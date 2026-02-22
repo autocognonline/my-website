@@ -215,6 +215,18 @@
       height: auto;
       display: block;
     }
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: #e0e0e0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #0070ba;
+      transition: width 1s linear;
+    }
     @media (max-width: 768px) {
       html, body {
         margin: 0;
@@ -301,6 +313,9 @@
 
   <div class="slideshow-container">
     <img id="slideshow-image" src="" alt="Slideshow image">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
   </div>
 
 
@@ -509,9 +524,10 @@
     const totalImages = 70;
     const imagePath = "images/";
     const imageExtension = ".jpg";
-    const intervalTime = 600000; // 10 minutes
+    const intervalTime = 300000; // ms
 
     const imgElement = document.getElementById("slideshow-image");
+    const progressFill = document.getElementById("progress-fill");
 
     function generateImages() {
       const arr = [];
@@ -557,11 +573,13 @@
 
     function updateSlideshow() {
       const elapsed = Date.now() - startTimestamp;
-      const steps = Math.floor(elapsed / intervalTime);
+      const progress = (elapsed % intervalTime) / intervalTime;
 
-      currentIndex = steps % images.length;
+      currentIndex = Math.floor(elapsed / intervalTime) % images.length;
 
-      if (steps >= images.length) {
+      progressFill.style.width = (progress * 100) + "%";
+
+      if (elapsed >= intervalTime * images.length) {
         shuffle(images);
         startTimestamp = Date.now();
         currentIndex = 0;
@@ -577,10 +595,8 @@
 
     updateSlideshow();
 
-    setInterval(updateSlideshow, 120000); 
+    setInterval(updateSlideshow, 1000); 
   </script>
 </body>
 
 </html>
-
-
