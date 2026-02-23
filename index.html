@@ -524,7 +524,7 @@
     const totalImages = 70;
     const imagePath = "images/";
     const imageExtension = ".jpg";
-    const intervalTime = 300000; // ms
+    const intervalTime = 120000; // ms
 
     const imgElement = document.getElementById("slideshow-image");
     const progressFill = document.getElementById("progress-fill");
@@ -595,8 +595,9 @@
 
     updateSlideshow();
 
-    setInterval(updateSlideshow, 1000); 
+    setInterval(updateSlideshow, 500); 
   </script>
 </body>
 
 </html>
+
