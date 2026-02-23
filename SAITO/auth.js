@@ -51,6 +51,11 @@ async function login() {
     const payload = await res.json();
 
     if (!res.ok || payload?.error) {
+      if (payload?.clear_fields) {
+        emailInput.value = "";
+        passwordInput.value = "";
+      }
+    
       loginMsg.innerText = payload?.error || "Login failed.";
       loginBtn.disabled = false;
       return;
@@ -79,4 +84,5 @@ async function login() {
 
 
 loginBtn.onclick = login;
+
 
