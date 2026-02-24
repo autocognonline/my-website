@@ -128,12 +128,12 @@
   </div>
   <hr>
   <div class="section" style="margin-top:20px;">
-    <p>You can see your up-to-date certificate by inputting your email address in the field below:</p>
+    <p>You can see your up-to-date certificate by inputting your NOACT Candidate ID in the field below:</p>
   </div>
   
   <form id="certForm" style="margin-top: 20px;">
-    <label>Email:</label>
-    <input type="text" id="EMAIL" required />
+    <label>Candidate ID:</label>
+    <input type="text" id="candidateID" required />
     <button type="submit" class="button">Show OCS Certificate</button>
   </form>
   
@@ -144,7 +144,7 @@
     document.getElementById("certForm").addEventListener("submit", async (e) => {
       e.preventDefault();
   
-      const EMAIL = document.getElementById("EMAIL").value.trim();
+      const candidateID = document.getElementById("candidateID").value.trim();
       const container = document.getElementById("result");
   
       container.innerHTML = `<p style="font-weight:bold;">Certificate is being generated…</p>`;
@@ -155,25 +155,43 @@
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ EMAIL }),
+            body: JSON.stringify({ candidateID }),
           }
         );
-
+  
         if (res.status === 429) {
-          container.innerHTML = `            <p style="color:red;">              Too many requests.            </p>          `;
+          container.innerHTML = `
+            <p style="color:red;">
+              Too many requests. Please try again tomorrow.
+            </p>
+          `;
           return;
         }
+  
         if (!res.ok) {
-          container.innerHTML = `<p style="color:red;">Certificate not available or wrong email.</p>`;
+          container.innerHTML = `
+            <p style="color:red;">
+              Certificate not available or wrong Candidate ID.
+            </p>
+          `;
           return;
         }
   
         const { url } = await res.json();
+  
         container.innerHTML = `
-          <iframe src="${url}" style="width:100%;height:600px;border:1px solid #ccc;margin-top:10px;" allowfullscreen></iframe>
+          <iframe src="${url}"
+            style="width:100%;height:600px;border:1px solid #ccc;margin-top:10px;"
+            allowfullscreen>
+          </iframe>
         `;
+  
       } catch (err) {
-        container.innerHTML = `<p style="color:red;">An error occurred. Please try again later.</p>`;
+        container.innerHTML = `
+          <p style="color:red;">
+            An error occurred. Please try again later.
+          </p>
+        `;
         console.error(err);
       }
     });
