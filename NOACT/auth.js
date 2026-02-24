@@ -102,23 +102,15 @@ if (payload.create_password) {
 }
 
 if (payload.need_password) {
-  passwordInput.type = "text";
+  passwordInput.type = "password";   // not "text"
   passwordInput.classList.remove("hidden");
   passwordInput.value = "";
 
-  const ackKey = "pwd_ack_" + email;
-  const alreadyAcked = !!localStorage.getItem(ackKey);
-
-  if (alreadyAcked) {
-    loginMsg.innerText = "Enter your password.";
-  } else {
+  if (payload.emailed) {
     loginMsg.innerText =
       "A password has been sent to your email. Check your spam folder if necessary.";
-    try {
-      localStorage.setItem(ackKey, "true");
-    } catch (e) {
-      // ignore storage errors
-    }
+  } else {
+    loginMsg.innerText = "Enter your password.";
   }
 
   loginBtn.disabled = false;
@@ -222,6 +214,7 @@ startTestBtn.innerText = "Start Test";
 });
 
 loginBtn.onclick = login;
+
 
 
 
