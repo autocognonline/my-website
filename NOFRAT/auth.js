@@ -81,13 +81,19 @@ async function login() {
     }
 
     if (payload.need_password) {
-      passwordInput.type = "text";
+      passwordInput.type = "password"; // keep the password masked
       passwordInput.classList.remove("hidden");
       passwordInput.value = "";
-
-      loginMsg.innerText = "Enter your password.";
-
+    
+      if (payload.emailed) {
+        loginMsg.innerText =
+          "A password has been sent to your email. Check your spam folder if necessary.";
+      } else {
+        loginMsg.innerText = "Enter your password.";
+      }
+    
       loginBtn.disabled = false;
+      loginBtn.onclick = login; // ensure handler is correct
       return;
     }
 
@@ -138,12 +144,17 @@ async function register() {
 
     usernameInput.classList.add("hidden");
 
-    loginMsg.innerText = "A password has been sent to your email. Check your spam folder if necessary.";
-
-    passwordInput.type = "text";
+    if (payload?.password_sent) {
+      loginMsg.innerText = "A password has been sent to your email. Check your spam folder if necessary.";
+    } else {
+      // fallback message if backend didn't send e-mail for some reason
+      loginMsg.innerText = "Account created. Enter your password if you have one, otherwise check your email.";
+    }
+    
+    passwordInput.type = "password";
     passwordInput.classList.remove("hidden");
     passwordInput.value = "";
-
+    
     loginBtn.onclick = login;
     loginBtn.disabled = false;
   } catch (err) {
@@ -188,5 +199,6 @@ startTestBtn?.addEventListener("click", async () => {
 
 
 loginBtn.onclick = login;
+
 
 
