@@ -262,7 +262,7 @@ async function submitAll() {
 if (submitBtn) {
   submitBtn.addEventListener("click", () => {
     const ok = confirm(
-      "Submit all answers?\nPlease check for typos before continuing."
+      "Submit all answers?"
     );
     if (ok) submitAll();
   });
@@ -271,4 +271,5 @@ if (submitBtn) {
 loadProgress();
 
 updateTopBar();
+
 
