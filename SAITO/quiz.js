@@ -325,7 +325,7 @@ function showFinalResults() {
 
 // ─── FINISH BUTTON ─────────────────────────────────────
 finishBtn?.addEventListener("click", async () => {
-  if(!window.confirm("Are you sure you want to finish the test?")) return;
+  if (!window.confirm("Are you sure you want to finish the test? Once submitted, you will not be able to continue working on it.")) return;
   await endGame();
 });
 
@@ -340,6 +340,7 @@ spatialCanvas.addEventListener("touchend", e=>{
 
 // ─── INITIAL LOAD ─────────────────────────────────────
 loadUserProgress();
+
 
 
 
