@@ -554,7 +554,7 @@ darkModeBtn?.addEventListener("click", () => {
 
 finishBtn?.addEventListener("click", async () => {
   const ok = window.confirm(
-    "Are you sure you want to finish the test?"
+    "Are you sure you want to finish the test?\nOnce submitted, you will not be able to continue working on it."
   );
   if (!ok) return;
 
@@ -565,4 +565,5 @@ finishBtn?.addEventListener("click", async () => {
 });
 
 loadUserProgress();
+
 
