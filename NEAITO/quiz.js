@@ -644,7 +644,7 @@ async function endGame() {
 }
 
 finishBtn?.addEventListener("click", async () => {
-  const ok = window.confirm("Are you sure you want to finish the test?");
+  const ok = window.confirm("Are you sure you want to finish the test?\nOnce submitted, you will not be able to continue working on it.");
   if (!ok) return;
   await updateDB({ extraUpdate: { finished: true } });
   showFinalResults();
@@ -652,4 +652,5 @@ finishBtn?.addEventListener("click", async () => {
 
 
 loadUserProgress();
+
 
