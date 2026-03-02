@@ -427,7 +427,7 @@ saveUsernameBtn?.addEventListener("click", async (e) => {
 
 finishBtn?.addEventListener("click", async () => {
   const ok = window.confirm(
-    "Are you sure you want to finish the test?"
+    "Are you sure you want to finish the test?\nOnce submitted, you won't be able to continue working on it."
   );
   if (!ok) return;
   await updateDB({
@@ -437,6 +437,7 @@ finishBtn?.addEventListener("click", async () => {
   showFinalResults();
 });
 
+
 darkModeBtn?.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
   const isDark = document.body.classList.contains("dark-mode");
@@ -445,5 +446,6 @@ darkModeBtn?.addEventListener("click", () => {
 });
 
 loadUserProgress();
+
 
 
