@@ -278,11 +278,28 @@
     <p id="usernameStatus" class="status-msg" aria-live="polite"></p>
   </div>
 </div>
+  
+<script>
+rowsInput.addEventListener("blur", () => {
+  let val = Number(rowsInput.value);
+  if (isNaN(val) || val < 1) val = 1;
+  if (val > 6) val = 6;
+  rowsInput.value = val;
+});
 
-<script src="quiz.js?v=3"></script>
+colsInput.addEventListener("blur", () => {
+  let val = Number(colsInput.value);
+  if (isNaN(val) || val < 1) val = 1;
+  if (val > 6) val = 6;
+  colsInput.value = val;
+});
+</script>
+  
+<script src="quiz.js?v=4"></script>
 
 </body>
 
 </html>
+
 
 
