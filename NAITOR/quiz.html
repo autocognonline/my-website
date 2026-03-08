@@ -238,7 +238,7 @@
       <div id="spatialContainer" class="spatial-container hidden">
         <div class="spatial-controls">
           <label>Rows: <input id="rowsInput" type="number" min="1" max="6" value="3"></label>
-          <label>Columns: <input id="colsInput" type="number" min="1" max="12" value="3"></label>
+          <label>Columns: <input id="colsInput" type="number" min="1" max="6" value="3"></label>
           <button id="resetCanvasBtn" type="button">Reset</button>
         </div>
 
@@ -278,8 +278,22 @@
   </div>
 </div>
 
-<script src="quiz.js?v=1"></script>
+<script>
+  const rowsInput = document.getElementById("rowsInput");
+  const colsInput = document.getElementById("colsInput");
+  rowsInput.addEventListener("input", () => {
+    if (rowsInput.value > 6) rowsInput.value = 6;
+    if (rowsInput.value < 1) rowsInput.value = 1;
+  });
+  colsInput.addEventListener("input", () => {
+    if (colsInput.value > 6) colsInput.value = 6;
+    if (colsInput.value < 1) colsInput.value = 1;
+  });
+</script>
+    
+<script src="quiz.js?v=2"></script>
 
 </body>
 
 </html>
+
