@@ -45,7 +45,7 @@ function drawSpatialGrid() {
 
 function updateSpatialGridFromInputs() {
   const rows = Math.min(6, Math.max(1, Number(rowsInput.value)));
-  const cols = Math.min(12, Math.max(1, Number(colsInput.value)));
+  const cols = Math.min(6, Math.max(1, Number(colsInput.value)));
   initSpatialGrid(rows, cols);
 }
 
@@ -652,5 +652,6 @@ finishBtn?.addEventListener("click", async () => {
 
 
 loadUserProgress();
+
 
 
