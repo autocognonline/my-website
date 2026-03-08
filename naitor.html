@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAITOR</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 30px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      margin-top: 60px;
+    }
+
+    p {
+      max-width: 1000px;
+      margin: 10px auto;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    a {
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .section {
+      margin: 50px auto;
+    }
+    .button {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 20px;
+      border-radius: 8px;
+      color: white;
+      background-color: #0070ba;
+      transition: background-color 0.3s ease;
+      margin: 5px;
+    }
+    .button:hover {
+      background-color: #005c99;
+    }
+    hr {
+      border: none;
+      height: 1px;
+      background-color: #ccc;
+      margin: 60px auto;
+      width: 80%;
+    }
+    .button, .paypal-button {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 20px;
+      border-radius: 8px;
+      color: white;
+      background-color: #0070ba;
+      transition: background-color 0.3s ease;
+      margin: 5px;
+      min-width: 150px;
+    }
+    .button:hover, .paypal-button:hover {
+      background-color: #005c99;
+    }
+    .thumbnail {
+      max-width: 1000px;
+      width: 100%;
+      height: auto;
+      border: 3px solid black;
+      border-radius: 8px;
+      cursor: zoom-in;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox img {
+      max-width: 95%;
+      max-height: 95%;
+      object-fit: contain;
+    }
+
+    .lightbox:target {
+      display: flex;
+      cursor: zoom-out;
+    }
+    @media (max-width: 700px) {
+      body {
+        margin: 15px;
+      }
+      p {
+        font-size: 16px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+      .button, .paypal-button {
+        width: 100%;
+        max-width: 350px;
+      }
+    }
+  </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3XHMB3NM73', {
+    'send_page_view': true,
+    'allow_google_signals': true
+  });
+</script>
+<link rel="icon" href="favicon.png">
+</head>
+<body>
+  <h1>Nydegger Automatic Intelligence Test Online Revised</h1>
+
+  <div class="section" style="max-width: 1000px;">  
+    <p>The NAITOR is an online, untimed and computerized IQ assessment consisting of 80 items designed to measure cognitive ability beyond the range of standard IQ tests.</p>
+
+    <p>It is a revised version of the NAIT: some items have been updated, others have been added or removed, and the test is now fully accessible online.</p>
+
+    <p>The items cover numerical, verbal, logical, abstract, and spatial reasoning and are approximately arranged in order of increasing difficulty.</p>
+
+    <p>Scores are reported on the Wechsler IQ scale (mean 100, standard deviation 15).</p>
+
+    <p>The test is primarily intended for individuals aged 18 and above.</p>
+
+    <p>While not a replacement for professionally administered psychological evaluations, the NAITOR is intended as a complementary tool for exploring cognitive ability.</p>
+
+    <p><strong>Note:</strong> For candidates who had already started or finished the NAIT, your progress has been carried over to the NAITOR, and any certificates remain valid.</p>
+  </div>
+
+  <h2 style="text-align: center;">Timeline of all tests that led to the NAITOR:</h2>
+
+  <a href="#timeline-lightbox">
+    <img src="Timeline.png" alt="NAIT timeline" class="thumbnail">
+  </a>
+
+  <a href="#" id="timeline-lightbox" class="lightbox">
+    <img src="Timeline.png" alt="NAIT timeline large">
+  </a>
+
+  <hr>
+
+  <div class="section" style="max-width: 1000px;">
+    <p>Participation is usually free of charge. Please do not share or discuss test items with others. The use of AI tools for solving, analyzing, or checking answers is not permitted.</p>
+    <p>You may use (online) calculators and dictionaries.</p>
+    <p>If you are already authenticated, you can proceed to the test using the link below:</p>
+    <a class="button" href="/NAITOR/login.html">NAITOR Login Page</a>
+    <p>If you have not yet completed authentication, please follow the instructions provided here:</p>
+    <a class="button" href="authProcedure.html">Authentication procedure</a>
+  </div>
+
+  <hr>
+
+  <div class="section" style="max-width: 1000px;">
+    <p>After completing the test, if you would like to receive a score certificate, please submit a 6€ payment via the link below, along with your name and email address.</p>
+    <a href="https://paypal.me/OrbifoldAnswers?country.x=CH&locale.x=en_US" target="_blank" rel="noopener noreferrer" class="paypal-button">Pay with PayPal</a>
+    <p>After logging in, enter your email address in the field provided to view and download your latest certificate.</p>
+  </div>
+  
+  <hr>
+
+  <div class="section">
+    <a class="button" href="naitorleaderboard.html">NAITOR Leaderboard</a>
+    <a class="button" href="stats.html">Statistics</a>
+    <a class="button" href="index.html" >Back to main page</a><br><br>
+  </div>
+
+</body>
+</html>
