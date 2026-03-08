@@ -279,14 +279,21 @@
 </div>
 
 <script>
-  rowsInput.addEventListener("input", () => {
-    if (rowsInput.value > 6) rowsInput.value = 6;
-    if (rowsInput.value < 1) rowsInput.value = 1;
-  });
-  colsInput.addEventListener("input", () => {
-    if (colsInput.value > 6) colsInput.value = 6;
-    if (colsInput.value < 1) colsInput.value = 1;
-  });
+rowsInput.addEventListener("input", () => {
+  const val = Number(rowsInput.value);
+  if (!isNaN(val)) {
+    if (val > 6) rowsInput.value = 6;
+    if (val < 1) rowsInput.value = 1;
+  }
+});
+
+colsInput.addEventListener("input", () => {
+  const val = Number(colsInput.value);
+  if (!isNaN(val)) {
+    if (val > 6) colsInput.value = 6;
+    if (val < 1) colsInput.value = 1;
+  }
+});
 </script>
     
 <script src="quiz.js?v=2"></script>
@@ -294,5 +301,6 @@
 </body>
 
 </html>
+
 
 
