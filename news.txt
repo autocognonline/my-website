@@ -1,3 +1,4 @@
+9 March 2026 - NAIT revised and relaunched online as NAITOR.
 25 February 2026 - For security, some test passwords were reset. You will get a new one at login.
 19 February 2026 - NAIT-ES revised and relaunched online as NEAITO.
 11 February 2026 - New way to enter the NAIT contest available.
@@ -14,4 +15,3 @@
 1 July 2025 - NAIT Contest is officially underway.
 26 June 2025 - Enhanced first preliminary norm for NAIT.
 1 June 2025 - Website is live.
-
