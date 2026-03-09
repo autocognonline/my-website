@@ -638,19 +638,34 @@ function showFinalResults() {
 }
 
 async function endGame() {
-  // mark finished and show final results
-  await updateDB({ extraUpdate: { finished: true } });
+  const res = await updateDB({ extraUpdate: { finished: true } });
+
+  if (res?.error) {
+    alert(res.error || "You cannot finish the test in less than 24 hours.");
+    return;
+  }
+
   showFinalResults();
 }
 
 finishBtn?.addEventListener("click", async () => {
-  const ok = window.confirm("Are you sure you want to finish the test?\nOnce submitted, you will not be able to continue working on it.");
+  const ok = window.confirm(
+    "Are you sure you want to finish the test?\nOnce submitted, you will not be able to continue working on it."
+  );
   if (!ok) return;
-  await updateDB({ extraUpdate: { finished: true } });
+
+  const res = await updateDB({ extraUpdate: { finished: true } });
+
+  if (res?.error) {
+    alert(res.error || "You cannot finish the test in less than 24 hours.");
+    return;
+  }
+
   showFinalResults();
 });
 
 
 loadUserProgress();
+
 
 
