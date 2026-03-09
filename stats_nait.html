@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Statistics of NAIT</title>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    margin: 20px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin: 40px 0 20px;
+  }
+
+  p {
+    max-width: 1280px;
+    margin: 10px auto;
+    font-size: 1rem;
+    text-align: justify;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #0070ba;
+  }
+
+  .section {
+    margin: 40px auto;
+    max-width: 1280px;
+    padding: 0 10px;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 6px;
+    color: white;
+    background-color: #0070ba;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+    min-width: 140px;
+  }
+
+  .button:hover {
+    background-color: #005c99;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 40px auto;
+    width: 80%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 40px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: auto;
+    font-size: 1rem;
+  }
+
+  th, td {
+    border: 1px solid black; 
+    padding: 8px 12px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #0070ba;
+    color: white;
+    font-size: 1rem;
+  }
+
+  tr:hover {
+    background-color: #f2f2f2;
+  }
+
+  caption {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  .default-table table {
+    font-size: 1rem;
+  }
+
+  .thumbnail, img {
+    max-width: 100%;
+    height: auto;
+    border: 3px solid black;
+    border-radius: 6px;
+    cursor: zoom-in;
+  }
+
+  .candidates-header th {
+    background-color: #0070ba; 
+    color: white;
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 600px) {
+    body {
+      margin: 10px;
+    }
+
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; }
+    p { font-size: 0.9rem; }
+    th, td { font-size: 0.8rem; padding: 6px 8px; }
+    .button { font-size: 0.9rem; padding: 8px 16px; min-width: 100px; }
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3XHMB3NM73', {
+    'send_page_view': true,
+    'allow_google_signals': true
+  });
+</script>
+<link rel="icon" href="favicon.png">
+</head>
+<body>
+  <h1>Statistics of NAIT and its subtests</h1>
+
+  <div class="section" style="max-width: 1000px;">
+    <p>  NAIT, developed in mai 2025, was the predecessor of NAITOR.</p>
+    <p>  It was an untimed, 120-item heterogeneous test that included numerical, verbal, logical, abstract, and spatial questions.</p>
+    <p>  Below you can find the final statistics from the test before it was officially discontinued in march 2026.</p>
+  </div>
+
+  <h2 style="text-align: center;">Timeline of all tests that led to the NAITOR:</h2>
+
+  <a >
+    <img src="Timeline.png" alt="NAIT timeline" class="thumbnail">
+  </a>
+
+  <hr>
+
+  <div class="section">
+
+    <div class="table-container">
+      <table>
+        <caption>Statistical Summary</caption>
+        <thead>
+          <tr>
+            <th>Test or subtest</th>
+            <th>N</th>
+            <th>Lowest raw score</th>
+            <th>Highest raw score</th>
+            <th>Mean</th>
+            <th>Median</th>
+            <th>Raw score standard deviation</th>
+            <th>Quartile deviation</th>
+            <th>Skewness</th>
+            <th>Excess Kurtosis</th>
+            <th>Cronbach's alpha</th>
+            <th>Split-half reliability index</th>
+            <th>Spearman–Brown corrected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>NAIT</td><td>23</td><td>35</td><td>114</td><td>85.26</td><td>86</td><td>19</td><td>12.5</td><td>-0.68</td><td>0.6</td><td>0.97</td><td>0.95</td><td>0.97</td></tr>
+          
+          <tr><td>Abstract</td><td>23</td><td>10</td><td>26</td><td>20.3</td><td>21</td><td>3.78</td><td>2.5</td><td>-1.07</td><td>1.53</td><td>0.86</td><td>0.81</td><td>0.90</td></tr>
+
+          <tr><td>Numerical</td><td>23</td><td>11</td><td>44</td><td>30.09</td><td>31</td><td>9.17</td><td>7.5</td><td>-0.11</td><td>-0.98</td><td>0.95</td><td>0.92</td><td>0.96</td></tr>
+
+          <tr><td>Verbal</td><td>23</td><td>8</td><td>26</td><td>20.96</td><td>22</td><td>3.99</td><td>2.5</td><td>-1.42</td><td>3.26</td><td>0.89</td><td>0.84</td><td>0.91</td></tr>
+
+          <tr><td>Logical</td><td>23</td><td>3</td><td>9</td><td>6.83</td><td>7</td><td>1.52</td><td>1</td><td>-0.4</td><td>0.08</td><td>0.66</td><td>0.56</td><td>0.72</td></tr>
+
+          <tr><td>Spatial</td><td>23</td><td>2</td><td>12</td><td>7.09</td><td>8</td><td>2.55</td><td>1.25</td><td>-0.61</td><td>0.01</td><td>0.81</td><td>0.72</td><td>0.84</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <caption>Ivec's Quality</caption>
+        <thead>
+          <tr>
+            <th>Test or subtest</th>
+            <th>Number of items</th>
+            <th>Good items</th>
+            <th>Average Items</th>
+            <th>Suspicious items</th>
+            <th>Bad items</th>
+            <th>Unsolved items</th>
+            <th>Overall quality (%)</th>
+            <th>130-150 quality (%)</th>
+            <th>140-160 quality (%)</th>
+            <th>150-170 quality (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>NAIT</td><td>120</td><td>103</td><td>10</td><td>4</td><td>0</td><td>3</td><td>89.3</td><td>87.0</td><td>81.5</td><td>74.3</td></tr>
+
+          <tr><td>Abstract</td><td>27</td><td>22</td><td>2</td><td>2</td><td>0</td><td>1</td><td>89.5</td><td>94.4</td><td>84.4</td><td>61.4</td></tr>
+
+          <tr><td>Numerical</td><td>45</td><td>40</td><td>4</td><td>0</td><td>0</td><td>1</td><td>88.6</td><td> 89.0</td><td>83.7</td><td>79.2</td></tr>
+
+          <tr><td>Verbal</td><td>26</td><td>25</td><td>1</td><td>0</td><td>0</td><td>0</td><td>94.1</td><td>95.9</td><td>88.1</td><td>76.0</td></tr>
+
+          <tr><td>Logical</td><td>9</td><td>8</td><td>1</td><td>0</td><td>0</td><td>0</td><td>92.5</td><td>93.0</td><td>79.2</td><td>84.5</td></tr>
+
+          <tr><td>Spatial</td><td>13</td><td>8</td><td>2</td><td>2</td><td>0</td><td>1</td><td>78.7</td><td>92.0</td><td>79.4</td><td>64.7</td></tr>
+        </tbody>
+      </table>
+      <a href="https://ivec.ultimaiq.net/quality.htm" target="_blank">Information about Ivec's quality</a>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <caption>More Statistics</caption>
+        <thead>
+          <tr>
+            <th>Test or subtest</th>
+            <th>Range</th>
+            <th>Resolution</th>
+            <th>Sample-dependent hardness</th>
+            <th>Sample-independent hardness</th>
+            <th>Overall Test Complexity</th>
+            <th>Standard error of measurement (raw score)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>NAIT</td><td>80</td><td>12.5</td><td>0.28</td><td>0.43</td><td>0.47</td><td>3.3</td></tr>
+          <tr><td>Abstract</td><td>17</td><td>2.5</td><td>0.22</td><td>0.36</td><td>0.45</td><td>1.41</td></tr>
+          <tr><td>Numerical</td><td>34</td><td>8.5</td><td>0.31</td><td>0.55</td><td>0.55</td><td>2.15</td></tr>
+          <tr><td>Verbal</td><td>19</td><td>3</td><td>0.15</td><td>0.33</td><td>0.41</td><td>1.33</td></tr>
+          <tr><td>Logical</td><td>7</td><td>1</td><td>0.22</td><td>0.44</td><td> 0.49</td><td>0.89</td></tr>
+          <tr><td>Spatial</td><td>11</td><td>1.5</td><td>0.38</td><td>0.69</td><td>0.73</td><td>1.12</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+    <div class="table-container" style="max-width: 1000px; margin: auto;">
+      <table class="candidates-header" style="width: 100%; border-collapse: collapse; text-align: left; font-family: Arial, sans-serif;">
+        <thead>
+          <tr>
+            <th colspan="2">Candidates Statistics</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th colspan="2" style="background: #8a8a8a; color: #fff;font-size: 16px;">
+            Candidates
+          </th>
+          </tr>
+
+          <tr>
+            <td style="padding: 6px 8px;">Youngest candidate (years)</td>
+            <td style="padding: 6px 8px;">17</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Oldest candidate (years)</td>
+            <td style="padding: 6px 8px;">75</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Mean age (years)</td>
+            <td style="padding: 6px 8px;">36.6</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Median age (years)</td>
+            <td style="padding: 6px 8px;">33.0</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Age standard deviation (years)</td>
+            <td style="padding: 6px 8px;">18.4</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Percentage of males</td>
+            <td style="padding: 6px 8px;">95.65</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Percentage of females</td>
+            <td style="padding: 6px 8px;">0.0</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Percentage classified as unknown/other sex</td>
+            <td style="padding: 6px 8px;">4.35</td>
+          </tr>
+
+          <tr>
+            <th colspan="2" style="padding: 8px; background: #8a8a8a; color: #fff; font-size: 16px;">
+              Candidates by Country (listed only if more than 1)
+            </th>
+          </tr>
+
+          <tr>
+            <td style="padding: 6px 8px;">United States of America</td>
+            <td style="padding: 6px 8px;">2</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">China</td>
+            <td style="padding: 6px 8px;">2</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Italy</td>
+            <td style="padding: 6px 8px;">2</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Japan</td>
+            <td style="padding: 6px 8px;">2</td>
+          </tr>
+
+          <tr>
+            <th colspan="2" style="padding: 8px; background: #8a8a8a; color: #fff; font-size: 16px;">
+              g factor
+            </th>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Estimated g-loading (lower bound)</td>
+            <td style="padding: 6px 8px;">0.78</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px;">Number of tests used for the g-loading estimation</td>
+            <td style="padding: 6px 8px;">11</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  <h2 style="text-align: center;"><strong>NAIT raw score histogram:</strong></h2>
+
+  <img src="nait_raw_score_histogram.png"
+      alt="NAIT"
+      style="max-width: 1000px; width: 100%; height: auto; 
+              border: 3px solid black; 
+              border-radius: 8px;">
+
+  <h2 style="text-align: center;"><strong>Correlations between NAIT and other tests:</strong></h2>
+
+  <div class="section" style="max-width: 1000px; margin: 0 auto; font-family: Arial, sans-serif;">
+    <p style="text-align: justify;">
+      Correlations are computed between the raw score on the NAIT and the raw scores on other tests, except in the case of standardized tests (e.g., WAIS), where correlations are computed between the raw NAIT score and the standardized IQ score. Values are displayed only if the number of score pairs is bigger than 2.
+    </p>
+  </div>
+
+  <div style="display: flex; justify-content: center;">
+  <table border="1" cellpadding="8" style="border-collapse: collapse; max-width: 700px; text-align: center; font-family: Arial, sans-serif;">
+    <thead>
+      <tr style="background-color: #0070ba; color: white;">
+        <th>Test Name</th>
+        <th>Spearman ρ</th>
+        <th>Pearson r</th>
+        <th>Pairs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>MCST 32</td><td>1.000</td><td>1.000</td><td>3</td></tr><tr><td>LSHR Light</td><td>1.000</td><td>1.000</td><td>3</td></tr><tr><td>MVA 28</td><td>1.000</td><td>0.959</td><td>3</td></tr><tr><td>SAT 36</td><td>0.975</td><td>0.722</td><td>5</td></tr><tr><td>NAIT Numerical Subtest</td><td>0.973</td><td>0.961</td><td>23</td></tr><tr><td>NAIT Verbal Subtest</td><td>0.901</td><td>0.927</td><td>23</td></tr><tr><td>Three Sonnets</td><td>0.866</td><td>0.987</td><td>3</td></tr><tr><td>NOACT Verbal Subtest</td><td>0.843</td><td>0.852</td><td>8</td></tr><tr><td>VTPR 26</td><td>0.821</td><td>0.786</td><td>5</td></tr><tr><td>Wechsler Adult Intelligence Scale (aggregate)</td><td>0.800</td><td>0.961</td><td>4</td></tr><tr><td>Simtollect</td><td>0.800</td><td>0.974</td><td>4</td></tr><tr><td>Numerus</td><td>0.800</td><td>0.934</td><td>4</td></tr><tr><td>NOACT</td><td>0.759</td><td>0.754</td><td>8</td></tr><tr><td>NAIT Abstract Subtest</td><td>0.753</td><td>0.850</td><td>23</td></tr><tr><td>NAIT Logical Subtest</td><td>0.738</td><td>0.811</td><td>23</td></tr><tr><td>NAIT Spatial Subtest</td><td>0.712</td><td>0.781</td><td>23</td></tr><tr><td>NOACT Logical Subtest</td><td>0.701</td><td>0.616</td><td>8</td></tr><tr><td>CLM 39</td><td>0.700</td><td>0.673</td><td>5</td></tr><tr><td>Einplex</td><td>0.564</td><td>0.615</td><td>5</td></tr><tr><td>NOACT Numerical Subtest</td><td>0.554</td><td>0.584</td><td>8</td></tr><tr><td>NOACT Abstract Subtest</td><td>0.546</td><td>0.539</td><td>8</td></tr><tr><td>NIT-Form 1</td><td>0.500</td><td>0.870</td><td>3</td></tr><tr><td>LSHR</td><td>0.500</td><td>0.977</td><td>3</td></tr><tr><td>LRN 38</td><td>0.500</td><td>0.474</td><td>3</td></tr><tr><td>OVAT33</td><td>0.400</td><td>0.564</td><td>4</td></tr><tr><td>Free Fall</td><td>0.000</td><td>0.277</td><td>3</td></tr><tr><td>World Intelligence Test</td><td>-0.400</td><td>-0.564</td><td>4</td></tr><tr><td>Triplex Light</td><td>-0.866</td><td>-0.693</td><td>3</td></tr><tr><td>Mathema</td><td>-0.894</td><td>-0.846</td><td>4</td></tr>
+    </tbody>
+  </table>
+</div>
+
+    <h2>Correlations matrix between NAIT subtests</h2>
+    <div class="default-table" style="display: flex; justify-content: center; width: 100%;">
+        <table style="width: auto; max-width: 1000px;">
+            <thead>
+            <tr>
+                <th> </th>
+                <th>Abstract</th><th>Numerical</th><th>Verbal</th><th>Spatial</th><th>Logical</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>Abstract</td><td>1</td><td>0.732</td><td>0.698</td><td>0.734</td><td>0.614</td></tr>
+            <tr><td>Numerical</td><td>0.732</td><td>1</td><td>0.870</td><td>0.658</td><td>0.742</td></tr>
+            <tr><td>Verbal</td><td>0.698</td><td>0.870</td><td>1</td><td>0.651</td><td>0.842</td></tr>
+            <tr><td>Spatial</td><td>0.734</td><td>0.658</td><td>0.651</td><td>1</td><td>0.527</td></tr>
+            <tr><td>Logical</td><td>0.614</td><td>0.742</td><td>0.842</td><td>0.527</td><td>1</td></tr>
+
+            </tbody>
+        </table>
+        </div>
+
+        <h2>NAIT subtests g-loadings (PCA)</h2>
+        <div class="default-table" style="display: flex; justify-content: center; width: 100%;">
+          <table style="width: auto; max-width: 1000px;">
+              <tbody>
+                      <tr><td>Verbal subtest</td><td>0.933</td></tr>
+                      <tr><td>Numerical subtest</td><td>0.919</td></tr>
+                      <tr><td>Abstract subtest</td><td>0.860</td></tr>
+                      <tr><td>Logical subtest</td><td>0.854</td></tr>
+                      <tr><td>Spatial subtest</td><td>0.808</td></tr>
+              </tbody>
+          </table>
+        </div>
+
+    <h1>Final norms of NAIT and its subtests</h1>
+    <a class="button" href="naitnorms.xlsx">Norms before the discontinuation</a>
+
+  <div class="section">
+    <a class="button" href="index.html">Back to main page</a>
+  </div>
+</body>
+</html>
