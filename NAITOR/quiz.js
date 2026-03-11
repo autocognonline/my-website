@@ -449,40 +449,39 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
 
 if (submitBtn) submitBtn.onclick = async () => {
   let rawAns;
-
   if (SPATIAL_ITEMS.includes(currentIndex)) {
     rawAns = serializeSpatialAnswer();
   } else {
     const input1 = document.getElementById("answerInput1").value.trim();
     const input2El = document.getElementById("answerInput2");
     const input3El = document.getElementById("answerInput3");
+    const input2 = input2El ? input2El.value.trim() : "";
+    const input3 = input3El ? input3El.value.trim() : "";
     if (THREE_ANSWERS.includes(currentIndex)) {
-      const input2 = input2El.value.trim();
-      const input3 = input3El.value.trim();
-    
       if (!input1 || !input2 || !input3) return;
-    
-      const sorted = [input1, input2, input3]
+      rawAns = [input1, input2, input3]
         .map(v => normalizeClient(v))
-        .sort();
-    
-      rawAns = sorted.join(",");
-    }
+        .sort()
+        .join(",");
+
+    } 
     else if (TWO_ANSWERS.includes(currentIndex)) {
-      const input2 = input2El.value.trim();
       if (!input1 || !input2) return;
-
-      const sorted = [input1, input2]
+      rawAns = [input1, input2]
         .map(v => normalizeClient(v))
-        .sort();
-
-      rawAns = sorted.join(",");
-    } else {
+        .sort()
+        .join(",");
+    } 
+    else {
       if (!input1) return;
-      rawAns = input1;
+      rawAns = normalizeClient(input1);
     }
   }
 
+  if (!rawAns) {
+    console.error("Blocked empty answer submission", { currentIndex });
+    return;
+  }
   try {
     const res = await fetch(GET_ANSWER_URL, {
       method: "POST",
@@ -500,18 +499,14 @@ if (submitBtn) submitBtn.onclick = async () => {
       console.error("get_answer failed:", txt);
       return;
     }
-
     const payload = await res.json().catch(() => ({}));
     const correct = payload?.correct === true;
 
     if (correct) {
       if (!solved.includes(currentIndex)) solved.push(currentIndex);
-
       await updateDB({ extraUpdate: {} });
-
       updateTopBar();
       showStatusPopup("Correct!", true);
-
       clearInputs();
 
       setTimeout(() => {
@@ -520,16 +515,11 @@ if (submitBtn) submitBtn.onclick = async () => {
 
       return;
     }
-
     showStatusPopup("Incorrect!", false);
-
     await updateDB({ extraUpdate: {}, decrementAttempt: true });
-
     const remaining = attempts[currentIndex - 1] ?? 0;
-
     if (remaining <= 0) {
       await updateDB({ extraUpdate: {} });
-
       const next = findNextUnsolved(currentIndex, true);
       if (!next) return endGame();
       loadQuestionByIndex(next);
@@ -537,7 +527,6 @@ if (submitBtn) submitBtn.onclick = async () => {
     }
     clearInputs();
     updateTopBar();
-
   } catch (err) {
     console.error("Submit error:", err);
   }
@@ -708,6 +697,7 @@ finishBtn?.addEventListener("click", async () => {
 
 
 loadUserProgress();
+
 
 
 
