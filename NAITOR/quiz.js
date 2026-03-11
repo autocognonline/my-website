@@ -3,7 +3,8 @@ const GET_ANSWER_URL  = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/g
 const TOTAL_ITEMS = 80;
 const TOTAL_ATTEMPTS = 4; // attempts per item
 const SPATIAL_ITEMS = [2,7,13,21,27,34,38,43,48,53,57,61,65,71,79];
-const TWO_ANSWERS = [3, 8, 12, 20, 28, 42, 47, 50, 56, 59, 72]; // items that must have two answers provided by the user
+const TWO_ANSWERS = [3, 12, 20, 28, 42, 50, 56, 59, 72]; // items that must have two answers provided by the user
+const THREE_ANSWERS = [8,47]; // items that must have three answers provided by the user
 
 const scoreEl       = document.getElementById("scoreEl");
 const attemptsEl    = document.getElementById("attemptsEl");
@@ -300,9 +301,11 @@ async function loadUserProgress() {
 function clearInputs() {
   const input1 = document.getElementById("answerInput1");
   const input2 = document.getElementById("answerInput2");
+  const input3 = document.getElementById("answerInput3");
 
   if (input1) input1.value = "";
   if (input2) input2.value = "";
+  if (input3) input3.value = "";
 }
 
 function loadQuestionByIndex(index) {
@@ -313,23 +316,51 @@ function loadQuestionByIndex(index) {
 
   const answerInput1 = document.getElementById("answerInput1");
   const answerInput2 = document.getElementById("answerInput2");
+  const answerInput3 = document.getElementById("answerInput3");
 
   if (SPATIAL_ITEMS.includes(index)) {
-    spatialContainer.classList.remove("hidden");  // show container
+
+    spatialContainer.classList.remove("hidden");
+
     answerInput1.style.display = "none";
     if (answerInput2) answerInput2.style.display = "none";
-    updateSpatialGridFromInputs();
-  } else {
-    spatialContainer.classList.add("hidden");  // hide container
-    answerInput1.style.display = "block";
+    if (answerInput3) answerInput3.style.display = "none";
 
-    if (TWO_ANSWERS.includes(index)) {
+    updateSpatialGridFromInputs();
+
+  } else {
+
+    spatialContainer.classList.add("hidden");
+
+    if (THREE_ANSWERS.includes(index)) {
+
+      answerInput1.style.display = "block";
       answerInput2.style.display = "block";
+      answerInput3.style.display = "block";
+
       answerInput1.placeholder = "Answer 1";
       answerInput2.placeholder = "Answer 2";
-    } else {
+      answerInput3.placeholder = "Answer 3";
+
+    } 
+    else if (TWO_ANSWERS.includes(index)) {
+
+      answerInput1.style.display = "block";
+      answerInput2.style.display = "block";
+      answerInput3.style.display = "none";
+
+      answerInput1.placeholder = "Answer 1";
+      answerInput2.placeholder = "Answer 2";
+
+    } 
+    else {
+
+      answerInput1.style.display = "block";
       answerInput2.style.display = "none";
+      answerInput3.style.display = "none";
+
       answerInput1.placeholder = "Your answer…";
+
     }
 
     answerInput1.focus();
@@ -424,12 +455,23 @@ if (submitBtn) submitBtn.onclick = async () => {
   } else {
     const input1 = document.getElementById("answerInput1").value.trim();
     const input2El = document.getElementById("answerInput2");
-
-    if (TWO_ANSWERS.includes(currentIndex)) {
+    const input3El = document.getElementById("answerInput3");
+    if (THREE_ANSWERS.includes(currentIndex)) {
+      const input2 = input2El.value.trim();
+      const input3 = input3El.value.trim();
+    
+      if (!input1 || !input2 || !input3) return;
+    
+      const sorted = [input1, input2, input3]
+        .map(v => normalizeClient(v))
+        .sort();
+    
+      rawAns = sorted.join(",");
+    }
+    else if (TWO_ANSWERS.includes(currentIndex)) {
       const input2 = input2El.value.trim();
       if (!input1 || !input2) return;
 
-      // Order-independent submission
       const sorted = [input1, input2]
         .map(v => normalizeClient(v))
         .sort();
@@ -666,6 +708,7 @@ finishBtn?.addEventListener("click", async () => {
 
 
 loadUserProgress();
+
 
 
 
