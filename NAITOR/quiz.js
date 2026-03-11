@@ -263,36 +263,40 @@ async function loadUserProgress() {
     const payload = await res.json().catch(()=>({}));
     const user = payload.user ?? payload;
 
-    // solved items from DB
-    solved = Array.isArray(user?.solved_ids) ? user.solved_ids.map(x => Number(x)) : [];
+    const serverSolved = Array.isArray(user?.solved_ids)
+      ? user.solved_ids.map(x => Number(x))
+      : [];
 
-    // attempts: if valid array of length TOTAL_ITEMS, use it; otherwise initialize default array
     if (Array.isArray(user?.attempts) && user.attempts.length === TOTAL_ITEMS) {
       attempts = user.attempts.map(n => Number.isFinite(Number(n)) ? Math.max(0, Number(n)) : TOTAL_ATTEMPTS);
     } else {
       attempts = Array(TOTAL_ITEMS).fill(TOTAL_ATTEMPTS);
     }
 
+    if (serverSolved.length > 0) {
+      solved = serverSolved.slice();
+    } else {
+      solved = [];
+    }
+
     username = localStorage.getItem("username") || user?.name || username;
     if (username) localStorage.setItem("username", username);
 
     updateTopBar();
-
-    // If user finished in DB -> show results
     if (user?.finished === true) {
       return showFinalResults();
     }
-
-    // If there are no available (unsolved & not exhausted) items -> finish
     const firstAvailable = findNextUnsolved(0, true);
+
     if (!firstAvailable) {
-      // mark finished server-side and show results
-      await updateDB({ extraUpdate: { finished: true } });
+      if (solved.length > 0) {
+        await updateDB({ extraUpdate: { finished: true } });
+      }
       return showFinalResults();
     }
 
-    // start at first available
     loadQuestionByIndex(firstAvailable);
+
   } catch (err) {
     console.error("loadUserProgress error:", err);
   }
@@ -390,6 +394,7 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
   const cleanEmail = String(email || "").trim();
   if (!cleanEmail) return;
 
+  // Ensure solvedNums reflects actual solved items
   const solvedNums = Array.isArray(solved)
     ? solved.map(x => Number.isFinite(Number(x)) ? Math.trunc(Number(x)) : x)
     : [];
@@ -404,7 +409,6 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
 
   if (decrementAttempt) {
     payload.decrement_attempt = true;
-    // send 0-based index to backend
     payload.question_index = Math.max(0, (currentIndex - 1));
   }
 
@@ -424,16 +428,13 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
 
     if (body?.user) {
       const u = body.user;
-      // sync solved (server authoritative)
-      solved = Array.isArray(u.solved_ids)
-        ? u.solved_ids.map(x => Number.isFinite(Number(x)) ? Number(x) : x)
-        : solved;
+      if (Array.isArray(u.solved_ids) && u.solved_ids.length > 0) {
+        solved = u.solved_ids.map(x => Number.isFinite(Number(x)) ? Number(x) : x);
+      }
 
-      // sync attempts array (server authoritative) with safety fallback
       if (Array.isArray(u.attempts) && u.attempts.length === TOTAL_ITEMS) {
         attempts = u.attempts.map(n => Number.isFinite(Number(n)) ? Math.max(0, Number(n)) : 0);
       } else {
-        // keep the local attempts if server didn't return them correctly
         attempts = Array(TOTAL_ITEMS).fill(TOTAL_ATTEMPTS);
       }
 
@@ -697,6 +698,7 @@ finishBtn?.addEventListener("click", async () => {
 
 
 loadUserProgress();
+
 
 
 
