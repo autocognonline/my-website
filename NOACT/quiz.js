@@ -12,6 +12,7 @@ const submitBtn     = document.getElementById("submitBtn");
 const prevBtn       = document.getElementById("prevBtn");
 const nextBtn       = document.getElementById("nextBtn");
 const darkModeBtn   = document.getElementById("darkModeBtn");
+const finishBtn = document.getElementById("finishBtn");
 
 const changeUsernameBtn = document.getElementById("changeUsernameBtn");
 const changeUsernameModal = document.getElementById("changeUsernameModal");
@@ -449,6 +450,7 @@ darkModeBtn?.addEventListener("click", () => {
 });
 
 loadUserProgress();
+
 
 
 
