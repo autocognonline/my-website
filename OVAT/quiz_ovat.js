@@ -201,7 +201,7 @@ async function loadProgress() {
 
     const data = await res.json();
 
-    solved   = data.solved_ids ?? [];
+    solved = Array.isArray(data.solved_ids) ? data.solved_ids : [];
     attempts = data.attempts ?? 3;
     finished = data.finished ?? false;
 
@@ -241,7 +241,7 @@ async function submitAll() {
 
     showBigPopup("Answers sent");
 
-    solved = data.solved_ids ?? [];
+    solved = Array.isArray(data.solved_ids) ? data.solved_ids : solved;
     attempts = data.attempts ?? attempts;
     finished = data.finished ?? false;
 
@@ -271,5 +271,6 @@ if (submitBtn) {
 loadProgress();
 
 updateTopBar();
+
 
 
