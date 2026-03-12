@@ -195,15 +195,14 @@ async function loadUserProgress() {
       return showFinalResults();
     }
 
-    // sync state
-    solved = Array.isArray(user?.solved_ids) ? user.solved_ids : (user?.solved_ids ?? []);
-    attempts = (user?.attempts ?? TOTAL_ATTEMPTS);
+    solved = Array.isArray(user?.solved_ids) ? user.solved_ids : [];
+    attempts = user?.attempts ?? TOTAL_ATTEMPTS;
     username = localStorage.getItem("username") || user?.name || username;
     if (username) localStorage.setItem("username", username);
     updateTopBar();
 
     if (solved.length >= TOTAL_ITEMS || attempts <= 0) {
-      updateDB({ extraUpdate: { finished: true } });
+      await updateDB({ extraUpdate: { finished: true } });
       return showFinalResults();
     }
 
@@ -262,11 +261,15 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
     ? solved.map(x => Number.isFinite(Number(x)) ? Math.trunc(Number(x)) : x)
     : [];
 
-  const updateObj = {
-    solved_ids: solvedNums,
+  const base = {
     score: solvedNums.length,
     iq: iq !== null ? Number(iq) : null,
     ...extraUpdate
+  };
+
+  const updateObj = {
+    ...(solvedNums.length > 0 ? { solved_ids: solvedNums } : {}),
+    ...base
   };
 
   const payload = { email: cleanEmail, password, update: updateObj };
@@ -565,5 +568,6 @@ finishBtn?.addEventListener("click", async () => {
 });
 
 loadUserProgress();
+
 
 
