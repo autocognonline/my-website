@@ -363,7 +363,7 @@ function showFinalResults() {
     });
 }
 
-function endGame() {
+async function endGame() {
   attempts = 0;
   await updateDB({ extraUpdate: { finished: true } });
   showFinalResults();
@@ -450,6 +450,7 @@ darkModeBtn?.addEventListener("click", () => {
 });
 
 loadUserProgress();
+
 
 
 
