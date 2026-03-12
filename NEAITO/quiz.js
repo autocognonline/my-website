@@ -255,19 +255,23 @@ async function loadUserProgress() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
     });
+
     if (!res.ok) {
       console.error("loadUserProgress: failed", await res.text().catch(()=> ""));
       return;
     }
+
     const payload = await res.json().catch(()=>({}));
     const user = payload.user ?? payload;
 
-    // solved items from DB
-    solved = Array.isArray(user?.solved_ids) ? user.solved_ids.map(x => Number(x)) : [];
+    solved = Array.isArray(user?.solved_ids)
+      ? user.solved_ids.map(x => Number(x))
+      : [];
 
-    // attempts: if valid array of length TOTAL_ITEMS, use it; otherwise initialize default array
     if (Array.isArray(user?.attempts) && user.attempts.length === TOTAL_ITEMS) {
-      attempts = user.attempts.map(n => Number.isFinite(Number(n)) ? Math.max(0, Number(n)) : TOTAL_ATTEMPTS);
+      attempts = user.attempts.map(n =>
+        Number.isFinite(Number(n)) ? Math.max(0, Number(n)) : TOTAL_ATTEMPTS
+      );
     } else {
       attempts = Array(TOTAL_ITEMS).fill(TOTAL_ATTEMPTS);
     }
@@ -277,20 +281,16 @@ async function loadUserProgress() {
 
     updateTopBar();
 
-    // If user finished in DB -> show results
     if (user?.finished === true) {
       return showFinalResults();
     }
 
-    // If there are no available (unsolved & not exhausted) items -> finish
     const firstAvailable = findNextUnsolved(0, true);
     if (!firstAvailable) {
-      // mark finished server-side and show results
       await updateDB({ extraUpdate: { finished: true } });
       return showFinalResults();
     }
 
-    // start at first available
     loadQuestionByIndex(firstAvailable);
   } catch (err) {
     console.error("loadUserProgress error:", err);
@@ -363,18 +363,21 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
     ? solved.map(x => Number.isFinite(Number(x)) ? Math.trunc(Number(x)) : x)
     : [];
 
-  const updateObj = {
-    solved_ids: solvedNums,
+  const base = {
     score: solvedNums.length,
     ...extraUpdate
+  };
+
+  const updateObj = {
+    ...(solvedNums.length > 0 ? { solved_ids: solvedNums } : {}),
+    ...base
   };
 
   const payload = { email: cleanEmail, password, update: updateObj };
 
   if (decrementAttempt) {
     payload.decrement_attempt = true;
-    // send 0-based index to backend
-    payload.question_index = Math.max(0, (currentIndex - 1));
+    payload.question_index = Math.max(0, currentIndex - 1);
   }
 
   try {
@@ -393,17 +396,17 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
 
     if (body?.user) {
       const u = body.user;
-      // sync solved (server authoritative)
+
       solved = Array.isArray(u.solved_ids)
         ? u.solved_ids.map(x => Number.isFinite(Number(x)) ? Number(x) : x)
         : solved;
 
-      // sync attempts array (server authoritative) with safety fallback
       if (Array.isArray(u.attempts) && u.attempts.length === TOTAL_ITEMS) {
-        attempts = u.attempts.map(n => Number.isFinite(Number(n)) ? Math.max(0, Number(n)) : 0);
+        attempts = u.attempts.map(n =>
+          Number.isFinite(Number(n)) ? Math.max(0, Number(n)) : 0
+        );
       } else {
-        // keep the local attempts if server didn't return them correctly
-        attempts = Array(TOTAL_ITEMS).fill(TOTAL_ATTEMPTS);
+        attempts = attempts;
       }
 
       updateTopBar();
@@ -652,6 +655,7 @@ finishBtn?.addEventListener("click", async () => {
 
 
 loadUserProgress();
+
 
 
 
