@@ -485,7 +485,7 @@ function showFinalResults() {
 
 async function endGame() {
   attempts = 0;
-  updateDB({ extraUpdate: { finished: true } });
+  await updateDB({ extraUpdate: { finished: true } });
   showFinalResults();
 }
 
@@ -568,6 +568,7 @@ finishBtn?.addEventListener("click", async () => {
 });
 
 loadUserProgress();
+
 
 
 
