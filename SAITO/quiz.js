@@ -181,7 +181,6 @@ async function fetchQuizAPI(payload) {
   }
 }
 
-// ─── LOAD USER ─────────────────────────────────────────
 async function loadUserProgress() {
   const payload = { email };
   const body = await fetchQuizAPI(payload);
@@ -193,7 +192,7 @@ async function loadUserProgress() {
   updateTopBar();
 
   if (user?.finished === true || solved.length >= TOTAL_ITEMS || attempts <= 0) {
-    endGame();
+    await endGame();
     return;
   }
 
@@ -214,14 +213,22 @@ function loadQuestionByIndex(index) {
   }
 }
 
-// ─── UPDATE DB ─────────────────────────────────────────
-async function updateDB({ extraUpdate = {}, decrementAttempt = false, markFinished=false } = {}) {
+async function updateDB({ extraUpdate = {}, decrementAttempt = false, markFinished = false } = {}) {
   const solvedNums = Array.isArray(solved)
     ? solved.map(x => Number.isFinite(Number(x)) ? Number(x) : x)
     : [];
 
-  const updateObj = { solved_ids: solvedNums, score: solvedNums.length, ...extraUpdate };
-  if(markFinished) updateObj.finished = true;
+  const base = {
+    score: solvedNums.length,
+    ...extraUpdate
+  };
+
+  const updateObj = {
+    ...(solvedNums.length > 0 ? { solved_ids: solvedNums } : {}),
+    ...base
+  };
+
+  if (markFinished) updateObj.finished = true;
 
   const payload = { email, update: updateObj, device_info: collectDeviceInfo() };
   if (decrementAttempt) payload.decrement_attempt = true;
@@ -304,10 +311,9 @@ function updateTopBar() {
   iqEl.innerText = solved.length===0 ? `IQ: N/A (Wechsler Scale)` : `IQ: ${iqVal} (Wechsler Scale)`;
 }
 
-// ─── END GAME ──────────────────────────────────────────
 async function endGame() {
   attempts = 0;
-  await updateDB({ markFinished:true });
+  await updateDB({ markFinished: true });
   showFinalResults();
 }
 
@@ -340,6 +346,7 @@ spatialCanvas.addEventListener("touchend", e=>{
 
 // ─── INITIAL LOAD ─────────────────────────────────────
 loadUserProgress();
+
 
 
 
