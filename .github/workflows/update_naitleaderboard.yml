@@ -1,4 +1,4 @@
-name: Update NAIT Leaderboard
+name: Update NAITOR Leaderboard
 
 on:
   schedule:
@@ -44,6 +44,7 @@ jobs:
             git commit -m "Auto-update leaderboard"
             git push
           fi
+
 
 
 
