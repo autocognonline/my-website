@@ -325,7 +325,7 @@ function showFinalResults() {
     <p><strong>Raw score:</strong> ${solved.length} / ${TOTAL_ITEMS}</p>
     <p><strong>Estimated IQ (Wechsler Scale):</strong> ${iq}</p>
     <p>Thank you for your participation in the project.</p>
-    <p>M.-A. Nydegger</p>
+    <p>M.N.</p>
   `;
 }
 
