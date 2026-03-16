@@ -2,31 +2,45 @@ from supabase import create_client
 import os
 import json
 
-# Load Supabase auth from environment
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_SERVICE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
-# Fetch leaderboard entries, sorted by score and attempts
+# Fetch leaderboard entries
 res = (
     supabase.table("online_data2")
-    .select("name, score, attempts")  # no iq field anymore
+    .select("name, score, solved_ids")
     .eq("leaderboard", True)
-    .order("score", desc=True)
-    .order("attempts", desc=True)  # tie-breaker
     .execute()
 )
 
-rows = res.data
+rows = res.data or []
 
 norm_file_bytes = supabase.storage.from_("public").download("questions2/normfr.json")
 norm_data = json.loads(norm_file_bytes.decode("utf-8"))
 
-# Function to get IQ from score using norm
 def score_to_iq(score):
     if score is None or score == 0:
         return "N/A"
-    return norm_data.get(str(score), "N/A")  # keys in JSON are strings
+    return norm_data.get(str(score), "N/A")
+
+def mean_solved_ids(solved_ids):
+    if not solved_ids:
+        return 0
+    return sum(solved_ids) / len(solved_ids)
+
+# Compute mean for each row
+for row in rows:
+    row["mean_solved"] = mean_solved_ids(row.get("solved_ids"))
+
+# Sort by score desc, then mean_solved desc
+rows.sort(
+    key=lambda r: (
+        -(r.get("score") or 0),
+        -(r.get("mean_solved") or 0),
+        (r.get("name") or "").lower()
+    )
+)
 
 # Build dynamic table rows
 rows_html = ""
