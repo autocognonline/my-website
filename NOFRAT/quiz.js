@@ -465,13 +465,21 @@ function showFinalResults() {
       const r = await fetch(UPDATE_USER_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, update: { leaderboard: wantLeaderboard } })
+        body: JSON.stringify({
+          email,
+          password,
+          update: { leaderboard: wantLeaderboard }
+        })
       });
+  
       if (r.ok) {
-        statusMsg.innerText = wantLeaderboard ? "Added to leaderboard!" : "Removed from leaderboard.";
+        statusMsg.innerText = wantLeaderboard
+          ? "Added to leaderboard!"
+          : "Removed from leaderboard.";
       } else {
         statusMsg.innerText = "Failed. Try again.";
       }
+  
     } catch {
       statusMsg.innerText = "Network error";
     }
@@ -526,7 +534,7 @@ saveUsernameBtn?.addEventListener("click", async (e) => {
     const res = await fetch(UPDATE_USER_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, update: { name: newName } })
+      body: JSON.stringify({  email,  password,  update: { name: newName }})
     });
 
     if (!res.ok) {
