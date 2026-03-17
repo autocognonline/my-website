@@ -5,53 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Statistics of NAIT</title>
   <style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
   body {
     font-family: Arial, sans-serif;
     background: #f9f9f9;
-    margin: 20px;
-    line-height: 1.5;
+    margin: 30px;
+    line-height: 1.6;
     text-align: center;
   }
 
   h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 36px;
+    margin-bottom: 30px;
   }
 
   h2 {
-    font-size: 1.5rem;
-    margin: 40px 0 20px;
+    font-size: 28px;
+    margin: 50px 0 25px;
   }
 
   p {
     max-width: 1280px;
     margin: 10px auto;
-    font-size: 1rem;
+    font-size: 18px;
     text-align: justify;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 
   a {
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 18px;
     color: #0070ba;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 
   .section {
-    margin: 40px auto;
+    margin: 50px auto;
     max-width: 1280px;
-    padding: 0 10px;
+    width: 100%;
   }
 
   .button {
     display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 6px;
+    padding: 12px 28px;
+    font-size: 20px;
+    border-radius: 8px;
     color: white;
     background-color: #0070ba;
     transition: background-color 0.3s ease;
     margin: 5px;
-    min-width: 140px;
+    min-width: 150px;
+    max-width: 100%;
   }
 
   .button:hover {
@@ -62,33 +76,45 @@
     border: none;
     height: 1px;
     background-color: #ccc;
-    margin: 40px auto;
+    margin: 60px auto;
     width: 80%;
+    max-width: 100%;
   }
 
   .table-container {
+    width: 100%;
+    max-width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 
   table {
     border-collapse: collapse;
+    border: 4px solid #000;
     width: 100%;
-    margin: auto;
-    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    margin-bottom: 40px;
+    background: #fff;
+  }
+
+  .table-container table {
+    min-width: 600px;
   }
 
   th, td {
-    border: 1px solid black; 
-    padding: 8px 12px;
+    border: 1px solid #ddd;
+    padding: 10px 16px;
     text-align: center;
+    font-size: 11px;
+    white-space: nowrap;
   }
 
   th {
     background-color: #0070ba;
     color: white;
-    font-size: 1rem;
+    font-size: 15px;
   }
 
   tr:hover {
@@ -96,39 +122,84 @@
   }
 
   caption {
-    font-size: 1.2rem;
+    font-size: 22px;
     font-weight: bold;
-    margin: 10px 0;
+    margin: 15px 0;
   }
 
-  .default-table table {
-    font-size: 1rem;
+  .default-table table,
+  .default-table table th,
+  .default-table table td {
+    font-size: 16px;
+    font-weight: normal;
   }
 
-  .thumbnail, img {
+  .default-table thead tr:first-child th {
+    font-weight: normal;
+    color: revert;
+    background-color: revert;
+  }
+
+  .thumbnail,
+  img,
+  iframe {
     max-width: 100%;
     height: auto;
+  }
+
+  .thumbnail,
+  img {
     border: 3px solid black;
     border-radius: 6px;
     cursor: zoom-in;
   }
 
   .candidates-header th {
-    background-color: #0070ba; 
+    background-color: #0070ba;
     color: white;
     font-size: 1.2rem;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     body {
-      margin: 10px;
+      margin: 12px;
     }
 
-    h1 { font-size: 1.5rem; }
-    h2 { font-size: 1.2rem; }
-    p { font-size: 0.9rem; }
-    th, td { font-size: 0.8rem; padding: 6px 8px; }
-    .button { font-size: 0.9rem; padding: 8px 16px; min-width: 100px; }
+    h1 {
+      font-size: 28px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin: 40px 0 20px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    a {
+      font-size: 16px;
+    }
+
+    .section {
+      margin: 30px auto;
+    }
+
+    .button {
+      width: 100%;
+      min-width: 0;
+      font-size: 18px;
+      padding: 12px 16px;
+    }
+
+    th, td {
+      padding: 8px 12px;
+    }
+
+    .table-container table {
+      min-width: 600px;
+    }
   }
 </style>
 <!-- Google tag (gtag.js) -->
@@ -260,10 +331,8 @@
       </table>
     </div>
 
-
-
     <div class="table-container" style="max-width: 1000px; margin: auto;">
-      <table class="candidates-header" style="width: 100%; border-collapse: collapse; text-align: left; font-family: Arial, sans-serif;">
+      <table class="candidates-header" style="text-align: left;">
         <thead>
           <tr>
             <th colspan="2">Candidates Statistics</th>
@@ -365,8 +434,8 @@
     </p>
   </div>
 
-  <div style="display: flex; justify-content: center;">
-  <table border="1" cellpadding="8" style="border-collapse: collapse; max-width: 700px; text-align: center; font-family: Arial, sans-serif;">
+  <div class="table-container">
+  <table style="max-width: 700px; margin: 0 auto;">
     <thead>
       <tr style="background-color: #0070ba; color: white;">
         <th>Test Name</th>
@@ -382,8 +451,8 @@
 </div>
 
     <h2>Correlations matrix between NAIT subtests</h2>
-    <div class="default-table" style="display: flex; justify-content: center; width: 100%;">
-        <table style="width: auto; max-width: 1000px;">
+      <div class="table-container default-table">
+        <table>
             <thead>
             <tr>
                 <th> </th>
@@ -402,8 +471,8 @@
         </div>
 
         <h2>NAIT subtests g-loadings (PCA)</h2>
-        <div class="default-table" style="display: flex; justify-content: center; width: 100%;">
-          <table style="width: auto; max-width: 1000px;">
+        <div class="table-container default-table">
+        <table>
               <tbody>
                       <tr><td>Verbal subtest</td><td>0.933</td></tr>
                       <tr><td>Numerical subtest</td><td>0.919</td></tr>
