@@ -11,6 +11,7 @@
       margin: 30px;
       text-align: center;
       line-height: 1.6;
+      color: #222;
     }
 
     h1 {
@@ -20,6 +21,14 @@
 
     h2 {
       margin-top: 60px;
+      color: #1f3b57;
+    }
+
+    h3 {
+      margin-top: 8px;
+      margin-bottom: 25px;
+      font-weight: normal;
+      color: #5a6b7b;
     }
 
     p {
@@ -80,22 +89,112 @@
     input[type="email"] {
       font-size: 18px;
       width: 280px;
-      height: 35px; 
-      padding: 8px 10px; 
+      height: 35px;
+      padding: 8px 10px;
       border: 1px solid #bbb;
       border-radius: 6px;
       margin: 8px;
     }
 
+    .norm-section {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .table-container {
+      width: 100%;
+      max-width: 760px;
+      margin: 25px auto 20px auto;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      background: #ffffff;
+      border: 1px solid #d7e0e8;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    }
+
     table {
       border-collapse: collapse;
       width: 100%;
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
+      background: #fff;
     }
 
     th, td {
-      border: 1px solid #ddd;
-      padding: 10px 16px;
+      padding: 12px 18px;
+      text-align: center;
+      font-size: 16px;
+      white-space: nowrap;
+      border-bottom: 1px solid #e6edf3;
+    }
+
+    th {
+      background: linear-gradient(180deg, #0070ba 0%, #005c99 100%);
+      color: white;
+      font-size: 16px;
+      letter-spacing: 0.2px;
+    }
+
+    /* vertical separator between columns */
+    th:first-child,
+    td:first-child {
+      border-right: 2px solid #c9d8e6;
+    }
+
+    /* clickable header row */
+    thead tr {
+      cursor: pointer;
+    }
+
+    thead tr:hover th {
+      background: linear-gradient(180deg, #0a7dca 0%, #0067a8 100%);
+    }
+
+    tbody tr:nth-child(even) td {
+      background-color: #f7fafd;
+    }
+
+    tbody tr:hover td {
+      background-color: #edf5fb;
+      transition: background-color 0.2s ease;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .collapsed-body {
+      display: none;
+    }
+
+    .norm-note {
+      max-width: 760px;
+      margin: 18px auto 0 auto;
+      padding: 14px 18px;
+      background: #eef4f8;
+      border-left: 5px solid #0070ba;
+      border-radius: 8px;
+      text-align: left;
+      font-size: 17px;
+    }
+
+    /* highlighted bold text blocks */
+    .highlight-box {
+      max-width: 1000px;
+      margin: 16px auto;
+      padding: 14px 18px;
+      background: #eef4f8;
+      border-left: 5px solid #0070ba;
+      border-radius: 8px;
+      text-align: left;
+      font-size: 18px;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+
+    .highlight-box.center {
       text-align: center;
     }
 
@@ -104,11 +203,8 @@
       margin-right: 8px;
       vertical-align: middle;
     }
-
-    tr:hover {
-      background-color: #f2f2f2;
-    }
   </style>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
   <script>
@@ -117,6 +213,7 @@
     gtag('js', new Date());
     gtag('config', 'G-3XHMB3NM73');
   </script>
+
   <link rel="icon" href="favicon.png">
 </head>
 <body>
@@ -125,36 +222,103 @@
   <div class="section" style="max-width: 1000px;">
     <p>SAITO is an untimed, computerized, high range cognitive test consisting of 30 items covering numerical, abstract, verbal, logical, and spatial reasoning. Item difficulty increases progressively throughout the test.</p>
 
-    <p>SAITO is intended both as a formal evaluation and as a demonstration test for individuals who are unfamiliar with high range cognitive tests or who wish to become familiar with the format before attempting the other tests available on this website. </p>
-      
-    <p>The overall difficulty is generally lower and the ceiling lower than in the other tests offered here.</p>
-    
-    <p>Candidates do not need to be authenticated to take SAITO; verifying an email address is sufficient.</p>
-    
-    <p>Results are displayed during the test (raw score and estimated standard score) and remain available after completion.</p>
-    
-    <p>SAITO follows the same general format and item style as NOACT and NOFRAT, but in a shorter and more condensed version.</p>
+    <p>SAITO is intended both as a formal evaluation and as a demonstration test for individuals who are unfamiliar with high range cognitive tests or who wish to become familiar with the format before attempting the other tests available on this website.</p>
 
-    <p><strong>Important: The test norms are currently estimated. Final standardized IQ scores may vary by more than 10 points!</strong> </p>
+    <p>The overall difficulty is generally lower and the ceiling lower than in the other tests offered here.</p>
+
+    <p>Candidates do not need to be authenticated to take SAITO; verifying an email address is sufficient.</p>
+
+    <p>Results are displayed during the test (raw score and estimated standard score) and remain available after completion.</p>
+
+    <p>SAITO follows the same general format and item style as NOACT and NOFRAT, but in a shorter and more condensed version.</p>
   </div>
 
   <hr>
 
   <div class="section" style="max-width: 1000px;">
     <p>Participation is free of charge. Please do not share or discuss test items with others. The use of AI tools to solve, analyze, or check answers is not permitted.</p>
-    <p><strong>Please do not retake the test using another email address, doing this is cheating and defeats the purpose of the assessment.</strong></p>
+
+    <div class="highlight-box">
+      Please do not retake the test using another email address, doing this is cheating and defeats the purpose of the assessment.
+    </div>
+
     <p>You may use calculators and dictionaries, including online versions.</p>
     <p>You can proceed to the test using the link below:</p>
     <a class="button" href="/SAITO/login.html">SAITO Login Page</a>
-    <p style="font-size: 24px;"><strong>If you are already authenticated, please log in using the authenticated email address !</strong> </p>
+
+    <div class="highlight-box center" style="margin-top: 20px;">
+      If you are already authenticated, please log in using the authenticated email address!
+    </div>
   </div>
-  
+
   <hr>
-  
+
+  <div class="norm-section">
+    <h2>SAITO - First preliminary norm</h2>
+    <h3>19 March 2026</h3>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr onclick="toggleNormTable()">
+            <th>Raw score</th>
+            <th>IQ score (Wechsler scale)</th>
+          </tr>
+        </thead>
+        <tbody id="normTableBody" class="collapsed-body">
+          <tr><td>0</td><td>100 or lower</td></tr>
+          <tr><td>1</td><td>101</td></tr>
+          <tr><td>2</td><td>103</td></tr>
+          <tr><td>3</td><td>107</td></tr>
+          <tr><td>4</td><td>108</td></tr>
+          <tr><td>5</td><td>110</td></tr>
+          <tr><td>6</td><td>113</td></tr>
+          <tr><td>7</td><td>115</td></tr>
+          <tr><td>8</td><td>117</td></tr>
+          <tr><td>9</td><td>119</td></tr>
+          <tr><td>10</td><td>122</td></tr>
+          <tr><td>11</td><td>125</td></tr>
+          <tr><td>12</td><td>127</td></tr>
+          <tr><td>13</td><td>130</td></tr>
+          <tr><td>14</td><td>132</td></tr>
+          <tr><td>15</td><td>135</td></tr>
+          <tr><td>16</td><td>138</td></tr>
+          <tr><td>17</td><td>139</td></tr>
+          <tr><td>18</td><td>141</td></tr>
+          <tr><td>19</td><td>143</td></tr>
+          <tr><td>20</td><td>144</td></tr>
+          <tr><td>21</td><td>146</td></tr>
+          <tr><td>22</td><td>147</td></tr>
+          <tr><td>23</td><td>149</td></tr>
+          <tr><td>24</td><td>151</td></tr>
+          <tr><td>25</td><td>153</td></tr>
+          <tr><td>26</td><td>155</td></tr>
+          <tr><td>27</td><td>158</td></tr>
+          <tr><td>28</td><td>162</td></tr>
+          <tr><td>29</td><td>163</td></tr>
+          <tr><td>30</td><td>164 or higher</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="norm-note">
+      <strong>Important:</strong> The test norms are computed based on a small sample size. Final standardized IQ scores may vary by a significant amount.
+    </div>
+  </div>
+
+  <hr>
+
   <div class="section">
     <a class="button" href="authProcedure.html">Authentication</a>
     <a class="button" href="stats.html">Statistics</a>
     <a class="button" href="index.html">Back to main page</a><br><br>
   </div>
+
+  <script>
+    function toggleNormTable() {
+      const tbody = document.getElementById('normTableBody');
+      tbody.classList.toggle('collapsed-body');
+    }
+  </script>
 </body>
 </html>
