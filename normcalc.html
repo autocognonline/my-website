@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Norm Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 30px;
+      text-align: center;
+      line-height: 1.6;
+      color: #222;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 16px;
+    }
+
+    p {
+      max-width: 1000px;
+      margin: 10px auto;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    a {
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .section {
+      max-width: 1000px;
+      margin: 50px auto;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 20px;
+      border-radius: 8px;
+      color: white;
+      background-color: #0070ba;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 5px;
+    }
+
+    .button:hover {
+      background-color: #005c99;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background-color: #ccc;
+      margin: 60px auto;
+      width: 80%;
+    }
+
+    .paypal-button {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 20px;
+      border-radius: 8px;
+      color: white;
+      background-color: #0070ba;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+      min-width: 180px;
+    }
+
+    .paypal-button:hover {
+      background-color: #005c99;
+    }
+
+    .card {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 24px;
+      background: #ffffff;
+      border: 1px solid #d7e0e8;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      text-align: left;
+    }
+
+    .note-box {
+      max-width: 1000px;
+      margin: 18px auto;
+      padding: 14px 18px;
+      background: #eef4f8;
+      border-left: 5px solid #0070ba;
+      border-radius: 8px;
+      text-align: left;
+      font-size: 17px;
+      box-sizing: border-box;
+    }
+
+    .example-block {
+      margin: 18px 0;
+      padding: 16px 18px;
+      background: #f7fafd;
+      border: 1px solid #d7e0e8;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #1f3b57;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .upload-card {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 28px 24px;
+      background: #ffffff;
+      border: 1px solid #d7e0e8;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    }
+
+    .file-input {
+      display: block;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto 18px auto;
+      padding: 12px;
+      font-size: 16px;
+      background: #f7fafd;
+      border: 1px solid #c9d8e6;
+      border-radius: 8px;
+      color: #333;
+      box-sizing: border-box;
+    }
+
+    .result-box {
+      max-width: 700px;
+      margin: 20px auto 0 auto;
+      padding: 14px 18px;
+      background: #eef4f8;
+      border-left: 5px solid #0070ba;
+      border-radius: 8px;
+      text-align: left;
+      font-size: 17px;
+      display: none;
+      box-sizing: border-box;
+    }
+
+    .result-box.error {
+      background: #fdeeee;
+      border-left-color: #c0392b;
+      color: #8a1f11;
+    }
+
+    .muted {
+      color: #5a6b7b;
+      text-align: center;
+      font-size: 17px;
+      margin-top: 8px;
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3XHMB3NM73');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+  <link rel="icon" href="favicon.png">
+</head>
+<body>
+  <h1>Norm Calculator</h1>
+
+  <div class="section">
+    <div class="card">
+      <p>This calculator allows you to compute norms for high range tests.</p>
+
+      <div class="note-box">
+        <strong>Minimum sample size:</strong> at least 20 candidates are required for the calculator to run properly.
+      </div>
+
+      <p>Please upload your data as a <strong>.json</strong> file formatted as an array of candidate response arrays.</p>
+
+      <div class="example-block">
+      [
+        [1, 1, 0, 1, 1, 1, 1, 1, 0],
+        [1, 0, 1, 1, 1, 1, 1, 1, 0],
+        [1, 1, 1, 0, 0, 1, 1, 1, 1]
+      ]</div>
+
+      <p>Each inner array represents one candidate. Each value represents the score obtained on one item:</p>
+      <p><strong>1</strong> = correct response, <strong>0</strong> = incorrect response.</p>
+      <p>Other values are not supported.</p>
+      <p>The first number corresponds to the first item, the second number to the second item, and so on. All candidate arrays must be enclosed within a single outer array.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="upload-card">
+      <h2>Upload data</h2>
+      <p class="muted">Select a JSON file and compute the norm.</p>
+
+      <form id="calc">
+        <input type="file" id="file" class="file-input" accept=".json,application/json" required />
+        <button type="submit" class="button">Compute norm</button>
+      </form>
+
+      <div id="result" class="result-box"></div>
+
+      <div style="margin-top: 14px;">
+        <button id="downloadXlsxBtn" class="button" style="display:none;">Download table (.xlsx)</button>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <p style="text-align:center;">If this calculator has been helpful, please consider supporting the project.</p>
+    <a href="https://paypal.me/OrbifoldAnswers?country.x=CH&locale.x=en_US" target="_blank" rel="noopener noreferrer" class="paypal-button">Donate with PayPal</a>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <a class="button" href="norms.html">Normalization information</a>
+    <a class="button" href="stats.html">Statistics</a>
+    <a class="button" href="index.html">Back to main page</a><br><br>
+  </div>
+
+  <script>
+    const form = document.getElementById("calc");
+    const fileInput = document.getElementById("file");
+    const resultBox = document.getElementById("result");
+    const downloadXlsxBtn = document.getElementById("downloadXlsxBtn");
+
+    let lastNormPayload = null;
+
+    function showMessage(message, isError = false) {
+      resultBox.style.display = "block";
+      resultBox.className = isError ? "result-box error" : "result-box";
+      resultBox.innerHTML = message;
+
+      if (isError) {
+        downloadXlsxBtn.style.display = "none";
+        lastNormPayload = null;
+      }
+    }
+
+    function isAllowedScore(value) {
+      return value === 0 || value === 1;
+    }
+
+    function validateNormData(data) {
+      if (!Array.isArray(data) || data.length === 0) {
+        throw new Error("The JSON file must contain a non-empty array of candidate responses.");
+      }
+
+      if (data.length < 20) {
+        throw new Error("The sample size is too small. At least 20 candidates are required.");
+      }
+
+      if (!Array.isArray(data[0]) || data[0].length === 0) {
+        throw new Error("Each candidate entry must be a non-empty array.");
+      }
+
+      const expectedLength = data[0].length;
+
+      for (let i = 0; i < data.length; i++) {
+        const row = data[i];
+
+        if (!Array.isArray(row)) {
+          throw new Error(`Candidate ${i + 1} is not formatted as an array.`);
+        }
+
+        if (row.length !== expectedLength) {
+          throw new Error(
+            `Candidate ${i + 1} has ${row.length} responses, but ${expectedLength} were expected. All arrays must have the same length.`
+          );
+        }
+
+        for (let j = 0; j < row.length; j++) {
+          const value = row[j];
+
+          if (typeof value !== "number" || !Number.isFinite(value)) {
+            throw new Error(
+              `Invalid value at candidate ${i + 1}, item ${j + 1}. All values must be numbers.`
+            );
+          }
+
+          if (!isAllowedScore(value)) {
+            throw new Error(
+              `Invalid value at candidate ${i + 1}, item ${j + 1}. Only 0 and 1 are allowed.`
+            );
+          }
+        }
+      }
+
+      return {
+        sampleSize: data.length,
+        items: expectedLength
+      };
+    }
+
+    function renderNormTable(payload) {
+      const rows = payload.normTable || [];
+
+      if (!rows.length) {
+        showMessage("No norm table was returned.", true);
+        return;
+      }
+
+      lastNormPayload = payload;
+      downloadXlsxBtn.style.display = "inline-block";
+
+      const html = `
+        <div style="margin-bottom:12px;">
+          <strong>Sample size:</strong> ${payload.sampleSize}<br>
+          <strong>Items:</strong> ${payload.items}<br>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; background:#fff;">
+            <thead>
+              <tr>
+                <th style="padding:10px 14px; background:#0070ba; color:#fff; border-bottom:1px solid #d7e0e8;">Raw score</th>
+                <th style="padding:10px 14px; background:#0070ba; color:#fff; border-bottom:1px solid #d7e0e8;">Standard score</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map((row, i) => `
+                <tr>
+                  <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">
+                    ${row.rawScore}
+                  </td>
+                  <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">
+                    ${row.standardScore === null ? "—" : row.standardScore}
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      showMessage(html, false);
+    }
+
+    function downloadNormTableXlsx() {
+      if (!lastNormPayload || !lastNormPayload.normTable || !lastNormPayload.normTable.length) {
+        return;
+      }
+
+      const exportRows = lastNormPayload.normTable.map(row => ({
+        "Raw score": row.rawScore,
+        "Standard score": row.standardScore
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(exportRows);
+      const workbook = XLSX.utils.book_new();
+
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Norm Table");
+
+      const originalName = fileInput.files[0]?.name?.replace(/\.[^/.]+$/, "") || "norm_table";
+      XLSX.writeFile(workbook, `${originalName}_norm_table.xlsx`);
+    }
+
+    downloadXlsxBtn.addEventListener("click", downloadNormTableXlsx);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const file = fileInput.files[0];
+      if (!file) {
+        showMessage("Please select a JSON file first.", true);
+        return;
+      }
+
+      showMessage("<strong>Processing...</strong> The norm is being computed.");
+
+      try {
+        const text = await file.text();
+        let data;
+
+        try {
+          data = JSON.parse(text);
+        } catch {
+          throw new Error("The selected file is not valid JSON.");
+        }
+
+        validateNormData(data);
+
+        const res = await fetch(
+          "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/norm_calc",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              data,
+              originalFileName: file.name
+            }),
+          }
+        );
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          throw new Error(result.error || "Server returned an error.");
+        }
+
+        renderNormTable(result);
+      } catch (err) {
+        console.error(err);
+        showMessage(err.message || "An unexpected error occurred.", true);
+      }
+    });
+  </script>
+</body>
+</html>
