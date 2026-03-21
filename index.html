@@ -45,12 +45,14 @@
       border-radius: 8px;
       color: white;
       background-color: #0070ba;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
       margin: 5px;
+      min-width: 150px;
     }
 
     .button:hover {
       background-color: #005c99;
+      transform: translateY(-1px);
     }
 
     hr {
@@ -59,22 +61,6 @@
       background-color: #ccc;
       margin: 60px auto;
       width: 80%;
-    }
-
-    .button, .paypal-button {
-      display: inline-block;
-      padding: 12px 28px;
-      font-size: 20px;
-      border-radius: 8px;
-      color: white;
-      background-color: #0070ba;
-      transition: background-color 0.3s ease;
-      margin: 5px;
-      min-width: 150px;
-    }
-
-    .button:hover, .paypal-button:hover {
-      background-color: #005c99;
     }
 
     table {
@@ -94,25 +80,60 @@
     }
 
     .test-row {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 15px;
-
-        max-width: 1000px;
-        margin: 0 auto 15px auto;
-
-        background: #eeeeee;      
-        border-radius: 10px;       
-        padding: 16px 18px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.08); 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      max-width: 1000px;
+      margin: 0 auto 15px auto;
+      background: #eeeeee;
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
     .test-row p {
-        margin: 0;
-        font-size: 18px;
-        text-align: left;
-        flex: 1;
+      margin: 0;
+      font-size: 18px;
+      text-align: left;
+      flex: 1;
+    }
+
+    .creator-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      max-width: 1000px;
+      margin: 0 auto 15px auto;
+      background: #eeeeee;
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .creator-link {
+      display: inline-block;
+      padding: 12px 24px;
+      min-width: 260px;
+      border-radius: 8px;
+      background: #0070ba;
+      color: white;
+      font-size: 19px;
+      text-align: center;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .creator-link:hover {
+      background: #005c99;
+      transform: translateY(-1px);
+    }
+
+    .creator-row p {
+      margin: 0;
+      font-size: 18px;
+      text-align: left;
+      flex: 1;
     }
 
     .news-container {
@@ -147,6 +168,7 @@
     .news-text {
       color: #444;
     }
+
     .form-container {
       max-width: 600px;
       margin: 20px auto 0 auto;
@@ -186,6 +208,7 @@
       text-align: center;
       margin-top: 20px;
     }
+
     .test-inline {
       display: flex;
       gap: 15px;
@@ -215,6 +238,7 @@
       height: auto;
       display: block;
     }
+
     .progress-bar {
       width: 100%;
       height: 20px;
@@ -227,52 +251,67 @@
       background: #0070ba;
       transition: width 1s linear;
     }
+
     @media (max-width: 768px) {
       html, body {
         margin: 0;
         padding: 15px;
         overflow-x: hidden;
       }
+
       * {
         box-sizing: border-box;
       }
+
       h1 {
         font-size: 26px;
       }
+
       h2 {
         font-size: 22px;
       }
+
       p {
         font-size: 16px;
         text-align: left;
       }
-      .test-row {
+
+      .test-row,
+      .creator-row {
         flex-direction: column;
-        align-items: center; 
+        align-items: center;
         text-align: left;
       }
-      .test-row p {
+
+      .test-row p,
+      .creator-row p {
         width: 100%;
         margin-top: 10px;
       }
-      .button, .paypal-button {
+
+      .button,
+      .creator-link,
+      .paypal-button {
         width: 90%;
         max-width: 320px;
         font-size: 18px;
         text-align: center;
+        min-width: unset;
       }
+
       .test-inline {
         flex-direction: column;
         gap: 10px;
       }
+
       .test-inline .score-group {
         max-width: 100%;
       }
+
       .news-container {
         height: auto;
         max-height: 250px;
       }
-    
     }
   </style>
 <!-- Google tag (gtag.js) -->
@@ -472,11 +511,30 @@
   <h2>Links to the work of other test creators </h2>
 
   <div class="section">
-    <a href="https://ivec.ultimaiq.net/" target="_blank">Tests by Ivan Ivec</a><br>
-    <a href="https://hriqtests.com/tests/" target="_blank">Tests by Theodosios Prousalis</a><br>
-    <a href="https://neurolus.com/" target="_blank">Tests by Matthew Scillitani</a><br>
-    <a href="https://highrangeiqtest.webnode.page/" target="_blank">Tests by Dawid Skrzos</a><br>
-    <a href="https://nsl36.netlify.app/sequels/all/" target="_blank">Tests by Andrei Udriște</a>
+    <div class="creator-row">
+      <a class="creator-link" href="https://ivec.ultimaiq.net/" target="_blank">Ultimaiq</a>
+      <p>Tests by Ivan Ivec.</p>
+    </div>
+
+    <div class="creator-row">
+      <a class="creator-link" href="https://hriqtests.com/tests/" target="_blank">HRIQtests</a>
+      <p>Tests by Theodosios Prousalis.</p>
+    </div>
+
+    <div class="creator-row">
+      <a class="creator-link" href="https://neurolus.com/" target="_blank">Neurolus</a>
+      <p>Tests by Matthew Scillitani.</p>
+    </div>
+
+    <div class="creator-row">
+      <a class="creator-link" href="https://highrangeiqtest.webnode.page/" target="_blank">HighRangeIQtest</a>
+      <p>Tests by Dawid Skrzos.</p>
+    </div>
+
+    <div class="creator-row">
+      <a class="creator-link" href="https://nsl36.netlify.app/sequels/all/" target="_blank">NSL36</a>
+      <p>Tests by Andrei Udriște.</p>
+    </div>
   </div>
   
   <hr>
