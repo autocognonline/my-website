@@ -24,9 +24,36 @@ def score_to_iq(score):
 
     return iq
 
+def compute_attempts_left(attempts):
+    """
+    attempts is expected to be a JSON array of numbers.
+    More attempts left is better:
+        attempts_left = 4*80 - sum(attempts)
+    """
+    if not attempts:
+        return 4 * 80
+
+    if isinstance(attempts, str):
+        try:
+            attempts = json.loads(attempts)
+        except Exception:
+            return 4 * 80
+
+    if not isinstance(attempts, list):
+        return 4 * 80
+
+    total_used = 0
+    for x in attempts:
+        try:
+            total_used += int(x)
+        except Exception:
+            pass
+
+    return 4 * 80 - total_used
+
 res = (
     supabase.table("data_naitor")
-    .select("name, score, contest, leaderboard")
+    .select("name, score, contest, leaderboard, attempts")
     .execute()
 )
 
@@ -37,7 +64,12 @@ contest_rows = [
     if r.get("contest") and r.get("name") and len(r["name"]) >= 2
 ]
 
-contest_rows.sort(key=lambda r: -(r.get("score") or 0))
+contest_rows.sort(
+    key=lambda r: (
+        -(r.get("score") or 0),
+        -compute_attempts_left(r.get("attempts"))
+    )
+)
 
 contest_rank_map = {
     r["name"]: i
@@ -52,20 +84,29 @@ for r in rows:
         continue
     if not r.get("leaderboard"):
         continue
+
     score = r.get("score") or 0
     iq = score_to_iq(score)
     if score == 80 and isinstance(iq, (int, float)):
         iq = f"≥ {iq}"
+
+    attempts_left = compute_attempts_left(r.get("attempts"))
     contest_rank = contest_rank_map.get(name, " ") if r.get("contest") else " "
 
     entries.append({
         "name": name,
         "score": score,
         "iq": iq,
-        "contest_rank": contest_rank
+        "contest_rank": contest_rank,
+        "attempts_left": attempts_left,
     })
 
-entries.sort(key=lambda r: -r["score"])
+entries.sort(
+    key=lambda r: (
+        -r["score"],
+        -r["attempts_left"]
+    )
+)
 
 rows_html = "\n".join(
     f"<tr><td>{i}</td>"
