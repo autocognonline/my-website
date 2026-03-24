@@ -252,6 +252,33 @@
       transition: width 1s linear;
     }
 
+    .intro-wrapper {
+      max-width: 1000px;
+      margin: 0 auto 20px auto;
+    }
+
+    .intro-toggle {
+      display: inline-block;
+      margin: 0 auto 15px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #0070ba;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .intro-toggle:hover {
+      background: #005c99;
+      transform: translateY(-1px);
+    }
+
+    .intro-content.collapsed {
+      display: none;
+    }
+
     @media (max-width: 768px) {
       html, body {
         margin: 0;
@@ -330,19 +357,26 @@
 </head>
 <body>
   <h1>Computerized high range cognitive tests</h1>
-  <div class="section" style="max-width: 1000px;">
-    <p>On this website, you will find experimental intelligence tests that I have created or co-authored.</p>
-    <p>This project began in 2009 and was active until 2015. It was revived in 2025 in a new format, featuring improved test items and updated scoring procedures.</p>
-    <p>The tests were developed based on prior item designs and experience derived from item analysis and are refined as additional data is collected. </p>
-    <p>Standard scores are estimated through statistical analysis and are adjusted as the dataset grows and norming methods improves.</p>
-    <p>These test are designed to be substantially more challenging than conventional IQ tests. With a higher measurement ceiling, they aim to assess exceptional cognitive levels. </p>
-    <p>Most tests require several hours to complete and are intended for motivated individuals who enjoy complex reasoning and difficult problem-solving tasks.</p>
-    <p>All tests here have no time limit. This power test design allows participants to focus entirely on reasoning processes rather than speed, and may therefore reduce the influence of factors such as age, fatigue, or temporary health conditions.</p>
-    <p>Unlike many high range IQ tests that require manual grading, all tests on this site use automated scoring. This allows results to be delivered immediately while ensuring consistent and objective evaluation.</p>
-    <p>Although these tests are not a substitute for professionally administered psychological assessments, they may serve as an exploratory tool for individuals interested in evaluating their cognitive ability.</p>
-    <p>Scores should be interpreted as estimates rather than definitive measures of intelligence until sufficient data has been collected and the validity becomes apparent.</p>
-    <p>The tests are intended for individuals aged 16 and older.</p>
-    <p>Whether you are seeking an intellectual challenge, pursuing a hobby, or simply curious about your cognitive abilities, all tests on this website are available free of charge.</p>
+
+  <div class="intro-wrapper" id="introWrapper">
+    <button id="introToggle" class="intro-toggle" type="button" aria-expanded="true">
+      Hide introduction
+    </button>
+
+    <div class="section intro-content" id="introContent" style="max-width: 1000px;">
+      <p>On this website, you will find experimental intelligence tests that I have created or co-authored.</p>
+      <p>This project began in 2009 and was active until 2015. It was revived in 2025 in a new format, featuring improved test items and updated scoring procedures.</p>
+      <p>The tests were developed based on prior item designs and experience derived from item analysis and are refined as additional data is collected.</p>
+      <p>Standard scores are estimated through statistical analysis and are adjusted as the dataset grows and norming methods improves.</p>
+      <p>These test are designed to be substantially more challenging than conventional IQ tests. With a higher measurement ceiling, they aim to assess exceptional cognitive levels.</p>
+      <p>Most tests require several hours to complete and are intended for motivated individuals who enjoy complex reasoning and difficult problem-solving tasks.</p>
+      <p>All tests here have no time limit. This power test design allows participants to focus entirely on reasoning processes rather than speed, and may therefore reduce the influence of factors such as age, fatigue, or temporary health conditions.</p>
+      <p>Unlike many high range IQ tests that require manual grading, all tests on this site use automated scoring. This allows results to be delivered immediately while ensuring consistent and objective evaluation.</p>
+      <p>Although these tests are not a substitute for professionally administered psychological assessments, they may serve as an exploratory tool for individuals interested in evaluating their cognitive ability.</p>
+      <p>Scores should be interpreted as estimates rather than definitive measures of intelligence until sufficient data has been collected and the validity becomes apparent.</p>
+      <p>The tests are intended for individuals aged 16 and older.</p>
+      <p>Whether you are seeking an intellectual challenge, pursuing a hobby, or simply curious about your cognitive abilities, all tests on this website are available free of charge.</p>
+    </div>
   </div>
 
   <h2>News</h2>
@@ -653,6 +687,36 @@
   
     updateSlideshow();
     setInterval(updateSlideshow, 500);
+  </script>
+  <script>
+    (function () {
+      const introContent = document.getElementById('introContent');
+      const introToggle = document.getElementById('introToggle');
+
+      const hasVisitedBefore = localStorage.getItem('visitedBefore') === 'true';
+
+      // Collapse automatically for returning visitors
+      if (hasVisitedBefore) {
+        introContent.classList.add('collapsed');
+        introToggle.textContent = 'Show introduction';
+        introToggle.setAttribute('aria-expanded', 'false');
+      } else {
+        // Mark first-time visitor for future visits
+        localStorage.setItem('visitedBefore', 'true');
+      }
+
+      introToggle.addEventListener('click', function () {
+        const isCollapsed = introContent.classList.toggle('collapsed');
+
+        if (isCollapsed) {
+          introToggle.textContent = 'Show introduction';
+          introToggle.setAttribute('aria-expanded', 'false');
+        } else {
+          introToggle.textContent = 'Hide introduction';
+          introToggle.setAttribute('aria-expanded', 'true');
+        }
+      });
+    })();
   </script>
 </body>
 </html>
