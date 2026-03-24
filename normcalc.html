@@ -190,7 +190,7 @@
       <p>This calculator allows you to compute norms for high range tests.</p>
 
       <div class="note-box">
-        <strong>Minimum sample size:</strong> at least 20 candidates are required for the calculator to run properly.
+        <strong>Minimum sample size:</strong> at least 25 candidates are required for the calculator to run properly.
       </div>
 
       <p>Please upload your data as a <strong>.json</strong> file formatted as an array of candidate response arrays.</p>
@@ -272,8 +272,8 @@
         throw new Error("The JSON file must contain a non-empty array of candidate responses.");
       }
 
-      if (data.length < 20) {
-        throw new Error("The sample size is too small. At least 20 candidates are required.");
+      if (data.length < 25) {
+        throw new Error("The sample size is too small. At least 25 candidates are required.");
       }
 
       if (!Array.isArray(data[0]) || data[0].length === 0) {
