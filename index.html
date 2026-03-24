@@ -692,19 +692,15 @@
     (function () {
       const introContent = document.getElementById('introContent');
       const introToggle = document.getElementById('introToggle');
-
       const hasVisitedBefore = localStorage.getItem('visitedBefore') === 'true';
 
-      // Collapse automatically for returning visitors
       if (hasVisitedBefore) {
         introContent.classList.add('collapsed');
         introToggle.textContent = 'Show introduction';
         introToggle.setAttribute('aria-expanded', 'false');
       } else {
-        // Mark first-time visitor for future visits
         localStorage.setItem('visitedBefore', 'true');
       }
-
       introToggle.addEventListener('click', function () {
         const isCollapsed = introContent.classList.toggle('collapsed');
 
