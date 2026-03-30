@@ -71,38 +71,24 @@
     .button:hover, .paypal-button:hover {
       background-color: #005c99;
     }
-    .thumbnail {
+
+    .highlight-box {
       max-width: 1000px;
-      width: 100%;
-      height: auto;
-      border: 3px solid black;
+      margin: 16px auto;
+      padding: 14px 18px;
+      background: #eef4f8;
+      border-left: 5px solid #0070ba;
       border-radius: 8px;
-      cursor: zoom-in;
+      text-align: left;
+      font-size: 18px;
+      font-weight: bold;
+      box-sizing: border-box;
     }
 
-    .lightbox {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      align-items: center;
-      justify-content: center;
+    .highlight-box.center {
+      text-align: center;
     }
 
-    .lightbox img {
-      max-width: 95%;
-      max-height: 95%;
-      object-fit: contain;
-    }
-
-    .lightbox:target {
-      display: flex;
-      cursor: zoom-out;
-    }
     @media (max-width: 700px) {
       body {
         margin: 15px;
@@ -157,9 +143,12 @@
 
     <p>While not a replacement for professionally administered psychological evaluations, the NAITOR is intended as a complementary tool for exploring cognitive ability.</p>
 
-    <p><strong>Note:</strong> For candidates who had already started or finished the NAIT, your progress has been carried over to the NAITOR, and any certificates remain valid.</p>
-
-    <p><strong>Contest:</strong> Candidates who joined the NAIT contest, are automatically registered to the NAITOR contest.</p>
+    <div class="highlight-box center" style="margin-top: 20px;">
+      For candidates who had already started or finished the NAIT, your progress has been carried over to the NAITOR, and any certificates remain valid.
+    </div>
+    <div class="highlight-box center" style="margin-top: 20px;">
+      Candidates who joined the NAIT contest, are automatically registered to the NAITOR contest.
+    </div>
   </div>
   
   <hr>
