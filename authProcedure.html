@@ -5,26 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Authentication</title>
   <style>
+    :root {
+      --bg: #f7f7f5;
+      --card: #ffffff;
+      --text: #171717;
+      --muted: #5f5f5f;
+      --line: #d9d9d4;
+      --accent: #0070ba;
+      --accent-hover: #005c99;
+      --shadow: 0 12px 34px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      margin: 30px;
-      text-align: center;
-      line-height: 1.6;
+      background: var(--bg);
+      margin: 0;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
     }
 
     h1 {
-      font-size: 36px;
-      margin-bottom: 30px;
+      font-size: 42px;
+      margin: 10px 0 24px;
+      text-align: center;
+      letter-spacing: 0.2px;
     }
 
     h2 {
-      margin-top: 60px;
+      margin: 0 0 20px;
+      text-align: center;
+      font-size: 28px;
+    }
+
+    h3 {
+      margin: 0 0 18px;
+      font-size: 22px;
+      text-align: left;
     }
 
     p {
-      max-width: 1000px;
-      margin: 10px auto;
+      margin: 10px 0;
       font-size: 18px;
       text-align: justify;
     }
@@ -32,97 +63,485 @@
     a {
       text-decoration: none;
       font-size: 18px;
+      color: inherit;
     }
 
-    .section {
-      margin: 50px auto;
+    .intro,
+    .notice,
+    .summary-box,
+    .form-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      margin: 28px auto;
     }
 
-    .button {
+    .intro,
+    .notice,
+    .summary-box,
+    .form-card {
+      max-width: 1000px;
+    }
+
+    .intro p:first-child {
+      margin-top: 0;
+    }
+
+    .lead {
+      font-size: 19px;
+    }
+
+    .emphasis {
+      font-weight: bold;
+    }
+
+    .button,
+    .paypal-button,
+    .submit-button {
       display: inline-block;
-      padding: 12px 28px;
-      font-size: 20px;
-      border-radius: 8px;
+      padding: 14px 30px;
+      font-size: 18px;
+      border-radius: 10px;
       color: white;
-      background-color: #0070ba;
-      transition: background-color 0.3s ease;
-      margin: 5px;
+      background-color: var(--accent);
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.25s ease, transform 0.15s ease;
+      min-width: 180px;
+      text-align: center;
     }
 
-    .button:hover {
-      background-color: #005c99;
+    .button:hover,
+    .paypal-button:hover,
+    .submit-button:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .actions {
+      text-align: center;
+      margin: 24px 0 10px;
+    }
+
+    .paypal-wrap {
+      text-align: center;
+      margin: 12px 0 34px;
+    }
+
+    .form-card {
+      text-align: left;
+    }
+
+    .form-intro {
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 17px;
+      text-align: left;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select,
+    input[type="file"] {
+      width: 100%;
+      font-size: 16px;
+      padding: 12px 14px;
+      border: 1px solid #cfcfc9;
+      border-radius: 10px;
+      background: #fff;
+      color: var(--text);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="file"] {
+      padding: 10px 12px;
+      background: #fcfcfb;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    select:focus,
+    input[type="file"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 112, 186, 0.12);
+    }
+
+    .hint {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    .rule-box {
+      background: #f4f8fb;
+      border: 1px solid #d7e7f5;
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 10px 0 24px;
+    }
+
+    .rule-box p {
+      margin: 6px 0;
+      font-size: 16px;
+      text-align: left;
+    }
+
+    .status {
+      margin-top: 18px;
+      font-size: 16px;
+      text-align: center;
+      min-height: 24px;
+      font-weight: bold;
+    }
+
+    .status.success {
+      color: #147a38;
+    }
+
+    .status.error {
+      color: #b42318;
+    }
+
+    .status.loading {
+      color: #444;
+    }
+
+    .image-wrap {
+      text-align: center;
+      margin: 24px 0 10px;
+    }
+
+    .image-wrap img {
+      max-width: 600px;
+      width: 100%;
+      border: 2px solid black;
+      border-radius: 8px;
+      display: inline-block;
     }
 
     hr {
       border: none;
       height: 1px;
       background-color: #ccc;
-      margin: 60px auto;
+      margin: 60px auto 30px;
       width: 80%;
     }
 
-    .button, .paypal-button {
-      display: inline-block;
-      padding: 12px 28px;
-      font-size: 20px;
-      border-radius: 8px;
-      color: white;
-      background-color: #0070ba;
-      transition: background-color 0.3s ease;
-      margin: 5px;
-      min-width: 150px;
+    .footer-actions {
+      text-align: center;
+      margin-top: 14px;
     }
 
-    .button:hover, .paypal-button:hover {
-      background-color: #005c99;
+    .inline-form {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .inline-form input {
+      height: 48px;
+    }
+
+    .inline-form button {
+      height: 48px;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .inline-form input {
+      flex: 1;
+    }
+
+    @media (max-width: 780px) {
+      body {
+        margin: 0;
+      }
+
+      .page {
+        padding: 28px 14px 50px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 17px;
+      }
+
+      .intro,
+      .notice,
+      .summary-box,
+      .form-card {
+        padding: 22px 18px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button,
+      .paypal-button,
+      .submit-button {
+        width: 100%;
+        max-width: 320px;
+      }
     }
   </style>
   <link rel="icon" href="favicon.png">
 </head>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-3XHMB3NM73');
 </script>
+
 <body>
-  <h1>Authentication Procedure</h1>
+  <div class="page">
+    <h1>Authentication Procedure</h1>
 
-  <div class="section" style="max-width: 1000px;">
-    <p>To verify your identity, please follow the steps below:</p>
-    <p>All new users must submit a valid identity document (ID, passport, driving license), by sending it directly to this <a href="mailto:orbifoldanswers@ikmail.com" target="_blank">email address</a>.   </p>
-    <p>Your full name and date of birth must be clearly visible on the document.</p>
-    <p>If you are a member of the Glia Society and joined before 2024, this information is sufficient. If you are not a member, the document must also include a visible photograph of your face.</p>
-    <p>In addition, you must submit a recent photograph of yourself. This is required to confirm that the person submitting the information is the same individual named on the identity document.</p>
-    <p>If you prefer not to submit a facial photograph, a one-time fee of 50 CHF must be paid using the PayPal button below.</p>
+    <div class="intro">
+      <p class="lead">To verify your identity, please follow the steps below:</p>
+      <p>All new users must submit a valid identity document (ID, passport, driving license) using the form below.</p>
+      <p>Your full name and date of birth must be clearly visible on the document.</p>
+      <p>If you are a member of the Glia Society and joined before 2024, this information is sufficient. If you are not a member, the document must also include a visible photograph of your face.</p>
+      <p>In addition, you must submit a recent photograph of yourself. This is required to confirm that the person submitting the information is the same individual named on the identity document.</p>
+      <p>If you prefer not to submit a facial photograph, a one-time fee of 50 CHF must be paid using the PayPal button below.</p>
+    </div>
+
+    <div class="paypal-wrap">
+      <a href="https://paypal.me/OrbifoldAnswers?country.x=CH&locale.x=en_US" target="_blank" rel="noopener noreferrer" class="paypal-button">Pay with PayPal</a>
+    </div>
+
+    <section class="form-card">
+      <h3>Verification form</h3>
+      <p class="form-intro">Please complete all required fields and upload clear, readable files.</p>
+
+      <div class="rule-box">
+        <p>Accepted identity document formats: JPG, JPEG, PNG, PDF.</p>
+        <p>Accepted selfie formats: JPG, JPEG, PNG.</p>
+      </div>
+
+      <form id="verification-form" enctype="multipart/form-data">
+        <div class="form-grid">
+          <div class="field">
+            <label for="full_name">Full name</label>
+            <input id="full_name" type="text" name="full_name" required />
+          </div>
+
+          <div class="field">
+            <label for="date_of_birth">Date of birth</label>
+            <input id="date_of_birth" type="date" name="date_of_birth" required />
+          </div>
+
+          <div class="field">
+            <label for="is_glia_member">Are you a member of the Glia Society and joined before 2024?</label>
+            <select id="is_glia_member" name="is_glia_member" required>
+              <option value="">Select</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="identity_document">Identity document</label>
+            <input
+              id="identity_document"
+              type="file"
+              name="identity_document"
+              accept=".jpg,.jpeg,.png,.pdf"
+              required
+            />
+            <div class="hint">Upload a clear document showing your full name and date of birth.</div>
+          </div>
+
+          <div class="field full">
+            <label for="selfie_photo">Recent photograph of yourself</label>
+            <input
+              id="selfie_photo"
+              type="file"
+              name="selfie_photo"
+              accept=".jpg,.jpeg,.png"
+            />
+            <div class="hint">
+              Required unless you choose the 50 CHF PayPal alternative below.
+            </div>
+          </div>
+
+          <div class="field full actions">
+            <button class="submit-button" type="submit">Submit verification</button>
+            <p id="form-status" class="status"></p>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <div class="notice">
+      <p class="emphasis">This information is collected to prevent individuals from retaking tests under a false identity. It will not be shared with any third party unless there is a strong reason to suspect fraudulent activity.</p>
+    </div>
+
+    <div class="summary-box">
+      <h2><strong>Procedure visual summary</strong></h2>
+
+      <div class="image-wrap">
+        <img src="auth.png" alt="Authentication procedure summary">
+      </div>
+
+      <p><strong>Under normal circumstances, authentication is completed within 3 days (typically within 1 business day). During vacation periods, processing may take up to 7 days.</strong></p>
+      <p><strong>Authentication might be rejected if fraudulent activity is suspected even if all the requested data has been provided.</strong></p>
+    </div>
+
+    <hr>
+
+  <section class="form-card" style="max-width: 700px;">
+    <h3>Authentication check</h3>
+
+    
+
+    <form id="email-check-form">
+      <div class="field full">
+        <label for="check_email">Email address</label>
+
+        <div class="inline-form">
+          <input
+            id="check_email"
+            type="email"
+            name="email"
+            placeholder="name@example.com"
+            required
+            autocomplete="email"
+          />
+
+          <button class="submit-button" type="submit">Check</button>
+        </div>
+      </div>
+      <p id="email-check-status" class="status"></p>
+    </form>
+  </section>
+
+    <hr>
+
+    <div class="footer-actions">
+      <a class="button" href="index.html">Back to main page</a>
+    </div>
+
   </div>
 
+  <script>
+    const form = document.getElementById("verification-form");
+    const statusEl = document.getElementById("form-status");
 
-  <a href="https://paypal.me/OrbifoldAnswers?country.x=CH&locale.x=en_US" target="_blank" rel="noopener noreferrer" class="paypal-button">Pay with PayPal</a>
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-  <div class="section" style="max-width: 1000px;">
-    <p><strong>This information is collected to prevent individuals from retaking tests under a false identity. It will not be shared with any third party unless there is a strong reason to suspect fraudulent activity.</strong></p>
-  </div>
+      statusEl.textContent = "Submitting...";
+      statusEl.className = "status loading";
 
-  <h2 style="text-align: center;"><strong>Procedure visual summary</strong></h2>
+      const formData = new FormData(form);
 
-  <img src="auth.png"
-     alt="Auth"
-     style="max-width: 600px; width: 30%;
-            border: 2px solid black;
-            border-radius: 6px;">
+      try {
+        const response = await fetch(
+          "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/submit-verification",
+          {
+            method: "POST",
+            body: formData
+          }
+        );
 
-  <div class="section" style="max-width: 1000px;">
-    <p><strong>Under normal circumstances, authentication is completed within 3 days (typically within 1 business day). During vacation periods, processing may take up to 7 days.</strong></p>
-    <p><strong>Authentication might be rejected if fraudulent activity is suspected even if all the data requested as been provided. </strong></p>
-  </div>
-  <hr>
+        const data = await response.json();
 
-  <div class="section">
-    <a class="button" href="index.html" >Back to main page</a><br><br>
-  </div>
+        if (!response.ok) {
+          throw new Error(data.error || "Submission failed");
+        }
+
+        statusEl.textContent = "Verification submitted successfully.";
+        statusEl.className = "status success";
+        form.reset();
+      } catch (err) {
+        statusEl.textContent = err.message || "An unexpected error occurred.";
+        statusEl.className = "status error";
+      }
+    });
+  </script>
+  <script>
+    const emailCheckForm = document.getElementById("email-check-form");
+    const emailCheckStatus = document.getElementById("email-check-status");
+
+    emailCheckForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      emailCheckStatus.textContent = "Checking...";
+      emailCheckStatus.className = "status loading";
+
+      const formData = new FormData(emailCheckForm);
+      const email = String(formData.get("email") || "").trim();
+
+      try {
+        const response = await fetch(
+          "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/check-auth-email",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email })
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Check failed");
+        }
+
+        if (data.authorized === true) {
+          emailCheckStatus.textContent = "This email is authorized.";
+          emailCheckStatus.className = "status success";
+        } else {
+          emailCheckStatus.textContent = "This email is not authorized.";
+          emailCheckStatus.className = "status error";
+        }
+      } catch (err) {
+        emailCheckStatus.textContent = err.message || "An unexpected error occurred.";
+        emailCheckStatus.className = "status error";
+      }
+    });
+  </script>
 </body>
 </html>
