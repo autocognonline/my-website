@@ -531,12 +531,16 @@
   </div>
 
   <hr>
-  <h2>Privacy Policy and Legal Disclaimer</h2>
+  <h2>Policies and Procedures</h2>
 
   <div class="section">
     <div class="test-row">
-          <a class="button" href="PPLD.html">View Policy</a>
+          <a class="button" href="PPLD.html">Privacy Policy and Legal Disclaimer</a>
           <p>Information about how personal data is collected and used, as well as the terms, limitations, and conditions governing the use of this platform.</p>
+    </div>
+    <div class="test-row">
+          <a class="button" href="authProcedure.html">Authentication Procedure</a>
+          <p>Procedure for identity verification required to access the tests.</p>
     </div>
   </div>
   
@@ -573,7 +577,7 @@
   
   <hr>
 
-  <p style="text-align: left; font-size:0.9em; font-style:italic;">Project by Marc-André Nydegger 2025-2026</p>
+  <p style="text-align: left; font-size:0.9em; font-style:italic;">Project by M.-A. Nydegger 2025-2026</p>
 
   <script>
     fetch("news.txt")
@@ -692,15 +696,19 @@
     (function () {
       const introContent = document.getElementById('introContent');
       const introToggle = document.getElementById('introToggle');
+
       const hasVisitedBefore = localStorage.getItem('visitedBefore') === 'true';
 
+      // Collapse automatically for returning visitors
       if (hasVisitedBefore) {
         introContent.classList.add('collapsed');
         introToggle.textContent = 'Show introduction';
         introToggle.setAttribute('aria-expanded', 'false');
       } else {
+        // Mark first-time visitor for future visits
         localStorage.setItem('visitedBefore', 'true');
       }
+
       introToggle.addEventListener('click', function () {
         const isCollapsed = introContent.classList.toggle('collapsed');
 
