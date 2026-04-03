@@ -2,7 +2,7 @@ name: Update NOFRAT Leaderboard
 
 on:
   schedule:
-    - cron: "0 0 */5 * *"
+    - cron: "0 0 */15 * *"
   workflow_dispatch:      # manual run button
 
 permissions:
