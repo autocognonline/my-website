@@ -156,6 +156,10 @@
       grid-column: 1 / -1;
     }
 
+    .hidden {
+      display: none;
+    }
+
     label {
       display: block;
       font-size: 16px;
@@ -164,6 +168,7 @@
     }
 
     input[type="text"],
+    input[type="email"],
     input[type="date"],
     select,
     input[type="file"] {
@@ -183,6 +188,7 @@
     }
 
     input[type="text"]:focus,
+    input[type="email"]:focus,
     input[type="date"]:focus,
     select:focus,
     input[type="file"]:focus {
@@ -265,6 +271,7 @@
     }
 
     .inline-form input {
+      flex: 1;
       height: 48px;
     }
 
@@ -274,10 +281,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .inline-form input {
-      flex: 1;
     }
 
     @media (max-width: 780px) {
@@ -317,6 +320,15 @@
       .submit-button {
         width: 100%;
         max-width: 320px;
+      }
+
+      .inline-form {
+        flex-direction: column;
+      }
+
+      .inline-form button {
+        width: 100%;
+        max-width: none;
       }
     }
   </style>
@@ -366,16 +378,20 @@
           </div>
 
           <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" type="email" name="email" required autocomplete="email" />
+          </div>
+
+          <div class="field">
             <label for="date_of_birth">Date of birth</label>
             <input id="date_of_birth" type="date" name="date_of_birth" required />
           </div>
 
           <div class="field">
-            <label for="is_glia_member">Are you a member of the Glia Society and joined before 2024?</label>
+            <label for="is_glia_member">Did you join the Glia Society before 2024 ?</label>
             <select id="is_glia_member" name="is_glia_member" required>
-              <option value="">Select</option>
-              <option value="true">Yes</option>
               <option value="false">No</option>
+              <option value="true">Yes</option>
             </select>
           </div>
 
@@ -388,10 +404,12 @@
               accept=".jpg,.jpeg,.png,.pdf"
               required
             />
-            <div class="hint">Upload a clear document showing your full name, date of birth and face if no fee is paid.</div>
+            <div class="hint" id="identity-document-hint">
+              Upload a clear document showing your full name, date of birth and face if no fee is paid.
+            </div>
           </div>
 
-          <div class="field full">
+          <div class="field full" id="selfie-field">
             <label for="selfie_photo">Recent photograph of yourself</label>
             <input
               id="selfie_photo"
@@ -429,43 +447,62 @@
 
     <hr>
 
-  <section class="form-card" style="max-width: 700px;">
-    <h3>Authentication check</h3>
+    <section class="form-card" style="max-width: 700px;">
+      <h3>Authentication check</h3>
 
-    
+      <form id="email-check-form">
+        <div class="field full">
+          <label for="check_email">Email address</label>
 
-    <form id="email-check-form">
-      <div class="field full">
-        <label for="check_email">Email address</label>
+          <div class="inline-form">
+            <input
+              id="check_email"
+              type="email"
+              name="email"
+              placeholder="name@example.com"
+              required
+              autocomplete="email"
+            />
 
-        <div class="inline-form">
-          <input
-            id="check_email"
-            type="email"
-            name="email"
-            placeholder="name@example.com"
-            required
-            autocomplete="email"
-          />
-
-          <button class="submit-button" type="submit">Check</button>
+            <button class="submit-button" type="submit">Check</button>
+          </div>
         </div>
-      </div>
-      <p id="email-check-status" class="status"></p>
-    </form>
-  </section>
+        <p id="email-check-status" class="status"></p>
+      </form>
+    </section>
 
     <hr>
 
     <div class="footer-actions">
       <a class="button" href="index.html">Back to main page</a>
     </div>
-
   </div>
 
   <script>
     const form = document.getElementById("verification-form");
     const statusEl = document.getElementById("form-status");
+    const memberSelect = document.getElementById("is_glia_member");
+    const selfieField = document.getElementById("selfie-field");
+    const selfieInput = document.getElementById("selfie_photo");
+    const identityDocumentHint = document.getElementById("identity-document-hint");
+
+    function updateVerificationForm() {
+      const isMember = memberSelect.value === "true";
+
+      if (isMember) {
+        selfieField.classList.add("hidden");
+        selfieInput.value = "";
+        identityDocumentHint.textContent =
+          "Upload a clear document showing your full name and date of birth.";
+      } else {
+        selfieField.classList.remove("hidden");
+        identityDocumentHint.textContent =
+          "Upload a clear document showing your full name, date of birth and face if no fee is paid.";
+      }
+    }
+
+    memberSelect.addEventListener("change", updateVerificationForm);
+    updateVerificationForm();
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -493,12 +530,14 @@
         statusEl.textContent = "Verification submitted successfully.";
         statusEl.className = "status success";
         form.reset();
+        updateVerificationForm();
       } catch (err) {
         statusEl.textContent = err.message || "An unexpected error occurred.";
         statusEl.className = "status error";
       }
     });
   </script>
+
   <script>
     const emailCheckForm = document.getElementById("email-check-form");
     const emailCheckStatus = document.getElementById("email-check-status");
