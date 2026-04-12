@@ -3,40 +3,59 @@ const GET_ANSWER_URL  = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/g
 const GET_ASSET_URL   = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_noctae_asset";
 
 const TOTAL_ITEMS = 48;
-const TOTAL_ATTEMPTS = 3; // attempts per item
-const FALLBACK_TOTAL_TIME_SECONDS = 6 * 3600; //total time in seconds
+const TOTAL_ATTEMPTS = 3;
+const FALLBACK_TOTAL_TIME_SECONDS = 6 * 3600;
 const SPATIAL_ITEMS = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48];
-const TWO_ANSWERS = [7, 10, 13, 23, 34, 38]; // items that must have two answers provided by the user
-const scoreEl       = document.getElementById("scoreEl");
-const attemptsEl    = document.getElementById("attemptsEl");
-const questionImg   = document.getElementById("questionImg");
-const submitBtn     = document.getElementById("submitBtn");
-const prevBtn       = document.getElementById("prevBtn");
-const nextBtn       = document.getElementById("nextBtn");
-const finishBtn     = document.getElementById("finishBtn");
+const TWO_ANSWERS = [7, 10, 13, 23, 34, 38];
+
+const scoreEl = document.getElementById("scoreEl");
+const attemptsEl = document.getElementById("attemptsEl");
+const questionImg = document.getElementById("questionImg");
+const submitBtn = document.getElementById("submitBtn");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const finishBtn = document.getElementById("finishBtn");
 const spatialContainer = document.getElementById("spatialContainer");
 const spatialCanvas = document.getElementById("spatialCanvas");
 const rowsInput = document.getElementById("rowsInput");
 const colsInput = document.getElementById("colsInput");
 const resetCanvasBtn = document.getElementById("resetCanvasBtn");
+const timerEl = document.getElementById("timerEl");
 
 const CELL_SIZE = 40;
-const timerEl = document.getElementById("timerEl");
+
 let timerInterval = null;
 let testStartIso = null;
 let remainingSeconds = FALLBACK_TOTAL_TIME_SECONDS;
 let darkMode = localStorage.getItem("noctae_dark_mode") === "true";
 let currentQuestionObjectUrl = null;
 
+let email = localStorage.getItem("email");
+let username = localStorage.getItem("username") || "";
+let password = sessionStorage.getItem("password");
+
+if (!email || !password) {
+  window.location.href = "login.html";
+  throw new Error("Missing login data");
+}
+
+let solved = [];
+let attempts = Array(TOTAL_ITEMS).fill(TOTAL_ATTEMPTS);
+let currentIndex = 0;
+let normoCache = null;
 let spatialGrid = [];
+
+/* -------------------- Spatial grid -------------------- */
+
 function initSpatialGrid(rows, cols) {
   spatialGrid = Array.from({ length: rows }, () =>
     Array.from({ length: cols }, () => 0)
   );
-  spatialCanvas.width  = cols * CELL_SIZE;
+  spatialCanvas.width = cols * CELL_SIZE;
   spatialCanvas.height = rows * CELL_SIZE;
   drawSpatialGrid();
 }
+
 function drawSpatialGrid() {
   if (!spatialGrid.length || !spatialGrid[0]?.length) return;
 
@@ -56,49 +75,66 @@ function drawSpatialGrid() {
     }
   }
 }
+
 function updateSpatialGridFromInputs() {
   const rows = Math.max(3, Math.min(8, Number(rowsInput.value) || 4));
   const cols = Math.max(3, Math.min(8, Number(colsInput.value) || 4));
   initSpatialGrid(rows, cols);
 }
-rowsInput.addEventListener("change", updateSpatialGridFromInputs);
-colsInput.addEventListener("change", updateSpatialGridFromInputs);
-resetCanvasBtn.addEventListener("click", () => updateSpatialGridFromInputs());
+
 function toggleCellFromEvent(x, y) {
+  if (!spatialGrid.length || !spatialGrid[0]?.length) return;
+
   const rect = spatialCanvas.getBoundingClientRect();
   const rows = spatialGrid.length;
   const cols = spatialGrid[0].length;
   const c = Math.floor((x - rect.left) / (spatialCanvas.width / cols));
   const r = Math.floor((y - rect.top) / (spatialCanvas.height / rows));
+
   if (r >= 0 && r < rows && c >= 0 && c < cols) {
     spatialGrid[r][c] ^= 1;
     drawSpatialGrid();
   }
 }
-spatialCanvas.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  const touch = e.touches[0];
-  toggleCellFromEvent(touch.clientX, touch.clientY);
-});
-spatialCanvas.addEventListener("contextmenu", (e) => {
-  e.preventDefault();
-  toggleCellFromEvent(e.clientX, e.clientY);
-});
+
 function serializeSpatialAnswer() {
+  if (!spatialGrid.length || !spatialGrid[0]?.length) return "";
   const rows = spatialGrid.length;
   const cols = spatialGrid[0].length;
   const flat = spatialGrid.map(row => row.join("")).join("");
   return `${cols}x${rows}:${flat}`;
 }
+
+rowsInput?.addEventListener("change", updateSpatialGridFromInputs);
+colsInput?.addEventListener("change", updateSpatialGridFromInputs);
+resetCanvasBtn?.addEventListener("click", () => updateSpatialGridFromInputs());
+
+spatialCanvas?.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  const touch = e.touches[0];
+  if (touch) toggleCellFromEvent(touch.clientX, touch.clientY);
+});
+
+spatialCanvas?.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+  toggleCellFromEvent(e.clientX, e.clientY);
+});
+
+/* -------------------- Status popup -------------------- */
+
 function showStatusPopup(message, isCorrect) {
   const modal = document.getElementById("statusModal");
   const content = document.getElementById("statusContent");
+  if (!modal || !content) return;
+
   content.textContent = message;
   content.style.color = isCorrect ? "green" : "red";
   modal.classList.remove("hidden");
+
   setTimeout(() => {
     modal.classList.add("show");
   }, 10);
+
   setTimeout(() => {
     modal.classList.remove("show");
     setTimeout(() => {
@@ -106,6 +142,8 @@ function showStatusPopup(message, isCorrect) {
     }, 200);
   }, 1000);
 }
+
+/* -------------------- Timer -------------------- */
 
 function formatTime(totalSeconds) {
   const safe = Math.max(0, Math.floor(totalSeconds));
@@ -116,7 +154,7 @@ function formatTime(totalSeconds) {
 }
 
 function setTimerText(seconds) {
-  timerEl.innerText = `Time left: ${formatTime(seconds)}`;
+  if (timerEl) timerEl.innerText = `Time left: ${formatTime(seconds)}`;
 }
 
 function startTimerFromStartIso(startIso) {
@@ -180,15 +218,19 @@ async function startTestIfNeeded(user) {
   return updatedUser;
 }
 
+async function endGameBecauseTimeExpired() {
+  showStatusPopup("Time is over.", false);
+  await updateDB({ extraUpdate: { finished: true } });
+  showFinalResults();
+}
+
+/* -------------------- Asset loading -------------------- */
+
 async function fetchPrivateAsset(path) {
   const res = await fetch(GET_ASSET_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email,
-      password,
-      path
-    })
+    body: JSON.stringify({ email, password, path })
   });
 
   if (!res.ok) {
@@ -219,123 +261,6 @@ async function loadQuestionImage(index) {
   }
 }
 
-function applyDarkMode() {
-  document.body.classList.toggle("dark-mode", darkMode);
-  const darkModeBtn = document.getElementById("darkModeBtn");
-  if (darkModeBtn) {
-    darkModeBtn.textContent = darkMode ? "Light Mode" : "Dark Mode";
-  }
-  localStorage.setItem("noctae_dark_mode", String(darkMode));
-  drawSpatialGrid();
-
-  if (currentIndex > 0) {
-    loadQuestionImage(currentIndex);
-  }
-}
-
-async function endGameBecauseTimeExpired() {
-  showStatusPopup("Time is over.", false);
-  await updateDB({ extraUpdate: { finished: true } });
-  showFinalResults();
-}
-
-const changeUsernameModal = document.getElementById("changeUsernameModal");
-const newUsernameInput = document.getElementById("newUsernameInput");
-const usernameStatus = document.getElementById("usernameStatus");
-const changeUsernameBtn = document.getElementById("changeUsernameBtn");
-const saveUsernameBtn = document.getElementById("saveUsernameBtn");
-const cancelUsernameBtn = document.getElementById("cancelUsernameBtn");
-function openUsernameModal() {
-  newUsernameInput.value = localStorage.getItem("username") || "";
-  usernameStatus.textContent = "";
-  changeUsernameModal.classList.remove("hidden");
-  changeUsernameModal.setAttribute("aria-hidden", "false");
-  setTimeout(() => {
-    changeUsernameModal.classList.add("show");
-    newUsernameInput.focus();
-  }, 50);
-}
-function closeUsernameModal() {
-  changeUsernameModal.classList.remove("show");
-  setTimeout(() => {
-    changeUsernameModal.classList.add("hidden");
-    changeUsernameModal.setAttribute("aria-hidden", "true");
-    usernameStatus.textContent = "";
-  }, 200);
-}
-changeUsernameBtn.addEventListener("click", () => {
-  openUsernameModal();
-});
-cancelUsernameBtn.addEventListener("click", () => {
-  closeUsernameModal();
-});
-changeUsernameModal.addEventListener("click", (e) => {
-  const modalBox = changeUsernameModal.querySelector(".modal-box");
-  if (!modalBox.contains(e.target)) {
-    closeUsernameModal();
-  }
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !changeUsernameModal.classList.contains("hidden")) {
-    closeUsernameModal();
-  }
-});
-document.getElementById("darkModeBtn")?.addEventListener("click", () => {
-  darkMode = !darkMode;
-  applyDarkMode();
-});
-saveUsernameBtn?.addEventListener("click", async (e) => {
-  e.preventDefault();
-  const newName = newUsernameInput.value.trim();
-  if (!newName) {
-    usernameStatus.style.color = "crimson";
-    usernameStatus.textContent = "Username cannot be empty";
-    return;
-  }
-  usernameStatus.style.color = "#2a7a2a";
-  usernameStatus.textContent = "Updating…";
-  try {
-    const res = await fetch(UPDATE_USER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({     email,     password,        update: { name: newName }   })
-    });
-    if (!res.ok) {
-      const txt = await res.text().catch(() => "");
-      console.error("Username update failed:", txt);
-      usernameStatus.style.color = "crimson";
-      usernameStatus.textContent = "Update failed";
-      return;
-    }
-    const payload = await res.json();
-    if (payload?.error) {
-      usernameStatus.style.color = "crimson";
-      usernameStatus.textContent = payload.error || "Update failed";
-      return;
-    }
-    // Update locally
-    localStorage.setItem("username", newName);
-    usernameStatus.style.color = "#2a7a2a";
-    usernameStatus.textContent = "Updated!";
-    // Close modal shortly after
-    setTimeout(() => closeUsernameModal(), 900);
-  } catch (err) {
-    console.error("Username update error:", err);
-    usernameStatus.style.color = "crimson";
-    usernameStatus.textContent = "Network error";
-  }
-});
-let email = localStorage.getItem("email");
-let username = localStorage.getItem("username") || "";
-let password = sessionStorage.getItem("password");
-if (!email || !password) {
-  window.location.href = "login.html";
-  throw new Error("Missing login data");
-}
-let solved = []; 
-let attempts = Array(TOTAL_ITEMS).fill(TOTAL_ATTEMPTS); // per-item attempts array
-let currentIndex = 0; // 1...48
-let normoCache = null;
 async function loadNorm() {
   try {
     const r = await fetchPrivateAsset("norm.json");
@@ -344,6 +269,173 @@ async function loadNorm() {
     console.error("Could not load norm", e);
   }
 }
+
+/* -------------------- Dark mode -------------------- */
+
+function applyDarkMode() {
+  document.body.classList.toggle("dark-mode", darkMode);
+
+  const darkModeBtn = document.getElementById("darkModeBtn");
+  if (darkModeBtn) {
+    darkModeBtn.textContent = darkMode ? "Light Mode" : "Dark Mode";
+  }
+
+  localStorage.setItem("noctae_dark_mode", String(darkMode));
+  drawSpatialGrid();
+
+  if (currentIndex > 0) {
+    loadQuestionImage(currentIndex);
+  }
+}
+
+document.getElementById("darkModeBtn")?.addEventListener("click", () => {
+  darkMode = !darkMode;
+  applyDarkMode();
+});
+
+/* -------------------- Username modal -------------------- */
+
+const changeUsernameModal = document.getElementById("changeUsernameModal");
+const newUsernameInput = document.getElementById("newUsernameInput");
+const usernameStatus = document.getElementById("usernameStatus");
+const changeUsernameBtn = document.getElementById("changeUsernameBtn");
+const saveUsernameBtn = document.getElementById("saveUsernameBtn");
+const cancelUsernameBtn = document.getElementById("cancelUsernameBtn");
+
+function openUsernameModal() {
+  newUsernameInput.value = localStorage.getItem("username") || "";
+  usernameStatus.textContent = "";
+  changeUsernameModal.classList.remove("hidden");
+  changeUsernameModal.setAttribute("aria-hidden", "false");
+
+  setTimeout(() => {
+    changeUsernameModal.classList.add("show");
+    newUsernameInput.focus();
+  }, 50);
+}
+
+function closeUsernameModal() {
+  changeUsernameModal.classList.remove("show");
+  setTimeout(() => {
+    changeUsernameModal.classList.add("hidden");
+    changeUsernameModal.setAttribute("aria-hidden", "true");
+    usernameStatus.textContent = "";
+  }, 200);
+}
+
+changeUsernameBtn?.addEventListener("click", () => {
+  openUsernameModal();
+});
+
+cancelUsernameBtn?.addEventListener("click", () => {
+  closeUsernameModal();
+});
+
+changeUsernameModal?.addEventListener("click", (e) => {
+  const modalBox = changeUsernameModal.querySelector(".modal-box");
+  if (modalBox && !modalBox.contains(e.target)) {
+    closeUsernameModal();
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && changeUsernameModal && !changeUsernameModal.classList.contains("hidden")) {
+    closeUsernameModal();
+  }
+});
+
+saveUsernameBtn?.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const newName = newUsernameInput.value.trim();
+  if (!newName) {
+    usernameStatus.style.color = "crimson";
+    usernameStatus.textContent = "Username cannot be empty";
+    return;
+  }
+
+  usernameStatus.style.color = "#2a7a2a";
+  usernameStatus.textContent = "Updating…";
+
+  try {
+    const res = await fetch(UPDATE_USER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password,
+        update: { name: newName }
+      })
+    });
+
+    if (!res.ok) {
+      const txt = await res.text().catch(() => "");
+      console.error("Username update failed:", txt);
+      usernameStatus.style.color = "crimson";
+      usernameStatus.textContent = "Update failed";
+      return;
+    }
+
+    const payload = await res.json().catch(() => ({}));
+    if (payload?.error) {
+      usernameStatus.style.color = "crimson";
+      usernameStatus.textContent = payload.error || "Update failed";
+      return;
+    }
+
+    localStorage.setItem("username", newName);
+    username = newName;
+
+    usernameStatus.style.color = "#2a7a2a";
+    usernameStatus.textContent = "Updated!";
+
+    setTimeout(() => closeUsernameModal(), 900);
+  } catch (err) {
+    console.error("Username update error:", err);
+    usernameStatus.style.color = "crimson";
+    usernameStatus.textContent = "Network error";
+  }
+});
+
+/* -------------------- End test modal -------------------- */
+
+const endTestModal = document.getElementById("endTestModal");
+const confirmEndBtn = document.getElementById("confirmEndBtn");
+const cancelEndBtn = document.getElementById("cancelEndBtn");
+
+function openEndTestModal() {
+  endTestModal.classList.remove("hidden");
+  setTimeout(() => endTestModal.classList.add("show"), 10);
+}
+
+function closeEndTestModal() {
+  endTestModal.classList.remove("show");
+  setTimeout(() => endTestModal.classList.add("hidden"), 200);
+}
+
+finishBtn?.addEventListener("click", () => {
+  openEndTestModal();
+});
+
+confirmEndBtn?.addEventListener("click", async () => {
+  closeEndTestModal();
+  await updateDB({ extraUpdate: { finished: true } });
+  showFinalResults();
+});
+
+cancelEndBtn?.addEventListener("click", () => {
+  closeEndTestModal();
+});
+
+endTestModal?.addEventListener("click", (e) => {
+  const box = endTestModal.querySelector(".modal-box");
+  if (box && !box.contains(e.target)) {
+    closeEndTestModal();
+  }
+});
+
+/* -------------------- Helpers -------------------- */
+
 function normalizeClient(s) {
   if (s === undefined || s === null) return "";
   let t = String(s);
@@ -351,17 +443,149 @@ function normalizeClient(s) {
   t = t.replace(/^[\s"']+|[\s"']+$/g, "");
   return t.toLowerCase().replace(/\s+/g, "");
 }
-// find next unsolved AND not-exhausted item
+
+function clearInputs() {
+  const input1 = document.getElementById("answerInput1");
+  const input2 = document.getElementById("answerInput2");
+  if (input1) input1.value = "";
+  if (input2) input2.value = "";
+}
+
 function findNextUnsolved(start, forward = true) {
   let i = start;
+
   for (let step = 0; step < TOTAL_ITEMS; step++) {
-    i = forward ? (i % TOTAL_ITEMS) + 1 : (i - 2 + TOTAL_ITEMS) % TOTAL_ITEMS + 1;
+    i = forward
+      ? (i % TOTAL_ITEMS) + 1
+      : (i - 2 + TOTAL_ITEMS) % TOTAL_ITEMS + 1;
+
     const isSolved = solved.includes(i);
     const remaining = attempts[i - 1] ?? TOTAL_ATTEMPTS;
+
     if (!isSolved && remaining > 0) return i;
   }
+
   return null;
 }
+
+/* -------------------- Question loading -------------------- */
+
+async function loadQuestionByIndex(index) {
+  currentIndex = index;
+
+  await loadQuestionImage(index);
+
+  const answerInput1 = document.getElementById("answerInput1");
+  const answerInput2 = document.getElementById("answerInput2");
+
+  if (SPATIAL_ITEMS.includes(index)) {
+    spatialContainer.classList.remove("hidden");
+    answerInput1.style.display = "none";
+    if (answerInput2) answerInput2.style.display = "none";
+    updateSpatialGridFromInputs();
+  } else {
+    spatialContainer.classList.add("hidden");
+    answerInput1.style.display = "block";
+
+    if (TWO_ANSWERS.includes(index)) {
+      answerInput2.style.display = "block";
+      answerInput1.placeholder = "Answer 1";
+      answerInput2.placeholder = "Answer 2";
+    } else {
+      answerInput2.style.display = "none";
+      answerInput1.placeholder = "Your answer…";
+    }
+
+    answerInput1.focus();
+  }
+
+  updateTopBar();
+}
+
+async function loadNextQuestion() {
+  const next = findNextUnsolved(currentIndex, true);
+  if (!next) return endGame();
+  await loadQuestionByIndex(next);
+}
+
+if (prevBtn) {
+  prevBtn.onclick = async () => {
+    const prev = findNextUnsolved(currentIndex, false);
+    if (!prev) return endGame();
+    await loadQuestionByIndex(prev);
+  };
+}
+
+if (nextBtn) {
+  nextBtn.onclick = async () => {
+    const next = findNextUnsolved(currentIndex, true);
+    if (!next) return endGame();
+    await loadQuestionByIndex(next);
+  };
+}
+
+/* -------------------- Server sync -------------------- */
+
+async function updateDB({
+  extraUpdate = {},
+  decrementAttempt = false,
+  markSolvedQuestion = null
+} = {}) {
+  const cleanEmail = String(email || "").trim();
+  if (!cleanEmail) return;
+
+  const payload = {
+    email: cleanEmail,
+    password,
+    update: { ...extraUpdate }
+  };
+
+  if (decrementAttempt) {
+    payload.decrement_attempt = true;
+    payload.question_index = Math.max(0, currentIndex - 1);
+  }
+
+  if (Number.isInteger(markSolvedQuestion)) {
+    payload.mark_solved_question = markSolvedQuestion;
+  }
+
+  try {
+    const res = await fetch(UPDATE_USER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const body = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      console.error("update_user failed:", res.status, body);
+      return body;
+    }
+
+    if (body?.user) {
+      const u = body.user;
+
+      solved = Array.isArray(u.solved_ids)
+        ? u.solved_ids.map(x => Number(x))
+        : solved;
+
+      if (Array.isArray(u.attempts) && u.attempts.length === TOTAL_ITEMS) {
+        attempts = u.attempts.map(n =>
+          Number.isFinite(Number(n)) ? Math.max(0, Number(n)) : 0
+        );
+      }
+
+      updateTopBar();
+    }
+
+    return body;
+  } catch (err) {
+    console.error("updateDB network error:", err);
+    throw err;
+  }
+}
+
 async function loadUserProgress() {
   try {
     const res = await fetch(UPDATE_USER_URL, {
@@ -413,193 +637,125 @@ async function loadUserProgress() {
     console.error("loadUserProgress error:", err);
   }
 }
-function clearInputs() {
-  const input1 = document.getElementById("answerInput1");
-  const input2 = document.getElementById("answerInput2");
-  if (input1) input1.value = "";
-  if (input2) input2.value = "";
-}
-async function loadQuestionByIndex(index) {
-  currentIndex = index;
 
-  await loadQuestionImage(index);
+/* -------------------- Submit answer -------------------- */
 
-  const answerInput1 = document.getElementById("answerInput1");
-  const answerInput2 = document.getElementById("answerInput2");
+if (submitBtn) {
+  submitBtn.onclick = async () => {
+    let rawAns;
 
-  if (SPATIAL_ITEMS.includes(index)) {
-    spatialContainer.classList.remove("hidden");
-    answerInput1.style.display = "none";
-    if (answerInput2) answerInput2.style.display = "none";
-    updateSpatialGridFromInputs();
-  } else {
-    spatialContainer.classList.add("hidden");
-    answerInput1.style.display = "block";
-
-    if (TWO_ANSWERS.includes(index)) {
-      answerInput2.style.display = "block";
-      answerInput1.placeholder = "Answer 1";
-      answerInput2.placeholder = "Answer 2";
+    if (SPATIAL_ITEMS.includes(currentIndex)) {
+      rawAns = serializeSpatialAnswer();
+      if (!rawAns) return;
     } else {
-      answerInput2.style.display = "none";
-      answerInput1.placeholder = "Your answer…";
+      const input1 = document.getElementById("answerInput1").value.trim();
+      const input2El = document.getElementById("answerInput2");
+
+      if (TWO_ANSWERS.includes(currentIndex)) {
+        const input2 = input2El.value.trim();
+        if (!input1 || !input2) return;
+
+        const sorted = [input1, input2]
+          .map(v => normalizeClient(v))
+          .sort();
+
+        rawAns = sorted.join(",");
+      } else {
+        if (!input1) return;
+        rawAns = input1;
+      }
     }
 
-    answerInput1.focus();
-  }
+    try {
+      const res = await fetch(GET_ANSWER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          question: currentIndex,
+          answer: rawAns
+        })
+      });
 
-  updateTopBar();
-}
-async function loadNextQuestion() {
-  const next = findNextUnsolved(currentIndex, true);
-  if (!next) return endGame();
-  await loadQuestionByIndex(next);
-}
-if (prevBtn) prevBtn.onclick = async () => {
-  const prev = findNextUnsolved(currentIndex, false);
-  if (!prev) return endGame();
-  await loadQuestionByIndex(prev);
-};
+      if (!res.ok) {
+        const txt = await res.text().catch(() => "");
+        console.error("get_answer failed:", txt);
 
-if (nextBtn) nextBtn.onclick = async () => {
-  const next = findNextUnsolved(currentIndex, true);
-  if (!next) return endGame();
-  await loadQuestionByIndex(next);
-};
-async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
-  const cleanEmail = String(email || "").trim();
-  if (!cleanEmail) return;
-  const solvedNums = Array.isArray(solved)
-    ? solved.map(x => Number.isFinite(Number(x)) ? Math.trunc(Number(x)) : x)
-    : [];
-  const updateObj = {
-    solved_ids: solvedNums,
-    score: solvedNums.length,
-    ...extraUpdate
-  };
-  const payload = { email: cleanEmail, password, update: updateObj };
-  if (decrementAttempt) {
-    payload.decrement_attempt = true;
-    // send 0-based index to backend
-    payload.question_index = Math.max(0, (currentIndex - 1));
-  }
-  try {
-    const res = await fetch(UPDATE_USER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    const body = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      console.error("update_user failed:", res.status, body);
-      return body;
-    }
-    if (body?.user) {
-      const u = body.user;
-      // sync solved (server authoritative)
-      solved = Array.isArray(u.solved_ids)
-        ? u.solved_ids.map(x => Number.isFinite(Number(x)) ? Number(x) : x)
-        : solved;
-      // sync attempts array (server authoritative) with safety fallback
-      if (Array.isArray(u.attempts) && u.attempts.length === TOTAL_ITEMS) {
-        attempts = u.attempts.map(n => Number.isFinite(Number(n)) ? Math.max(0, Number(n)) : 0);
-      } 
-      updateTopBar();
-    }
-    return body;
-  } catch (err) {
-    console.error("updateDB network error:", err);
-    throw err;
-  }
-}
-if (submitBtn) submitBtn.onclick = async () => {
-  let rawAns;
-  if (SPATIAL_ITEMS.includes(currentIndex)) {
-    rawAns = serializeSpatialAnswer();
-  } else {
-    const input1 = document.getElementById("answerInput1").value.trim();
-    const input2El = document.getElementById("answerInput2");
-    if (TWO_ANSWERS.includes(currentIndex)) {
-      const input2 = input2El.value.trim();
-      if (!input1 || !input2) return;
-      // Order-independent submission
-      const sorted = [input1, input2]
-        .map(v => normalizeClient(v))
-        .sort();
-      rawAns = sorted.join(",");
-    } else {
-      if (!input1) return;
-      rawAns = input1;
-    }
-  }
-  try {
-    const res = await fetch(GET_ANSWER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password,
-        question: currentIndex,
-        answer: rawAns
-      })
-    });
-    if (!res.ok) {
-      const txt = await res.text().catch(() => "");
-      console.error("get_answer failed:", txt);
-      return;
-    }
-    const payload = await res.json().catch(() => ({}));
-    const correct = payload?.correct === true;
-    if (correct) {
-      if (!solved.includes(currentIndex)) solved.push(currentIndex);
-      await updateDB({ extraUpdate: {} });
-      updateTopBar();
-      showStatusPopup("Correct!", true);
+        try {
+          const parsed = JSON.parse(txt);
+          if (parsed?.error === "Question already solved" || parsed?.error === "No attempts left") {
+            await loadUserProgress();
+          }
+        } catch (_) {}
+
+        return;
+      }
+
+      const payload = await res.json().catch(() => ({}));
+      const correct = payload?.correct === true;
+
+      if (correct) {
+        await updateDB({ markSolvedQuestion: currentIndex });
+        showStatusPopup("Correct!", true);
+        clearInputs();
+
+        setTimeout(async () => {
+          await loadNextQuestion();
+        }, 1000);
+
+        return;
+      }
+
+      showStatusPopup("Incorrect!", false);
+      await updateDB({ decrementAttempt: true });
+
+      const remaining = attempts[currentIndex - 1] ?? 0;
+      if (remaining <= 0) {
+        const next = findNextUnsolved(currentIndex, true);
+        if (!next) return endGame();
+        await loadQuestionByIndex(next);
+        return;
+      }
+
       clearInputs();
-      setTimeout(async () => {
-        await loadNextQuestion();
-      }, 1000);
-      return;
+      updateTopBar();
+    } catch (err) {
+      console.error("Submit error:", err);
     }
-    showStatusPopup("Incorrect!", false);
-    await updateDB({ extraUpdate: {}, decrementAttempt: true });
-    const remaining = attempts[currentIndex - 1] ?? 0;
-    if (remaining <= 0) {
-      await updateDB({ extraUpdate: {} });
-      const next = findNextUnsolved(currentIndex, true);
-      if (!next) return endGame();
-      await loadQuestionByIndex(next);
-      return;
-    }
-    clearInputs();
-    updateTopBar();
-  } catch (err) {
-    console.error("Submit error:", err);
-  }
-};
+  };
+}
+
+/* -------------------- UI update -------------------- */
+
 function updateTopBar() {
   scoreEl.innerText = `Score: ${solved.length}`;
-  // show attempts for current item (if any)
-  let remaining = "";
+
   if (currentIndex > 0) {
-    remaining = attempts[currentIndex - 1] ?? 0;
+    const remaining = attempts[currentIndex - 1] ?? 0;
     attemptsEl.innerText = `Attempts left: ${remaining}`;
   } else {
-    attemptsEl.innerText = `Attempts left: -`;
+    attemptsEl.innerText = "Attempts left: -";
   }
+
   const iqVal = (normoCache && normoCache[solved.length]) ? normoCache[solved.length] : "N/A";
   let iqEl = document.getElementById("iqEl");
+
   if (!iqEl) {
     iqEl = document.createElement("span");
     iqEl.id = "iqEl";
     scoreEl.parentNode.appendChild(iqEl);
   }
-  if (solved.length==0){
-    iqEl.innerText = `IQ: N/A`;
-  }else{
+
+  if (solved.length === 0) {
+    iqEl.innerText = "IQ: N/A";
+  } else {
     iqEl.innerText = `IQ: ${iqVal} (Wechsler Scale)`;
   }
 }
+
+/* -------------------- Final results -------------------- */
+
 async function loadLeaderboardState() {
   try {
     const res = await fetch(UPDATE_USER_URL, {
@@ -607,14 +763,17 @@ async function loadLeaderboardState() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
     });
+
     if (!res.ok) return false;
-    const payload = await res.json().catch(()=>({}));
+
+    const payload = await res.json().catch(() => ({}));
     const user = payload.user ?? payload;
     return user?.leaderboard === true;
   } catch {
     return false;
   }
 }
+
 function showFinalResults() {
   if (timerInterval) {
     clearInterval(timerInterval);
@@ -644,7 +803,7 @@ function showFinalResults() {
     </label>
 
     <p id="leaderboardStatus" style="margin-top:10px; font-weight:bold;"></p>
-    
+
     <div style="text-align:center; margin-top:20px;">
       <button id="changeUsernameBtn">Change Username</button>
     </div>
@@ -667,7 +826,8 @@ function showFinalResults() {
 
   document.getElementById("certForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
+
+    const emailValue = document.getElementById("email").value;
     const container = document.getElementById("result");
     container.innerHTML = `<p style="font-weight:bold;">Certificate is being generated…</p>`;
 
@@ -677,7 +837,7 @@ function showFinalResults() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email: emailValue }),
         }
       );
 
@@ -696,6 +856,7 @@ function showFinalResults() {
 
   checkbox?.addEventListener("change", async () => {
     const wantLeaderboard = checkbox.checked;
+
     try {
       const r = await fetch(UPDATE_USER_URL, {
         method: "POST",
@@ -717,53 +878,22 @@ function showFinalResults() {
     }
   });
 
-  document.getElementById("changeUsernameBtn")
-    ?.addEventListener("click", (e) => {
-      e.preventDefault();
-      openUsernameModal();
-    });
+  document.getElementById("changeUsernameBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    openUsernameModal();
+  });
 }
+
 async function endGame() {
-  // mark finished and show final results
   await updateDB({ extraUpdate: { finished: true } });
   showFinalResults();
 }
-const endTestModal = document.getElementById("endTestModal");
-const confirmEndBtn = document.getElementById("confirmEndBtn");
-const cancelEndBtn = document.getElementById("cancelEndBtn");
 
-function openEndTestModal() {
-  endTestModal.classList.remove("hidden");
-  setTimeout(() => endTestModal.classList.add("show"), 10);
-}
-
-function closeEndTestModal() {
-  endTestModal.classList.remove("show");
-  setTimeout(() => endTestModal.classList.add("hidden"), 200);
-}
-
-finishBtn?.addEventListener("click", () => {
-  openEndTestModal();
-});
-
-confirmEndBtn?.addEventListener("click", async () => {
-  closeEndTestModal();
-  await updateDB({ extraUpdate: { finished: true } });
-  showFinalResults();
-});
-
-cancelEndBtn?.addEventListener("click", () => {
-  closeEndTestModal();
-});
-endTestModal.addEventListener("click", (e) => {
-  const box = endTestModal.querySelector(".modal-box");
-  if (!box.contains(e.target)) closeEndTestModal();
-});
+/* -------------------- Init -------------------- */
 
 applyDarkMode();
-awaitInit();
 
-async function awaitInit() {
+(async function init() {
   await loadNorm();
   await loadUserProgress();
-}
+})();
