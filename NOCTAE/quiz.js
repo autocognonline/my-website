@@ -77,8 +77,18 @@ function drawSpatialGrid() {
 }
 
 function updateSpatialGridFromInputs() {
-  const rows = Math.max(3, Math.min(8, Number(rowsInput.value) || 4));
-  const cols = Math.max(3, Math.min(8, Number(colsInput.value) || 4));
+  let rows = Math.round(Number(rowsInput.value));
+  let cols = Math.round(Number(colsInput.value));
+
+  if (!Number.isFinite(rows)) rows = 4;
+  if (!Number.isFinite(cols)) cols = 4;
+
+  rows = Math.max(3, Math.min(8, rows));
+  cols = Math.max(3, Math.min(8, cols));
+
+  rowsInput.value = rows;
+  colsInput.value = cols;
+
   initSpatialGrid(rows, cols);
 }
 
