@@ -1,0 +1,57 @@
+name: Update NOCTAE Leaderboard
+
+on:
+  schedule:
+    - cron: "0 0 */15 * *"
+  workflow_dispatch:      # manual run button
+
+permissions:
+  contents: write
+
+concurrency:
+  group: leaderboard-update
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # fetch full history
+
+      # 2️⃣ Setup Python
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      # 3️⃣ Install Supabase Client
+      - name: Install Supabase Client
+        run: pip install supabase
+
+      # 4️⃣ Generate leaderboard
+      - name: Generate leaderboard
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python generate_nofratleaderboard.py
+
+      # 5️⃣ Commit and push changes (if any) directly to main
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+
+          git add nofratleaderboard.html
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update NOFRAT leaderboard"
+            git push
+          fi
+
