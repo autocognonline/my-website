@@ -4,7 +4,7 @@ const GET_ASSET_URL   = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/g
 
 const TOTAL_ITEMS = 48;
 const TOTAL_ATTEMPTS = 3;
-const FALLBACK_TOTAL_TIME_SECONDS = 6 * 3600;
+const FALLBACK_TOTAL_TIME_SECONDS = 4 * 3600;
 const SPATIAL_ITEMS = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48];
 const TWO_ANSWERS = [7, 10, 13, 23, 34, 38];
 
