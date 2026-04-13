@@ -38,7 +38,7 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-        run: python generate_nofratleaderboard.py
+        run: python generate_noctaeleaderboard.py
 
       # 5️⃣ Commit and push changes (if any) directly to main
       - name: Commit and push changes
@@ -46,7 +46,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
 
-          git add nofratleaderboard.html
+          git add noctaeleaderboard.html
 
           if git diff --cached --quiet; then
             echo "No changes to commit"
