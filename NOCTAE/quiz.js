@@ -230,7 +230,9 @@ async function startTestIfNeeded(user) {
 
 async function endGameBecauseTimeExpired() {
   showStatusPopup("Time is over.", false);
-  await updateDB({ extraUpdate: { finished: true } });
+  try {
+    await updateDB({ extraUpdate: { finished: true } });
+  } catch (_) {}
   showFinalResults();
 }
 
@@ -536,6 +538,10 @@ if (nextBtn) {
 
 /* -------------------- Server sync -------------------- */
 
+function isTimeExpiredResponse(payload) {
+  return payload?.expired === true || payload?.error === "Time expired";
+}
+
 async function updateDB({
   extraUpdate = {},
   decrementAttempt = false,
@@ -570,6 +576,29 @@ async function updateDB({
 
     if (!res.ok) {
       console.error("update_user failed:", res.status, body);
+    
+      if (isTimeExpiredResponse(body)) {
+        if (body?.user) {
+          const u = body.user;
+      
+          solved = Array.isArray(u.solved_ids)
+            ? u.solved_ids.map(x => Number(x))
+            : solved;
+      
+          if (Array.isArray(u.attempts) && u.attempts.length === TOTAL_ITEMS) {
+            attempts = u.attempts.map(n =>
+              Number.isFinite(Number(n)) ? Math.max(0, Number(n)) : 0
+            );
+          }
+      
+          updateTopBar();
+        }
+      
+        showStatusPopup("Time is over.", false);
+        showFinalResults();
+        throw new Error("Time expired");
+      }
+    
       return body;
     }
 
@@ -605,7 +634,29 @@ async function loadUserProgress() {
     });
 
     if (!res.ok) {
-      console.error("loadUserProgress: failed", await res.text().catch(() => ""));
+      const txt = await res.text().catch(() => "");
+      console.error("loadUserProgress: failed", txt);
+    
+      try {
+        const parsed = JSON.parse(txt);
+        if (isTimeExpiredResponse(parsed)) {
+          const user = parsed.user ?? {};
+          solved = Array.isArray(user?.solved_ids)
+            ? user.solved_ids.map(x => Number(x))
+            : [];
+    
+          if (Array.isArray(user?.attempts) && user.attempts.length === TOTAL_ITEMS) {
+            attempts = user.attempts.map(n =>
+              Number.isFinite(Number(n)) ? Math.max(0, Number(n)) : TOTAL_ATTEMPTS
+            );
+          }
+    
+          updateTopBar();
+          showFinalResults();
+          return;
+        }
+      } catch (_) {}
+    
       return;
     }
 
@@ -691,14 +742,25 @@ if (submitBtn) {
       if (!res.ok) {
         const txt = await res.text().catch(() => "");
         console.error("get_answer failed:", txt);
-
+      
         try {
           const parsed = JSON.parse(txt);
-          if (parsed?.error === "Question already solved" || parsed?.error === "No attempts left") {
+      
+          if (isTimeExpiredResponse(parsed)) {
+            showStatusPopup("Time is over.", false);
+            showFinalResults();
+            return;
+          }
+      
+          if (
+            parsed?.error === "Question already solved" ||
+            parsed?.error === "No attempts left"
+          ) {
             await loadUserProgress();
+            return;
           }
         } catch (_) {}
-
+      
         return;
       }
 
@@ -731,6 +793,7 @@ if (submitBtn) {
       clearInputs();
       updateTopBar();
     } catch (err) {
+      if (String(err?.message || err) === "Time expired") return;
       console.error("Submit error:", err);
     }
   };
