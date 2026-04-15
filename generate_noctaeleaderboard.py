@@ -60,7 +60,7 @@ html_output = f"""<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NOCTAE Leaderboard</title>
+  <title>NOCTÆ Leaderboard</title>
   <link rel="icon" href="favicon.png">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
@@ -172,7 +172,7 @@ html_output = f"""<!DOCTYPE html>
   </div>
 
   <div class="leaderboard-container">
-    <h2>NOCTAE Leaderboard</h2>
+    <h2>NOCTÆ Leaderboard</h2>
     <table>
       <thead>
         <tr>
