@@ -36,26 +36,25 @@
     .section {
       margin: 50px auto;
     }
+
     .test-row {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 15px;
-
-        max-width: 1000px;
-        margin: 0 auto 15px auto;
-
-        background: #eeeeee;      
-        border-radius: 10px;       
-        padding: 16px 18px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.08); 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      max-width: 1000px;
+      margin: 0 auto 15px auto;
+      background: #eeeeee;
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
     .test-row p {
-        margin: 0;
-        font-size: 18px;
-        text-align: left;
-        flex: 1;
+      margin: 0;
+      font-size: 18px;
+      text-align: left;
+      flex: 1;
     }
 
     .button {
@@ -87,13 +86,13 @@
       border: 4px solid #000;
       width: 100%;
       font-family: sans-serif;
-      margin: 0 auto; 
+      margin: 0 auto;
     }
 
     th, td {
       border: 1px solid #ddd;
       padding: 10px 16px;
-      text-align: center; 
+      text-align: center;
     }
 
     th h3 {
@@ -114,6 +113,7 @@
 
     th {
       background-color: #0070ba;
+      color: white;
     }
 
     td:nth-child(2) {
@@ -122,33 +122,33 @@
 
     .table-container {
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch; 
+      -webkit-overflow-scrolling: touch;
       max-width: 100%;
-      margin: 0 auto; 
+      margin: 0 auto;
     }
 
     .default-table table,
     .default-table table th,
     .default-table table td {
       font-size: 16px;
-      font-weight: normal; 
+      font-weight: normal;
     }
 
-    .default-table thead tr:first-child th {    
-      font-weight: normal;  
-      color: revert;           
-      background-color: revert; 
+    .default-table thead tr:first-child th {
+      font-weight: normal;
+      color: revert;
+      background-color: revert;
     }
 
     .default-table tbody tr:first-child td {
-      font-weight: normal;  
+      font-weight: normal;
     }
 
     .default-table table {
-      width: auto !important;  
-      max-width: 900px;         
-      margin: 0 auto;           
-      display: table;          
+      width: auto !important;
+      max-width: 900px;
+      margin: 0 auto;
+      display: table;
     }
 
     .default-table caption {
@@ -156,88 +156,130 @@
       text-align: center;
       font-weight: bold;
       padding-bottom: 8px;
+      white-space: nowrap;
     }
-    .default-table caption {
-      caption-side: top;
-      text-align: center;
-      font-weight: bold;
-      padding-bottom: 8px;
-      white-space: nowrap;   
-    }
+
     .hover-thumb {
-    position: relative;
-    cursor: help;
+      position: relative;
+      cursor: help;
     }
 
     .hover-thumb img {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 500px; 
-    border: 2px solid #333;
-    background: #fff;
-    padding: 4px;
-    z-index: 10;
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 500px;
+      border: 2px solid #333;
+      background: #fff;
+      padding: 4px;
+      z-index: 10;
     }
 
     .hover-thumb:hover img {
       display: block;
-      }
+    }
 
-      .general-stats {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0;
-    list-style: none;
-    text-align: left;
-  }
+    .general-stats {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0;
+      list-style: none;
+      text-align: left;
+    }
 
-  .general-stats > li {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 8px;
-    border-bottom: 1px solid #ddd;
-  }
+    .general-stats > li {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 8px;
+      border-bottom: 1px solid #ddd;
+    }
 
-  .general-stats .label {
-    flex: 1;
-  }
+    .general-stats .label {
+      flex: 1;
+    }
 
-  .general-stats .value {
-    font-weight: bold;
-    margin-left: 20px;
-  }
+    .general-stats .value {
+      font-weight: bold;
+      margin-left: 20px;
+    }
 
-  .general-stats .sub {
-    padding-left: 32px;
-    font-size: 0.95em;
-    color: #555;
-  }
+    .general-stats .sub {
+      padding-left: 32px;
+      font-size: 0.95em;
+      color: #555;
+    }
 
-  .general-stats > li:not(.sub) {
-    background-color: #f2f2f2;
-    font-weight: 600;
-  }
+    .general-stats > li:not(.sub) {
+      background-color: #f2f2f2;
+      font-weight: 600;
+    }
 
-  .general-stats > li.sub {
-    background-color: transparent;
-  }
+    .general-stats > li.sub {
+      background-color: transparent;
+    }
 
+    .chart-section {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      height: 420px;
+    }
+
+    .chart-title {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .updated-at {
+      font-size: 15px;
+      color: #666;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .loading-message,
+    .error-message {
+      max-width: 900px;
+      margin: 20px auto;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .error-message {
+      color: #b42318;
+    }
+
+    .histogram-note {
+      max-width: 1000px;
+      margin: 10px auto 20px auto;
+      font-size: 17px;
+      text-align: center;
+      color: #333;
+    }
   </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-3XHMB3NM73', {
-    'send_page_view': true,
-    'allow_google_signals': true
-  });
-</script>
-<link rel="icon" href="favicon.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3XHMB3NM73', {
+      'send_page_view': true,
+      'allow_google_signals': true
+    });
+  </script>
+
+  <link rel="icon" href="favicon.png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <h1>Statistical report</h1>
@@ -247,7 +289,7 @@
       <h2>General</h2>
 
       <table>
-        <thead style="color: white;">
+        <thead>
           <tr>
             <th>Test name</th>
             <th>Finished submissions</th>
@@ -256,74 +298,377 @@
         </thead>
         <tbody>
           <tr>
-            <td><a href="noctae.html">NOCTÆ</a></td>
-            <td>4</td>
-            <td>–</td>
-          </tr>
-          <tr>
             <td><a href="naitor.html">NAITOR</a></td>
-            <td>3</td>
-            <td>29</td>
+            <td id="finished-NAITOR">–</td>
+            <td id="unfinished-NAITOR">–</td>
           </tr>
           <tr>
             <td><a href="neaito.html">NEAITO</a></td>
-            <td>4</td>
-            <td>10</td>
+            <td id="finished-NEAITO">–</td>
+            <td id="unfinished-NEAITO">–</td>
           </tr>
           <tr>
             <td><a href="noact.html">NOACT</a></td>
-            <td>9</td>
-            <td>11</td>
+            <td id="finished-NOACT">–</td>
+            <td id="unfinished-NOACT">–</td>
+          </tr>
+          <tr>
+            <td><a href="noctae.html">NOCTÆ</a></td>
+            <td id="finished-NOCTAE">–</td>
+            <td>–</td>
           </tr>
           <tr>
             <td><a href="nofrat.html">NOFRAT</a></td>
-            <td>6</td>
-            <td>12</td>
-          </tr>
-          <tr>
-            <td><a href="ovat.html">OVAT33</a></td>
-            <td>5</td>
-            <td>9</td>
-          </tr>
-          <tr>
-            <td><a href="https://nsl36.netlify.app/sequels/sat">SAT</a></td>
-            <td>10</td>
-            <td>10</td>
-          </tr>
-          <tr>
-            <td><a href="saito.html">SAITO</a></td>
-            <td>15</td>
-            <td>–</td>
+            <td id="finished-NOFRAT">–</td>
+            <td id="unfinished-NOFRAT">–</td>
           </tr>
           <tr>
             <td><a href="ocs.html">OCS</a></td>
             <td>3</td>
             <td>–</td>
           </tr>
+          <tr>
+            <td><a href="ovat.html">OVAT33</a></td>
+            <td id="finished-OVAT33">–</td>
+            <td id="unfinished-OVAT33">–</td>
+          </tr>
+          <tr>
+            <td><a href="saito.html">SAITO</a></td>
+            <td id="finished-SAITO">–</td>
+            <td>–</td>
+          </tr>
+          <tr>
+            <td><a href="https://nsl36.netlify.app/sequels/sat">SAT</a></td>
+            <td id="finished-SAT">–</td>
+            <td id="unfinished-SAT">–</td>
+          </tr>
         </tbody>
       </table>
+
+      <div class="updated-at" id="updated-at"></div>
     </div>
   </div>
 
-  <h2>Statistics of tests currently in use</h2>
+  <h2>Live raw score histograms</h2>
+  <p class="histogram-note">
+    Each small rectangle represents one submission. Black rectangles correspond to finished submissions and green rectangles to unfinished submissions.
+  </p>
+  <div id="loading-message" class="loading-message">Loading statistics…</div>
+  <div id="error-message" class="error-message" style="display:none;"></div>
+  <div id="charts-container"></div>
 
-  <p>Waiting for more data for detailed reports.</p>
+
+  <h2>Statistics of current tests</h2>
+
+  <p>Waiting for more data.</p>
 
   <h2>Statistics of discontinued tests</h2>
 
   <div class="section">
     <div class="test-row">
-          <a class="button" href="stats_NIT.html">NIT-Form 1</a>
-          <p>Some information about NIT-Form 1.</p>
+      <a class="button" href="stats_NIT.html">NIT-Form 1</a>
+      <p>Some information about NIT-Form 1.</p>
     </div>
     <div class="test-row">
-          <a class="button" href="stats_nait.html">NAIT</a>
-          <p>Some information about NAIT.</p>
+      <a class="button" href="stats_nait.html">NAIT</a>
+      <p>Some information about NAIT.</p>
     </div>
   </div>
 
   <div class="section">
-    <a class="button" href="index.html" >Back to main page</a>
+    <a class="button" href="index.html">Back to main page</a>
   </div>
+
+  <script>
+    const STATS_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/storage/v1/object/public/public-stats/stats.json";
+
+    const TEST_LINKS = {
+      NOCTAE: "noctae.html",
+      NAITOR: "naitor.html",
+      NEAITO: "neaito.html",
+      NOACT: "noact.html",
+      NOFRAT: "nofrat.html",
+      OVAT33: "ovat.html",
+      SAT: "https://nsl36.netlify.app/sequels/sat",
+      SAITO: "saito.html"
+    };
+
+    const TEST_DISPLAY_NAMES = {
+      NOCTAE: "NOCTÆ",
+      NAITOR: "NAITOR",
+      NEAITO: "NEAITO",
+      NOACT: "NOACT",
+      NOFRAT: "NOFRAT",
+      OVAT33: "OVAT33",
+      SAT: "SAT",
+      SAITO: "SAITO"
+    };
+
+    const blockBarPlugin = {
+      id: "blockBarPlugin",
+      afterDatasetsDraw(chart, args, pluginOptions) {
+        const { ctx, scales } = chart;
+        const yScale = scales.y;
+
+        const datasets = chart.data.datasets;
+        if (!datasets || datasets.length === 0) return;
+
+        const meta0 = chart.getDatasetMeta(0);
+        if (!meta0 || !meta0.data) return;
+
+        const blockGap = pluginOptions?.blockGap ?? 2;
+        const sidePadding = pluginOptions?.sidePadding ?? 8;
+
+        for (let i = 0; i < meta0.data.length; i++) {
+          const barElement = meta0.data[i];
+          if (!barElement) continue;
+
+          const x = barElement.x;
+          const baseY = yScale.getPixelForValue(0);
+          const finishedValue = Number(datasets[0]?.data?.[i] ?? 0);
+          const unfinishedValue = Number(datasets[1]?.data?.[i] ?? 0);
+          const totalValue = finishedValue + unfinishedValue;
+
+          if (totalValue <= 0) continue;
+
+          const barWidth = Math.max(10, barElement.width - sidePadding * 2);
+          const pixelZero = yScale.getPixelForValue(0);
+          const pixelOne = yScale.getPixelForValue(1);
+          const unitHeight = Math.abs(pixelZero - pixelOne) - blockGap;
+
+          if (unitHeight <= 0) continue;
+
+          let currentCount = 0;
+
+          const drawBlock = (color) => {
+            const yTop = baseY - (currentCount + 1) * (unitHeight + blockGap);
+
+            ctx.save();
+            ctx.fillStyle = color;
+            ctx.fillRect(
+              x - barWidth / 2,
+              yTop,
+              barWidth,
+              unitHeight
+            );
+            ctx.restore();
+
+            currentCount += 1;
+          };
+
+          for (let j = 0; j < finishedValue; j++) {
+            drawBlock("#000000");
+          }
+
+          for (let j = 0; j < unfinishedValue; j++) {
+            drawBlock("#2e8b57");
+          }
+        }
+      }
+    };
+
+    Chart.register(blockBarPlugin);
+
+    function setGeneralStats(generalStats) {
+      for (const stat of generalStats) {
+        const finishedCell = document.getElementById(`finished-${stat.test_name}`);
+        const unfinishedCell = document.getElementById(`unfinished-${stat.test_name}`);
+
+        if (finishedCell) {
+          finishedCell.textContent = stat.finished_submissions;
+        }
+
+        if (unfinishedCell) {
+          unfinishedCell.textContent = stat.unfinished_submissions;
+        }
+      }
+    }
+
+    function formatDate(isoString) {
+      const date = new Date(isoString);
+
+      if (Number.isNaN(date.getTime())) return "";
+
+      const formatted = date.toLocaleString("en-GB", {
+        timeZone: "Europe/Zurich",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+      return `Last updated: ${formatted} (CET/CEST)`;
+    }
+
+    function createChartSection(testName, histogramData) {
+      const filteredBins = histogramData.bins.filter(
+        bin => {
+          const unfinished = testName === "NOCTAE" ? 0 : bin.unfinished;
+          return bin.finished > 0 || unfinished > 0;
+        }
+      );
+
+      if (filteredBins.length === 0) {
+        return;
+      }
+
+      const chartsContainer = document.getElementById("charts-container");
+
+      const section = document.createElement("div");
+      section.className = "chart-section";
+
+      const title = document.createElement("h3");
+      title.className = "chart-title";
+
+      const titleLink = document.createElement("a");
+      titleLink.href = TEST_LINKS[testName] || "#";
+      titleLink.textContent = `${TEST_DISPLAY_NAMES[testName] || testName} score distribution`;
+      title.appendChild(titleLink);
+
+      const wrap = document.createElement("div");
+      wrap.className = "chart-wrap";
+
+      const canvas = document.createElement("canvas");
+      canvas.id = `chart-${testName}`;
+
+      wrap.appendChild(canvas);
+      section.appendChild(title);
+      section.appendChild(wrap);
+      chartsContainer.appendChild(section);
+
+      const labels = filteredBins.map(bin => bin.label);
+      const finishedValues = filteredBins.map(bin => bin.finished);
+      const unfinishedValues = filteredBins.map(bin =>
+        testName === "NOCTAE" ? 0 : bin.unfinished
+      );
+
+      const datasets = [
+        {
+          label: "Finished",
+          data: finishedValues,
+          backgroundColor: "rgba(0,0,0,0)",
+          borderColor: "rgba(0,0,0,0)",
+          borderWidth: 0,
+          stack: "submissions",
+          grouped: false
+        }
+      ];
+
+      if (testName !== "NOCTAE") {
+        datasets.push({
+          label: "Unfinished",
+          data: unfinishedValues,
+          backgroundColor: "rgba(0,0,0,0)",
+          borderColor: "rgba(0,0,0,0)",
+          borderWidth: 0,
+          stack: "submissions",
+          grouped: false
+        });
+      }
+
+      new Chart(canvas.getContext("2d"), {
+        type: "bar",
+        data: {
+          labels,
+          datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              mode: "index",
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  return `${context.dataset.label}: ${context.raw}`;
+                }
+              }
+            },
+            blockBarPlugin: {
+              blockGap: 2,
+              sidePadding: 8
+            }
+          },
+          interaction: {
+            mode: "index",
+            intersect: false
+          },
+          scales: {
+            x: {
+              stacked: true,
+              title: {
+                display: true,
+                text: "Score range"
+              }
+            },
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1,
+                precision: 0
+              },
+              title: {
+                display: true,
+                text: "Number of scores"
+              }
+            }
+          }
+        }
+      });
+    }
+
+    async function loadStats() {
+      const loadingEl = document.getElementById("loading-message");
+      const errorEl = document.getElementById("error-message");
+
+      try {
+        const response = await fetch(STATS_URL, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`Failed to fetch stats: HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (Array.isArray(data.general)) {
+          setGeneralStats(data.general);
+        }
+
+        if (data.generated_at) {
+          document.getElementById("updated-at").textContent = formatDate(data.generated_at);
+        }
+
+        if (data.histograms && typeof data.histograms === "object") {
+          const sortedTests = Object.keys(data.histograms).sort();
+
+          for (const testName of sortedTests) {
+            const histogramData = data.histograms[testName];
+
+            if (
+              histogramData &&
+              Array.isArray(histogramData.bins) &&
+              histogramData.bins.length > 0
+            ) {
+              createChartSection(testName, histogramData);
+            }
+          }
+        }
+
+        loadingEl.style.display = "none";
+      } catch (error) {
+        console.error(error);
+        loadingEl.style.display = "none";
+        errorEl.style.display = "block";
+        errorEl.textContent = "Could not load statistics right now.";
+      }
+    }
+
+    loadStats();
+  </script>
 </body>
 </html>
