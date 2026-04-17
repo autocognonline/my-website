@@ -313,6 +313,11 @@
             <td id="unfinished-NOACT">–</td>
           </tr>
           <tr>
+            <td><a href="noais.html">NOAIS</a></td>
+            <td id="finished-NOAIS">–</td>
+            <td>–</td>
+          </tr>
+          <tr>
             <td><a href="noctae.html">NOCTÆ</a></td>
             <td id="finished-NOCTAE">–</td>
             <td>–</td>
@@ -324,7 +329,7 @@
           </tr>
           <tr>
             <td><a href="ocs.html">OCS</a></td>
-            <td>3</td>
+            <td id="finished-OCS">–</td>
             <td>–</td>
           </tr>
           <tr>
@@ -387,6 +392,7 @@
       NAITOR: "naitor.html",
       NEAITO: "neaito.html",
       NOACT: "noact.html",
+      NOAIS: "noais.html",
       NOFRAT: "nofrat.html",
       OVAT33: "ovat.html",
       SAT: "https://nsl36.netlify.app/sequels/sat",
@@ -398,6 +404,7 @@
       NAITOR: "NAITOR",
       NEAITO: "NEAITO",
       NOACT: "NOACT",
+      NOAIS: "NOAIS",
       NOFRAT: "NOFRAT",
       OVAT33: "OVAT33",
       SAT: "SAT",
@@ -539,8 +546,10 @@
 
       const labels = filteredBins.map(bin => bin.label);
       const finishedValues = filteredBins.map(bin => bin.finished);
+      const noUnfinished = ["NOCTAE", "OCS", "NOAIS"].includes(testName);
+
       const unfinishedValues = filteredBins.map(bin =>
-        testName === "NOCTAE" ? 0 : bin.unfinished
+        noUnfinished ? 0 : bin.unfinished
       );
 
       const datasets = [
@@ -555,7 +564,7 @@
         }
       ];
 
-      if (testName !== "NOCTAE") {
+      if (!noUnfinished) {
         datasets.push({
           label: "Unfinished",
           data: unfinishedValues,
