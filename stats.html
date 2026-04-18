@@ -394,7 +394,6 @@
       NOACT: "noact.html",
       NOAIS: "noais.html",
       NOFRAT: "nofrat.html",
-      OCS: "ocs.html",
       OVAT33: "ovat.html",
       SAT: "https://nsl36.netlify.app/sequels/sat",
       SAITO: "saito.html"
@@ -407,10 +406,20 @@
       NOACT: "NOACT",
       NOAIS: "NOAIS",
       NOFRAT: "NOFRAT",
-      OCS: "OCS",
       OVAT33: "OVAT33",
       SAT: "SAT",
       SAITO: "SAITO"
+    };
+
+    const TEST_NORM_LINKS = {
+      NAITOR: "norms.html#norm-naitor",
+      NEAITO: "norms.html#norm-neaito",
+      NOACT: "norms.html#norm-noact",
+      NOAIS: "norms.html#norm-noais",
+      NOCTAE: "norms.html#norm-noctae",
+      NOFRAT: "norms.html#norm-nofrat",
+      OVAT33: "norms.html#norm-ovat33",
+      SAT: "norms.html#norm-sat"
     };
 
     const blockBarPlugin = {
@@ -530,10 +539,33 @@
       const title = document.createElement("h3");
       title.className = "chart-title";
 
+      // clickable quiz name
       const titleLink = document.createElement("a");
       titleLink.href = TEST_LINKS[testName] || "#";
-      titleLink.textContent = `${TEST_DISPLAY_NAMES[testName] || testName} score distribution`;
+      titleLink.textContent = TEST_DISPLAY_NAMES[testName] || testName;
       title.appendChild(titleLink);
+
+      // plain text
+      const titleText = document.createElement("span");
+      titleText.textContent = " score distribution";
+      title.appendChild(titleText);
+
+      // optional norms link
+      const normLinkUrl = TEST_NORM_LINKS[testName];
+      if (normLinkUrl) {
+        const separator = document.createElement("span");
+        separator.textContent = " • ";
+        separator.style.color = "#666";
+        title.appendChild(separator);
+
+        const normLink = document.createElement("a");
+        normLink.href = normLinkUrl;
+        normLink.textContent = "See norm";
+        normLink.style.fontSize = "20px";
+        normLink.style.color = "#0070ba";
+
+        title.appendChild(normLink);
+      }
 
       const wrap = document.createElement("div");
       wrap.className = "chart-wrap";
