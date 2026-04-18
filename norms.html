@@ -303,7 +303,7 @@
     <h1>Current norms</h1>
 
     <div class="norm-list">
-      <details>
+      <details id="norm-naitor">
         <summary class="expand-btn">1. NAITOR - Nydegger Automatic Intelligence Test Online Revised</summary>
         <div class="iframe-wrap">
           <iframe class="pdf-frame" src="naitornorm.pdf" title="Nydegger Automatic Intelligence Test Online Revised"></iframe>
@@ -311,7 +311,7 @@
         </div>
       </details>
 
-      <details>
+      <details id="norm-neaito">
         <summary class="expand-btn">2. NEAITO - Nydegger Extreme Automatic Intelligence Test Online</summary>
         <div class="iframe-wrap">
           <iframe class="pdf-frame" src="neaitonorm.pdf" title="Nydegger Extreme Automatic Intelligence Test Online"></iframe>
@@ -319,15 +319,15 @@
         </div>
       </details>
 
-      <details>
-        <summary class="expand-btn">3. NOCTÆ - Nydegger Online Cognitive Timed Automatic Examination</summary>
+      <details id="norm-noctae">
+        <summary class="expand-btn">3. NOCTAE - Nydegger Online Cognitive Timed Automatic Examination</summary>
         <div class="iframe-wrap">
           <iframe class="pdf-frame" src="noctaenorm.pdf" title="Nydegger Online Cognitive Timed Automatic Examination"></iframe>
           <p class="pdf-link"><a href="noctaenorm.pdf" target="_blank">Open this PDF in a new tab</a></p>
         </div>
       </details>
 
-      <details>
+      <details id="norm-noact">
         <summary class="expand-btn">4. NOACT - Nydegger Online Automatic Cognitive Test</summary>
         <div class="iframe-wrap">
           <iframe class="pdf-frame" src="noactnorm.pdf" title="Nydegger Online Automatic Cognitive Test"></iframe>
@@ -335,7 +335,7 @@
         </div>
       </details>
 
-      <details>
+      <details id="norm-nofrat">
         <summary class="expand-btn">5. NOFRAT - Nydegger Online Formal Reasoning Automatic Test</summary>
         <div class="iframe-wrap">
           <iframe class="pdf-frame" src="nofratnorm.pdf" title="Nydegger Online Formal Reasoning Automatic Test"></iframe>
@@ -343,7 +343,7 @@
         </div>
       </details>
 
-      <details>
+      <details id="norm-ovat33">
         <summary class="expand-btn">6. OVAT33 - Online Verbal Automatic Test 33</summary>
         <div class="iframe-wrap">
           <iframe class="pdf-frame" src="ovatnorm.pdf" title="Online Verbal Automatic Test 33"></iframe>
@@ -351,7 +351,7 @@
         </div>
       </details>
 
-      <details>
+      <details id="norm-sat">
         <summary class="expand-btn">7. SAT - Spatial Assessment Test</summary>
         <div class="iframe-wrap">
           <iframe class="pdf-frame" src="satnorm.pdf" title="Spatial Assessment Test"></iframe>
@@ -359,7 +359,7 @@
         </div>
       </details>
 
-      <details>
+      <details id="norm-noais">
         <summary class="expand-btn">8. NOAIS - Nydegger Online Automatic Intelligence Scale</summary>
         <div class="iframe-wrap">
           <iframe class="pdf-frame" src="noaisnorm.pdf" title="Nydegger Online Automatic Intelligence Scale"></iframe>
@@ -553,5 +553,27 @@
     </div>
 
   </div>
+
+  <script>
+    function openNormFromHash() {
+      const hash = window.location.hash;
+      if (!hash) return;
+
+      const target = document.querySelector(hash);
+      if (!target || target.tagName.toLowerCase() !== "details") return;
+
+      target.open = true;
+
+      setTimeout(() => {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }, 100);
+    }
+
+    window.addEventListener("load", openNormFromHash);
+    window.addEventListener("hashchange", openNormFromHash);
+  </script>
 </body>
 </html>
