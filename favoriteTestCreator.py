@@ -179,7 +179,7 @@ def generate_html(counter, link_map):
         <ul>
     """]
     
-        for name, count in sorted(counter.items(), key=lambda x: (-x[1], x[0].lower())):
+    for name, count in sorted(counter.items(), key=lambda x: (-x[1], x[0].lower())):
             link = link_map.get(name)
     
             if link:
@@ -187,7 +187,7 @@ def generate_html(counter, link_map):
             else:
                 html.append(f'      <li>{name} ({count})</li>')
     
-        html.append("""    </ul>
+    html.append("""    </ul>
       </div>
     
       <p>This list is automatically updated once a month.</p>
