@@ -76,129 +76,131 @@ def collect():
 
 def generate_html(counter, link_map):
     html = ["""<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Favorite High Range Tests</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      margin: 30px;
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 30px;
-    }
-
-    p {
-      max-width: 1000px;
-      margin: 10px auto;
-      font-size: 18px;
-      text-align: justify;
-    }
-
-    a {
-      text-decoration: none;
-      font-size: 18px;
-    }
-
-    .section {
-      margin: 50px auto;
-      max-width: 1000px;
-    }
-
-    ul {
-        max-width: 800px;
-        margin: 20px auto;
-        text-align: left;
-        font-size: 17px;
-        line-height: 1.5;
-        padding-left: 20px;
-    }
-
-    li {
-      padding: 2px 0;
-    }
-
-    hr {
-      border: none;
-      height: 1px;
-      background-color: #ccc;
-      margin: 60px auto;
-      width: 80%;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 12px 28px;
-      font-size: 20px;
-      border-radius: 8px;
-      color: white;
-      background-color: #0070ba;
-      transition: background-color 0.3s ease;
-      margin: 5px;
-      min-width: 150px;
-    }
-
-    .button:hover {
-      background-color: #005c99;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Favorite High Range Tests</h1>
-
-  <div class="section">
-    <p>
-      If you are new to high range tests, or simply want to explore new ones,
-      please consider the list below.
-    </p>
-
-    <p>
-      It is a compilation of the tests that members of the
-      <a href="https://nsl36.netlify.app/cognimetrica/society" target="_blank">
-        Cognimetrica Society
-      </a>
-      used to join the society, inspired by Ivan Ivec’s
-      <a href="https://www.ultimaiq.net/ftests.htm" target="_blank">
-        World Favorite IQ Tests
-      </a>
-      list.
-    </p>
-
-    <p><strong>(with links and number of votes in parentheses)</strong></p>
-
-    <hr>
-      <ul>
-"""]
-
-    for name, count in sorted(counter.items(), key=lambda x: (-x[1], x[0].lower())):
-        link = link_map.get(name)
-
-        if link:
-            html.append(f'        <li><a href="{link}" target="_blank">{name}</a> ({count})</li>')
-        else:
-            html.append(f'        <li>{name} ({count})</li>')
-
-    html.append("""      </ul>
-  </div>
-                
-  <p>This list is automatically updated once a month.  </p>
-
-  <hr>
-
-  <div class="section">
-    <a class="button" href="index.html">Back to main page</a><br><br>
-  </div>
-
-</body>
-</html>
-""")
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Favorite High Range Tests</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          background: #f9f9f9;
+          margin: 30px;
+          text-align: center;
+          line-height: 1.6;
+        }
+    
+        h1 {
+          font-size: 36px;
+          margin-bottom: 30px;
+        }
+    
+        p {
+          max-width: 1000px;
+          margin: 10px auto;
+          font-size: 18px;
+          text-align: justify;
+        }
+    
+        a {
+          text-decoration: none;
+          font-size: 18px;
+        }
+    
+        .section {
+          margin: 50px auto;
+        }
+    
+        ul {
+          max-width: 800px;
+          margin: 20px auto;
+          text-align: left;
+          font-size: 17px;
+          line-height: 1.5;
+          padding-left: 20px;
+        }
+    
+        li {
+          padding: 2px 0;
+        }
+    
+        hr {
+          border: none;
+          height: 1px;
+          background-color: #ccc;
+          margin: 60px auto;
+          width: 80%;
+        }
+    
+        .button {
+          display: inline-block;
+          padding: 12px 28px;
+          font-size: 20px;
+          border-radius: 8px;
+          color: white;
+          background-color: #0070ba;
+          transition: background-color 0.3s ease;
+          margin: 5px;
+          min-width: 150px;
+        }
+    
+        .button:hover {
+          background-color: #005c99;
+        }
+      </style>
+    </head>
+    <body>
+    
+      <h1>Favorite High Range Tests</h1>
+    
+      <div class="section" style="max-width: 1000px;">
+        <p>
+          If you are new to high range tests, or simply want to explore new ones,
+          please consider the list below.
+        </p>
+    
+        <p>
+          It is a compilation of the tests that members of the
+          <a href="https://nsl36.netlify.app/cognimetrica/society" target="_blank">
+            Cognimetrica Society
+          </a>
+          used to join the society, inspired by Ivan Ivec’s
+          <a href="https://www.ultimaiq.net/ftests.htm" target="_blank">
+            World Favorite IQ Tests
+          </a>
+          list.
+        </p>
+    
+        <p><strong>(with links and number of votes in parentheses)</strong></p>
+      </div>
+    
+      <hr>
+    
+      <div class="section">
+        <ul>
+    """]
+    
+        for name, count in sorted(counter.items(), key=lambda x: (-x[1], x[0].lower())):
+            link = link_map.get(name)
+    
+            if link:
+                html.append(f'      <li><a href="{link}" target="_blank">{name}</a> ({count})</li>')
+            else:
+                html.append(f'      <li>{name} ({count})</li>')
+    
+        html.append("""    </ul>
+      </div>
+    
+      <p>This list is automatically updated once a month.</p>
+    
+      <hr>
+    
+      <div class="section">
+        <a class="button" href="index.html">Back to main page</a><br><br>
+      </div>
+    
+    </body>
+    </html>
+    """)
 
     with open("favTests.html", "w", encoding="utf-8") as f:
         f.write("\n".join(html))
