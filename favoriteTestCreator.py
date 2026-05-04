@@ -7,7 +7,8 @@ BASE = "https://nsl36.netlify.app"
 
 def get_member_links():
     url = f"{BASE}/cognimetrica/society"
-    r = requests.get(url)
+    r = requests.get(url, timeout=20)
+    r.raise_for_status()
     soup = BeautifulSoup(r.text, "html.parser")
 
     links = []
@@ -21,7 +22,8 @@ def get_member_links():
 
 
 def extract_tests(member_url):
-    r = requests.get(member_url)
+    r = requests.get(member_url, timeout=20)
+    r.raise_for_status()
     soup = BeautifulSoup(r.text, "html.parser")
 
     results = []
