@@ -65,11 +65,10 @@ def collect():
         tests = extract_tests(link)
 
         for name, test_link in tests:
-            counter[name] += 1
-
-            # store one link per test (if available)
-            if test_link and name not in link_map:
-                link_map[name] = test_link
+            if test_link:
+              counter[name] += 1
+              if name not in link_map:
+                  link_map[name] = test_link
 
     return counter, link_map
 
@@ -180,12 +179,12 @@ def generate_html(counter, link_map):
     """]
     
     for name, count in sorted(counter.items(), key=lambda x: (-x[1], x[0].lower())):
-            link = link_map.get(name)
-    
-            if link:
-                html.append(f'      <li><a href="{link}" target="_blank">{name}</a> ({count})</li>')
-            else:
-                html.append(f'      <li>{name} ({count})</li>')
+      link = link_map.get(name)
+
+      if not link:
+          continue  # skip tests without a link
+
+      html.append(f'      <li><a href="{link}" target="_blank">{name}</a> ({count})</li>')
     
     html.append("""    </ul>
       </div>
