@@ -184,10 +184,9 @@ def generate_html(counter, link_map):
             html.append(f'        <li>{name} ({count})</li>')
 
     html.append("""      </ul>
-    </div>
   </div>
                 
-    <p>This list is automatically updated once a month.  </p>
+  <p>This list is automatically updated once a month.  </p>
 
   <hr>
 
@@ -199,7 +198,7 @@ def generate_html(counter, link_map):
 </html>
 """)
 
-    with open("output.html", "w", encoding="utf-8") as f:
+    with open("favTest.html", "w", encoding="utf-8") as f:
         f.write("\n".join(html))
 
 
