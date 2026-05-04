@@ -1,0 +1,40 @@
+name: Update Favorite Tests List
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'  # runs at 00:00 on the 1st of every month (UTC)
+  workflow_dispatch:     # allows manual run from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # needed to push changes
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: Run script
+        run: |
+          python favoriteTestCreator.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add favTests.html
+
+          git diff --cached --quiet || git commit -m "Auto-update favorite tests list"
+          git push
