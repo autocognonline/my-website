@@ -205,4 +205,4 @@ def generate_html(counter, link_map):
 if __name__ == "__main__":
     counts, links = collect()
     generate_html(counts, links)
-    print("Done. Open output.html")
+    print("Done.")
