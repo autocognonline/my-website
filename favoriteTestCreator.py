@@ -198,7 +198,7 @@ def generate_html(counter, link_map):
 </html>
 """)
 
-    with open("favTest.html", "w", encoding="utf-8") as f:
+    with open("favTests.html", "w", encoding="utf-8") as f:
         f.write("\n".join(html))
 
 
