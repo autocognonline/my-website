@@ -146,6 +146,19 @@ def generate_html(counter, link_map):
           background-color: #005c99;
         }
       </style>
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-3XHMB3NM73', {
+          'send_page_view': true,
+          'allow_google_signals': true
+        });
+      </script>
+
+      <link rel="icon" href="favicon.png">
     </head>
     <body>
     
@@ -169,7 +182,7 @@ def generate_html(counter, link_map):
           list.
         </p>
     
-        <p><strong>(with links and number of appearances in parentheses)</strong></p>
+        <p><strong>(with links and number of votes in parentheses)</strong></p>
       </div>
     
       <hr>
@@ -203,7 +216,6 @@ def generate_html(counter, link_map):
 
     with open("favTests.html", "w", encoding="utf-8") as f:
         f.write("\n".join(html))
-
 
 if __name__ == "__main__":
     counts, links = collect()
