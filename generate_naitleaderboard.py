@@ -256,7 +256,7 @@ html_output = f"""
   </div>
   
   <div class="section">
-    <a class="button" href="https://nsl36.netlify.app/competitions/naitor-certamen-ingenii">Contest Information</a>
+    <a class="button" href="https://nsl36.netlify.app/events/naitor-certamen-ingenii">Contest Information</a>
   </div>
 
   <div class="section">
