@@ -571,10 +571,10 @@
         }
 
         if (data.authorized === true) {
-          emailCheckStatus.textContent = "This email is authorized.";
+          emailCheckStatus.textContent = "This email is authenticated.";
           emailCheckStatus.className = "status success";
         } else {
-          emailCheckStatus.textContent = "This email is not authorized.";
+          emailCheckStatus.textContent = "This email is not authenticated.";
           emailCheckStatus.className = "status error";
         }
       } catch (err) {
