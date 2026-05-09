@@ -1,4 +1,5 @@
 const QUIZ_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/quiz_saito";
+const CERT_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/generate_saito_cert";
 const TOTAL_ITEMS = 30;
 const TOTAL_ATTEMPTS = 18;
 const SPATIAL_ITEMS = [4, 7, 15, 24, 27, 30];
@@ -320,13 +321,89 @@ async function endGame() {
 function showFinalResults() {
   let iq = normoCache?.[solved.length] ?? "N/A";
   if (solved.length === TOTAL_ITEMS) iq += " or higher";
+
   document.querySelector(".container").innerHTML = `
     <h2>Test Completed</h2>
     <p><strong>Raw score:</strong> ${solved.length} / ${TOTAL_ITEMS}</p>
     <p><strong>Estimated IQ (Wechsler Scale):</strong> ${iq}</p>
+
+    <div id="certificateBox" style="margin-top:20px; padding:16px; border:1px solid #ddd; border-radius:10px; background:#f7f9fc;">
+      <p><strong>Certificate</strong></p>
+      <p>If you are authenticated, you can generate your score certificate.</p>
+
+      <button id="generateCertBtn" type="button">
+        Generate Certificate
+      </button>
+
+      <p id="certStatus" style="margin-top:12px; font-weight:bold;"></p>
+    </div>
+
     <p>Thank you for your participation in the project.</p>
     <p>M.N.</p>
   `;
+
+  document
+    .getElementById("generateCertBtn")
+    ?.addEventListener("click", generateCertificate);
+}
+
+async function generateCertificate() {
+  const btn = document.getElementById("generateCertBtn");
+  const status = document.getElementById("certStatus");
+
+  if (!email) {
+    status.style.color = "crimson";
+    status.textContent = "Missing email. Please log in again.";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Generating...";
+  status.style.color = "#333";
+  status.textContent = "Generating certificate...";
+
+  try {
+    const res = await fetch(CERT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email })
+    });
+
+    const body = await res.json().catch(() => ({}));
+
+    if (!res.ok || body.error) {
+      status.style.color = "crimson";
+      status.textContent = body.error || "Could not generate certificate.";
+      btn.disabled = false;
+      btn.textContent = "Generate Certificate";
+      return;
+    }
+
+    if (!body.url) {
+      status.style.color = "crimson";
+      status.textContent = "Certificate generated, but no URL was returned.";
+      btn.disabled = false;
+      btn.textContent = "Generate Certificate";
+      return;
+    }
+
+    status.style.color = "#2a7a2a";
+    status.innerHTML = `
+      Certificate generated successfully.<br>
+      <a href="${body.url}" target="_blank" rel="noopener noreferrer">
+        Open certificate PDF
+      </a>
+    `;
+
+    btn.textContent = "Certificate Generated";
+  } catch (err) {
+    status.style.color = "crimson";
+    status.textContent = "Network error while generating certificate.";
+    btn.disabled = false;
+    btn.textContent = "Generate Certificate";
+  }
 }
 
 // ─── FINISH BUTTON ─────────────────────────────────────
@@ -346,9 +423,3 @@ spatialCanvas.addEventListener("touchend", e=>{
 
 // ─── INITIAL LOAD ─────────────────────────────────────
 loadUserProgress();
-
-
-
-
-
-
