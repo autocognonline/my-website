@@ -202,7 +202,7 @@ def generate_html(counter, link_map):
     html.append("""    </ul>
       </div>
     
-      <p>This list is automatically updated twice a month.</p>
+      <p>This list is automatically updated every 15 days.</p>
     
       <hr>
     
