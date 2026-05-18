@@ -1,3 +1,4 @@
+18 May 2026 - Index layout change.
 9 May 2026 - Authenticated candidates can generate a SAITO certificate.
 4 May 2026 - A list of favorite high range tests is available.
 13 April 2026 - NOCTÆ is available.
