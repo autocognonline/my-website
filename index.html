@@ -79,26 +79,7 @@
       background-color: #f2f2f2;
     }
 
-    .test-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      max-width: 1000px;
-      margin: 0 auto 15px auto;
-      background: #eeeeee;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
-
-    .test-row p {
-      margin: 0;
-      font-size: 18px;
-      text-align: left;
-      flex: 1;
-    }
-
+    .test-row,
     .creator-row {
       display: flex;
       align-items: center;
@@ -110,6 +91,14 @@
       border-radius: 10px;
       padding: 16px 18px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .test-row p,
+    .creator-row p {
+      margin: 0;
+      font-size: 18px;
+      text-align: left;
+      flex: 1;
     }
 
     .creator-link {
@@ -129,15 +118,8 @@
       transform: translateY(-1px);
     }
 
-    .creator-row p {
-      margin: 0;
-      font-size: 18px;
-      text-align: left;
-      flex: 1;
-    }
-
     .news-container {
-      max-width: 800px;
+      max-width: 1000px;
       height: 180px;
       margin: 0 auto 50px auto;
       padding: 15px 20px;
@@ -170,7 +152,7 @@
     }
 
     .form-container {
-      max-width: 600px;
+      max-width: 1000px;
       margin: 20px auto 0 auto;
       background: #eeeeee;
       border-radius: 10px;
@@ -225,7 +207,7 @@
     }
 
     .slideshow-container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 30px auto;
       border-radius: 12px;
       overflow: hidden;
@@ -252,31 +234,83 @@
       transition: width 1s linear;
     }
 
-    .intro-wrapper {
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+
       max-width: 1000px;
-      margin: 0 auto 20px auto;
+      width: calc(100% - 0px);
+      margin: 0 auto 28px auto;
+      padding: 8px 10px;
+      box-sizing: border-box;
+
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 6px;
+
+      background: rgba(249, 249, 249, 0.96);
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      backdrop-filter: blur(6px);
     }
 
-    .intro-toggle {
-      display: inline-block;
-      margin: 0 auto 15px auto;
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      background: #0070ba;
-      color: white;
+    .tab-button {
+      flex: 1 1 120px;
+      min-width: 105px;
+
+      border: 1px solid #0070ba;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      padding: 6px 10px;
+      font-size: clamp(12px, 1.35vw, 16px);
+      border-radius: 999px;
+      color: #0070ba;
+      background-color: #ffffff;
+
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+      text-align: center;
+      line-height: 1.15;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .intro-toggle:hover {
-      background: #005c99;
+    .tab-button:hover,
+    .tab-button:focus {
+      background-color: #e7f3fb;
       transform: translateY(-1px);
+      outline: none;
     }
 
-    .intro-content.collapsed {
+    .tab-button.active {
+      color: #ffffff;
+      background-color: #0070ba;
+      box-shadow: 0 2px 7px rgba(0,112,186,0.22);
+    }
+
+    .content-panel {
       display: none;
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px 18px 10px 18px;
+      background: #ffffff;
+      border: 1px solid #e2e2e2;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    }
+
+    .content-panel.active {
+      display: block;
+    }
+
+    .content-panel h2:first-child {
+      margin-top: 5px;
     }
 
     @media (max-width: 768px) {
@@ -301,6 +335,24 @@
       p {
         font-size: 16px;
         text-align: left;
+      }
+
+      .top-nav {
+        gap: 6px;
+        padding: 8px;
+      }
+
+      .tab-button {
+        flex: 1 1 105px;
+        min-width: 95px;
+        max-width: none;
+        width: auto;
+        font-size: 11px;
+        padding: 5px 8px;
+      }
+
+      .content-panel {
+        padding: 14px 10px 4px 10px;
       }
 
       .test-row,
@@ -358,12 +410,29 @@
 <body>
   <h1>Computerized high range cognitive tests</h1>
 
-  <div class="intro-wrapper" id="introWrapper">
-    <button id="introToggle" class="intro-toggle" type="button" aria-expanded="true">
-      Hide introduction
-    </button>
+  <h2>News</h2>
 
-    <div class="section intro-content" id="introContent" style="max-width: 1000px;">
+    <div id="news-container" class="news-container">
+    Loading news...
+    </div>
+  </div>
+
+  <nav class="top-nav" aria-label="Page sections">
+    <button class="tab-button active" type="button" data-target="intro-panel">Introduction</button>
+    <button class="tab-button" type="button" data-target="contest-panel">NAITOR Contest</button>
+    <button class="tab-button" type="button" data-target="tests-panel">Tests</button>
+    <button class="tab-button" type="button" data-target="statistics-panel">Statistics</button>
+    <button class="tab-button" type="button" data-target="misc-panel">Miscellaneous</button>
+    <button class="tab-button" type="button" data-target="policies-panel">Policies & Procedures</button>
+    <button class="tab-button" type="button" data-target="creators-panel">Other creators</button>
+  </nav>
+
+
+
+  <div class="content-panel active" id="intro-panel">
+    <h2>Introduction</h2>
+
+    <div class="section" style="max-width: 1000px;">
       <p>On this website, you will find experimental intelligence tests that I have created or co-authored.</p>
       <p>The project originally ran from 2009 to 2015 and was revived in 2025 in a new format, featuring improved test items and updated scoring procedures.</p>
       <p>All tests are developed through iterative item design informed by prior experience and statistical analysis. As additional data is collected, the tests are revised to improve accuracy and reliability.</p>
@@ -379,26 +448,8 @@
     </div>
   </div>
 
-  <h2>News</h2>
 
-    <div id="news-container" class="news-container">
-    Loading news...
-    </div>
-  </div>
-
-  <hr>
-  <h2>Selected NAIT/SAITO Item Showcase</h2>
-
-  <div class="slideshow-container">
-    <img id="slideshow-image" src="" alt="Slideshow image">
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress-fill"></div>
-    </div>
-  </div>
-
-
-  <hr>
-
+  <div class="content-panel" id="contest-panel">
   <h2>NAITOR Contest</h2>
 
   <div class="section" id="nait-section">
@@ -450,6 +501,9 @@
 
   <hr>
 
+  </div>
+
+  <div class="content-panel" id="tests-panel">
   <h2>Standalone tests</h2>
 
   <div class="section">
@@ -500,6 +554,9 @@
       </div>
   </div>
 
+  </div>
+
+  <div class="content-panel" id="statistics-panel">
   <h2>Statistics and related information</h2>
 
   <div class="section">
@@ -525,7 +582,9 @@
     </div>
   </div>
 
-  <hr>
+  </div>
+
+  <div class="content-panel" id="misc-panel">
   <h2>Miscellaneous</h2>
 
   <div class="section">
@@ -539,7 +598,9 @@
     </div>
   </div>
 
-  <hr>
+  </div>
+
+  <div class="content-panel" id="policies-panel">
   <h2>Policies and Procedures</h2>
 
   <div class="section">
@@ -553,8 +614,10 @@
     </div>
   </div>
   
-  <hr>
   
+  </div>
+
+  <div class="content-panel" id="creators-panel">
   <h2>Links to the work of other test creators </h2>
 
   <div class="section">
@@ -584,10 +647,51 @@
     </div>
   </div>
   
-  <hr>
+
+  </div>
 
   <p style="text-align: left; font-size:0.9em; font-style:italic;">Project by M.-A. Nydegger 2025-2026</p>
 
+  <hr>
+
+  <h2>Selected NAIT/SAITO Item Showcase</h2>
+
+  <div class="slideshow-container">
+    <img id="slideshow-image" src="" alt="Slideshow image">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+
+  <script>
+    (function () {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const panels = document.querySelectorAll('.content-panel');
+
+      function showPanel(targetId) {
+        panels.forEach(panel => {
+          panel.classList.toggle('active', panel.id === targetId);
+        });
+
+        tabButtons.forEach(button => {
+          const isActive = button.dataset.target === targetId;
+          button.classList.toggle('active', isActive);
+          button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+      }
+
+      tabButtons.forEach(button => {
+        button.setAttribute('role', 'tab');
+        button.setAttribute('aria-selected', button.classList.contains('active') ? 'true' : 'false');
+
+        button.addEventListener('click', function () {
+          showPanel(this.dataset.target);
+        });
+      });
+    })();
+  </script>
   <script>
     fetch("news.txt")
       .then(response => response.text())
@@ -700,36 +804,6 @@
   
     updateSlideshow();
     setInterval(updateSlideshow, 500);
-  </script>
-  <script>
-    (function () {
-      const introContent = document.getElementById('introContent');
-      const introToggle = document.getElementById('introToggle');
-
-      const hasVisitedBefore = localStorage.getItem('visitedBefore') === 'true';
-
-      // Collapse automatically for returning visitors
-      if (hasVisitedBefore) {
-        introContent.classList.add('collapsed');
-        introToggle.textContent = 'Show introduction';
-        introToggle.setAttribute('aria-expanded', 'false');
-      } else {
-        // Mark first-time visitor for future visits
-        localStorage.setItem('visitedBefore', 'true');
-      }
-
-      introToggle.addEventListener('click', function () {
-        const isCollapsed = introContent.classList.toggle('collapsed');
-
-        if (isCollapsed) {
-          introToggle.textContent = 'Show introduction';
-          introToggle.setAttribute('aria-expanded', 'false');
-        } else {
-          introToggle.textContent = 'Hide introduction';
-          introToggle.setAttribute('aria-expanded', 'true');
-        }
-      });
-    })();
   </script>
 </body>
 </html>
