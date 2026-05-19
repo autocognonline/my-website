@@ -352,8 +352,21 @@
       <p><strong>Individuals below the age of 16 are not allowed.</strong></p>
       <p class="lead">To verify your identity, please follow the steps below:</p>
       <p>All new users must submit a valid identity document (ID, passport, driving license) using the form below.</p>
-      <p>Your full name and date of birth must be clearly visible on the document.</p>
-      <p>If you are a member of the Glia Society and joined before 2024, this information is sufficient. If you are not a member, the document must also include a visible photograph of your face.</p>
+      <p>
+  If any of the following apply to you, your identity document only needs to show
+  your full name and date of birth (a facial photograph on the document is not required):
+</p>
+
+<div class="rule-box">
+  <p>• You joined the Glia Society before 2024.</p>
+  <p>• You are a member of the Cognimetrica Society.</p>
+  <p>• You previously completed NIT – Form 1 (full test).</p>
+</div>
+
+<p>
+  If none of the above apply, your identity document must also include a clearly
+  visible photograph of your face.
+</p>
       <p>In addition, you must submit a recent photograph of yourself. This is required to confirm that the person submitting the information is the same individual named on the identity document.</p>
       <p>If you prefer not to submit a facial photograph, a one-time fee of 50 CHF must be paid using the PayPal button below.</p>
     </div>
@@ -373,10 +386,7 @@
       <p><strong>Authentication might be rejected if fraudulent activity is suspected even if all the requested data has been provided.</strong></p>
     </div>
 
-    <div class="paypal-wrap">
-      <a href="https://paypal.me/OrbifoldAnswers?country.x=CH&locale.x=en_US" target="_blank" rel="noopener noreferrer" class="paypal-button">Pay with PayPal</a>
-    </div>
-
+    
     <section class="form-card">
       <h3>Verification form</h3>
       <p class="form-intro">Please complete all required fields and upload clear, readable files.</p>
@@ -388,63 +398,88 @@
 
       <form id="verification-form" enctype="multipart/form-data">
         <div class="form-grid">
-          <div class="field">
-            <label for="full_name">Full name</label>
-            <input id="full_name" type="text" name="full_name" required />
+        <div class="field">
+          <label for="full_name">Full name</label>
+          <input id="full_name" type="text" name="full_name" required />
+        </div>
+
+        <div class="field" style="grid-row: span 3;">
+          <label for="is_glia_member">
+            Does any of the following apply to you?
+          </label>
+
+          <div class="rule-box" style="margin: 0 0 12px;">
+            <p>• You joined the Glia Society before 2024.</p>
+            <p>• You are a member of the Cognimetrica Society.</p>
+            <p>• You previously completed NIT – Form 1 (full test).</p>
           </div>
 
-          <div class="field">
-            <label for="email">Email address</label>
-            <input id="email" type="email" name="email" required autocomplete="email" />
-          </div>
+          <select id="is_glia_member" name="is_glia_member" required>
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
 
-          <div class="field">
-            <label for="date_of_birth">Date of birth</label>
-            <input id="date_of_birth" type="date" name="date_of_birth" required />
-          </div>
+        <div class="field">
+          <label for="email">Email address</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            required
+            autocomplete="email"
+          />
+        </div>
 
-          <div class="field">
-            <label for="is_glia_member">Did you join the Glia Society before 2024 ?</label>
-            <select id="is_glia_member" name="is_glia_member" required>
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </div>
+        <div class="field">
+          <label for="date_of_birth">Date of birth</label>
+          <input
+            id="date_of_birth"
+            type="date"
+            name="date_of_birth"
+            required
+          />
+        </div>
 
-          <div class="field full">
-            <label for="identity_document">Identity document</label>
-            <input
-              id="identity_document"
-              type="file"
-              name="identity_document"
-              accept=".jpg,.jpeg,.png,.pdf"
-              required
-            />
-            <div class="hint" id="identity-document-hint">
-              Upload a clear document showing your full name, date of birth and face if no fee is paid.
-            </div>
-          </div>
-
-          <div class="field full" id="selfie-field">
-            <label for="selfie_photo">Recent photograph of yourself</label>
-            <input
-              id="selfie_photo"
-              type="file"
-              name="selfie_photo"
-              accept=".jpg,.jpeg,.png"
-            />
-            <div class="hint">
-              Required unless you choose to pay the 50 CHF fee.
-            </div>
-          </div>
-
-          <div class="field full actions">
-            <button class="submit-button" type="submit">Submit verification</button>
-            <p id="form-status" class="status"></p>
+        <div class="field full">
+          <label for="identity_document">Identity document</label>
+          <input
+            id="identity_document"
+            type="file"
+            name="identity_document"
+            accept=".jpg,.jpeg,.png,.pdf"
+            required
+          />
+          <div class="hint" id="identity-document-hint">
+            Upload a clear document showing your full name, date of birth and face if no fee is paid.
           </div>
         </div>
+
+        <div class="field full" id="selfie-field">
+          <label for="selfie_photo">Recent photograph of yourself</label>
+          <input
+            id="selfie_photo"
+            type="file"
+            name="selfie_photo"
+            accept=".jpg,.jpeg,.png"
+          />
+          <div class="hint">
+            Required unless you choose to pay the 50 CHF fee.
+          </div>
+        </div>
+
+        <div class="field full actions">
+          <button class="submit-button" type="submit">Submit verification</button>
+          <p id="form-status" class="status"></p>
+        </div>
+      </div>
       </form>
     </section>
+
+    <div class="paypal-wrap">
+      <a href="https://paypal.me/OrbifoldAnswers?country.x=CH&locale.x=en_US" target="_blank" rel="noopener noreferrer" class="paypal-button">Pay with PayPal</a>
+    </div>
+
 
     <hr>
 
