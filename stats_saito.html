@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Statistics of SAITO</title>
+  <style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .page {
+    width: min(1000px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 32px 0 60px;
+  }
+
+  .intro {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    margin: 0 0 12px;
+    color: #111;
+  }
+
+  h2 {
+    font-size: clamp(22px, 3vw, 30px);
+    margin: 0 0 18px;
+    text-align: center;
+  }
+
+  p {
+    max-width: 1000px;
+    margin: 10px auto;
+    font-size: 18px;
+    text-align: justify;
+  }
+
+  a {
+    color: #0070ba;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px auto;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .narrow {
+    max-width: 1000px;
+  }
+
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+  }
+
+  caption {
+    caption-side: top;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 14px;
+    color: #111;
+  }
+
+  th, td {
+    border: 1px solid #e2e7ee;
+    padding: 10px 14px;
+    font-size: 16px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  th {
+    background: #0070ba;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  tbody tr:nth-child(even) {
+    background: #f8fbff;
+  }
+
+  tbody tr:hover {
+    background: #eef6ff;
+  }
+
+  .metric-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+    white-space: normal;
+  }
+
+  .metric-table td:last-child {
+    font-weight: bold;
+    width: 180px;
+  }
+
+  .group-row th {
+    background: #6f7782;
+    color: #fff;
+    font-size: 16px;
+    text-align: left;
+  }
+
+  .wide-table th,
+  .wide-table td {
+    white-space: nowrap;
+  }
+
+  .note-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 16px;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 12px 28px;
+    font-size: 18px;
+    border-radius: 8px;
+    color: white;
+    background-color: #0070ba;
+    transition: background-color 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: #005c99;
+    text-decoration: none;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .page {
+      width: min(100% - 20px, 1500px);
+      padding-top: 20px;
+    }
+
+    .card {
+      padding: 16px;
+      margin: 20px auto;
+      border-radius: 10px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    th, td {
+      padding: 8px 10px;
+      font-size: 15px;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3XHMB3NM73', {
+    'send_page_view': true,
+    'allow_google_signals': true
+  });
+</script>
+<link rel="icon" href="favicon.png">
+<!-- MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <main class="page">
+
+    <section class="intro">
+      <h1>Statistics of SAITO and its Subtests</h1>
+      <h3>19 May 2026</h3>
+      <p>Developed in February 2026, SAITO is a short high range IQ test designed as an introduction to high range tests for newcomers, while also serving as a formal examination.
+      <p>The test is untimed and consists of 30 items covering five cognitive domains, including numerical, verbal, logical, abstract, and spatial reasoning. 
+      Its format is similar to a condensed version of NOACT and NOFRAT, with each of the five subtests containing six items.</p>
+      <p>Unlike the other tests available on this website, SAITO can be taken without completing the authentication process. 
+      Candidates need only verify an email address to gain access.</p>
+      <p>While this makes the test more accessible, it also creates a greater opportunity for retakes and cheating, since users can potentially register multiple email addresses.
+      To mitigate this risk, the testing platform incorporates several security mechanisms designed to make cheating difficult. 
+      In addition, every submission is manually reviewed by the test author before being included in the dataset, in order to ensure as far as possible that fraudulent attempts are excluded.</p>
+      <p>Another important consideration is that SAITO is offered free of charge and is open to anyone, including potentially very young participants. 
+      As a result, some submissions may not accurately reflect a candidate's true cognitive ability, as individuals may abandon the test prematurely or make avoidable errors due to lack of motivation or seriousness.
+      This tendency can lead to somewhat deflated statistical results, and this should be kept in mind when interpreting the data.</p>
+      <p>Below are the current statistics for SAITO, based on a sample of 29 verified submissions.</p>
+    </section>
+
+    <section class="card narrow">
+      <div class="table-container">
+        <table class="metric-table">
+          <caption>Statistical Summary</caption>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="2">Descriptive Statistics</th></tr>
+            <tr><td>Lowest raw score</td><td>1</td></tr>
+            <tr><td>Highest raw score</td><td>29</td></tr>
+            <tr><td>Mean and 95% confidence uncertainty</td><td>16.34 ± 3.44</td></tr>
+            <tr><td>Median</td><td>15.0</td></tr>
+            <tr><td>Mode</td><td>27.0</td></tr>
+            <tr><td>Raw score standard deviation</td><td>8.89</td></tr>
+            <tr><td>Quartile deviation</td><td>8.00</td></tr>
+            <tr><td>Skewness</td><td>-0.10</td></tr>
+            <tr><td>Excess kurtosis</td><td>-1.44</td></tr>
+            <tr><td>Average number of attempts left</td><td>2.38</td></tr>
+
+            <tr class="group-row"><th colspan="2">Reliability</th></tr>
+            <tr><td>Cronbach's alpha</td><td>0.953</td></tr>
+            <tr><td>McDonald's omega</td><td>0.944</td></tr>
+            <tr><td>Split-half reliability index</td><td>0.925</td></tr>
+            <tr><td>Spearman–Brown corrected reliability</td><td>0.960</td></tr>
+
+            <tr class="group-row"><th colspan="2">Test Characteristics</th></tr>
+            <tr><td>Range</td><td>29</td></tr>
+            <tr><td>Resolution</td><td>7.88</td></tr>
+            <tr><td>Sample-dependent hardness</td><td>0.50</td></tr>
+            <tr><td>Sample-independent hardness</td><td>0.53</td></tr>
+            <tr><td>Overall test complexity</td><td>0.54</td></tr>
+            <tr><td>Standard error of measurement (raw score)</td><td>1.86</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card narrow">
+      <div class="table-container">
+        <table class="metric-table">
+          <caption>Ivec’s Quality </caption>
+          <tbody>
+            <tr class="group-row">
+              <th colspan="2">Item Classification</th>
+            </tr>
+            <tr><td>Number of items</td><td>30</td></tr>
+            <tr><td>Good items</td><td>25</td></tr>
+            <tr><td>Average items</td><td>4</td></tr>
+            <tr><td>Suspicious items</td><td>1</td></tr>
+            <tr><td>Bad items</td><td>0</td></tr>
+            <tr><td>Unsolved items</td><td>0</td></tr>
+
+            <tr class="group-row">
+              <th colspan="2">Quality Estimates in Percentage</th>
+            </tr>
+            <tr><td>Overall quality </td><td>84.5</td></tr>
+            <tr><td>Abstract subtest quality </td><td>83.4</td></tr>
+            <tr><td>Numerical subtest quality </td><td>90.3</td></tr>
+            <tr><td>Verbal subtest quality </td><td>91.7</td></tr>
+            <tr><td>Spatial subtest quality </td><td>79.2</td></tr>
+            <tr><td>Logical subtest quality </td><td>77.7</td></tr>
+            <tr><td>Overal quality in the 130 to 150 IQ range  </td><td>88.1</td></tr>
+            <tr><td>Overal Quality in the 140 to 160 IQ range </td><td>84.8</td></tr>
+            <tr><td>Overal Quality in the 150 to 170 IQ range </td><td>63.8</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a
+        class="note-link"
+        href="https://ivec.ultimaiq.net/quality.htm"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Information about Ivec’s quality
+      </a>
+    </section>
+
+    <section class="card narrow">
+      <div class="table-container">
+        <table class="metric-table">
+          <caption>Authenticated Candidate Statistics</caption>
+          <tbody>
+            <tr class="group-row"><th colspan="2">General data</th></tr>
+            <tr><td>Youngest candidate in years</td><td>18</td></tr>
+            <tr><td>Oldest candidate in years</td><td>76</td></tr>
+            <tr><td>Mean age in years</td><td>42.9</td></tr>
+            <tr><td>Median age in years</td><td>41.5</td></tr>
+            <tr><td>Age standard deviation in years</td><td>16.79</td></tr>
+            <tr><td>Percentage of males</td><td>92.9</td></tr>
+            <tr><td>Percentage of females</td><td>7.1</td></tr>
+            <tr><td>Percentage classified as unknown/other sex</td><td>0.0</td></tr>
+            <tr><td>Correlation between age and raw score</td><td>-0.25</td></tr>
+
+            <tr class="group-row"><th colspan="2">Candidates by Country, listed only if more than 1</th></tr>
+            <tr><td>Italy</td><td>3</td></tr>
+            <tr><td>United States of America</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card narrow">
+      <h2>Correlations between SAITO and Other Tests</h2>
+      <p>
+        Correlations are computed between the raw score on the SAITO and the raw scores on other tests,
+        except in the case of standardized tests, such as the WAIS, where correlations are computed between
+        the raw SAITO score and the standardized IQ score. Values are displayed only if the number of score
+        pairs is greater than 2. This information is only available from authenticated candidates whose previous test scores are known.
+      </p>
+    
+    <br>
+
+    <!-- generated HTML from python code-->
+
+    <div class="table-container">
+      <table style="max-width: 900px; margin: 0 auto;">
+        <thead>
+          <tr style="background-color: #0070ba; color: white;">
+            <th>Test Name</th>
+            <th>Author(s)</th>
+            <th>Spearman ρ</th>
+            <th>Pearson r</th>
+            <th>Pairs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Algebrica</td><td>M. Predavec</td><td>1.000</td><td>1.000</td><td>3</td></tr><tr><td>Cooijmans Intelligence Test - Form 3E</td><td>P. Cooijmans</td><td>1.000</td><td>0.994</td><td>3</td></tr><tr><td>Calculus Luminis Mensura</td><td>A. Udriste</td><td>1.000</td><td>0.993</td><td>3</td></tr><tr><td>NOFRAT</td><td>M.-A. Nydegger</td><td>1.000</td><td>0.989</td><td>3</td></tr><tr><td>NEAITO Verbal Subtest</td><td>M.-A. Nydegger</td><td>1.000</td><td>0.971</td><td>4</td></tr><tr><td>NEAITO</td><td>M.-A. Nydegger</td><td>1.000</td><td>0.969</td><td>4</td></tr><tr><td>NOCTAE Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.975</td><td>0.994</td><td>5</td></tr><tr><td>NEAITO Numerical Subtest</td><td>M.-A. Nydegger</td><td>1.000</td><td>0.955</td><td>4</td></tr><tr><td>NOCTAE Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.918</td><td>0.992</td><td>5</td></tr><tr><td>NOFRAT Numerical Subtest</td><td>M.-A. Nydegger</td><td>1.000</td><td>0.892</td><td>3</td></tr><tr><td>NOACT Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.898</td><td>0.983</td><td>6</td></tr><tr><td>NOCTAE</td><td>M.-A. Nydegger</td><td>0.975</td><td>0.902</td><td>5</td></tr><tr><td>NOFRAT Abstract Subtest</td><td>M.-A. Nydegger</td><td>1.000</td><td>0.862</td><td>3</td></tr><tr><td>Numerus Light 2</td><td>I. Ivec</td><td>0.866</td><td>0.993</td><td>3</td></tr><tr><td>NEAITO Logical Subtest</td><td>M.-A. Nydegger</td><td>1.000</td><td>0.814</td><td>4</td></tr><tr><td>Verba 66</td><td>M. Predavec</td><td>1.000</td><td>0.806</td><td>3</td></tr><tr><td>SAITO Logical Subtest</td><td>M.-A. Nydegger</td><td>0.819</td><td>0.919</td><td>14</td></tr><tr><td>Morphic Verbal Associations</td><td>A. Udriste</td><td>0.866</td><td>0.866</td><td>3</td></tr><tr><td>MCST 32</td><td>P.L. Miranda</td><td>0.800</td><td>0.930</td><td>4</td></tr><tr><td>NEAITO Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.800</td><td>0.924</td><td>4</td></tr><tr><td>NAITOR Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.895</td><td>0.769</td><td>5</td></tr><tr><td>SAITO Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.858</td><td>0.723</td><td>14</td></tr><tr><td>SAITO Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.670</td><td>0.883</td><td>14</td></tr><tr><td>SAITO Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.689</td><td>0.864</td><td>14</td></tr><tr><td>NAIT Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.605</td><td>0.888</td><td>9</td></tr><tr><td>NOACT Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.577</td><td>0.910</td><td>6</td></tr><tr><td>Spatial Assessment Test</td><td>A. Udriste / M.-A. Nydegger</td><td>0.667</td><td>0.795</td><td>5</td></tr><tr><td>NAIT Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.675</td><td>0.774</td><td>9</td></tr><tr><td>NAITOR</td><td>M.-A. Nydegger</td><td>0.667</td><td>0.763</td><td>5</td></tr><tr><td>NAIT</td><td>M.-A. Nydegger</td><td>0.545</td><td>0.866</td><td>9</td></tr><tr><td>NOACT Logical Subtest</td><td>M.-A. Nydegger</td><td>0.539</td><td>0.860</td><td>6</td></tr><tr><td>NAIT Logical Subtest</td><td>M.-A. Nydegger</td><td>0.591</td><td>0.792</td><td>9</td></tr><tr><td>Einplex</td><td>I. Ivec</td><td>0.632</td><td>0.750</td><td>4</td></tr><tr><td>NOCTAE Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.821</td><td>0.557</td><td>5</td></tr><tr><td>Simtollect</td><td>I. Ivec</td><td>0.500</td><td>0.860</td><td>3</td></tr><tr><td>LDA-SWaN</td><td>G. Lombardi</td><td>0.500</td><td>0.851</td><td>3</td></tr><tr><td>NAIT Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.515</td><td>0.836</td><td>9</td></tr><tr><td>OVAT 33</td><td>M.-A. Nydegger</td><td>0.671</td><td>0.628</td><td>5</td></tr><tr><td>NEAITO Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.632</td><td>0.662</td><td>4</td></tr><tr><td>SAITO Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.654</td><td>0.639</td><td>14</td></tr><tr><td>NOFRAT Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.500</td><td>0.756</td><td>3</td></tr><tr><td>Logica Rigor Numerorum</td><td>A. Udriste</td><td>0.500</td><td>0.721</td><td>3</td></tr><tr><td>NOACT</td><td>M.-A. Nydegger</td><td>0.334</td><td>0.885</td><td>6</td></tr><tr><td>NAIT Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.346</td><td>0.768</td><td>9</td></tr><tr><td>NIT-Form 1</td><td>M.-A. Nydegger</td><td>0.500</td><td>0.521</td><td>3</td></tr><tr><td>Numericore</td><td>D. Fourie</td><td>0.500</td><td>0.513</td><td>3</td></tr><tr><td>LUX 25</td><td>J. Betts</td><td>0.500</td><td>0.500</td><td>3</td></tr><tr><td>Hieroglyphica</td><td>M. Predavec</td><td>0.400</td><td>0.577</td><td>4</td></tr><tr><td>NOACT Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.154</td><td>0.778</td><td>6</td></tr><tr><td>Numerus Strictus Logicae 36</td><td>A. Udriste</td><td>0.500</td><td>0.327</td><td>3</td></tr><tr><td>NAITOR Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.289</td><td>0.533</td><td>5</td></tr><tr><td>Numerus</td><td>I. Ivec</td><td>0.316</td><td>0.505</td><td>4</td></tr><tr><td>NAITOR Logical Subtest</td><td>M.-A. Nydegger</td><td>0.359</td><td>0.444</td><td>5</td></tr><tr><td>NAITOR Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.500</td><td>0.280</td><td>5</td></tr><tr><td>Free Fall</td><td>I. Ivec</td><td>0.500</td><td>0.217</td><td>3</td></tr><tr><td>XVLingua</td><td>M. Predavec</td><td>0.258</td><td>0.403</td><td>4</td></tr><tr><td>NAITOR Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.289</td><td>0.243</td><td>5</td></tr><tr><td>Tetragram</td><td>G. Garofalo</td><td>0.000</td><td>0.410</td><td>3</td></tr><tr><td>Numerus Light</td><td>I. Ivec</td><td>0.105</td><td>0.287</td><td>4</td></tr><tr><td>SLSE I</td><td>J. Wai</td><td>0.056</td><td>0.157</td><td>4</td></tr><tr><td>Verbal Test of Pattern Recognition</td><td>A. Udriste</td><td>0.000</td><td>0.189</td><td>3</td></tr><tr><td>World Intelligence Test</td><td>J. Betts</td><td>0.200</td><td>-0.084</td><td>4</td></tr><tr><td>Lexiq</td><td>J. Betts</td><td>-0.500</td><td>-0.283</td><td>3</td></tr><tr><td>Mathema</td><td>J. Betts</td><td>-0.577</td><td>-0.518</td><td>5</td></tr><tr><td>Asterix</td><td>J. Betts</td><td>-0.866</td><td>-0.693</td><td>3</td></tr><tr><td>AGLT</td><td>A.A. Gangvik</td><td>-0.866</td><td>-0.786</td><td>3</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+
+    <section class="card narrow">
+      <div class="table-container">
+        <table class="metric-table">
+          <caption>Construct Validity</caption>
+          <tbody>
+            <tr class="group-row"><th colspan="2">g Factor</th></tr>
+            <tr><td>Estimated g-loading (lower bound)</td><td>0.75</td></tr>
+            <tr><td>Number of (sub)tests used for the g-loading estimation (score pairs ≥ 4, SAITO subtests excluded) </td><td>38</td></tr>
+
+            <tr class="group-row"><th colspan="2">Corrected Point-Biserial Correlation \(r_{pb}\)</th></tr>
+            <tr><td>Mean value</td><td>0.602</td></tr>
+            <tr><td>Number of items with \(r_{pb}\) &gt; 0.7</td><td>10</td></tr>
+            <tr><td>Number of items with 0.7 ≥ \(r_{pb}\) &gt; 0.5</td><td>12</td></tr>
+            <tr><td>Number of items with 0.5 ≥ \(r_{pb}\) &gt; 0.3</td><td>6</td></tr>
+            <tr><td>Number of items with 0.3 ≥ \(r_{pb}\) &gt; 0.1</td><td>2</td></tr>
+            <tr><td>Number of items with \(r_{pb}\) ≤ 0.1</td><td>0</td></tr>
+            <tr><td>Number of items with insufficient data</td><td>0</td></tr>
+
+            <tr class="group-row"><th colspan="2">Dimensionality</th></tr>
+            <tr><td><strong>Full test structure</strong></td><td>Unidimensional</td></tr>
+            <tr><td>Numerical subtest structure</td><td>Unidimensional</td></tr>
+            <tr><td>Verbal subtest  structure</td><td>Unidimensional</td></tr>
+            <tr><td>Abstract Subtest structure</td><td>Unidimensional</td></tr>
+            <tr><td>Logical subtest structure</td><td>Unidimensional</td></tr>
+            <tr><td>Spatial subtest structure</td><td>Borderline</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+      <!-- generated HTML from code from python-->
+      <div style="display: flex; justify-content: center; margin: 20px 0;">
+        <table style="
+            border-collapse: collapse;
+            font-size: 16px;
+            text-align: center;
+            background: white;
+        ">
+          <caption style="
+              font-size: 22px;
+              font-weight: bold;
+              margin-bottom: 12px;
+              color: #111;
+          ">
+            Correlation Matrix between SAITO Subtests
+          </caption>
+
+          <thead>
+            <tr>
+              <th style="border: none; background: transparent;"></th>
+              <th>Abstract</th><th>Numerical</th><th>Verbal</th><th>Spatial</th><th>Logical</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr><th>Abstract</th><td>1</td><td>0.805</td><td>0.725</td><td>0.839</td><td>0.705</td></tr>
+      <tr><th>Numerical</th><td>0.805</td><td>1</td><td>0.774</td><td>0.762</td><td>0.868</td></tr>
+      <tr><th>Verbal</th><td>0.725</td><td>0.774</td><td>1</td><td>0.712</td><td>0.760</td></tr>
+      <tr><th>Spatial</th><td>0.839</td><td>0.762</td><td>0.712</td><td>1</td><td>0.708</td></tr>
+      <tr><th>Logical</th><td>0.705</td><td>0.868</td><td>0.760</td><td>0.708</td><td>1</td></tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-container">
+        <table class="metric-table" style="max-width: 650px; margin: 0 auto;">
+          <caption>SAITO Subtest g-loadings, PCA</caption>
+          <tbody>
+            <tr class="group-row"><th colspan="2">Subtest g-loadings</th></tr>
+            <tr><td>Numerical subtest</td><td>0.935</td></tr>
+      <tr><td>Abstract subtest</td><td>0.904</td></tr>
+      <tr><td>Logical subtest</td><td>0.897</td></tr>
+      <tr><td>Spatial subtest</td><td>0.891</td></tr>
+      <tr><td>Verbal subtest</td><td>0.880</td></tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <p><br>The first principal component accounts for 81.3% of total variance, indicating a very strong general factor and substantial unidimensionality at the test level.</p>
+
+    </section>
+
+    <div class="footer">
+      <a class="button" href="index.html">Back to main page</a>
+    </div>
+
+  </main>
+</body>
+</html>
