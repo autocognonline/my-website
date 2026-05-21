@@ -565,8 +565,13 @@
     }
 
     function renderLoggedInView(data) {
-      if (data.scores && data.scores.length > 0) {
-        existingScores.innerHTML = data.scores.map(score => {
+      const visibleScores = (data.scores || []).filter(score => {
+        const author = (score.tests?.author || "").toLowerCase();
+        return !author.includes("nydegger");
+      });
+      
+      if (visibleScores.length > 0) {
+        existingScores.innerHTML = visibleScores.map(score => {
           const testName = score.tests?.test_name || "Unknown test";
 
           let displayedScore = "-";
