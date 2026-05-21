@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Previous IQ Test Scores</title>
+
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --card: #ffffff;
+      --text: #171717;
+      --muted: #5f5f5f;
+      --line: #d9d9d4;
+      --accent: #0070ba;
+      --accent-hover: #005c99;
+      --shadow: 0 12px 34px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      margin: 0;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 44px 20px 70px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin: 0 0 28px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin: 0 0 16px;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 12px 0;
+    }
+
+    ul {
+      font-size: 18px;
+      margin: 14px 0 0 22px;
+      padding: 0;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      margin-bottom: 28px;
+    }
+
+    .highlight {
+      background: #eef4f8;
+      border-left: 5px solid var(--accent);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-top: 22px;
+      font-weight: bold;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 26px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .button:hover {
+      background: var(--accent-hover);
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 30px 14px 50px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      p,
+      ul {
+        font-size: 17px;
+      }
+
+      .button {
+        width: 100%;
+        max-width: 360px;
+      }
+    }
+  </style>
+
+  <link rel="icon" href="favicon.png" />
+</head>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag("js", new Date());
+  gtag("config", "G-3XHMB3NM73");
+</script>
+
+<body>
+  <main class="page">
+    <h1>Previous IQ Test Scores</h1>
+
+    <section class="card">
+      <h2>Share your previous scores</h2>
+
+      <p>If you have previously taken other IQ tests, you can submit your earlier scores through this interface.</p>
+      <p>These submissions help improve the quality of the statistical reports on this website, including correlations, g-loadings, norms, and various comparisons between tests. </p>
+      <p>After logging in, you can also see which scores are already recorded for your email address, so you can check for missing or incorrect entries. </p>
+
+      <ul>
+        <li>Only first and second attempts are accepted.</li>
+        <li>Each submission must include clear proof of the score.</li>
+        <li>All submitted scores are reviewed manually before validation so please be patient.</li>
+      </ul>
+
+      <div class="highlight">
+        Every 10 validated submitted scores allow you to request one free score
+        certificate for a test available on this website.
+      </div>
+
+      <div class="actions">
+        <a class="button" href="scoreSubmission.html">Login and Submit Scores</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <p>Thank you in advance for contributing.</p>
+    </section>
+
+    <div class="actions">
+      <a class="button" href="stats.html">View Statistics</a>
+      <a class="button" href="index.html">Back to Main Page</a>
+    </div>
+  </main>
+</body>
+</html>
