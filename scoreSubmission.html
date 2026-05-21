@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Score Submission</title>
+
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --card: #ffffff;
+      --text: #171717;
+      --muted: #5f5f5f;
+      --line: #d9d9d4;
+      --accent: #0070ba;
+      --accent-hover: #005c99;
+      --shadow: 0 12px 34px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      margin: 0;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin: 10px 0 24px;
+      text-align: center;
+      letter-spacing: 0.2px;
+    }
+
+    h2 {
+      margin: 0 0 20px;
+      text-align: center;
+      font-size: 28px;
+    }
+
+    h3 {
+      margin: 0 0 18px;
+      font-size: 22px;
+    }
+
+    p {
+      margin: 10px 0;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .form-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      margin-bottom: 30px;
+    }
+
+    .form-intro {
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 17px;
+      text-align: left;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    label {
+      display: block;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select,
+    input[type="file"] {
+      width: 100%;
+      font-size: 16px;
+      padding: 12px 14px;
+      border: 1px solid #cfcfc9;
+      border-radius: 10px;
+      background: #fff;
+      color: var(--text);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="file"] {
+      padding: 10px 12px;
+      background: #fcfcfb;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 112, 186, 0.12);
+    }
+
+    .hint {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    .status {
+      margin-top: 18px;
+      font-size: 16px;
+      text-align: center;
+      min-height: 24px;
+      font-weight: bold;
+    }
+
+    .status.success {
+      color: #147a38;
+    }
+
+    .status.error {
+      color: #b42318;
+    }
+
+    .status.loading {
+      color: #444;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .button,
+    button {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .button:hover,
+    button:hover {
+      background: var(--accent-hover);
+    }
+
+    .inline-form {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .inline-form input {
+      flex: 1;
+      height: 48px;
+    }
+
+    .inline-form button {
+      height: 48px;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+
+    .scores-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .score-item {
+      padding: 14px 18px;
+      background: #fafafa;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .footer-actions {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 780px) {
+      .page {
+        padding: 28px 14px 50px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 17px;
+      }
+
+      .form-card {
+        padding: 22px 18px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .inline-form {
+        flex-direction: column;
+      }
+
+      .inline-form button {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <link rel="icon" href="favicon.png" />
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-3XHMB3NM73');
+</script>
+
+<body>
+  <div class="page">
+    <a id="top"></a>
+    <h1>Score Submission</h1>
+
+    <section class="form-card" id="login-section">
+      <h3>Login</h3>
+      <p class="form-intro">
+        Enter the email address associated with your account. If this is your
+        first login, your personal 10-digit code will be sent to you by email.
+      </p>
+
+      <div id="email-step">
+        <div class="field full">
+          <label for="login-email">Email address</label>
+          <div class="inline-form">
+            <input
+              id="login-email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+            />
+            <button type="button" id="send-code">Login</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="code-step" class="hidden">
+        <div class="field full">
+          <label for="login-code">Login code</label>
+          <div class="inline-form">
+            <input
+              id="login-code"
+              type="text"
+              placeholder="10-character code"
+              maxlength="10"
+              autocomplete="one-time-code"
+            />
+            <button type="button" id="verify-code">Login</button>
+            <button type="button" id="resend-code" class="secondary-button">
+              I lost my code, send it again
+            </button>
+          </div>
+        </div>
+      </div>
+        <p id="login-status" class="status"></p>
+    </section>
+
+    
+    <section class="form-card hidden" id="submission-section">
+      <h3>Submit a New Score</h3>
+      <p class="form-intro">
+        Upload a clear image showing your score. All submissions are
+        reviewed manually so please be patient.
+      </p>
+
+      <form id="score-form" enctype="multipart/form-data">
+        <div class="form-grid">
+          <div class="field full">
+            <label for="test-search">Test</label>
+            <input
+              id="test-search"
+              type="text"
+              list="tests-list"
+              placeholder="Start typing a test name..."
+              autocomplete="off"
+              required
+            />
+            <datalist id="tests-list"></datalist>
+            <input id="test-id" name="test_id" type="hidden" required />
+            <div class="hint">
+              Start typing the name of a test and select it from the list.
+            </div>
+          </div>
+
+          <div class="field full">
+            <label for="raw-score">Raw Score</label>
+            <input
+              id="raw-score"
+              name="raw_score"
+              type="number"
+              step="any"
+              required
+            />
+          </div>
+
+          <div class="field full">
+            <label for="proof">Score Proof</label>
+            <input
+              id="proof"
+              name="proof"
+              type="file"
+              accept=".jpg,.jpeg,.png,.pdf"
+              required
+            />
+            <div class="hint">
+              Upload a clear and readable document.
+            </div>
+          </div>
+
+          <div class="field full actions">
+            <button type="submit">Submit Score</button>
+            <p id="form-status" class="status"></p>
+          </div>
+        </div>
+      </form>
+    </section>
+
+
+    <section class="form-card hidden" id="certificate-section">
+      <h3>Request a Certificate</h3>
+
+      <p class="form-intro">
+        You have at least 10 validated submissions. Enter the test name for which
+        you would like to request a certificate.
+      </p>
+
+      <form id="certificate-form">
+        <div class="form-grid">
+          <div class="field full">
+            <label for="certificate-test-name">Test name</label>
+
+            <input
+              id="certificate-test-name"
+              name="test_name"
+              type="text"
+              placeholder="Enter the test name"
+              required
+            />
+          </div>
+
+          <div class="field full actions">
+            <button type="submit">Request Certificate</button>
+            <p id="certificate-status" class="status"></p>
+          </div>
+        </div>
+      </form>
+
+      <div id="certificate-success" class="hidden">
+        <p id="certificate-success-message" class="status success"></p>
+      </div>
+    </section>
+
+    <div class="footer-actions">
+      <a class="button" href="index.html">Back to Main Page</a>
+    </div>
+    <br>
+
+    <section class="form-card hidden" id="scores-section">
+      <h3>Your Existing Scores</h3>
+      <p id="submitted-count" class="form-intro"></p>
+      <div id="existing-scores" class="scores-list"></div>
+    </section>
+
+    <div class="footer-actions">
+      <a class="button" href="#top">Back to top</a>
+    </div>
+  </div>
+
+  <script>
+    const BASE =
+      "https://rvlubjoeicvrsozjaffd.supabase.co/functions/v1/score-login";
+
+    let loggedEmail = "";
+    let loginCode = "";
+    let availableTests = [];
+    let testNumber = 10;
+
+    const loginSection = document.getElementById("login-section");
+    const emailStep = document.getElementById("email-step");
+    const codeStep = document.getElementById("code-step");
+    const certificateSection = document.getElementById("certificate-section");
+    const submittedCount = document.getElementById("submitted-count");
+    const loginStatus = document.getElementById("login-status");
+    const scoresSection = document.getElementById("scores-section");
+    const submissionSection = document.getElementById("submission-section");
+    const existingScores = document.getElementById("existing-scores");
+
+    const testSearch = document.getElementById("test-search");
+    const testsList = document.getElementById("tests-list");
+    const testIdInput = document.getElementById("test-id");
+
+    const certificateForm = document.getElementById("certificate-form");
+    const certificateSuccess = document.getElementById("certificate-success");
+    const certificateSuccessMessage = document.getElementById("certificate-success-message");
+
+
+    function escapeHtml(text) {
+      return String(text ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function setStatus(element, message, className) {
+      element.textContent = message;
+      element.className = "status " + className;
+    }
+
+    function saveLogin() {
+      sessionStorage.setItem("score_email", loggedEmail);
+      sessionStorage.setItem("score_code", loginCode);
+    }
+
+    function clearLogin() {
+      sessionStorage.removeItem("score_email");
+      sessionStorage.removeItem("score_code");
+    }
+
+    function updateSelectedTest() {
+      const entered = testSearch.value.trim().toLowerCase();
+
+      const match = availableTests.find(
+        test => test.test_name.toLowerCase() === entered
+      );
+
+      testIdInput.value = match ? match.test_id : "";
+    }
+
+    function populateTests(tests) {
+      availableTests = tests || [];
+      testsList.innerHTML = "";
+
+      function refreshSuggestions() {
+        const prefix = testSearch.value.trim().toLowerCase();
+
+        if (!prefix) {
+          testsList.innerHTML = "";
+          return;
+        }
+
+        const matches = availableTests
+          .filter(test => test.test_name.toLowerCase().startsWith(prefix))
+          .sort((a, b) => a.test_name.localeCompare(b.test_name))
+          .slice(0, 50);
+
+        testsList.innerHTML = matches
+          .map(test => `<option value="${escapeHtml(test.test_name)}"></option>`)
+          .join("");
+
+        updateSelectedTest();
+      }
+
+      testSearch.addEventListener("input", refreshSuggestions);
+      testSearch.addEventListener("change", updateSelectedTest);
+    }
+
+    function updateCertificateSection(data) {
+      const validated = data.validated_count ?? 0;
+      const pendingCertificate = data.pending_certificate;
+
+      if (validated < testNumber && !pendingCertificate) {
+        certificateSection.classList.add("hidden");
+        return;
+      }
+
+      certificateSection.classList.remove("hidden");
+
+
+      if (pendingCertificate) {
+        certificateForm.classList.add("hidden");
+        certificateSuccess.classList.remove("hidden");
+
+        let message =
+          `You requested a certificate for "${pendingCertificate.test_name}". `;
+
+        switch ((pendingCertificate.status || "").toLowerCase()) {
+          case "approved":
+            message +=
+              `Your certificate request has been approved.`;
+            break;
+
+          case "rejected":
+            message +=
+              `Your certificate request was rejected.`;
+            break;
+
+          default:
+            message +=
+              `Your request is pending. Please be patient.`;
+            break;
+        }
+
+        certificateSuccessMessage.textContent = message;
+
+        return;
+      }
+
+      certificateForm.classList.remove("hidden");
+      certificateSuccess.classList.add("hidden");
+    }
+
+    function renderLoggedInView(data) {
+      if (data.scores && data.scores.length > 0) {
+        existingScores.innerHTML = data.scores.map(score => {
+          const testName = score.tests?.test_name || "Unknown test";
+
+          let displayedScore = "-";
+          if (score.raw_score !== null && score.raw_score !== undefined) {
+            displayedScore = `Raw score: ${score.raw_score}`;
+          } else if (
+            score.standard_score !== null &&
+            score.standard_score !== undefined
+          ) {
+            displayedScore = `Standard score: ${score.standard_score}`;
+          }
+
+          return `
+            <div class="score-item">
+              <strong>${escapeHtml(testName)}</strong><br>
+              ${displayedScore}<br>
+              Date: ${escapeHtml(score.test_date || "-")}
+            </div>
+          `;
+        }).join("");
+      } else {
+        existingScores.innerHTML =
+          '<div class="score-item">No scores found.</div>';
+      }
+
+      populateTests(data.tests || []);
+
+      const submitted = data.submitted_count ?? 0;
+      const validated = data.validated_count ?? 0;
+      const totalDatabaseScores = (data.scores || []).length;
+
+      submittedCount.textContent =
+      `Score(s) in the database: ${totalDatabaseScores}. ` +
+        `You have submitted ${submitted} score(s). ` +
+        `Among those ${validated} are validated. ` ;
+
+      updateCertificateSection(data);
+
+      if (validated >= testNumber) {
+        certificateSection.classList.remove("hidden");
+      } else {
+        certificateSection.classList.add("hidden");
+}
+
+      loginSection.classList.add("hidden");
+      scoresSection.classList.remove("hidden");
+      submissionSection.classList.remove("hidden");
+    }
+
+    async function verifyAndLoad(email, code, silent = false) {
+      if (!silent) {
+        setStatus(loginStatus, "Logging in...", "loading");
+      }
+
+      const res = await fetch(BASE, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          action: "verify_code",
+          email,
+          code
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || data.success === false) {
+        throw new Error(data.error || "Invalid login code.");
+      }
+
+      loggedEmail = email;
+      loginCode = code;
+      saveLogin();
+      renderLoggedInView(data);
+    }
+
+    async function autoLoginIfPossible() {
+      const savedEmail = sessionStorage.getItem("score_email");
+      const savedCode = sessionStorage.getItem("score_code");
+
+      if (!savedEmail || !savedCode) return;
+
+      loginSection.classList.add("hidden");
+
+      try {
+        await verifyAndLoad(savedEmail, savedCode, true);
+      } catch {
+        clearLogin();
+        loginSection.classList.remove("hidden");
+      }
+    }
+
+    certificateForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const status = document.getElementById("certificate-status");
+
+      const testName =
+        document.getElementById("certificate-test-name")
+          .value
+          .trim();
+
+      if (!testName) {
+        setStatus(status, "Please enter a test name.", "error");
+        return;
+      }
+
+      setStatus(status, "Submitting certificate request...", "loading");
+
+      try {
+        const res = await fetch(BASE, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            action: "request_certificate",
+            email: loggedEmail,
+            code: loginCode,
+            test_name: testName
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.success === false) {
+          throw new Error(data.error || "Certificate request failed.");
+        }
+
+        // Hide the form
+        certificateForm.classList.add("hidden");
+
+        // Show success message
+        certificateSuccess.classList.remove("hidden");
+
+        certificateSuccessMessage.textContent =
+          `You requested a certificate for "${testName}". ` +
+          `Your request is pending. Please be patient.`;
+
+      } catch (err) {
+        setStatus(
+          status,
+          err.message || "An unexpected error occurred.",
+          "error"
+        );
+      }
+    });
+
+    document.getElementById("send-code").addEventListener("click", async () => {
+      loggedEmail = document.getElementById("login-email").value.trim();
+
+      if (!loggedEmail) {
+        setStatus(loginStatus, "Please enter your email address.", "error");
+        return;
+      }
+
+      setStatus(loginStatus, "Checking account...", "loading");
+
+      try {
+        const res = await fetch(BASE, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            action: "request_code",
+            email: loggedEmail
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.success === false) {
+          throw new Error(data.error || "Login failed.");
+        }
+
+        emailStep.classList.add("hidden");
+        codeStep.classList.remove("hidden");
+        document.getElementById("login-code").focus();
+
+        setStatus(
+          loginStatus,
+          data.message || "Please enter your login code.",
+          "success"
+        );
+      } catch (err) {
+        setStatus(
+          loginStatus,
+          err.message || "An unexpected error occurred.",
+          "error"
+        );
+      }
+    });
+
+    document.getElementById("resend-code").addEventListener("click", async () => {
+      if (!loggedEmail) {
+        setStatus(loginStatus, "Please enter your email address first.", "error");
+        return;
+      }
+
+      setStatus(loginStatus, "Sending code again...", "loading");
+
+      try {
+        const res = await fetch(BASE, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            action: "resend_code",
+            email: loggedEmail
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.success === false) {
+          throw new Error(data.error || "Could not resend code.");
+        }
+
+        setStatus(
+          loginStatus,
+          data.message || "Your code has been sent again.",
+          "success"
+        );
+      } catch (err) {
+        setStatus(
+          loginStatus,
+          err.message || "An unexpected error occurred.",
+          "error"
+        );
+      }
+    });
+
+    document.getElementById("verify-code").addEventListener("click", async () => {
+      const email = loggedEmail;
+      const code = document.getElementById("login-code").value.trim();
+
+      if (!code) {
+        setStatus(loginStatus, "Please enter your login code.", "error");
+        return;
+      }
+
+      try {
+        await verifyAndLoad(email, code);
+      } catch (err) {
+        setStatus(
+          loginStatus,
+          err.message || "An unexpected error occurred.",
+          "error"
+        );
+      }
+    });
+
+    document.getElementById("score-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formStatus = document.getElementById("form-status");
+
+      updateSelectedTest();
+
+      if (!testIdInput.value) {
+        setStatus(
+          formStatus,
+          "Please select a test from the autocomplete list.",
+          "error"
+        );
+        return;
+      }
+
+      setStatus(formStatus, "Submitting...", "loading");
+
+      try {
+        const formData = new FormData(e.target);
+        formData.append("email", loggedEmail);
+        formData.append("code", loginCode);
+
+        const res = await fetch(BASE, {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.success === false) {
+          throw new Error(data.error || "Submission failed.");
+        }
+
+        setStatus(
+          formStatus,
+          data.message || "Score submitted successfully for manual review.",
+          "success"
+        );
+
+        e.target.reset();
+        testIdInput.value = "";
+      } catch (err) {
+        setStatus(
+          formStatus,
+          err.message || "An unexpected error occurred.",
+          "error"
+        );
+      }
+    });
+
+    autoLoginIfPossible();
+    </script>
+</body>
+</html>
