@@ -143,7 +143,7 @@ def main():
         </tr>
         """
 
-    updated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    #updated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
     html_output = f"""<!DOCTYPE html>
 <html lang="en">
@@ -307,13 +307,12 @@ def main():
 
   <div class="section">
     <p class="note">
-      The leaderboard is refreshed every 5 days and includes only participants who opted in to be listed using their real name.
-      Last updated: {updated_at}.
+      The leaderboard is refreshed every 5 days and includes only participants who opted to be listed.
     </p>
   </div>
 
   <div class="section">
-    <a class="button" href="scoreSubmissionIntro.html">Submit Scores</a>
+    <a class="button" href="previousScores.html">Submit Scores</a>
     <a class="button" href="index.html">Back to main page</a>
   </div>
 </body>
