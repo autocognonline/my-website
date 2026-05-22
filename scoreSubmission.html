@@ -111,6 +111,7 @@
     input[type="email"],
     input[type="number"],
     select,
+    textarea,
     input[type="file"] {
       width: 100%;
       font-size: 16px;
@@ -128,7 +129,8 @@
     }
 
     input:focus,
-    select:focus {
+    select:focus,
+    textarea:focus {
       outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(0, 112, 186, 0.12);
@@ -414,10 +416,38 @@
       </div>
     </section>
 
+    <section class="form-card hidden" id="message-section">
+      <h3>Report an issue or send a comment</h3>
+
+      <p class="form-intro">
+        Use this form to report an error, a bug, or send a comment about your score(s).
+      </p>
+
+      <form id="message-form">
+        <div class="form-grid">
+          <div class="field full">
+            <label for="user-message">Message</label>
+            <textarea
+              id="user-message"
+              name="message"
+              rows="3"
+              required
+              placeholder="Write your message here..."
+            ></textarea>
+          </div>
+          <div class="field full actions">
+            <button type="submit">Send Message</button>
+            <p id="message-status" class="status"></p>
+          </div>
+        </div>
+      </form>
+    </section>
+
     <div class="footer-actions">
       <a class="button" href="index.html">Back to Main Page</a>
     </div>
-    <br>
+    
+    <br><hr><br>
 
     <section class="form-card hidden" id="scores-section">
       <h3>Your existing scores (only tests from other authors)</h3>
@@ -456,6 +486,9 @@
     const certificateForm = document.getElementById("certificate-form");
     const certificateSuccess = document.getElementById("certificate-success");
     const certificateSuccessMessage = document.getElementById("certificate-success-message");
+
+    const messageSection = document.getElementById("message-section");
+    const messageForm = document.getElementById("message-form");
 
 
     function escapeHtml(text) {
@@ -577,7 +610,7 @@
         const author = (score.tests?.author || "").toLowerCase();
         return !author.includes("nydegger");
       });
-      
+      messageSection.classList.remove("hidden");
       if (visibleScores.length > 0) {
         existingScores.innerHTML = visibleScores.map(score => {
           const testName = score.tests?.test_name || "Unknown test";
@@ -711,10 +744,8 @@
           throw new Error(data.error || "Certificate request failed.");
         }
 
-        // Hide the form
         certificateForm.classList.add("hidden");
 
-        // Show success message
         certificateSuccess.classList.remove("hidden");
 
         certificateSuccessMessage.textContent =
@@ -729,6 +760,55 @@
         );
       }
     });
+
+    messageForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const status = document.getElementById("message-status");
+      const message = document.getElementById("user-message").value.trim();
+
+      if (!message) {
+        setStatus(status, "Please enter a message.", "error");
+        return;
+      }
+
+      setStatus(status, "Sending message...", "loading");
+
+      try {
+        const res = await fetch(BASE, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            action: "submit_user_message",
+            email: loggedEmail,
+            code: loginCode,
+            message: message
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.success === false) {
+          throw new Error(data.error || "Message could not be sent.");
+        }
+
+        setStatus(
+          status,
+          data.message || "Message sent successfully.",
+          "success"
+        );
+
+        e.target.reset();
+      } catch (err) {
+        setStatus(
+          status,
+          err.message || "An unexpected error occurred.",
+          "error"
+        );
+      }
+});
 
     document.getElementById("send-code").addEventListener("click", async () => {
       loggedEmail = document.getElementById("login-email").value.trim();
