@@ -226,6 +226,87 @@
       margin-top: 20px;
     }
 
+    .checkbox-label {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .checkbox-label input {
+      width: 18px;
+      height: 18px;
+    }
+
+    .leaderboard-box {
+      margin-top: 10px;
+      padding: 18px 20px;
+      border: 1px solid #d8e4ef;
+      background: #f7fbff;
+      border-radius: 14px;
+    }
+
+    .leaderboard-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .leaderboard-title {
+      margin: 0 0 4px;
+      font-size: 20px;
+    }
+
+    .leaderboard-text {
+      margin: 0;
+      font-size: 16px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    .toggle {
+      position: relative;
+      width: 58px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #c8ccd1;
+      border-radius: 999px;
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
+
+    .toggle-slider::before {
+      content: "";
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      left: 4px;
+      top: 4px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.2s ease;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .toggle input:checked + .toggle-slider {
+      background: var(--accent);
+    }
+
+    .toggle input:checked + .toggle-slider::before {
+      transform: translateX(26px);
+    }
     @media (max-width: 780px) {
       .page {
         padding: 28px 14px 50px;
@@ -257,6 +338,10 @@
 
       .inline-form button {
         width: 100%;
+      }
+      .leaderboard-row {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   </style>
@@ -377,10 +462,29 @@
             <button type="submit">Submit Score</button>
             <p id="form-status" class="status"></p>
           </div>
+
+          <div class="field full leaderboard-box" id="leaderboard-section">
+            <div class="leaderboard-row">
+              <div>
+                <h3 class="leaderboard-title">Project Contributor Leaderboard</h3>
+                <p class="leaderboard-text">
+                  Be listed publicly among the biggest contributors to this project.
+                </p>
+                <p class="hint">
+                  Note: the leaderboard uses your real name.
+                </p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="leaderboard-checkbox" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <p id="leaderboard-status" class="status"></p>
+          </div>
         </div>
       </form>
     </section>
-
 
     <section class="form-card hidden" id="certificate-section">
       <h3>Request a certificate</h3>
@@ -489,6 +593,10 @@
 
     const messageSection = document.getElementById("message-section");
     const messageForm = document.getElementById("message-form");
+
+    const leaderboardSection = document.getElementById("leaderboard-section");
+    const leaderboardCheckbox = document.getElementById("leaderboard-checkbox");
+    const leaderboardStatus = document.getElementById("leaderboard-status");
 
 
     function escapeHtml(text) {
@@ -611,6 +719,8 @@
         return !author.includes("nydegger");
       });
       messageSection.classList.remove("hidden");
+      leaderboardSection.classList.remove("hidden");
+      leaderboardCheckbox.checked = Boolean(data.leaderboard);
       if (visibleScores.length > 0) {
         existingScores.innerHTML = visibleScores.map(score => {
           const testName = score.tests?.test_name || "Unknown test";
@@ -650,12 +760,6 @@
         `${validated} are validated. ` ;
 
       updateCertificateSection(data);
-
-      if (validated >= testNumber) {
-        certificateSection.classList.remove("hidden");
-      } else {
-        certificateSection.classList.add("hidden");
-}
 
       loginSection.classList.add("hidden");
       scoresSection.classList.remove("hidden");
@@ -755,6 +859,45 @@
       } catch (err) {
         setStatus(
           status,
+          err.message || "An unexpected error occurred.",
+          "error"
+        );
+      }
+    });
+
+    leaderboardCheckbox.addEventListener("change", async () => {
+      setStatus(leaderboardStatus, "Updating preference...", "loading");
+
+      try {
+        const res = await fetch(BASE, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            action: "update_leaderboard",
+            email: loggedEmail,
+            code: loginCode,
+            leaderboard: leaderboardCheckbox.checked
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.success === false) {
+          throw new Error(data.error || "Could not update preference.");
+        }
+
+        setStatus(
+          leaderboardStatus,
+          data.message || "Preference updated.",
+          "success"
+        );
+      } catch (err) {
+        leaderboardCheckbox.checked = !leaderboardCheckbox.checked;
+
+        setStatus(
+          leaderboardStatus,
           err.message || "An unexpected error occurred.",
           "error"
         );
