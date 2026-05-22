@@ -10,7 +10,10 @@ SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY_2"]
 OUTPUT_FILE = "contributorLeaderboard.html"
 INTERNAL_AUTHOR = "M.-A. Nydegger"
 
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+supabase = create_client(
+    SUPABASE_URL_2,
+    SUPABASE_SERVICE_KEY_2
+)
 
 
 def fetch_all(table, select="*", filters=None, page_size=1000):
