@@ -481,13 +481,22 @@
       sessionStorage.removeItem("score_code");
     }
 
+    function normalizeTestName(name) {
+      return String(name ?? "")
+        .normalize("NFKC")
+        .replace(/\u00A0/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+    }
+    
     function updateSelectedTest() {
-      const entered = testSearch.value.trim().toLowerCase();
-
+      const entered = normalizeTestName(testSearch.value);
+    
       const match = availableTests.find(
-        test => test.test_name.toLowerCase() === entered
+        test => normalizeTestName(test.test_name) === entered
       );
-
+    
       testIdInput.value = match ? match.test_id : "";
     }
 
@@ -503,13 +512,12 @@
           return;
         }
 
-        const matches = availableTests
-          .filter(test => test.test_name.toLowerCase().startsWith(prefix))
-          .sort((a, b) => a.test_name.localeCompare(b.test_name))
-          .slice(0, 50);
+        const matches = availableTests.filter(test =>
+          normalizeTestName(test.test_name).startsWith(normalizeTestName(prefix))
+        );
 
         testsList.innerHTML = matches
-          .map(test => `<option value="${escapeHtml(test.test_name)}"></option>`)
+          .map(test => `<option value="${escapeHtml(String(test.test_name).trim())}"></option>`)
           .join("");
 
         updateSelectedTest();
