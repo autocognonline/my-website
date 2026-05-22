@@ -4,8 +4,8 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from supabase import create_client
 
-SUPABASE_URL = os.environ["SUPABASE_URL"]
-SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
+SUPABASE_URL = os.environ["SUPABASE_URL_2"]
+SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY_2"]
 
 OUTPUT_FILE = "contributorLeaderboard.html"
 INTERNAL_AUTHOR = "M.-A. Nydegger"
