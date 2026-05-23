@@ -276,7 +276,7 @@ def main():
 
     <p>
       The contribution score is computed as:
-      <strong>Score = 2 × Number of this website's tests and subtests taken + Number of external scores shared</strong>.
+      <strong>Score = 2 × Internal tests taken + External scores shared</strong>.
     </p>
 
     <p>
