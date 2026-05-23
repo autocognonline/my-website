@@ -7,13 +7,8 @@ const loginBtn = document.getElementById("loginBtn");
 
 let email = "";
 
-function emailDubiousScore(str) {
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str)) return 999;
-  return Math.max(0, score);
-}
-
 function looksLikeEmail(str) {
-  return emailDubiousScore(str) < 40;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str.trim());
 }
 
 function finishLogin(user) {
