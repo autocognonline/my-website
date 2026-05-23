@@ -7,9 +7,39 @@ const loginBtn = document.getElementById("loginBtn");
 
 let email = "";
 
+function emailDubiousScore(str) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str)) {
+    return 999;
+  }
+
+  const local = str.split("@")[0].toLowerCase();
+  const letters = local.replace(/[^a-z]/g, "");
+  const digits = local.replace(/\D/g, "");
+
+  let score = 0;
+
+  if (letters.length < 3) score += 35;
+  if (letters.length > 24) score += 20;
+
+  if (!/[aeiou]/.test(letters)) score += 35;
+  if (/[bcdfghjklmnpqrstvwxyz]{6,}/.test(letters)) score += 30;
+
+  if (/(.)\1{3,}/.test(letters)) score += 25;
+
+  if (digits.length >= 5) score += 20;
+  if (digits.length > letters.length) score += 35;
+
+  const symbolCount = local.replace(/[a-z0-9]/g, "").length;
+  if (symbolCount >= 3) score += 15;
+
+  if (/^[a-z]{2,}([._-][a-z]{2,})+$/.test(local)) score -= 25; // john.smith
+  if (/^[a-z]{3,}\d{0,4}$/.test(local)) score -= 15; // alice92
+
+  return Math.max(0, score);
+}
+
 function looksLikeEmail(str) {
-  // Simple but practical email check
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str);
+  return emailDubiousScore(str) < 70;
 }
 
 function finishLogin(user) {
