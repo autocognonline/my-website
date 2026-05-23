@@ -634,9 +634,17 @@
     function updateSelectedTest() {
       const entered = normalizeTestName(testSearch.value);
     
-      const match = availableTests.find(
-        test => normalizeTestName(test.test_name) === entered
-      );
+      const match = availableTests.find(test => {
+      const cleanName = String(test.test_name).trim();
+      const author = String(test.author || "").trim();
+
+      const display =
+        author
+          ? `${cleanName} (${author})`
+          : cleanName;
+
+      return normalizeTestName(display) === entered;
+    });
     
       testIdInput.value = match ? match.test_id : "";
     }
@@ -658,7 +666,17 @@
         );
 
         testsList.innerHTML = matches
-          .map(test => `<option value="${escapeHtml(String(test.test_name).trim())}"></option>`)
+          .map(test => {
+            const cleanName = String(test.test_name).trim();
+            const author = String(test.author || "").trim();
+
+            const display =
+              author
+                ? `${cleanName} (${author})`
+                : cleanName;
+
+            return `<option value="${escapeHtml(display)}"></option>`;
+          })
           .join("");
 
         updateSelectedTest();
