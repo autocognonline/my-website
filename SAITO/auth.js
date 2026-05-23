@@ -8,9 +8,7 @@ const loginBtn = document.getElementById("loginBtn");
 let email = "";
 
 function emailDubiousScore(str) {
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str)) {
-    return 999;
-  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str)) return 999;
 
   const local = str.split("@")[0].toLowerCase();
   const letters = local.replace(/[^a-z]/g, "");
@@ -18,11 +16,20 @@ function emailDubiousScore(str) {
 
   let score = 0;
 
-  if (letters.length < 3) score += 35;
-  if (letters.length > 24) score += 20;
+  const vowels = (letters.match(/[aeiou]/g) || []).length;
+  const vowelRatio = letters.length ? vowels / letters.length : 0;
+  const uniqueRatio = letters.length ? new Set(letters).size / letters.length : 0;
 
-  if (!/[aeiou]/.test(letters)) score += 35;
-  if (/[bcdfghjklmnpqrstvwxyz]{6,}/.test(letters)) score += 30;
+  if (letters.length < 3) score += 35;
+  if (letters.length > 18) score += 15;
+
+  if (vowelRatio < 0.25 || vowelRatio > 0.65) score += 20;
+  if (uniqueRatio > 0.75 && letters.length >= 8) score += 20;
+
+  if (/[bcdfghjklmnpqrstvwxyz]{4,}/.test(letters)) score += 25;
+  if (/[aeiou]{4,}/.test(letters)) score += 20;
+
+  if (/(fd|gf|dg|hf|fs|ahr|hfs|gfd|dahf|sahr)/.test(letters)) score += 35;
 
   if (/(.)\1{3,}/.test(letters)) score += 25;
 
@@ -33,13 +40,13 @@ function emailDubiousScore(str) {
   if (symbolCount >= 3) score += 15;
 
   if (/^[a-z]{2,}([._-][a-z]{2,})+$/.test(local)) score -= 25;
-  if (/^[a-z]{3,}\d{0,4}$/.test(local)) score -= 15;
+  if (/^[a-z]{3,}\d{0,4}$/.test(local)) score -= 10;
 
   return Math.max(0, score);
 }
 
 function looksLikeEmail(str) {
-  return emailDubiousScore(str) < 35;
+  return emailDubiousScore(str) < 40;
 }
 
 function finishLogin(user) {
