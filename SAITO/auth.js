@@ -39,7 +39,7 @@ function emailDubiousScore(str) {
 }
 
 function looksLikeEmail(str) {
-  return emailDubiousScore(str) < 70;
+  return emailDubiousScore(str) < 50;
 }
 
 function finishLogin(user) {
