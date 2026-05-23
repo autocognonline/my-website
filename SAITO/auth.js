@@ -32,14 +32,14 @@ function emailDubiousScore(str) {
   const symbolCount = local.replace(/[a-z0-9]/g, "").length;
   if (symbolCount >= 3) score += 15;
 
-  if (/^[a-z]{2,}([._-][a-z]{2,})+$/.test(local)) score -= 25; // john.smith
-  if (/^[a-z]{3,}\d{0,4}$/.test(local)) score -= 15; // alice92
+  if (/^[a-z]{2,}([._-][a-z]{2,})+$/.test(local)) score -= 25;
+  if (/^[a-z]{3,}\d{0,4}$/.test(local)) score -= 15;
 
   return Math.max(0, score);
 }
 
 function looksLikeEmail(str) {
-  return emailDubiousScore(str) < 50;
+  return emailDubiousScore(str) < 35;
 }
 
 function finishLogin(user) {
