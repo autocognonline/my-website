@@ -1,7 +1,6 @@
 import os
 import html
 from collections import defaultdict
-from datetime import datetime, timezone
 from supabase import create_client
 
 OUTPUT_FILE = "contributorLeaderboard.html"
@@ -76,19 +75,24 @@ def main():
         }
 
         internal_taken = defaultdict(int)
+        known_external = defaultdict(int)
 
-        if internal_test_ids:
-            test_results = fetch_all(
-                "test_results",
-                select="email, test_id"
-            )
+        test_results = fetch_all(
+            "test_results",
+            select="email, test_id"
+        )
 
-            for row in test_results:
-                if (
-                    row["email"] in opted_emails
-                    and row["test_id"] in internal_test_ids
-                ):
-                    internal_taken[row["email"]] += 1
+        for row in test_results:
+            email = row["email"]
+            test_id = row["test_id"]
+
+            if email not in opted_emails:
+                continue
+
+            if test_id in internal_test_ids:
+                internal_taken[email] += 1
+            else:
+                known_external[email] += 1
 
         # External scores shared = approved pending submissions
         external_shared = defaultdict(int)
@@ -108,19 +112,28 @@ def main():
         leaderboard_rows = []
 
         for email in opted_emails:
-            taken = internal_taken[email]
-            shared = external_shared[email]
-            score = 2 * taken + shared
+          taken = internal_taken[email]
+          shared = external_shared[email]
+          known = known_external[email]
 
-            leaderboard_rows.append({
-                "name": name_by_email.get(email, email),
-                "score": score,
-                "taken": taken,
-                "shared": shared,
-            })
+          score = 4 * taken + 2 * shared + known
+
+          leaderboard_rows.append({
+              "name": name_by_email.get(email, email),
+              "score": score,
+              "taken": taken,
+              "shared": shared,
+              "known": known,
+          })
 
         leaderboard_rows.sort(
-            key=lambda row: (-row["score"], -row["taken"], -row["shared"], row["name"].lower())
+            key=lambda row: (
+                -row["score"],
+                -row["taken"],
+                -row["shared"],
+                -row["known"],
+                row["name"].lower()
+            )
         )
 
     table_rows = "\n".join(
@@ -131,19 +144,18 @@ def main():
           <td>{row["score"]}</td>
           <td>{row["taken"]}</td>
           <td>{row["shared"]}</td>
+          <td>{row["known"]}</td>
         </tr>
         """
         for rank, row in enumerate(leaderboard_rows, start=1)
     )
 
     if not table_rows:
-        table_rows = """
-        <tr>
-          <td colspan="5">No listed contributors yet.</td>
-        </tr>
-        """
-
-    #updated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+      table_rows = """
+      <tr>
+        <td colspan="6">No listed contributors yet.</td>
+      </tr>
+      """
 
     html_output = f"""<!DOCTYPE html>
 <html lang="en">
@@ -275,8 +287,7 @@ def main():
     </p>
 
     <p>
-      The contribution score is computed as:
-      <strong>Score = 2 × Internal tests taken + External scores shared</strong>.
+      <strong>Contribution score = 4 × Internal tests taken + 2 × External scores shared + Total external scores</strong>.
     </p>
 
     <p>
@@ -293,9 +304,10 @@ def main():
         <tr>
           <th>Rank</th>
           <th>Name</th>
-          <th>Score</th>
+          <th>Contribution score</th>
           <th>Internal tests taken</th>
           <th>External scores shared</th>
+          <th>Total external scores</th>
         </tr>
       </thead>
 
