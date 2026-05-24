@@ -2,7 +2,7 @@ name: Update NEAITO Leaderboard
 
 on:
   schedule:
-    - cron: "0 0 */15 * *"
+    - cron: "0 0 */10 * *"
   workflow_dispatch:  # manual run button
 
 permissions:
