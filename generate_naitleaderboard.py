@@ -25,31 +25,19 @@ def score_to_iq(score):
     return iq
 
 def compute_attempts_left(attempts):
-    """
-    attempts is expected to be a JSON array of numbers.
-    More attempts left is better:
-        attempts_left = 4*80 - sum(attempts)
-    """
     if not attempts:
-        return 4 * 80
+        return 0
 
     if isinstance(attempts, str):
         try:
             attempts = json.loads(attempts)
         except Exception:
-            return 4 * 80
+            return 0
 
     if not isinstance(attempts, list):
-        return 4 * 80
+        return 0
 
-    total_used = 0
-    for x in attempts:
-        try:
-            total_used += int(x)
-        except Exception:
-            pass
-
-    return 4 * 80 - total_used
+    return sum(int(x) for x in attempts)
 
 res = (
     supabase.table("data_naitor")
