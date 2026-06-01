@@ -1,3 +1,4 @@
+1 june 2026 - Candidates can check their contest rank in the NAITOR contest tab.
 22 May 2026 - Project contributors leaderboard available.
 21 May 2026 - An interface to share previous test scores is available.
 19 May 2026 - SAITO statistics available.
