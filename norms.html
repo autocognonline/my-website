@@ -407,57 +407,22 @@
     <p>Both overestimation and underestimation are possible, with overestimation being more common.</p>
     <p>At this stage, the norm should be regarded as an educated guess.</p>
 
-    <h2>First preliminary norm (N = 15)</h2>
+    <h2>First preliminary norm and subsequent norms (N ≥ 15)</h2>
 
     <h3>Method:</h3>
 
-    <p>Observed item solvabilities are now available. For each item, the empirical solvability is averaged with the previously estimated value.</p>
-    <p>These averaged solvabilities \(s\) are converted to standard scores using the following empirical transformation:</p>
-
-    <div class="math-block">
-      \[
-        SS =
-        \left(
-          \frac{a - \ln\!\left(\dfrac{s \cdot c}{1 - s}\right)}{b}
-        \right) \cdot 15 + 100
-      \]
-    </div>
-
-    <p>with:</p>
-
-    <div class="math-block">
-      \[
-        \begin{aligned}
-          a &= 1.4796910138601 \\
-          b &= 1.1681357145202 \\
-          c &= 0.1571667950315
-        \end{aligned}
-      \]
-    </div>
-
-    <p>This formula is derived from empirical data published at: <a href="https://ivec.ultimaiq.net/stat.htm" target="_blank">https://ivec.ultimaiq.net/stat.htm</a></p>
-    <p>Early test takers tend to perform above the general high-range population. Because converting item-level solvabilities to standard scores relies only on limited information, the resulting norm is inherently conservative.</p>
-    <p>Using raw empirical solvabilities directly would therefore systematically deflate the norm even further.</p>
-    <p>This transformation forces slower convergence toward the final norm, reducing the risk of early overshooting.</p>
-
-    <h3>Accuracy:</h3>
-
-    <p>Near the center of the distribution, deviations may exceed 10 points.</p>
-    <p>At the extremes, deviations may exceed 15 points.</p>
-
-    <h2>Second preliminary norm and subsequent norms (N ≥ 25)</h2>
-
-    <p>From this stage onward, the final norming methodology is applied. Subsequent updates primarily reduce uncertainty by increasing sample size.</p>
+    <p>From this stage onward, the final norming methodology is applied. Subsequent updates are expected to mainly enhance accuracy through larger sample sizes and reduced uncertainty.</p>
     <p>Two complementary sources of information are used: Modeled raw-score solvability and Empirical percentiles (proportion outscored)</p>
+    <p>Each source independently generates a subnorm, and these subnorms are subsequently combined to form the final norm.</p>
 
     <h3>Raw-score solvability model:</h3>
 
     <p>
       Item-level solvabilities are not directly converted into standard scores.
-      Instead, a model is fitted to predict the expected solvability of a raw score, rather than of individual items.
+      Instead, a model is fitted to predict the expected solvability of a raw score, rather than of individual items because there is missing information.
       Example:
-      If five items each have solvability 0.90, what is the expected solvability of a raw score of 3?
     </p>
+    <p>If five items each have solvability 0.90, what is the expected solvability of a raw score of 3?  </p>
     <p>The predicted raw-score solvability \(s_r\) is then converted to a standard score using:</p>
 
     <div class="math-block">
@@ -527,12 +492,12 @@
     <p>A monotone latent norm curve is estimated from the available data of the subnorms using a weighted isotonic regression.</p>
     <p>Boundary values where subnorm data is unavailable are handled by extrapolation.</p>
     <p>The primary reason for using this more complex norming method, rather than simply pairing scores with previous tests, is to minimize the reliance on prior scores from candidates and ideally avoid them entirely.</p>
-    <p>For small sample sizes, candidate performance on other tests may be used to shift the norm. These prior scores help estimate the relative ability level of the current sample compared to the broader high-range population.</p>
+    <p>For small sample sizes, candidate performance on other tests is used to shift the norm locally. These prior scores help estimate the relative ability level of the current sample compared to the broader high-range population.</p>
 
     <h3>Accuracy:</h3>
 
     <p>
-      From this stage onward, uncertainty is computed statistically and a 95% confidence interval is displayed.
+      From this stage onward, uncertainty is computed statistically and a 95% confidence interval is displayed starting at N=50.
       Accuracy is expected to increase with larger sample sizes and the inclusion of qualitative submissions.
     </p>
 
