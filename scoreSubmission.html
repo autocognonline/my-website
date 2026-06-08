@@ -300,6 +300,46 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.2);
     }
 
+    .tabs {
+      display: none;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0 0 24px;
+    }
+
+    .tabs.visible {
+      display: flex;
+    }
+    .tab-panel,
+    #login-section {
+      width: 100%;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .tab-button {
+      background: #ffffff;
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+
+    .tab-button.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .tab-button.locked {
+      display: none;
+    }
+
+    .tab-panel.hidden {
+      display: none;
+    }
+
     .toggle input:checked + .toggle-slider {
       background: var(--accent);
     }
@@ -309,27 +349,46 @@
     }
     @media (max-width: 780px) {
       .page {
-        padding: 28px 14px 50px;
+        padding: 24px 12px 44px;
       }
 
       h1 {
-        font-size: 34px;
+        font-size: 30px;
+        line-height: 1.2;
       }
 
-      h2 {
-        font-size: 24px;
+      h3 {
+        font-size: 21px;
       }
 
-      p {
-        font-size: 17px;
+      p,
+      .form-intro {
+        font-size: 16px;
+        text-align: left;
       }
 
       .form-card {
-        padding: 22px 18px;
+        padding: 20px 16px;
+        border-radius: 12px;
       }
 
-      .form-grid {
-        grid-template-columns: 1fr;
+      .tabs {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .tab-button {
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 15px;
+        line-height: 1.25;
+      }
+
+      .button,
+      button {
+        width: 100%;
+        max-width: 360px;
+        min-height: 46px;
       }
 
       .inline-form {
@@ -339,6 +398,15 @@
       .inline-form button {
         width: 100%;
       }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="number"],
+      textarea,
+      input[type="file"] {
+        font-size: 16px;
+      }
+
       .leaderboard-row {
         flex-direction: column;
         align-items: flex-start;
@@ -362,6 +430,33 @@
   <div class="page">
     <a id="top"></a>
     <h1>Score submission</h1>
+
+    <nav class="tabs" id="tabs">
+      <button type="button" class="tab-button active" data-tab="submission-section">
+        Submit Score
+      </button>
+
+      <button type="button" class="tab-button" data-tab="scores-section">
+        List of scores on other author's tests
+      </button>
+
+      <button type="button" class="tab-button" data-tab="message-section">
+        Comment
+      </button>
+
+      <button type="button" class="tab-button" data-tab="leaderboard-section">
+        Leaderboard
+      </button>
+
+      <button
+        type="button"
+        class="tab-button locked"
+        id="certificate-tab"
+        data-tab="certificate-section"
+      >
+        Certificate
+      </button>
+    </nav>
 
     <section class="form-card" id="login-section">
       <h3>Login</h3>
@@ -407,10 +502,10 @@
     </section>
 
     
-    <section class="form-card hidden" id="submission-section">
+    <section class="form-card hidden tab-panel" id="submission-section">
       <h3>Submit a new score</h3>
       <p class="form-intro">
-        Upload a clear image showing your score. Please only submit scores that are not already in the database. All submissions are reviewed manually so please be patient.
+        Upload a clear image showing your score. Only scores that are not already registered in the database can be submitted. All submissions are reviewed manually so please be patient.
       </p>
 
       <form id="score-form" enctype="multipart/form-data">
@@ -461,31 +556,33 @@
             <button type="submit">Submit Score</button>
             <p id="form-status" class="status"></p>
           </div>
-
-          <div class="field full leaderboard-box" id="leaderboard-section">
-            <div class="leaderboard-row">
-              <div>
-                <h3 class="leaderboard-title">Project Contributor Leaderboard</h3>
-                <p class="leaderboard-text">
-                  Be listed publicly among the biggest contributors to this project.
-                </p>
-                <p class="hint">
-                  Note: the leaderboard uses your real name.
-                </p>
-              </div>
-              <label class="toggle">
-                <input type="checkbox" id="leaderboard-checkbox" />
-                <span class="toggle-slider"></span>
-              </label>
-            </div>
-
-            <p id="leaderboard-status" class="status"></p>
-          </div>
         </div>
       </form>
     </section>
 
-    <section class="form-card hidden" id="certificate-section">
+    <section class="form-card hidden tab-panel" id="leaderboard-section">
+      <h3>Project Contributor Leaderboard</h3>
+
+      <div class="leaderboard-row">
+        <div>
+          <p class="leaderboard-text">
+            Be listed publicly among the contributors.
+          </p>
+          <p class="hint">
+            Note: the leaderboard uses your real name.
+          </p>
+        </div>
+
+        <label class="toggle">
+          <input type="checkbox" id="leaderboard-checkbox" />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <p id="leaderboard-status" class="status"></p>
+    </section>
+
+    <section class="form-card hidden tab-panel" id="certificate-section">
       <h3>Request a certificate</h3>
 
       <p class="form-intro">
@@ -519,12 +616,14 @@
       </div>
     </section>
 
-    <section class="form-card hidden" id="message-section">
+    <section class="form-card hidden tab-panel" id="message-section">
       <h3>Report an issue or send a comment</h3>
 
-      <p class="form-intro">
-        Use this form to report an error, a bug, or send a comment about your score(s).
-      </p>
+      <div class="form-intro">
+        <p>Use this form to report an error, a bug, or send a comment about your score(s).</p>
+        <p>You can also mention a missing test in the database, but tests with ceilings below 150 and/or without raw scores reported are not accepted.</p>
+        <p>Discontinued tests are accepted if they have been taken by at least 30 candidates.</p>
+      </div>
 
       <form id="message-form">
         <div class="form-grid">
@@ -546,21 +645,20 @@
       </form>
     </section>
 
+    <section class="form-card hidden tab-panel" id="scores-section">
+      <h3>Your existing scores (only tests from other authors are listed here)</h3>
+      <p id="submitted-count" class="form-intro"></p>
+      <div id="existing-scores" class="scores-list"></div>
+
+      <div class="footer-actions">
+        <a class="button" href="#top">Back to top</a>
+      </div>
+    </section>
+
     <div class="footer-actions">
       <a class="button" href="index.html">Back to Main Page</a>
     </div>
     
-    <br><hr><br>
-
-    <section class="form-card hidden" id="scores-section">
-      <h3>Your existing scores (only tests from other authors)</h3>
-      <p id="submitted-count" class="form-intro"></p>
-      <div id="existing-scores" class="scores-list"></div>
-    </section>
-
-    <div class="footer-actions">
-      <a class="button" href="#top">Back to top</a>
-    </div>
   </div>
 
   <script>
@@ -596,6 +694,31 @@
     const leaderboardSection = document.getElementById("leaderboard-section");
     const leaderboardCheckbox = document.getElementById("leaderboard-checkbox");
     const leaderboardStatus = document.getElementById("leaderboard-status");
+
+    const tabs = document.getElementById("tabs");
+    const certificateTab = document.getElementById("certificate-tab");
+
+    function showTab(sectionId) {
+      document.querySelectorAll(".tab-panel").forEach(panel => {
+        panel.classList.add("hidden");
+      });
+
+      document.querySelectorAll(".tab-button").forEach(button => {
+        button.classList.remove("active");
+      });
+
+      const panel = document.getElementById(sectionId);
+      const button = document.querySelector(`[data-tab="${sectionId}"]`);
+
+      if (panel) panel.classList.remove("hidden");
+      if (button) button.classList.add("active");
+    }
+
+    document.querySelectorAll(".tab-button").forEach(button => {
+      button.addEventListener("click", () => {
+        showTab(button.dataset.tab);
+      });
+    });
 
 
     function escapeHtml(text) {
@@ -689,13 +812,15 @@
       const validated = data.validated_count ?? 0;
       const pendingCertificate = data.pending_certificate;
 
-      if (validated < testNumber && !pendingCertificate) {
+      const unlocked = validated >= testNumber || pendingCertificate;
+
+      if (!unlocked) {
+        certificateTab.classList.add("locked");
         certificateSection.classList.add("hidden");
         return;
       }
 
-      certificateSection.classList.remove("hidden");
-
+      certificateTab.classList.remove("locked");
 
       if (pendingCertificate) {
         certificateForm.classList.add("hidden");
@@ -706,23 +831,17 @@
 
         switch ((pendingCertificate.status || "").toLowerCase()) {
           case "approved":
-            message +=
-              `Your certificate request has been approved.`;
+            message += "Your certificate request has been approved.";
             break;
-
           case "rejected":
-            message +=
-              `Your certificate request was rejected.`;
+            message += "Your certificate request was rejected.";
             break;
-
           default:
-            message +=
-              `Your request is pending. Please be patient.`;
+            message += "Your request is pending. Please be patient.";
             break;
         }
 
         certificateSuccessMessage.textContent = message;
-
         return;
       }
 
@@ -736,7 +855,6 @@
         return !author.includes("nydegger");
       });
       messageSection.classList.remove("hidden");
-      leaderboardSection.classList.remove("hidden");
       leaderboardCheckbox.checked = Boolean(data.leaderboard);
       if (visibleScores.length > 0) {
         existingScores.innerHTML = visibleScores.map(score => {
@@ -779,8 +897,16 @@
       updateCertificateSection(data);
 
       loginSection.classList.add("hidden");
-      scoresSection.classList.remove("hidden");
+
+      tabs.classList.add("visible");
+
       submissionSection.classList.remove("hidden");
+      scoresSection.classList.add("hidden");
+      messageSection.classList.add("hidden");
+      leaderboardSection.classList.add("hidden");
+      certificateSection.classList.add("hidden");
+
+      showTab("submission-section");
     }
 
     async function verifyAndLoad(email, code, silent = false) {
