@@ -505,13 +505,19 @@
     <section class="form-card hidden tab-panel" id="submission-section">
       <h3>Submit a new score</h3>
       <p class="form-intro">
-        Upload a clear image showing your score. Only scores that are not already registered in the database can be submitted. All submissions are reviewed manually so please be patient.
+        Upload a clear image showing your score. Only scores that are not already
+        registered in the database can be submitted. All submissions are reviewed
+        manually so please be patient.
+      </p>
+
+      <p class="hint">
+        There are currently <strong id="test-count">0</strong> external tests in the database.
       </p>
 
       <form id="score-form" enctype="multipart/form-data">
         <div class="form-grid">
           <div class="field full">
-            <label for="test-search">Test</label>
+            <label for="test-search">Test Name</label>
             <input
               id="test-search"
               type="text"
@@ -679,6 +685,8 @@
     const scoresSection = document.getElementById("scores-section");
     const submissionSection = document.getElementById("submission-section");
     const existingScores = document.getElementById("existing-scores");
+
+    const testCountElement = document.getElementById("test-count");
 
     const testSearch = document.getElementById("test-search");
     const testsList = document.getElementById("tests-list");
@@ -884,6 +892,8 @@
       }
 
       populateTests(data.tests || []);
+
+      testCountElement.textContent = data.tests.length;
 
       const submitted = data.submitted_count ?? 0;
       const validated = data.validated_count ?? 0;
