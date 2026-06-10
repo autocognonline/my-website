@@ -114,6 +114,13 @@
       font-size: 15px;
       text-align: left;
     }
+    #forgotPwdBtn {
+      background: #666;
+    }
+
+    #forgotPwdBtn:active {
+      background: #444;
+    }
 
     .spatial-canvas-wrapper {
       display: flex;
@@ -155,6 +162,7 @@
       <input id="email" class="login-input" type="email" placeholder="Email" required>
       <input  id="password"  class="login-input hidden"  type="password"  placeholder="Password"  autocomplete="new-password"  readonly  inputmode="text"  onfocus="this.removeAttribute('readonly')">
       <button id="loginBtn">Login</button>
+      <button id="forgotPwdBtn" class="hidden" type="button">Send new password</button>
       <p id="loginMsg"></p>
     </div>
 
@@ -177,6 +185,6 @@
   </div>
 </div>
 
-<script src="auth.js?v=9"></script>
+<script src="auth.js?v=10"></script>
 </body>
 </html>
