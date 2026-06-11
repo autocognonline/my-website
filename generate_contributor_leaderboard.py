@@ -291,8 +291,9 @@ def main():
     </p>
 
     <p>
-      Main tests and subtests are counted separately. For example, completing a test
+      Standalone tests and subtests are counted separately. For example, completing a test
       composed of 5 subtests counts as 6 completed tests in total.
+      Combined tests count once.
     </p>
   </div>
 
