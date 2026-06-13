@@ -116,7 +116,7 @@ def main():
           shared = external_shared[email]
           known = known_external[email]
 
-          score = 4 * taken + 2 * shared + known
+          score = 8 * taken + 2 * shared + known
 
           leaderboard_rows.append({
               "name": name_by_email.get(email, email),
@@ -287,7 +287,7 @@ def main():
     </p>
 
     <p>
-      <strong>Contribution score = 4 × Internal tests taken + 2 × External scores shared + Total external scores</strong>.
+      <strong>Contribution score = 8 × Internal tests taken + 2 × External scores shared + Total external scores</strong>.
     </p>
 
     <p>
