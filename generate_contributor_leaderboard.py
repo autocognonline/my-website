@@ -2,6 +2,7 @@ import os
 import html
 from collections import defaultdict
 from supabase import create_client
+import math
 
 OUTPUT_FILE = "contributorLeaderboard.html"
 INTERNAL_AUTHOR = "M.-A. Nydegger"
@@ -116,7 +117,7 @@ def main():
           shared = external_shared[email]
           known = known_external[email]
 
-          score = (taken * (3 * shared + known + 1))**0.5
+          score = math.floor((taken * (3 * shared + known + 1))**0.5 + 0.5)
 
           leaderboard_rows.append({
               "name": name_by_email.get(email, email),
@@ -287,7 +288,7 @@ def main():
     </p>
 
     <p>
-      <strong>Contribution score = √(Internal tests taken × (3 × External scores shared + Total external scores + 1))</strong>.
+      <strong>Contribution score = √(Internal tests taken × (3 × External scores shared + Total external scores + 1)), rounded to the nearest whole number.</strong>
     </p>
 
     <p>
