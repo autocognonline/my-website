@@ -138,17 +138,17 @@ function endQuiz(standardScore, rawScore) {
 
     <label style="display:flex; align-items:center; gap:8px; margin-top:20px;">
       <input type="checkbox" id="leaderboardCheckbox">
-      Be visible on the NOAIS leaderboard
+      Be visible on the NOAIS - Form 1 leaderboard
     </label>
     <p id="leaderboardStatus" style="margin-top:10px; font-weight:bold;"></p>
 
     <div class="section"; margin-top:20px;">
-      <p>You can only see your NOAIS certificate if you have also completed NOFRAT !</p>
+      <p>You can only see your NOAIS - Form 1 certificate if you have also completed NOFRAT !</p>
     </div>
     <form id="certForm" style="margin-top: 20px;">
       <label>Email:</label>
       <input type="email" id="email" value="${email}" readonly />
-      <button type="submit" class="button" style="margin-top: 10px;">Show NOAIS Certificate</button>
+      <button type="submit" class="button" style="margin-top: 10px;">Show NOAIS - Form 1 Certificate</button>
     </form>
 
     <div id="result" style="margin-top: 20px;"></div>
