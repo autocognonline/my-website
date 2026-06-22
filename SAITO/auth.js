@@ -5,6 +5,9 @@ const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const loginBtn = document.getElementById("loginBtn");
 const forgotPwdBtn = document.getElementById("forgotPwdBtn");
+const loginSection = document.getElementById("loginSection");
+const instructionsSection = document.getElementById("instructionsSection");
+const startTestBtn = document.getElementById("startTestBtn");
 
 let email = "";
 
@@ -21,8 +24,14 @@ function finishLogin(user) {
 
   localStorage.setItem("email", email);
   localStorage.setItem("saito_user", JSON.stringify(user));
-  location.replace("quiz.html");
+
+  loginSection.classList.add("hidden");
+  instructionsSection.classList.remove("hidden");
 }
+
+startTestBtn.onclick = () => {
+  location.replace("quiz.html");
+};
 
 async function login() {
   email = emailInput.value.trim();
