@@ -5,7 +5,7 @@ const passwordInput = document.getElementById("password");
 const loginBtn      = document.getElementById("loginBtn");
 
 let email = "";
-let password = ""; // keep password in scope so finishLogin can use it
+let password = ""; 
 
 function finishLogin(user) {
   if (!user) {
@@ -14,7 +14,7 @@ function finishLogin(user) {
     return;
   }
   localStorage.setItem("email", email);
-  // SECURITY: storing plaintext passwords is risky. Consider using a session token instead.
+
   sessionStorage.setItem("password", password || "");
   location.replace("quiz_ovat.html");
 }
@@ -22,10 +22,7 @@ function finishLogin(user) {
 async function login() {
   email = emailInput.value.trim();
   const pwRaw = passwordInput.value;
-  // send null when empty to let backend know no password was provided this request
   const pwToSend = pwRaw && pwRaw.length ? pwRaw : null;
-
-  // save for finishLogin (but avoid storing long-term)
   password = pwToSend;
 
   if (!email) {
