@@ -15,7 +15,7 @@ function looksLikeEmail(str) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str.trim());
 }
 
-function finishLogin(user) {
+function finishLogin(user, showInstructions = false) {
   if (!user) {
     loginMsg.innerText = "Login succeeded but user data missing.";
     loginBtn.disabled = false;
@@ -25,12 +25,47 @@ function finishLogin(user) {
   localStorage.setItem("email", email);
   localStorage.setItem("saito_user", JSON.stringify(user));
 
-  loginSection.classList.add("hidden");
-  instructionsSection.classList.remove("hidden");
+  if (showInstructions) {
+    loginSection.classList.add("hidden");
+    instructionsSection.classList.remove("hidden");
+  } else {
+    location.replace("quiz.html");
+  }
 }
 
-startTestBtn.onclick = () => {
-  location.replace("quiz.html");
+startTestBtn.onclick = async () => {
+  const password = passwordInput.value;
+
+  startTestBtn.disabled = true;
+  loginMsg.innerText = "Starting test…";
+
+  try {
+    const res = await fetch(LOGIN_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password,
+        start_test: true
+      })
+    });
+
+    const payload = await res.json();
+
+    if (!res.ok || payload?.error) {
+      loginMsg.innerText = payload?.error || "Could not start test.";
+      startTestBtn.disabled = false;
+      return;
+    }
+
+    localStorage.setItem("saito_user", JSON.stringify(payload.user));
+    location.replace("quiz.html");
+
+  } catch (err) {
+    console.error(err);
+    loginMsg.innerText = "Network error.";
+    startTestBtn.disabled = false;
+  }
 };
 
 async function login() {
@@ -92,7 +127,7 @@ async function login() {
       return;
     }
 
-    finishLogin(payload.user);
+    finishLogin(payload.user, payload.show_instructions);
 
   } catch (err) {
     console.error(err);
