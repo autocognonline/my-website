@@ -75,8 +75,13 @@ async function login() {
 
     if (payload.need_password) {
       passwordInput.classList.remove("hidden");
-      forgotPwdBtn.classList.remove("hidden");
       passwordInput.value = "";
+      
+      if (payload.can_reset_password) {
+        forgotPwdBtn.classList.remove("hidden");
+      } else {
+        forgotPwdBtn.classList.add("hidden");
+      }
 
       loginMsg.innerText = payload.emailed
         ? "A password was sent to your email. Enter it above."
