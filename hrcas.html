@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HRCAS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 30px;
+      text-align: center;
+      line-height: 1.6;
+      color: #222;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      margin-top: 60px;
+    }
+
+    .section,
+    #certForm,
+    #result {
+      max-width: 1000px;
+      margin: 50px auto;
+    }
+
+    p {
+      margin: 10px auto;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    a {
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .button,
+    .paypal-button {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 20px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      background-color: #0070ba;
+      transition: background-color 0.3s ease;
+      margin: 5px;
+      min-width: 150px;
+      cursor: pointer;
+    }
+
+    .button:hover,
+    .paypal-button:hover {
+      background-color: #005c99;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background-color: #ccc;
+      margin: 60px auto;
+      width: min(80%, 1000px);
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-family: sans-serif;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 10px 16px;
+      text-align: center;
+    }
+
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    #certForm {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    #certForm label {
+      font-size: 18px;
+    }
+
+    #certForm input[type="text"] {
+      font-size: 16px;
+      padding: 12px 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      width: min(100%, 320px);
+    }
+
+    #result iframe {
+      width: 100%;
+      height: 600px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        margin: 18px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      p {
+        text-align: left;
+      }
+
+      #certForm {
+        flex-direction: column;
+      }
+
+      #certForm input[type="text"],
+      #certForm button {
+        width: 100%;
+        max-width: 420px;
+      }
+    }
+  </style>
+  <link rel="icon" href="favicon.png">
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3XHMB3NM73');
+</script>
+
+<body>
+  <h1>High Range Cognitive Ability Scale</h1>
+
+  <div class="section"> 
+    <p>HRCAS is an untimed, high-range cognitive ability battery consisting of 86 items. It is designed to measure cognitive ability across the range extending from approximately one to five standard deviations above the population mean.</p>
+
+    <p>The battery includes numerical, verbal, abstract, logical, and spatial reasoning items, arranged approximately in order of increasing difficulty.</p>
+
+    <p>HRCAS consists of two independent (sub)tests: NOACT and SAT.</p>
+
+    <p>NOACT assesses cognitive ability through numerical, verbal, abstract, and logical reasoning tasks. It is suitable for candidates who are proficient in English.</p>
+
+    <p>SAT is the spatial reasoning subtest of HRCAS.</p>
+
+    <p>For the most comprehensive assessment of cognitive ability, candidates are encouraged to complete both NOACT and SAT.</p> 
+  </div>
+  <div class="section">
+
+      <h2>The (sub)tests:</h2>
+
+      <div class="test-row">
+          <a class="button" href="noact.html">NOACT</a>
+          <a class="button" href="https://nsl36.netlify.app/sequels/sat">SAT</a>
+      </div>
+
+  </div>
+
+  <hr>
+
+  <div class="section" style="margin-top:20px;">
+    <p>If you have completed both tests, you can see your up-to-date certificate by inputting your NOACT Candidate ID in the field below:</p>
+  </div>
+  
+  <form id="certForm">
+    <label>Candidate ID:</label>
+    <input type="text" id="candidateID" required />
+    <button type="submit" class="button">Show HRCAS Certificate</button>
+  </form>
+  
+  <div id="result" style="margin-top: 20px;"></div>
+
+  <hr>
+
+  <div class="section">
+    <a class="button" href="stats.html">Statistics</a>
+    <a class="button" href="index.html">Back to main page</a><br><br>
+  </div>
+
+  <script>
+    document.getElementById("certForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+  
+      const candidateID = document.getElementById("candidateID").value.trim();
+      const container = document.getElementById("result");
+  
+      container.innerHTML = `<p style="font-weight:bold;">Certificate is being generated…</p>`;
+  
+      try {
+        const res = await fetch(
+          "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/gcai_certificate",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ candidateID }),
+          }
+        );
+  
+        if (res.status === 429) {
+          container.innerHTML = `
+            <p style="color:red;">
+              Too many requests. Please try again tomorrow.
+            </p>
+          `;
+          return;
+        }
+  
+        if (!res.ok) {
+          container.innerHTML = `
+            <p style="color:red;">
+              Certificate not available or wrong Candidate ID.
+            </p>
+          `;
+          return;
+        }
+  
+        const { url } = await res.json();
+  
+        container.innerHTML = `
+          <iframe src="${url}" allowfullscreen></iframe>
+        `;
+  
+      } catch (err) {
+        container.innerHTML = `
+          <p style="color:red;">
+            An error occurred. Please try again later.
+          </p>
+        `;
+        console.error(err);
+      }
+    });
+  </script>
+  </body>
+</html>
