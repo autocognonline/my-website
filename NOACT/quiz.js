@@ -118,7 +118,12 @@ async function loadUserProgress() {
 function loadQuestionByIndex(index) {
   statusEl.innerText = "";
   currentIndex = index;
-  questionImg.src = `${GET_QUIZ_IMAGE_URL}?bucket=questions_items&index=${index}`;
+
+  const email = encodeURIComponent(localStorage.getItem("email") || "");
+  const password = encodeURIComponent(sessionStorage.getItem("password") || "");
+
+  questionImg.src =  `${GET_QUIZ_IMAGE_URL}?bucket=questions_items&index=${index}&email=${email}&password=${password}`;
+
   answerInput.focus();
 }
 function loadNextQuestion() {
