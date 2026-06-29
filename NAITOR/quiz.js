@@ -1,5 +1,7 @@
 const UPDATE_USER_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/update_user_naitor";
 const GET_ANSWER_URL  = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_answer_naitor";
+const GET_QUIZ_IMAGE_URL =  "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_quiz_image";
+
 const TOTAL_ITEMS = 80;
 const TOTAL_ATTEMPTS = 4; // attempts per item
 const SPATIAL_ITEMS = [2,7,13,21,27,34,38,43,48,53,57,61,65,71,79];
@@ -315,8 +317,11 @@ function clearInputs() {
 function loadQuestionByIndex(index) {
   currentIndex = index;
 
+  const email = encodeURIComponent(localStorage.getItem("email") || "");
+  const password = encodeURIComponent(sessionStorage.getItem("password") || "");
+
   questionImg.src =
-    `https://qlmlvtohtkiycwtohqwk.supabase.co/storage/v1/object/public/naitor_questions/Base-${index}.jpg`;
+    `${GET_QUIZ_IMAGE_URL}?bucket=naitor_questions_items&index=${index}&email=${email}&password=${password}`;
 
   const answerInput1 = document.getElementById("answerInput1");
   const answerInput2 = document.getElementById("answerInput2");
