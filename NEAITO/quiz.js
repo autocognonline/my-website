@@ -1,5 +1,7 @@
 const UPDATE_USER_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/update_user_neaito";
 const GET_ANSWER_URL  = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_answer_neaito";
+const GET_QUIZ_IMAGE_URL =  "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_quiz_image";
+
 const TOTAL_ITEMS = 60;
 const TOTAL_ATTEMPTS = 4; // attempts per item
 const SPATIAL_ITEMS = [10, 20, 22, 29, 32, 33, 43, 47, 52, 53];
@@ -308,9 +310,12 @@ function clearInputs() {
 function loadQuestionByIndex(index) {
   currentIndex = index;
 
-  questionImg.src =
-    `https://qlmlvtohtkiycwtohqwk.supabase.co/storage/v1/object/public/neaito_questions/Base-${index}.jpg`;
+  const email = encodeURIComponent(localStorage.getItem("email") || "");
+  const password = encodeURIComponent(sessionStorage.getItem("password") || "");
 
+  questionImg.src =
+    `${GET_QUIZ_IMAGE_URL}?bucket=neaito_questions_items&index=${index}&email=${email}&password=${password}`;
+  
   const answerInput1 = document.getElementById("answerInput1");
   const answerInput2 = document.getElementById("answerInput2");
 
