@@ -1,5 +1,6 @@
 const UPDATE_USER_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/update_user";
 const GET_ANSWER_URL  = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_answer";
+const GET_QUIZ_IMAGE_URL =  "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_quiz_image";
 const TOTAL_ITEMS = 50;
 const TOTAL_ATTEMPTS = 30;
 
@@ -117,7 +118,7 @@ async function loadUserProgress() {
 function loadQuestionByIndex(index) {
   statusEl.innerText = "";
   currentIndex = index;
-  questionImg.src = `https://qlmlvtohtkiycwtohqwk.supabase.co/storage/v1/object/public/questions/Base-${index}.jpg`;
+  questionImg.src = `${GET_QUIZ_IMAGE_URL}?bucket=questions_items&index=${index}`;
   answerInput.focus();
 }
 function loadNextQuestion() {
