@@ -1,5 +1,6 @@
 const UPDATE_USER_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/update_user2";
 const GET_ANSWER_URL  = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_answer2";
+const GET_QUIZ_IMAGE_URL =  "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_quiz_image";
 const TOTAL_ITEMS = 55;
 const TOTAL_ATTEMPTS = 35;
 const SPATIAL_ITEMS = [1, 3, 8, 13, 16, 20, 23, 25, 27, 30 ,33, 37, 42 ,43, 47, 51 ,52]; 
@@ -217,8 +218,11 @@ function loadQuestionByIndex(index) {
   statusEl.innerText = "";
   currentIndex = index;
 
+  const email = encodeURIComponent(localStorage.getItem("email") || "");
+  const password = encodeURIComponent(sessionStorage.getItem("password") || "");
+
   questionImg.src =
-    `https://qlmlvtohtkiycwtohqwk.supabase.co/storage/v1/object/public/questions2/Base-${index}.jpg`;
+    `${GET_QUIZ_IMAGE_URL}?bucket=questions2_items&index=${index}&email=${email}&password=${password}`;
 
   if (SPATIAL_ITEMS.includes(index)) {
     spatialContainer.style.display = "flex";
