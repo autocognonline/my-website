@@ -238,7 +238,6 @@ function normalizeClient(s) {
   return t.toLowerCase().replace(/\s+/g, "");
 }
 
-// find next unsolved AND not-exhausted item
 function findNextUnsolved(start, forward = true) {
   let i = start;
   for (let step = 0; step < TOTAL_ITEMS; step++) {
@@ -512,26 +511,12 @@ if (submitBtn) submitBtn.onclick = async () => {
 function updateTopBar() {
   scoreEl.innerText = `Score: ${solved.length}`;
 
-  // show attempts for current item (if any)
   let remaining = "";
   if (currentIndex > 0) {
     remaining = attempts[currentIndex - 1] ?? 0;
     attemptsEl.innerText = `Attempts left: ${remaining}`;
   } else {
     attemptsEl.innerText = `Attempts left: -`;
-  }
-
-  const iqVal = (normoCache && normoCache[solved.length]) ? normoCache[solved.length] : "N/A";
-  let iqEl = document.getElementById("iqEl");
-  if (!iqEl) {
-    iqEl = document.createElement("span");
-    iqEl.id = "iqEl";
-    scoreEl.parentNode.appendChild(iqEl);
-  }
-  if (solved.length==0){
-    iqEl.innerText = `IQ: N/A`;
-  }else{
-    iqEl.innerText = `IQ: ${iqVal} (Wechsler Scale)`;
   }
 }
 
