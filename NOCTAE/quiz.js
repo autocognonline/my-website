@@ -45,8 +45,6 @@ let currentIndex = 0;
 let normoCache = null;
 let spatialGrid = [];
 
-/* -------------------- Spatial grid -------------------- */
-
 function initSpatialGrid(rows, cols) {
   spatialGrid = Array.from({ length: rows }, () =>
     Array.from({ length: cols }, () => 0)
@@ -130,8 +128,6 @@ spatialCanvas?.addEventListener("contextmenu", (e) => {
   toggleCellFromEvent(e.clientX, e.clientY);
 });
 
-/* -------------------- Status popup -------------------- */
-
 function showStatusPopup(message, isCorrect) {
   const modal = document.getElementById("statusModal");
   const content = document.getElementById("statusContent");
@@ -152,8 +148,6 @@ function showStatusPopup(message, isCorrect) {
     }, 200);
   }, 1000);
 }
-
-/* -------------------- Timer -------------------- */
 
 function formatTime(totalSeconds) {
   const safe = Math.max(0, Math.floor(totalSeconds));
@@ -236,8 +230,6 @@ async function endGameBecauseTimeExpired() {
   showFinalResults();
 }
 
-/* -------------------- Asset loading -------------------- */
-
 async function fetchPrivateAsset(path) {
   const res = await fetch(GET_ASSET_URL, {
     method: "POST",
@@ -282,8 +274,6 @@ async function loadNorm() {
   }
 }
 
-/* -------------------- Dark mode -------------------- */
-
 function applyDarkMode() {
   document.body.classList.toggle("dark-mode", darkMode);
 
@@ -304,8 +294,6 @@ document.getElementById("darkModeBtn")?.addEventListener("click", () => {
   darkMode = !darkMode;
   applyDarkMode();
 });
-
-/* -------------------- Username modal -------------------- */
 
 const changeUsernameModal = document.getElementById("changeUsernameModal");
 const newUsernameInput = document.getElementById("newUsernameInput");
@@ -409,8 +397,6 @@ saveUsernameBtn?.addEventListener("click", async (e) => {
   }
 });
 
-/* -------------------- End test modal -------------------- */
-
 const endTestModal = document.getElementById("endTestModal");
 const confirmEndBtn = document.getElementById("confirmEndBtn");
 const cancelEndBtn = document.getElementById("cancelEndBtn");
@@ -446,8 +432,6 @@ endTestModal?.addEventListener("click", (e) => {
   }
 });
 
-/* -------------------- Helpers -------------------- */
-
 function normalizeClient(s) {
   if (s === undefined || s === null) return "";
   let t = String(s);
@@ -479,8 +463,6 @@ function findNextUnsolved(start, forward = true) {
 
   return null;
 }
-
-/* -------------------- Question loading -------------------- */
 
 async function loadQuestionByIndex(index) {
   currentIndex = index;
@@ -535,8 +517,6 @@ if (nextBtn) {
     await loadQuestionByIndex(next);
   };
 }
-
-/* -------------------- Server sync -------------------- */
 
 function isTimeExpiredResponse(payload) {
   return payload?.expired === true || payload?.error === "Time expired";
@@ -699,8 +679,6 @@ async function loadUserProgress() {
   }
 }
 
-/* -------------------- Submit answer -------------------- */
-
 if (submitBtn) {
   submitBtn.onclick = async () => {
     let rawAns;
@@ -799,8 +777,6 @@ if (submitBtn) {
   };
 }
 
-/* -------------------- UI update -------------------- */
-
 function updateTopBar() {
   scoreEl.innerText = `Score: ${solved.length}`;
 
@@ -810,24 +786,7 @@ function updateTopBar() {
   } else {
     attemptsEl.innerText = "Attempts left: -";
   }
-
-  const iqVal = (normoCache && normoCache[solved.length]) ? normoCache[solved.length] : "N/A";
-  let iqEl = document.getElementById("iqEl");
-
-  if (!iqEl) {
-    iqEl = document.createElement("span");
-    iqEl.id = "iqEl";
-    scoreEl.parentNode.appendChild(iqEl);
-  }
-
-  if (solved.length === 0) {
-    iqEl.innerText = "IQ: N/A";
-  } else {
-    iqEl.innerText = `IQ: ${iqVal} (Wechsler Scale)`;
-  }
 }
-
-/* -------------------- Final results -------------------- */
 
 async function loadLeaderboardState() {
   try {
@@ -961,8 +920,6 @@ async function endGame() {
   await updateDB({ extraUpdate: { finished: true } });
   showFinalResults();
 }
-
-/* -------------------- Init -------------------- */
 
 applyDarkMode();
 
