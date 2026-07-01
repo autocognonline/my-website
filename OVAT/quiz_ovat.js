@@ -70,19 +70,6 @@ function hideSolvedItems() {
 function updateTopBar(standardScore = null) {
   scoreEl.textContent = `Score: ${solved.length}`;
   attemptsEl.textContent = `Attempts left: ${attempts}`;
-
-  let ssEl = document.getElementById("standardScoreEl");
-
-  if (!ssEl) {
-    ssEl = document.createElement("span");
-    ssEl.id = "standardScoreEl";
-    ssEl.style.marginLeft = "15px";
-    attemptsEl.parentNode.appendChild(ssEl);
-  }
-
-  if (standardScore !== null) {
-    ssEl.textContent = `Standard score: ${standardScore}`;
-  }
 }
 
 async function loadLeaderboardState() {
