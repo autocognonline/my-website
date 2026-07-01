@@ -368,15 +368,6 @@ if (submitBtn) submitBtn.onclick = async () => {
 function updateTopBar() {
   scoreEl.innerText = `Score: ${solved.length}`;
   attemptsEl.innerText = `Attempts left: ${attempts}`;
-
-  const iqVal = (normoCache && normoCache[solved.length]) ? normoCache[solved.length] : "N/A";
-  let iqEl = document.getElementById("iqEl");
-  if (!iqEl) {
-    iqEl = document.createElement("span");
-    iqEl.id = "iqEl";
-    scoreEl.parentNode.appendChild(iqEl);
-  }
-  iqEl.innerText = `IQ: ${iqVal} (Wechsler Scale)`;
 }
 
 async function loadLeaderboardState() {
