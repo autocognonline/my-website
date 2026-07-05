@@ -288,8 +288,9 @@ async function loadUserProgress() {
 
     const firstAvailable = findNextUnsolved(0, true);
     if (!firstAvailable) {
-      await updateDB({ extraUpdate: { finished: true } });
-      return showFinalResults();
+      const finished = await tryFinishTest();
+      if (finished) return showFinalResults();
+      return;
     }
 
     loadQuestionByIndex(firstAvailable);
@@ -630,17 +631,31 @@ function showFinalResults() {
     });
 }
 
+async function tryFinishTest() {
+  const result = await updateDB({ extraUpdate: { finished: true } });
+
+  if (result?.error) {
+    alert(result.error);
+    return false;
+  }
+
+  return true;
+}
+
 async function endGame() {
-  // mark finished and show final results
-  await updateDB({ extraUpdate: { finished: true } });
-  showFinalResults();
+  const finished = await tryFinishTest();
+  if (finished) showFinalResults();
 }
 
 finishBtn?.addEventListener("click", async () => {
-  const ok = window.confirm("Are you sure you want to finish the test?\nOnce submitted, you will not be able to continue working on it.");
+  const ok = window.confirm(
+    "Are you sure you want to finish the test?\nOnce submitted, you will not be able to continue working on it."
+  );
+
   if (!ok) return;
-  await updateDB({ extraUpdate: { finished: true } });
-  showFinalResults();
+
+  const finished = await tryFinishTest();
+  if (finished) showFinalResults();
 });
 
 
