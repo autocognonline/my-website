@@ -313,7 +313,7 @@
             <td id="unfinished-NOACT">–</td>
           </tr>
           <tr>
-            <td><a href="noais.html">NOAIS</a></td>
+            <td><a href="noais.html">NOAIS-Form 1</a></td>
             <td id="finished-NOAIS">–</td>
             <td>–</td>
           </tr>
@@ -328,7 +328,7 @@
             <td id="unfinished-NOFRAT">–</td>
           </tr>
           <tr>
-            <td><a href="ocs.html">OCS</a></td>
+            <td><a href="hrcas.html">HRCAS</a></td>
             <td id="finished-OCS">–</td>
             <td>–</td>
           </tr>
@@ -409,7 +409,7 @@
       NAITOR: "NAITOR",
       NEAITO: "NEAITO",
       NOACT: "NOACT",
-      NOAIS: "NOAIS",
+      NOAIS1: "NOAIS-Form 1",
       NOFRAT: "NOFRAT",
       OVAT33: "OVAT33",
       SAT: "SAT",
@@ -420,7 +420,7 @@
       NAITOR: "norms.html#norm-naitor",
       NEAITO: "norms.html#norm-neaito",
       NOACT: "norms.html#norm-noact",
-      NOAIS: "norms.html#norm-noais",
+      NOAIS1: "norms.html#norm-noais",
       NOCTAE: "norms.html#norm-noctae",
       NOFRAT: "norms.html#norm-nofrat",
       OVAT33: "norms.html#norm-ovat33",
@@ -544,18 +544,15 @@
       const title = document.createElement("h3");
       title.className = "chart-title";
 
-      // clickable quiz name
       const titleLink = document.createElement("a");
       titleLink.href = TEST_LINKS[testName] || "#";
       titleLink.textContent = TEST_DISPLAY_NAMES[testName] || testName;
       title.appendChild(titleLink);
 
-      // plain text
       const titleText = document.createElement("span");
       titleText.textContent = " score distribution";
       title.appendChild(titleText);
 
-      // optional norms link
       const normLinkUrl = TEST_NORM_LINKS[testName];
       if (normLinkUrl) {
         const separator = document.createElement("span");
