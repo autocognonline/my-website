@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NOAIS-Form 2 Verbal Subtest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #f7f9fc;
+      font-family: Arial, sans-serif;
+      color: #222;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .title {
+      text-align: center;
+    }
+
+    .instructions {
+      max-width: 850px;
+      margin: 0 auto 24px;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 24px 0;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .question-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 175px;
+      gap: 16px;
+      align-items: start;
+      padding: 12px 14px;
+      border-radius: 8px;
+    }
+
+    .item-row:nth-child(even) {
+      background: #f8fbff;
+    }
+
+    .item-text {
+      text-align: left;
+      font-size: 20px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .item-input {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+
+    .item-input input {
+      width: 200px;
+      padding: 8px 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #bbb;
+      text-align: center;
+    }
+
+    .item-input input:focus {
+      outline: none;
+      border-color: #0b5cff;
+    }
+
+    .item-row.solved {
+      display: none;
+    }
+
+    .item-row.locked {
+      display: none;
+    }
+
+    button {
+      padding: 14px 42px;
+      background: #0b5cff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    button:active {
+      background: #084fc1;
+    }
+
+    .submit-area {
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .big-popup-overlay,
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .big-popup-overlay.show,
+    .confirm-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .big-popup,
+    .confirm-box {
+      max-width: 720px;
+      width: 90%;
+      padding: 42px;
+      border-radius: 18px;
+      text-align: center;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+    }
+
+    .big-popup {
+      background: #0b5cff;
+      color: white;
+      font-size: 34px;
+      font-weight: bold;
+    }
+
+    .big-popup.error {
+      background: #d93025;
+    }
+
+    .confirm-box {
+      background: #fff;
+      color: #111827;
+    }
+
+    .confirm-box h2 {
+      margin-top: 0;
+      color: #d93025;
+      font-size: 30px;
+    }
+
+    .confirm-box p {
+      font-size: 20px;
+      line-height: 1.5;
+    }
+
+    .confirm-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .confirm-actions button.secondary {
+      background: #6b7280;
+    }
+
+    .secondary-btn {
+      background: white;
+      color: #0b5cff;
+      border: 2px solid #0b5cff;
+    }
+
+    .secondary-btn:hover {
+      background: #eef4ff;
+    }
+
+    @media (max-width: 760px) {
+      .item-row {
+        grid-template-columns: 1fr;
+      }
+
+      .item-text {
+        font-size: 16px;
+      }
+
+      .item-input {
+        justify-content: flex-start;
+      }
+
+      .item-input input {
+        width: 145px;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        gap: 8px;
+        font-size: 16px;
+      }
+
+      button {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      .big-popup {
+        font-size: 24px;
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <h1 class="title" style="text-align:center; margin-bottom:20px;">Verbal Subtest</h1>
+
+
+  <div class="section" style="max-width: 1000px;">
+    <h2 class="title" style="text-align:center; margin-bottom:50px;">Instructions</h2>
+    <p>The test contains four main types of items.</p>
+    <p><strong>Analogies:</strong> the first element has the same relationship to the second as the third has to the fourth.</p>
+    <p><strong>Associations:</strong> a group of words refers to a common idea or object, and you must identify what that idea or object is.</p>
+    <p><strong>Cipher:</strong> the item contains a hidden message that you have to decipher.</p>
+    <p><strong>Sequence:</strong> the words are logically connected in a sequential order.</p>
+    <p>A combination of types is also possible; part of the test is recognizing which kind of item is presented.</p>
+    <p>Some items may have more than one correct answer. Spaces are optional, and answers are not case sensitive.</p>
+    <p>You have 3 attempts. All answers must be submitted at the same time. After each attempt, any unsolved items will remain visible.</p>
+  </div>
+
+  <div style="margin-top:30px; text-align:center;">
+    <button id="returnBtn" type="button" class="secondary-btn">
+          Return to NOAIS-Form 2 index
+    </button>
+  </div>
+
+  <hr style="margin:40px 0; border:0; height:2px; background:#0b5cff;">
+
+  <section id="gameSection" class="hidden" aria-live="polite">
+
+    <div class="top-bar">
+      <span id="attemptsEl">Attempts left: 0</span>
+      <span id="scoreEl">Raw score: 0</span>
+    </div>
+
+    <div class="question-container">
+
+      <div class="item-row"><div class="item-text">ID 1: Monocycle, Bicycle, Tricycle, ?</div><div class="item-input"><input id="ans1" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 2: One-word answer: Ball, Lane, 300</div><div class="item-input"><input id="ans2" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 3: Two-word answer: Trinity, Fatman, Alamos</div><div class="item-input"><input id="ans3" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 4: a0 b2 c1 d5 e15 f3 g8 h6</div><div class="item-input"><input id="ans4" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 5: Fluid is to Electricity as Valve is to ?</div><div class="item-input"><input id="ans5" type="text" autocomplete="off"></div></div>
+
+      <div class="item-row"><div class="item-text">ID 6: retteldrowecnetnes?</div><div class="item-input"><input id="ans6" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 7: Talc, Gypsum, Calcite, Fluorite, Apatite, ?</div><div class="item-input"><input id="ans7" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 8: One-word answer: Lupa, -753, 7h</div><div class="item-input"><input id="ans8" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 9: xandy is to 14 as xandx is to 6 as xtimesy is to ?</div><div class="item-input"><input id="ans9" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 10: 470 is to Blue as 685 is to Red as 250 is to ?</div><div class="item-input"><input id="ans10" type="text" autocomplete="off"></div></div>
+
+      <div class="item-row"><div class="item-text">ID 11: One-word answer: Wasp, China, Wood</div><div class="item-input"><input id="ans11" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 12: Blue is to Copper as Yellow is to Sodium as Green is to ?</div><div class="item-input"><input id="ans12" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 13: Dliiegshetler is to Kerosene as lhietahvoiseprhere is to ?</div><div class="item-input"><input id="ans13" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 14: Two-word answer: Radiator-House, Pot-Stove, Sun-Space</div><div class="item-input"><input id="ans14" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 15: Pascal is to /Area as Joule is to *Length as Watt is to ?</div><div class="item-input"><input id="ans15" type="text" autocomplete="off"></div></div>
+
+      <div class="item-row"><div class="item-text">ID 16: 2222 233 33 13 1 223 33 225 55</div><div class="item-input"><input id="ans16" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 17: 1mx2rea4uplsrf1s7ndhkloag3moga2fer</div><div class="item-input"><input id="ans17" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 18: srqouoatrse 4006481361 8140025169 81361 3612251444842516</div><div class="item-input"><input id="ans18" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 19: Sun is to L. XIV as Spider is to ?</div><div class="item-input"><input id="ans19" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 20: /2112 /12 /1122121 /112112 : 417838275730080836588405922590</div><div class="item-input"><input id="ans20" type="text" autocomplete="off"></div></div>
+
+      <div class="item-row"><div class="item-text">ID 21: Somme is to (33+44)/49 as Verdun is to ?</div><div class="item-input"><input id="ans21" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 22: 647/4000-___ is to 51687473/400000000-__-_-- as 2076089/5000000_--__ is to ?<br>  Answer in plain English.</div><div class="item-input"><input id="ans22" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 23: Egg, 31205181691212118, Chrysalis, 44414004002532436144625 :<br> 583212564 is to Suez as 38416506251049761600004096 is to ?</div><div class="item-input"><input id="ans23" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 24: Third is to Network as Penultimate is to ?</div><div class="item-input"><input id="ans24" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 25: Rᶦᵍʰᵗ is to 1 arrow as ᴸᵉᶠt is to ?</div><div class="item-input"><input id="ans25" type="text" autocomplete="off"></div></div>
+
+    </div>
+
+    <div style="margin-top:15px; text-align:center;">
+      <button id="submitBtn" type="button">Submit All</button>
+    </div>
+
+  </section>
+</div>
+<script src="quiz_v.js?v=1"></script>
+</body>
+
+</html>

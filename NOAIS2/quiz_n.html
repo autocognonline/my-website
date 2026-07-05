@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NOAIS-Form 2 Numerical Subtest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #f7f9fc;
+      font-family: Arial, sans-serif;
+      color: #222;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .title {
+      text-align: center;
+    }
+
+    .instructions {
+      max-width: 850px;
+      margin: 0 auto 24px;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 24px 0;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .question-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+
+    .item-row:nth-child(even) {
+      background: #f8fbff;
+    }
+
+    .item-text {
+      text-align: left;
+      font-size: 20px;
+      line-height: 1.4;
+    }
+
+    .item-input {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .item-input input {
+      width: 130px;
+      padding: 7px 8px;
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #bbb;
+      text-align: center;
+    }
+
+    .item-input input:focus {
+      outline: none;
+      border-color: #0b5cff;
+    }
+
+    .item-row.solved {
+      display: none;
+    }
+
+    .item-row.locked {
+      display: none;
+    }
+
+    button {
+      padding: 14px 42px;
+      background: #0b5cff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    button:active {
+      background: #084fc1;
+    }
+
+    .submit-area {
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .big-popup-overlay,
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .big-popup-overlay.show,
+    .confirm-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .big-popup,
+    .confirm-box {
+      max-width: 720px;
+      width: 90%;
+      padding: 42px;
+      border-radius: 18px;
+      text-align: center;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+    }
+
+    .big-popup {
+      background: #0b5cff;
+      color: white;
+      font-size: 34px;
+      font-weight: bold;
+    }
+
+    .big-popup.error {
+      background: #d93025;
+    }
+
+    .confirm-box {
+      background: #fff;
+      color: #111827;
+    }
+
+    .confirm-box h2 {
+      margin-top: 0;
+      color: #d93025;
+      font-size: 30px;
+    }
+
+    .confirm-box p {
+      font-size: 20px;
+      line-height: 1.5;
+    }
+
+    .confirm-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .confirm-actions button.secondary {
+      background: #6b7280;
+    }
+
+    .secondary-btn {
+      background: white;
+      color: #0b5cff;
+      border: 2px solid #0b5cff;
+    }
+
+    .secondary-btn:hover {
+      background: #eef4ff;
+    }
+
+
+    @media (max-width: 760px) {
+      .item-row {
+        grid-template-columns: 1fr;
+      }
+
+      .item-text {
+        font-size: 16px;
+      }
+
+      .item-input {
+        justify-content: flex-start;
+      }
+
+      .item-input input {
+        width: 95px;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        gap: 8px;
+        font-size: 16px;
+      }
+
+      button {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      .big-popup {
+        font-size: 24px;
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <h1 class="title" style="text-align:center; margin-bottom:20px;">Numerical Subtest</h1>
+
+
+  <div class="section">
+    <h2 class="title" style="text-align:center; margin-bottom:50px;">Instructions</h2>
+    <p>The test contains one type of items.</p>
+    <p><strong>Sequence:</strong> find the number(s) that should replace the question mark(s).</p>
+    <p>You have 3 attempts. All answers must be submitted at the same time. After the first attempt, any unsolved items will remain visible so you can try them again.</p>
+  </div>
+
+  <div style="margin-top:30px; text-align:center;">
+    <button id="returnBtn" type="button" class="secondary-btn">
+          Return to NOAIS-Form 2 index
+    </button>
+  </div>
+
+  <hr style="margin:40px 0; border:0; height:2px; background:#0b5cff;">
+
+  <section id="gameSection" class="hidden" aria-live="polite">
+
+    <div class="top-bar">
+      <span id="attemptsEl">Attempts left: 0</span>
+      <span id="scoreEl">Raw score: 0</span>
+    </div>
+
+    <div class="question-container">
+
+      <div class="item-row"><div class="item-text">ID 1: 0, 11, 222, 3333, ?</div><div class="item-input"><input id="ans1" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 2: BEGINS 11, 22, 110, 770, 6930, 97020, ?</div><div class="item-input"><input id="ans2" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 3: 2, 32, 235, 7532, 235711, ?</div><div class="item-input"><input id="ans3" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 4: 25, 37, 611, 1117, 1825, 2735, ?</div><div class="item-input"><input id="ans4" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 5: 11, 21, 23, 83, 815, 4815, ?, 384105</div><div class="item-input"><input id="ans5" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 6: 111, 248, 3927, 41664, ?</div><div class="item-input"><input id="ans6" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 7: 79, 194, 1882, 17642, ?, 1708442, ...</div><div class="item-input"><input id="ans7" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 8: 35, 335, 6210, 181050, 724200, ?</div><div class="item-input"><input id="ans8" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 9: 17, 102, 204, 816, 5712, 34272, ?</div><div class="item-input"><input id="ans9" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 10: 73, 37, 47, 114, 456, 228, ?, 5679, ...</div><div class="item-input"><input id="ans10" type="text" autocomplete="off"></div></div>
+
+      <div class="item-row"><div class="item-text">ID 11: 1, 26, 241, 2072, 05040, 403203, ? </div><div class="item-input"><input id="ans11" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 12: 1729, 171, 63, ?, 45, 45, ?, ...</div><div class="item-input"><input id="ans12.1" type="text" autocomplete="off"><input id="ans12.2" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 13: 1, 12, 139, 1, 41, 664, 1, 52, 512, 5, ?, ?</div><div class="item-input"><input id="ans13.1" type="text" autocomplete="off"><input id="ans13.2" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 14: 013, 169, 482, 539, 454, ?</div><div class="item-input"><input id="ans14" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 15: 10101=270, 10110=402, 11001=500, 11110=6170, 100101=876, ?</div><div class="item-input"><input id="ans15" type="text" autocomplete="off"></div></div>
+
+      <div class="item-row"><div class="item-text">ID 16: 26, 52, 165, 606, 3003, 18810, ?</div><div class="item-input"><input id="ans16" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 17: 19, 95, 665, 11305/3, 22610/3, ?</div><div class="item-input"><input id="ans17" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 18: 10, 33, 1300, 6363, 34430, 173493, ?</div><div class="item-input"><input id="ans18" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 19: 11, 22, 132, 2376, 3920400, ?</div><div class="item-input"><input id="ans19" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 20: 20, 2215, 151443, 33171179, 133171179, ?</div><div class="item-input"><input id="ans20" type="text" autocomplete="off"></div></div>
+
+      <div class="item-row"><div class="item-text">ID 21: 32, 6, 44, 633, 1594, 92492, 124974, ?</div><div class="item-input"><input id="ans21" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 22: 171, 173, 436, 6910, 2115, 6121, ?, ?</div><div class="item-input"><input id="ans22.1" type="text" autocomplete="off"><input id="ans22.2" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 23: 61, 5357, 714322, 13234376, 6789911471, ?</div><div class="item-input"><input id="ans23" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 24: ENDS 25.3, ?, 196.9, 20.6, 56.8, 16.5, 95.4, 266.8, ?, 361.3</div><div class="item-input"><input id="ans24.1" type="text" autocomplete="off"><input id="ans24.2" type="text" autocomplete="off"></div></div>
+      <div class="item-row"><div class="item-text">ID 25: 25=90, 48=6223, 141=4, 560=, ?, 16764=0, 117341=2, 938720=, ...</div><div class="item-input"><input id="ans25" type="text" autocomplete="off"></div></div>
+
+    </div>
+
+    <div style="margin-top:15px; text-align:center;">
+      <button id="submitBtn" type="button">Submit All</button>
+    </div>
+
+  </section>
+</div>
+<script src="quiz_n.js?v=2"></script>
+</body>
+
+</html>

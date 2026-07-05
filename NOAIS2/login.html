@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOAIS 2 - Login</title>
+
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --panel: #ffffff;
+      --text: #222;
+      --muted: #1f2937;
+      --primary: #0b5cff;
+      --primary-dark: #084fc1;
+      --primary-soft: #f8fbff;
+      --primary-border: #dbeafe;
+      --warning-bg: #fff7ed;
+      --warning-border: #fed7aa;
+      --warning-text: #7c2d12;
+      --line: #e5e7eb;
+      --shadow: 0 6px 20px rgba(0,0,0,0.15);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .login-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 12px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 900px;
+      padding: 22px 16px;
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .login-box h1 {
+      margin: 0 0 18px;
+      font-size: 30px;
+      line-height: 1.3;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 14px;
+      font-size: 16px;
+      border: 1px solid #bbb;
+      border-radius: var(--radius-sm);
+    }
+
+    .login-input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 8px;
+      font-size: 17px;
+      color: #fff;
+      background: var(--primary);
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    button:active {
+      background: var(--primary-dark);
+    }
+
+    #loginMsg {
+      margin-top: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      color: red;
+    }
+
+    .instructions-card {
+      width: 100%;
+      padding: 24px;
+      background: var(--panel);
+      border: 1px solid #e8edf5;
+      border-radius: var(--radius-lg);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      flex: 1;
+      margin: 0;
+      padding: 12px;
+      background: #eef4ff;
+      color: #0b3f9c;
+      border: 1px solid var(--primary-border);
+      font-weight: bold;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .instructions-title {
+      margin: 0 0 22px;
+      font-size: 28px;
+      color: #111827;
+    }
+
+    .instruction-panels {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .instruction-panel,
+    .leaderboard-card,
+    .pdf-links-card,
+    .score-card {
+      padding: 20px 22px;
+      background: var(--primary-soft);
+      border: 1px solid var(--primary-border);
+      border-radius: 14px;
+      text-align: left;
+    }
+
+    .instruction-panel h3,
+    .pdf-links-card h3 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      color: #0b3f9c;
+    }
+
+    .instruction-panel p {
+      margin: 0 0 12px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .instruction-panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    .instruction-note {
+      margin: 0;
+      padding: 14px 16px;
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      border-radius: var(--radius-md);
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--warning-text);
+    }
+
+    .score-card {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .score-label {
+      font-size: 17px;
+      font-weight: bold;
+      color: #0b3f9c;
+      margin-bottom: 10px;
+    }
+
+    .score-value {
+      font-size: 42px;
+      font-weight: bold;
+      color: #111827;
+    }
+
+    .iq-score-box {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--primary-border);
+    }
+
+    .quiz-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .quiz-btn {
+      margin: 0;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .pdf-links-card {
+      background: #fff;
+    }
+
+    .pdf-links-card a {
+      display: block;
+      padding: 10px 0;
+      color: var(--primary);
+      font-weight: bold;
+      text-decoration: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .pdf-links-card a:first-of-type {
+      border-top: none;
+    }
+
+    .pdf-links-card a:hover {
+      text-decoration: underline;
+    }
+
+    .leaderboard-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      line-height: 1.4;
+    }
+
+    #leaderboardStatus {
+      margin: 10px 0 0;
+      font-size: 14px;
+      font-weight: bold;
+      color: #0b3f9c;
+    }
+
+    @media (max-width: 600px) {
+      .login-box h1,
+      .instructions-title {
+        font-size: 24px;
+      }
+
+      .instructions-card {
+        padding: 18px 14px;
+      }
+
+      .tabs {
+        flex-direction: column;
+      }
+
+      .instruction-panel h3,
+      .pdf-links-card h3 {
+        font-size: 18px;
+      }
+
+      .instruction-panel p,
+      .instruction-note {
+        font-size: 15px;
+      }
+
+      .quiz-btn {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-wrapper">
+    <div class="login-box">
+
+      <h1>Nydegger Online Automatic Intelligence Scale - Form 2</h1>
+
+      <div id="loginSection">
+        <input id="email" class="login-input" type="email" placeholder="Email" required>
+        <input id="password" class="login-input hidden" type="password" placeholder="Password">
+        <button id="loginBtn">Login</button>
+        <p id="loginMsg"></p>
+      </div>
+
+      <section id="instructionsSection" class="hidden">
+        <div class="instructions-card">
+
+          <div class="tabs">
+            <button class="tab-btn active" data-tab="generalTab" type="button">General instructions</button>
+            <button class="tab-btn" data-tab="testsTab" type="button">Subtests</button>
+            <button class="tab-btn" data-tab="resTab" type="button">Results</button>
+          </div>
+
+          <div id="generalTab" class="tab-panel active">
+            <h2 class="instructions-title">General Instructions</h2>
+
+            <div class="instruction-panels">
+              <div class="instruction-panel">
+                <h3>Spatial, Abstract and Logical Subtests</h3>
+                <p>
+                  In these subtests, items are answered one at a time. For each item,
+                  you will either submit an alphanumeric answer or a drawing before moving to another item.
+                </p>
+                <p>
+                  Each item allows 3 attempts. After 3 incorrect attempts, the item becomes unavailable.
+                </p>
+              </div>
+
+              <div class="instruction-panel">
+                <h3>Numerical and Verbal Subtests</h3>
+                <p>
+                  In these subtests, you will enter your answers in a form and submit all
+                  answers at the same time.
+                </p>
+                <p>
+                  After each submission, incorrectly answered items remain available. You have 3 total submissions.
+                </p>
+              </div>
+            </div>
+
+            <p class="instruction-note">
+              A subtest ends when no questions remain available, or when you click the “End Test” button.
+            </p>
+          </div>
+
+          <div id="testsTab" class="tab-panel">
+            <div class="quiz-buttons">
+              <button id="startSpatial" class="quiz-btn hidden" type="button">Spatial Subtest App</button>
+              <button id="startNumerical" class="quiz-btn hidden" type="button">Numerical Subtest App</button>
+              <button id="startVerbal" class="quiz-btn hidden" type="button">Verbal Subtest App</button>
+              <button id="startAbstract" class="quiz-btn hidden" type="button">Abstract Subtest App</button>
+              <button id="startLogical" class="quiz-btn hidden" type="button">Logical Subtest App</button>
+            </div>
+
+            <div class="pdf-links-card">
+              <h3>PDF versions of the test items</h3>
+              <a href="Spatial Subtest.pdf" target="_blank">Spatial items PDF</a>
+              <a href="Numerical Subtest.pdf" target="_blank">Numerical items PDF</a>
+              <a href="Verbal Subtest.pdf" target="_blank">Verbal items PDF</a>
+              <a href="Abstract Subtest.pdf" target="_blank">Abstract items PDF</a>
+              <a href="Logical Subtest.pdf" target="_blank">Logical items PDF</a>
+            </div>
+          </div>
+
+          <div id="resTab" class="tab-panel">
+            <div class="score-card">
+              <div class="score-label">Your raw score on NOAIS-Form 2</div>
+              <div id="rawScore" class="score-value">0</div>
+
+              <div id="iqScoreBox" class="iq-score-box hidden">
+                <div class="score-label">Estimated IQ score</div>
+                <div id="iqScore" class="score-value">-</div>
+              </div>
+            </div>
+            <div class="leaderboard-card">
+              <label class="leaderboard-toggle">
+                <input type="checkbox" id="leaderboardCheckbox">
+                Show my current score on the NOAIS - Form 2 leaderboard (uses real name)
+              </label>
+              <p id="leaderboardStatus"></p>
+            </div>
+
+            <div id="certificateBox" style="margin-top:20px; padding:16px; border:1px solid #ddd; border-radius:10px; background:#f7f9fc;">
+              <p><strong>Certificate</strong></p>
+              <p>After finishing the full test, you can generate and see your score certificate here.</p>
+
+              <button id="generateCertBtn" type="button">
+                Generate Certificate
+              </button>
+
+              <p id="certStatus" style="margin-top:12px; font-weight:bold;"></p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="auth.js?v=4"></script>
+</body>
+</html>
