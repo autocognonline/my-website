@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOAIS 2</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 30px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      margin-top: 60px;
+    }
+
+    p {
+      max-width: 1000px;
+      margin: 10px auto;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    a {
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .section {
+      margin: 50px auto;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 20px;
+      border-radius: 8px;
+      color: white;
+      background-color: #0070ba;
+      transition: background-color 0.3s ease;
+      margin: 5px;
+    }
+
+    .button:hover {
+      background-color: #005c99;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background-color: #ccc;
+      margin: 60px auto;
+      width: 80%;
+    }
+
+    .button, .paypal-button {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 20px;
+      border-radius: 8px;
+      color: white;
+      background-color: #0070ba;
+      transition: background-color 0.3s ease;
+      margin: 5px;
+      min-width: 150px;
+    }
+
+    .button:hover, .paypal-button:hover {
+      background-color: #005c99;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-family: sans-serif;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px 16px;
+      text-align: center;
+    }
+
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    #certForm input[type="email"] {
+      font-size: 20px;        
+      padding: 12px 10px;       
+      height: calc(20px + 24px); 
+      border-radius: 8px;       
+      border: 1px solid #ccc;
+      box-sizing: border-box;   
+      margin-right: 10px;       
+    }
+  </style>
+  <link rel="icon" href="favicon.png">
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3XHMB3NM73');
+</script>
+<body>
+  <h1>Nydegger Online Automatic Intelligence Scale - Form 2</h1>
+
+  <div class="section" style="max-width: 1000px;">
+    <p>NOAIS - Form 2 is an untimed, high-range intelligence battery consisting of 115 items, designed to measure cognitive ability across a broad range, from approximately the population average to exceptionally high levels of ability (+6 standard deviations).</p>
+    <p>The battery consists of 115  items distributed across five reasoning domains: Numerical, Verbal, Abstract, Logical and Spatial. Within each subtest, items are arranged in approximately increasing order of difficulty.</p>
+    <p>The five subtests may be completed independently and in any order. Your progress is saved automatically, allowing you to return later if necessary.</p>
+    <p>During each subtest your raw score is displayed. After completing a subtest, an estimated standardized score becomes available. Once all five subtests have been completed, an overall estimated IQ score (Wechsler scale, mean = 100, SD = 15) is calculated.</p>
+    <p>NOAIS - Form 2 is a new battery following the same general philosophy as NAITOR and NEAITO.</p>
+    <p>Authenticated candidates may complete the battery free of charge. <strong>Unauthenticated candidates may participate by purchasing access to individual subtests.</strong></p>
+
+
+  </div>
+
+   <hr>
+
+  <div class="section" style="max-width: 1000px;">
+    <p>If you have not completed the authentication procedure, you may purchase access to an individual subtest for <strong>15€</strong>.</p>
+    <p>When making the payment, please include your <strong>full name</strong>, <strong>email address</strong> and the <strong>subtest</strong> you wish to access.</p>
+    <p><strong>Important:</strong> Access is granted per subtest. A separate payment is required for each subtest, and payments cannot be refunded once access has been issued.</p>
+    <a href="https://paypal.me/OrbifoldAnswers?country.x=CH&locale.x=en_US" target="_blank" rel="noopener noreferrer" class="paypal-button">Pay Subtest fee with PayPal</a>
+
+    <p>To completed authentication, please follow the instructions provided here:</p>
+    <a class="button" href="authProcedure.html">Authentication procedure</a>
+  </div>
+
+  <div class="section" style="max-width: 1000px;">
+    <h2>Preview Test Item PDFs</h2>
+
+    <p>
+      If you are not yet authenticated and would like to view the test item PDFs before purchasing access,
+      please enter your email address below.
+    </p>
+
+    <form id="pdfAccessForm">
+      <input
+        type="email"
+        id="previewEmail"
+        placeholder="Enter your email address"
+        required
+        style="font-size:20px; padding:12px 10px; border-radius:8px; border:1px solid #ccc; min-width:300px;"
+      >
+      <button type="submit" class="button">Proceed</button>
+    </form>
+
+    <div id="codeArea" style="display:none; margin-top:20px;">
+      <input
+        type="text"
+        id="verificationCode"
+        placeholder="Enter verification code"
+        style="font-size:20px; padding:12px 10px; border-radius:8px; border:1px solid #ccc; min-width:250px;"
+      >
+      <button id="verifyCodeBtn" class="button">Verify Code</button>
+    </div>
+
+    <p id="pdfMessage" style="text-align:center;"></p>
+
+    <div id="pdfButtons" style="display:none; margin-top:25px;">
+      <a class="button" href="Verbal Subtest.pdf" target="_blank">Verbal subtest items PDF</a>
+      <a class="button" href="Numerical Subtest.pdf" target="_blank">Numerical subtest items PDF</a>
+      <a class="button" href="Abstract Subtest.pdf" target="_blank">Abstract subtest items PDF</a>
+      <a class="button" href="Logical Subtest.pdf" target="_blank">Logical subtest items PDF</a>
+      <a class="button" href="Spatial Subtest.pdf" target="_blank">Spatial subtest items PDF</a>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section" style="max-width: 1000px;">
+    <p>Participation is free of charge for authenticated candidates.</p>
+    <p>Please do not share, discuss, publish, or reproduce any test items or solutions.</p>
+    <p>The use of AI tools (ChatGPT, Gemini, Claude, Copilot, etc.) for solving, explaining, analysing, or verifying answers is strictly prohibited.</p>
+    <p>External reference resources such as dictionaries, calculators, Wikipedia and Wolfram Alpha may be used.</p>
+    <p>If you have already completed authentication or have previously purchased access, you may proceed directly to the login page here:</p>
+    <a class="button" href="/NOAIS2/login.html">NOAIS-Form 2 Login Page</a>
+  </div>
+
+  <hr>
+
+
+
+  <div class="section" style="max-width: 1000px;">
+    <p>After completing the test, if you would like to receive a score certificate, please submit a 3€ payment via the link below, along with your name and email address.</p>
+    <a href="https://paypal.me/OrbifoldAnswers?country.x=CH&locale.x=en_US" target="_blank" rel="noopener noreferrer" class="paypal-button">Pay with PayPal</a>
+    <p>Once the certificate has been issued, it can be viewed and downloaded directly after logging into your account.</p>
+  </div>
+
+  
+  <hr>
+
+  <div class="section">
+    <a class="button" href="noais2leaderboard.html">NOAIS - Form 2 Leaderboard</a>
+    <a class="button" href="stats.html">Statistics</a>
+    <a class="button" href="index.html">Back to main page</a><br><br>
+  </div>
+
+  <script>
+    const pdfAccessForm = document.getElementById("pdfAccessForm");
+    const previewEmail = document.getElementById("previewEmail");
+    const codeArea = document.getElementById("codeArea");
+    const verificationCode = document.getElementById("verificationCode");
+    const verifyCodeBtn = document.getElementById("verifyCodeBtn");
+    const pdfMessage = document.getElementById("pdfMessage");
+    const pdfButtons = document.getElementById("pdfButtons");
+
+    pdfAccessForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const email = previewEmail.value.trim();
+
+      pdfMessage.textContent = "Please wait...";
+      pdfButtons.style.display = "none";
+
+      try {
+        const response = await fetch("https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/register_nocis_preview", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "send_code",
+            email
+          })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || "Unable to process request.");
+        }
+
+        codeArea.style.display = "block";
+
+        if (result.already_verified) {
+          pdfMessage.textContent =
+            "This email address has already been verified. Please enter the verification code that was previously sent to this email address to access the preview PDFs.";
+        } else {
+          pdfMessage.textContent =
+            "A verification code has been sent to your email address. Please enter it below to access the preview PDFs.";
+        }
+
+      } catch (error) {
+        console.error(error);
+        pdfMessage.textContent = error.message || "An unexpected error occurred.";
+      }
+    });
+
+    verifyCodeBtn.addEventListener("click", async () => {
+      const email = previewEmail.value.trim();
+      const code = verificationCode.value.trim();
+
+      if (!code) {
+        pdfMessage.textContent = "Please enter your verification code.";
+        return;
+      }
+
+      pdfMessage.textContent = "Verifying code...";
+
+      try {
+        const response = await fetch("https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/register_nocis_preview", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "verify_code",
+            email,
+            code
+          })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || "Invalid verification code.");
+        }
+
+        pdfMessage.textContent =
+          "Verification successful. You may now open any of the preview PDFs below.";
+
+        codeArea.style.display = "none";
+        pdfButtons.style.display = "block";
+
+      } catch (error) {
+        console.error(error);
+        pdfMessage.textContent = error.message || "Verification failed.";
+      }
+    });
+  </script>
+
+</body>
+</html>
