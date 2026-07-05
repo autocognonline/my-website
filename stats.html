@@ -582,7 +582,7 @@
 
       const labels = filteredBins.map(bin => bin.label);
       const finishedValues = filteredBins.map(bin => bin.finished);
-      const noUnfinished = ["NOCTAE", "OCS", "NOAIS1"].includes(testName);
+      const noUnfinished = ["NOCTAE", "HRCAS", "NOAIS1"].includes(testName);
 
       const unfinishedValues = filteredBins.map(bin =>
         noUnfinished ? 0 : bin.unfinished
