@@ -397,7 +397,7 @@
       NAITOR: "naitor.html",
       NEAITO: "neaito.html",
       NOACT: "noact.html",
-      NOAIS: "noais.html",
+      NOAIS1: "noais.html",
       NOFRAT: "nofrat.html",
       OVAT33: "ovat.html",
       SAT: "https://nsl36.netlify.app/sequels/sat",
@@ -582,7 +582,7 @@
 
       const labels = filteredBins.map(bin => bin.label);
       const finishedValues = filteredBins.map(bin => bin.finished);
-      const noUnfinished = ["NOCTAE", "OCS", "NOAIS"].includes(testName);
+      const noUnfinished = ["NOCTAE", "OCS", "NOAIS1"].includes(testName);
 
       const unfinishedValues = filteredBins.map(bin =>
         noUnfinished ? 0 : bin.unfinished
