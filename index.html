@@ -355,6 +355,42 @@
       color: #444;
     }
 
+    .accordion-section {
+      margin: 18px 0;
+    }
+
+    .accordion-toggle {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: left;
+      border: 1px solid #dbe3ef;
+      border-radius: 10px;
+      background: #eef5fc;
+      color: #222;
+      cursor: pointer;
+    }
+
+    .accordion-toggle::after {
+      content: "+";
+      float: right;
+      font-size: 26px;
+    }
+
+    .accordion-toggle.active::after {
+      content: "−";
+    }
+
+    .accordion-content {
+      display: none;
+      margin-top: 18px;
+    }
+
+    .accordion-content.open {
+      display: block;
+    }
+
     .details-grid {
         display: grid;
         margin-top: 10px;
@@ -599,193 +635,216 @@
   </div>
 
   <div class="content-panel" id="tests-panel">
-  <h2>Standalone tests</h2>
+    <div class="accordion-section">
+      <button class="accordion-toggle" type="button">
+        Standalone tests
+      </button>
 
-    <div class="section test-list">
+      <div class="accordion-content">
 
-      <div class="test-card">
-        <a class="button" href="saito.html">SAITO</a>
-        <div class="test-info">
-          <p class="test-note">Recommended as a starting point for those new to high range tests.</p>
+        <div class="section test-list">
 
-          <div class="details-grid">
-            <div>Items</div><div>30</div>
-            <div>Timing</div><div>Untimed</div>
-            <div>Recommended time</div><div>At least 1.5 hour</div>
-            <div>OTC</div><div>Medium</div>
-            <div>Domains</div><div>Numerical, Verbal, Logical, Abstract, Spatial</div>
-            <div>Pros</div><div>Brief, broad, beginner-friendly</div>
-            <div>Cons</div><div>Lower ceiling than other tests, ceiling effects starting at around 150.</div>
+          <div class="test-card">
+            <a class="button" href="saito.html">SAITO</a>
+            <div class="test-info">
+              <p class="test-note">Recommended as a starting point for those new to high range tests.</p>
+
+              <div class="details-grid">
+                <div>Items</div><div>30</div>
+                <div>Timing</div><div>Untimed</div>
+                <div>Recommended time</div><div>At least 1.5 hour</div>
+                <div>OTC</div><div>Medium</div>
+                <div>Domains</div><div>Numerical, Verbal, Logical, Abstract, Spatial</div>
+                <div>Pros</div><div>Brief, broad, beginner-friendly</div>
+                <div>Cons</div><div>Lower ceiling than other tests, ceiling effects starting at around 150.</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="test-card">
-        <a class="button" href="noctae.html">NOCTÆ</a>
-        <div class="test-info">
-          <p class="test-note">For those that are more interested in timed and nonverbal tests.</p>
-          <div class="details-grid">
-            <div>Items</div><div>48</div>
-            <div>Timing</div><div>Timed</div>
-            <div>Recommended time</div><div>At least 2 hours</div>
-            <div>OTC</div><div>High</div>
-            <div>Domains</div><div>Numerical, Abstract, Spatial</div>
-            <div>Pros</div><div>Culture-fair, progressive difficulty</div>
-            <div>Cons</div><div>Time pressure may not suit everyone</div>
+          <div class="test-card">
+            <a class="button" href="noctae.html">NOCTÆ</a>
+            <div class="test-info">
+              <p class="test-note">For those that are more interested in timed and nonverbal tests.</p>
+              <div class="details-grid">
+                <div>Items</div><div>48</div>
+                <div>Timing</div><div>Timed</div>
+                <div>Recommended time</div><div>At least 2 hours</div>
+                <div>OTC</div><div>High</div>
+                <div>Domains</div><div>Numerical, Abstract, Spatial</div>
+                <div>Pros</div><div>Culture-fair, progressive difficulty</div>
+                <div>Cons</div><div>Time pressure may not suit everyone</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="test-card">
-        <a class="button" href="naitor.html">NAITOR</a>
-        <div class="test-info">
-          <p class="test-note">Recommended option if you are unsure which test to take.</p>
+          <div class="test-card">
+            <a class="button" href="naitor.html">NAITOR</a>
+            <div class="test-info">
+              <p class="test-note">Recommended option if you are unsure which test to take.</p>
 
-          <div class="details-grid">
-            <div>Items</div><div>80</div>
-            <div>Timing</div><div>Untimed</div>
-            <div>Recommended time</div><div>At least 12 hours</div>
-            <div>OTC</div><div>Medium</div>
-            <div>Domains</div><div>Numerical, Verbal, Logical, Abstract, Spatial</div>
-            <div>Pros</div><div>Broad coverage, revised version of NAIT</div>
-            <div>Cons</div><div>Very long test</div>
+              <div class="details-grid">
+                <div>Items</div><div>80</div>
+                <div>Timing</div><div>Untimed</div>
+                <div>Recommended time</div><div>At least 12 hours</div>
+                <div>OTC</div><div>Medium</div>
+                <div>Domains</div><div>Numerical, Verbal, Logical, Abstract, Spatial</div>
+                <div>Pros</div><div>Broad coverage, revised version of NAIT</div>
+                <div>Cons</div><div>Very long test</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="test-card">
-        <a class="button" href="neaito.html">NEAITO</a>
-        <div class="test-info">
-          <p class="test-note">Shorter and harder than NAITOR, with an increased ceiling.</p>
+          <div class="test-card">
+            <a class="button" href="neaito.html">NEAITO</a>
+            <div class="test-info">
+              <p class="test-note">Shorter and harder than NAITOR, with an increased ceiling.</p>
 
-          <div class="details-grid">
-            <div>Items</div><div>60</div>
-            <div>Timing</div><div>Untimed</div>
-            <div>Recommended time</div><div>At least 15 hours</div>
-            <div>OTC</div><div>Very high</div>
-            <div>Domains</div><div>Numerical, Verbal, Logical, Abstract, Spatial</div>
-            <div>Pros</div><div>Very high ceiling, more efficient than NAITOR for extreme cognitive abilities</div>
-            <div>Cons</div><div>Strenuous, not suitable as a first test</div>
+              <div class="details-grid">
+                <div>Items</div><div>60</div>
+                <div>Timing</div><div>Untimed</div>
+                <div>Recommended time</div><div>At least 15 hours</div>
+                <div>OTC</div><div>Very high</div>
+                <div>Domains</div><div>Numerical, Verbal, Logical, Abstract, Spatial</div>
+                <div>Pros</div><div>Very high ceiling, more efficient than NAITOR for extreme cognitive abilities</div>
+                <div>Cons</div><div>Strenuous, not suitable as a first test</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="test-card">
-        <a class="button" href="noact.html">NOACT</a>
-        <div class="test-info">
-          <p class="test-note">Same format as SAITO but without a spatial component</p>
-          <div class="details-grid">
-            <div>Items</div><div>50</div>
-            <div>Timing</div><div>Untimed</div>
-            <div>Recommended time</div><div>At least 4 hours</div>
-            <div>OTC</div><div>High</div>
-            <div>Domains</div><div>Numerical, Verbal, Logical, Abstract</div>
-            <div>Pros</div><div>Progressive difficulty, can be completed quickly</div>
-            <div>Cons</div><div>No spatial reasoning score</div>
+          <div class="test-card">
+            <a class="button" href="noact.html">NOACT</a>
+            <div class="test-info">
+              <p class="test-note">Same format as SAITO but without a spatial component</p>
+              <div class="details-grid">
+                <div>Items</div><div>50</div>
+                <div>Timing</div><div>Untimed</div>
+                <div>Recommended time</div><div>At least 4 hours</div>
+                <div>OTC</div><div>High</div>
+                <div>Domains</div><div>Numerical, Verbal, Logical, Abstract</div>
+                <div>Pros</div><div>Progressive difficulty, can be completed quickly</div>
+                <div>Cons</div><div>No spatial reasoning score</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="test-card">
-        <a class="button" href="nofrat.html">NOFRAT</a>
-        <div class="test-info">
-          <p class="test-note">Same format as SAITO but entirely nonverbal</p>
-          <div class="details-grid">
-            <div>Items</div><div>55</div>
-            <div>Timing</div><div>Untimed</div>
-            <div>Recommended time</div><div>At least 9 hours</div>
-            <div>OTC</div><div>Very high</div>
-            <div>Domains</div><div>Numerical, Abstract, Spatial</div>
-            <div>Pros</div><div>Culture-fair, high ceiling</div>
-            <div>Cons</div><div>Very demanding, not recommended as a first test</div>
+          <div class="test-card">
+            <a class="button" href="nofrat.html">NOFRAT</a>
+            <div class="test-info">
+              <p class="test-note">Same format as SAITO but entirely nonverbal</p>
+              <div class="details-grid">
+                <div>Items</div><div>55</div>
+                <div>Timing</div><div>Untimed</div>
+                <div>Recommended time</div><div>At least 9 hours</div>
+                <div>OTC</div><div>Very high</div>
+                <div>Domains</div><div>Numerical, Abstract, Spatial</div>
+                <div>Pros</div><div>Culture-fair, high ceiling</div>
+                <div>Cons</div><div>Very demanding, not recommended as a first test</div>
+              </div>
+            </div>
           </div>
+
         </div>
+
       </div>
+    </div>   
 
-    </div>
+    <div class="accordion-section">
+      <button class="accordion-toggle" type="button">
+        Standalone subtests
+      </button>
 
-  <h2>Standalone subtests</h2>
+      <div class="accordion-content">
 
-  <div class="section test-list">
+        <div class="section test-list">
 
-    <div class="test-card">
-      <a class="button" href="ovat.html">OVAT 33</a>
+          <div class="test-card">
+            <a class="button" href="ovat.html">OVAT 33</a>
 
-      <div class="test-info">
-        <p class="test-note">A high range verbal subtest testing verbal reasoning and pattern recognition.</p>
+            <div class="test-info">
+              <p class="test-note">A high range verbal subtest testing verbal reasoning and pattern recognition.</p>
 
-        <div class="details-grid">
-          <div>Items</div><div>33</div>
-          <div>Timing</div><div>Untimed</div>
-          <div>Recommended time</div><div>At least 4 hours</div>
-          <div>OTC</div><div>Medium</div>
-          <div>Domains</div><div>Verbal</div>
-          <div>Pros</div><div>Focused verbal measurement, important NOAIS component</div>
-          <div>Cons</div><div>Not culture fair</div>
-        </div>
-      </div>
-    </div>
+              <div class="details-grid">
+                <div>Items</div><div>33</div>
+                <div>Timing</div><div>Untimed</div>
+                <div>Recommended time</div><div>At least 4 hours</div>
+                <div>OTC</div><div>Medium</div>
+                <div>Domains</div><div>Verbal</div>
+                <div>Pros</div><div>Focused verbal measurement, important NOAIS component</div>
+                <div>Cons</div><div>Not culture fair</div>
+              </div>
+            </div>
+          </div>
 
-    <div class="test-card">
-      <a class="button" href="https://nsl36.netlify.app/sequels/sat">SAT</a>
+          <div class="test-card">
+            <a class="button" href="https://nsl36.netlify.app/sequels/sat">SAT</a>
 
-      <div class="test-info">
-        <p class="test-note">A high range spatial test co-created with Andrei Udriște.</p>
+            <div class="test-info">
+              <p class="test-note">A high range spatial test co-created with Andrei Udriște.</p>
 
-        <div class="details-grid">
-          <div>Items</div><div>36</div>
-          <div>Timing</div><div>Untimed</div>
-          <div>Recommended time</div><div>At least 6 hours</div>
-          <div>OTC</div><div>High</div>
-          <div>Domains</div><div>Spatial</div>
-          <div>Pros</div><div>Focused spatial measurement, high difficulty, culture fair</div>
-          <div>Cons</div><div>Measures mainly spatial reasoning</div>
-        </div>
-      </div>
-    </div>
+              <div class="details-grid">
+                <div>Items</div><div>36</div>
+                <div>Timing</div><div>Untimed</div>
+                <div>Recommended time</div><div>At least 6 hours</div>
+                <div>OTC</div><div>High</div>
+                <div>Domains</div><div>Spatial</div>
+                <div>Pros</div><div>Focused spatial measurement, high difficulty, culture fair</div>
+                <div>Cons</div><div>Measures mainly spatial reasoning</div>
+              </div>
+            </div>
+          </div>
 
-  </div>
-
-  <h2>Combined tests / batteries</h2>
-
-  <div class="section test-list">
-
-    <div class="test-card">
-      <a class="button" href="noais.html">NOAIS - Form 1</a>
-
-      <div class="test-info">
-        <p class="test-note">A combined high range battery formed from NOFRAT and OVAT 33.</p>
-
-        <div class="details-grid">
-          <div>Items</div><div>88</div>
-          <div>Timing</div><div>Untimed</div>
-          <div>Recommended time</div><div>At least 13 hours</div>
-          <div>OTC</div><div>High</div>
-          <div>Domains</div><div>Numerical, Verbal, Abstract, Spatial</div>
-          <div>Pros</div><div>Broad battery, combines verbal and nonverbal reasoning</div>
-          <div>Cons</div><div>Very long, requires sustained effort</div>
         </div>
       </div>
     </div>
 
-    <div class="test-card">
-      <a class="button" href="hrcas.html">HRCAS</a>
 
-      <div class="test-info">
-        <p class="test-note">A broad high range battery formed from NOACT and SAT.</p>
+    <div class="accordion-section">
+      <button class="accordion-toggle" type="button">
+        Combined tests / batteries
+      </button>
 
-        <div class="details-grid">
-          <div>Items</div><div>86</div>
-          <div>Timing</div><div>Untimed / mostly computerized</div>
-          <div>Recommended time</div><div>At least 10 hours</div>
-          <div>OTC</div><div>High</div>
-          <div>Domains</div><div>Numerical, Verbal, Abstract, Logical, Spatial</div>
-          <div>Pros</div><div>Very broad coverage</div>
-          <div>Cons</div><div>Long battery, less convenient than a standalone test like NAITOR</div>
+      <div class="accordion-content">
+
+        <div class="section test-list">
+
+          <div class="test-card">
+            <a class="button" href="noais.html">NOAIS - Form 1</a>
+
+            <div class="test-info">
+              <p class="test-note">A combined high range battery formed from NOFRAT and OVAT 33.</p>
+
+              <div class="details-grid">
+                <div>Items</div><div>88</div>
+                <div>Timing</div><div>Untimed</div>
+                <div>Recommended time</div><div>At least 13 hours</div>
+                <div>OTC</div><div>High</div>
+                <div>Domains</div><div>Numerical, Verbal, Abstract, Spatial</div>
+                <div>Pros</div><div>Broad battery, combines verbal and nonverbal reasoning</div>
+                <div>Cons</div><div>Very long, requires sustained effort</div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="test-card">
+              <a class="button" href="hrcas.html">HRCAS</a>
+
+            <div class="test-info">
+                <p class="test-note">A broad high range battery formed from NOACT and SAT.</p>
+
+              <div class="details-grid">
+                  <div>Items</div><div>86</div>
+                  <div>Timing</div><div>Untimed / mostly computerized</div>
+                  <div>Recommended time</div><div>At least 10 hours</div>
+                  <div>OTC</div><div>High</div>
+                  <div>Domains</div><div>Numerical, Verbal, Abstract, Logical, Spatial</div>
+                  <div>Pros</div><div>Very broad coverage</div>
+                  <div>Cons</div><div>Long battery, less convenient than a standalone test like NAITOR</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
   </div>
 
@@ -915,6 +974,19 @@
         "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/check_naitor_rank";
 
       const rankBtn = document.getElementById("checkRankBtn");
+      const accordionButtons = document.querySelectorAll(".accordion-toggle");
+
+      accordionButtons.forEach(button => {
+        button.setAttribute("aria-expanded", "false");
+
+        button.addEventListener("click", () => {
+          const content = button.nextElementSibling;
+          const isOpen = content.classList.toggle("open");
+
+          button.classList.toggle("active", isOpen);
+          button.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
+      });
 
       if (rankBtn) {
         rankBtn.addEventListener("click", async () => {
