@@ -77,16 +77,59 @@
       background-color: #005c99;
     }
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      font-family: sans-serif;
+    .table-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      overflow: hidden;
     }
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px 16px;
-      text-align: center;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 18px;
+    }
+
+    thead {
+      background: #0070ba;
+      color: white;
+    }
+
+    th {
+      padding: 16px;
+      font-weight: bold;
+      letter-spacing: 0.4px;
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #ececec;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fbfe;
+    }
+
+    tbody tr:hover {
+      background: #eaf4fc;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    td:first-child {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .updated-at {
+      padding: 12px;
+      font-size: 14px;
+      color: #666;
+      background: #fafafa;
     }
 
     tr:hover {
@@ -124,11 +167,53 @@
     <p>During each subtest your raw score is displayed. After completing a subtest, an estimated standardized score becomes available. Once all five subtests have been completed, an overall estimated IQ score (Wechsler scale, mean = 100, SD = 15) is calculated.</p>
     <p>NOAIS - Form 2 is a new battery following the same general philosophy as NAITOR and NEAITO.</p>
     <p>Authenticated candidates may complete the battery free of charge. <strong>Unauthenticated candidates may participate by purchasing access to individual subtests.</strong></p>
-    <p>It is recommended to take the spatial subtest on a computer browsers not on a smartphone.</p>
-
+    <p>For optimal usability, it is recommended to complete the spatial subtest on a computer rather than on a smartphone.</p>
   </div>
 
-   <hr>
+  <div class="section">
+    <h2 style="margin-bottom:25px;">Subtest Characteristics</h2>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Subtest</th>
+            <th>Difficulty</th>
+            <th>OTC</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Logical</td>
+            <td>Moderate</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td>Verbal</td>
+            <td>Moderate</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td>Spatial</td>
+            <td>Moderate</td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>Abstract</td>
+            <td>Moderate</td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>Numerical</td>
+            <td>Hard</td>
+            <td>High</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr>
 
   <div class="section" style="max-width: 1000px;">
     <p>If you have not completed the authentication procedure, you may purchase access to an individual subtest for <strong>15€</strong>.</p>
