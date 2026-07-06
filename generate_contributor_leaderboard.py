@@ -321,7 +321,7 @@ def main():
 
   <div class="section">
     <p class="note">
-      The leaderboard is refreshed every 2 days and includes only participants who opted to be listed.
+      The leaderboard is refreshed every 5 days and includes only participants who opted to be listed.
     </p>
   </div>
 
