@@ -339,7 +339,7 @@ html_output = f"""<!DOCTYPE html>
   </div>
 
   <div class="section">
-    <p>The leaderboard is refreshed every 2 days, showcasing the current scores of participants who opted to be listed.</p>
+    <p>The leaderboard is refreshed every 3 days, showcasing the current scores of participants who opted to be listed.</p>
   </div>
 
   <div class="section">
