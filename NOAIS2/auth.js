@@ -45,31 +45,6 @@ if(p.allowed_abstract)startAbstract?.classList.remove("hidden");
 if(p.allowed_logical)startLogical?.classList.remove("hidden");
 }
 
-function resetLoginPage(){
-currentEmail="";
-window.loggedEmail="";
-passwordStage=false;
-loginInProgress=false;
-sessionStorage.removeItem("email");
-sessionStorage.removeItem("noais_email");
-sessionStorage.removeItem("password");
-sessionStorage.removeItem("nocis_permissions");
-localStorage.removeItem("email");
-localStorage.removeItem("noais_email");
-localStorage.removeItem("nocis_logged_in");
-localStorage.removeItem("nocis_permissions");
-emailInput.value="";
-passwordInput.value="";
-passwordInput.classList.add("hidden");
-passwordInput.setAttribute("readonly","readonly");
-loginBtn.innerText="Login";
-loginBtn.disabled=false;
-loginMsg.innerText="";
-loginSection?.classList.remove("hidden");
-instructionsSection?.classList.add("hidden");
-hideAllQuizButtons();
-}
-
 function showPasswordField(){
 passwordStage=true;
 passwordInput.value="";
@@ -78,6 +53,7 @@ passwordInput.removeAttribute("readonly");
 requestAnimationFrame(()=>{
 passwordInput.value="";
 passwordInput.focus();
+setTimeout(()=>passwordInput.value="",100);
 });
 }
 
@@ -87,10 +63,11 @@ return sessionStorage.getItem("password")||passwordInput.value.trim();
 
 function finishLogin(payload,password){
 const permissions=payload.permissions||{};
-sessionStorage.setItem("email",currentEmail);
-sessionStorage.setItem("noais_email",currentEmail);
+localStorage.setItem("email",currentEmail);
+localStorage.setItem("noais_email",currentEmail);
+localStorage.setItem("nocis_logged_in","true");
+localStorage.setItem("nocis_permissions",JSON.stringify(permissions));
 sessionStorage.setItem("password",password);
-sessionStorage.setItem("nocis_permissions",JSON.stringify(permissions));
 window.loggedEmail=currentEmail;
 passwordInput.value="";
 loginSection.classList.add("hidden");
@@ -100,8 +77,43 @@ loadLeaderboardChoice();
 loadRawScore();
 }
 
+function restoreLogin(){
+const savedEmail=localStorage.getItem("email");
+const savedPassword=sessionStorage.getItem("password");
+const loggedIn=localStorage.getItem("nocis_logged_in")==="true";
+
+passwordInput.value="";
+
+if(!savedEmail||!savedPassword||!loggedIn){
+passwordStage=false;
+passwordInput.classList.add("hidden");
+passwordInput.setAttribute("readonly","readonly");
+return;
+}
+
+currentEmail=savedEmail;
+window.loggedEmail=currentEmail;
+localStorage.setItem("noais_email",currentEmail);
+emailInput.value=savedEmail;
+
+let permissions={};
+
+try{
+permissions=JSON.parse(localStorage.getItem("nocis_permissions")||"{}");
+}catch{
+permissions={};
+}
+
+loginSection.classList.add("hidden");
+instructionsSection.classList.remove("hidden");
+showAllowedQuizButtons(permissions);
+loadLeaderboardChoice();
+loadRawScore();
+}
+
 async function login(){
 if(loginInProgress)return;
+
 currentEmail=emailInput.value.trim();
 const password=passwordStage?passwordInput.value.trim():"";
 
@@ -125,8 +137,12 @@ try{
 const res=await fetch(LOGIN_URL,{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({email:currentEmail,password:passwordStage?password:null})
+body:JSON.stringify({
+email:currentEmail,
+password:passwordStage?password:null
+})
 });
+
 const payload=await res.json().catch(()=>({}));
 
 if(!res.ok||payload.error){
@@ -138,7 +154,9 @@ return;
 
 if(payload.need_password){
 showPasswordField();
-loginMsg.innerText=payload.emailed?"A password was sent to your email. Enter it below.":"Enter your existing password.";
+loginMsg.innerText=payload.emailed
+?"A password was sent to your email. Enter it below."
+:"Enter your existing password.";
 loginBtn.innerText="Continue";
 loginBtn.disabled=false;
 loginInProgress=false;
@@ -154,6 +172,7 @@ return;
 loginMsg.innerText="Unexpected login response.";
 loginBtn.disabled=false;
 loginInProgress=false;
+
 }catch(err){
 console.error(err);
 loginMsg.innerText="Network error.";
@@ -167,19 +186,26 @@ const rawScoreEl=document.getElementById("rawScore");
 const iqScoreBox=document.getElementById("iqScoreBox");
 const iqScoreEl=document.getElementById("iqScore");
 const password=getPassword();
+
 if(!rawScoreEl||!currentEmail||!password)return;
 
 try{
 const res=await fetch(API_URL,{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({action:"get_user",email:currentEmail,password})
+body:JSON.stringify({
+action:"get_user",
+email:currentEmail,
+password
+})
 });
+
 if(!res.ok)return;
 
 const payload=await res.json().catch(()=>({}));
 const user=payload.user||{};
 const rawScore=Number(user.score||0);
+
 rawScoreEl.innerText=rawScore;
 
 if(!user.end){
@@ -200,19 +226,21 @@ if(rawScore===0)iq+=" or lower";
 
 iqScoreEl.innerText=iq;
 iqScoreBox?.classList.remove("hidden");
+
 }catch(err){
 console.error(err);
 }
 }
 
 function getLoggedEmail(){
-return window.loggedEmail||sessionStorage.getItem("noais_email")||sessionStorage.getItem("email")||emailInput.value.trim();
+return window.loggedEmail||localStorage.getItem("noais_email")||localStorage.getItem("email")||emailInput.value.trim();
 }
 
 async function generateCertificate(){
 const btn=document.getElementById("generateCertBtn");
 const status=document.getElementById("certStatus");
 const email=getLoggedEmail();
+
 if(!btn||!status)return;
 
 if(!email){
@@ -232,6 +260,7 @@ method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({email})
 });
+
 const body=await res.json().catch(()=>({}));
 
 if(!res.ok||body.error){
@@ -245,6 +274,7 @@ return;
 status.style.color="#2a7a2a";
 status.innerHTML=`Certificate generated successfully.<br><a href="${body.url}" target="_blank" rel="noopener noreferrer">Open certificate PDF</a>`;
 btn.textContent="Certificate Generated";
+
 }catch(err){
 console.error(err);
 status.style.color="crimson";
@@ -257,17 +287,26 @@ btn.textContent="Generate Certificate";
 async function loadLeaderboardChoice(){
 const checkbox=document.getElementById("leaderboardCheckbox");
 const password=getPassword();
+
 if(!checkbox||!currentEmail||!password)return;
 
 try{
 const res=await fetch(API_URL,{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({action:"update_user",email:currentEmail,password,subtest:"spatial"})
+body:JSON.stringify({
+action:"update_user",
+email:currentEmail,
+password,
+subtest:"spatial"
+})
 });
+
 if(!res.ok)return;
+
 const payload=await res.json().catch(()=>({}));
 checkbox.checked=payload?.user?.leaderboard===true;
+
 }catch(err){
 console.error(err);
 }
@@ -333,6 +372,7 @@ update:{leaderboard:checked}
 
 if(!res.ok)checkbox.checked=!checked;
 if(status)status.innerText=res.ok?"Saved.":"Could not save.";
+
 }catch(err){
 console.error(err);
 checkbox.checked=!checked;
@@ -345,6 +385,7 @@ checkbox.disabled=false;
 document.addEventListener("click",e=>{
 const btn=e.target.closest(".tab-btn");
 if(!btn)return;
+
 const targetId=btn.dataset.tab;
 
 document.querySelectorAll(".tab-btn").forEach(b=>{
@@ -362,4 +403,5 @@ startVerbal.onclick=()=>location.href=QUIZ_URLS.verbal;
 startAbstract.onclick=()=>location.href=QUIZ_URLS.abstract;
 startLogical.onclick=()=>location.href=QUIZ_URLS.logical;
 
-resetLoginPage();
+passwordInput.value="";
+restoreLogin();
