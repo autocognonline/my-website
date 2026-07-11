@@ -63,20 +63,23 @@ return sessionStorage.getItem("password")||passwordInput.value.trim();
 
 function finishLogin(payload,password){
 const permissions=payload.permissions||{};
+
 localStorage.setItem("email",currentEmail);
 localStorage.setItem("noais_email",currentEmail);
 localStorage.setItem("nocis_logged_in","true");
 localStorage.setItem("nocis_permissions",JSON.stringify(permissions));
 sessionStorage.setItem("password",password);
+
 window.loggedEmail=currentEmail;
 passwordInput.value="";
+
 loginSection.classList.add("hidden");
 instructionsSection.classList.remove("hidden");
+
 showAllowedQuizButtons(permissions);
 loadLeaderboardChoice();
 loadRawScore();
 }
-
 function restoreLogin(){
 const savedEmail=localStorage.getItem("email");
 const savedPassword=sessionStorage.getItem("password");
@@ -85,15 +88,32 @@ const loggedIn=localStorage.getItem("nocis_logged_in")==="true";
 passwordInput.value="";
 
 if(!savedEmail||!savedPassword||!loggedIn){
+localStorage.removeItem("email");
+localStorage.removeItem("noais_email");
+localStorage.removeItem("nocis_logged_in");
+localStorage.removeItem("nocis_permissions");
+
+currentEmail="";
 passwordStage=false;
+loginInProgress=false;
+
+emailInput.value="";
+passwordInput.value="";
 passwordInput.classList.add("hidden");
 passwordInput.setAttribute("readonly","readonly");
+
+loginBtn.innerText="Login";
+loginBtn.disabled=false;
+loginMsg.innerText="";
+
+loginSection.classList.remove("hidden");
+instructionsSection.classList.add("hidden");
+hideAllQuizButtons();
 return;
 }
 
 currentEmail=savedEmail;
-window.loggedEmail=currentEmail;
-localStorage.setItem("noais_email",currentEmail);
+window.loggedEmail=savedEmail;
 emailInput.value=savedEmail;
 
 let permissions={};
@@ -109,6 +129,28 @@ instructionsSection.classList.remove("hidden");
 showAllowedQuizButtons(permissions);
 loadLeaderboardChoice();
 loadRawScore();
+}
+
+function resetLoginPage(){
+currentEmail="";
+window.loggedEmail="";
+passwordStage=false;
+loginInProgress=false;
+localStorage.removeItem("email");
+localStorage.removeItem("noais_email");
+localStorage.removeItem("nocis_logged_in");
+localStorage.removeItem("nocis_permissions");
+sessionStorage.removeItem("password");
+emailInput.value="";
+passwordInput.value="";
+passwordInput.classList.add("hidden");
+passwordInput.setAttribute("readonly","readonly");
+loginBtn.innerText="Login";
+loginBtn.disabled=false;
+loginMsg.innerText="";
+loginSection.classList.remove("hidden");
+instructionsSection.classList.add("hidden");
+hideAllQuizButtons();
 }
 
 async function login(){
