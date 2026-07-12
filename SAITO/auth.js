@@ -1,4 +1,5 @@
-const LOGIN_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/login_saito";
+const LOGIN_URL =
+  "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/login_saito";
 
 const loginMsg = document.getElementById("loginMsg");
 const emailInput = document.getElementById("email");
@@ -13,6 +14,18 @@ let email = "";
 
 function looksLikeEmail(str) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str.trim());
+}
+
+function showPasswordField() {
+  passwordInput.value = "";
+  passwordInput.disabled = false;
+  passwordInput.classList.remove("hidden");
+}
+
+function hidePasswordField() {
+  passwordInput.value = "";
+  passwordInput.disabled = true;
+  passwordInput.classList.add("hidden");
 }
 
 function finishLogin(user, showInstructions = false) {
@@ -42,7 +55,9 @@ startTestBtn.onclick = async () => {
   try {
     const res = await fetch(LOGIN_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         email,
         password,
@@ -70,7 +85,12 @@ startTestBtn.onclick = async () => {
 
 async function login() {
   email = emailInput.value.trim();
-  const password = passwordInput.value;
+
+  const password =
+    passwordInput.disabled ||
+    passwordInput.classList.contains("hidden")
+      ? null
+      : passwordInput.value;
 
   if (!email) {
     loginMsg.innerText = "Enter email.";
@@ -89,8 +109,13 @@ async function login() {
   try {
     const res = await fetch(LOGIN_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email,
+        password
+      })
     });
 
     const payload = await res.json();
@@ -98,7 +123,7 @@ async function login() {
     if (!res.ok || payload?.error) {
       if (payload?.clear_fields) {
         emailInput.value = "";
-        passwordInput.value = "";
+        hidePasswordField();
         forgotPwdBtn.classList.add("hidden");
       }
 
@@ -109,9 +134,8 @@ async function login() {
     }
 
     if (payload.need_password) {
-      passwordInput.classList.remove("hidden");
-      passwordInput.value = "";
-      
+      showPasswordField();
+
       if (payload.can_reset_password) {
         forgotPwdBtn.classList.remove("hidden");
       } else {
@@ -157,24 +181,31 @@ async function resetPassword() {
   try {
     const res = await fetch(LOGIN_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, reset_password: true })
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email,
+        reset_password: true
+      })
     });
 
     const payload = await res.json();
 
     if (!res.ok || payload?.error) {
-      loginMsg.innerText = payload?.error || "Could not send new password.";
+      loginMsg.innerText =
+        payload?.error || "Could not send new password.";
+
       loginBtn.disabled = false;
       forgotPwdBtn.disabled = false;
       return;
     }
 
-    passwordInput.classList.remove("hidden");
-    passwordInput.value = "";
+    showPasswordField();
     forgotPwdBtn.classList.remove("hidden");
 
-    loginMsg.innerText = "A new password was sent to your email.";
+    loginMsg.innerText =
+      "A new password was sent to your email.";
 
   } catch (err) {
     console.error(err);
