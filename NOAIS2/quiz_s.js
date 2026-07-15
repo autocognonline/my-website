@@ -1953,17 +1953,17 @@ function returnToIndex() {
 }
 
 async function endGame() {
-  await updateDB({
+  const result = await updateDB({
     extraUpdate: {
       finished: true
     }
   });
 
   if (!result?.ok || result.user?.finished_s !== true) {
-      return;
+    return;
   }
 
-  showFinalResults();
+  await showFinalResults();
 }
 
 applyToolbarState();
