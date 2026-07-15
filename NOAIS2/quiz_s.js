@@ -1789,7 +1789,7 @@ async function loadUserProgress() {
           }
       });
       
-      if (!result?.ok || result.user?.finished_a !== true) {
+      if (!result?.ok || result.user?.finished_s !== true) {
           return;
       }
       
