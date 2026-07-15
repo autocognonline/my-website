@@ -463,7 +463,7 @@ function returnToIndex() {
 }
 
 async function endGame() {
-  await updateDB({
+  const result = await updateDB({
     extraUpdate: {
       finished: true
     }
@@ -473,7 +473,7 @@ async function endGame() {
     return;
   }
 
-  showFinalResults();
+  await showFinalResults();
 }
 
 const endTestModal = document.getElementById("endTestModal");
