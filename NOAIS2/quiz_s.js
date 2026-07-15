@@ -1578,14 +1578,7 @@ finishBtn?.addEventListener("click", () => {
 
 confirmEndBtn?.addEventListener("click", async () => {
   closeEndTestModal();
-
-  await updateDB({
-    extraUpdate: {
-      finished: true
-    }
-  });
-
-  showFinalResults();
+  await endGame();
 });
 
 cancelEndBtn?.addEventListener("click", () => {
