@@ -238,7 +238,16 @@ async function updateDB({
 
   if (!res.ok) {
     console.error("update_user failed:", body);
-    return body;
+  
+    showStatusPopup(
+      body?.error || "Unable to finish the quiz.",
+      false
+    );
+  
+    return {
+      ok: false,
+      error: body?.error || "Update failed"
+    };
   }
 
   if (Array.isArray(body.solved_ids)) {
@@ -297,12 +306,16 @@ async function loadUserProgress() {
   const firstAvailable = findNextUnsolved(0, true);
 
   if (!firstAvailable) {
-    await updateDB({
-      extraUpdate: {
-        finished: true
-      }
+    const result = await updateDB({
+        extraUpdate: {
+            finished: true
+        }
     });
-
+    
+    if (!result?.ok || result.user?.finished_a !== true) {
+        return;
+    }
+    
     return showFinalResults();
   }
 
@@ -455,6 +468,10 @@ async function endGame() {
       finished: true
     }
   });
+
+  if (!result?.ok || result.user?.finished_a !== true) {
+    return;
+  }
 
   showFinalResults();
 }
