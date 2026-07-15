@@ -466,17 +466,17 @@ function returnToIndex() {
 }
 
 async function endGame() {
-  await updateDB({
+  const result = await updateDB({
     extraUpdate: {
       finished: true
     }
   });
 
-  if (!result?.ok || result.user?.finished_l !== true) {
-      return;
+  if (!result?.ok || result.user?.finished_a !== true) {
+    return;
   }
 
-  showFinalResults();
+  await showFinalResults();
 }
 
 const endTestModal = document.getElementById("endTestModal");
