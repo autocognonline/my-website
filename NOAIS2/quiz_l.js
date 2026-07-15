@@ -472,7 +472,7 @@ async function endGame() {
     }
   });
 
-  if (!result?.ok || result.user?.finished_a !== true) {
+  if (!result?.ok || result.user?.finished_l !== true) {
     return;
   }
 
