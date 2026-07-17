@@ -255,6 +255,13 @@
     </div>
 
     <p id="pdfMessage" style="text-align:center;"></p>
+    <div id="pdfButtons" style="display:none; margin-top:25px;">
+      <a class="button" href="NOAIS2/Verbal Subtest.pdf" target="_blank">Verbal subtest items PDF</a>
+      <a class="button" href="NOAIS2/Numerical Subtest.pdf" target="_blank">Numerical subtest items PDF</a>
+      <a class="button" href="NOAIS2/Abstract Subtest.pdf" target="_blank">Abstract subtest items PDF</a>
+      <a class="button" href="NOAIS2/Logical Subtest.pdf" target="_blank">Logical subtest items PDF</a>
+      <a class="button" href="NOAIS2/Spatial Subtest.pdf" target="_blank">Spatial subtest items PDF</a>
+    </div>
   </div>
 
   <hr>
@@ -324,10 +331,10 @@
 
         if (result.already_verified) {
           pdfMessage.textContent =
-            "This email address has already been verified. Please enter the verification code that was previously sent to this email address to access the preview PDFs.";
+            "This email address has already been verified. Please enter the verification code that was previously sent to this email address to access the PDFs.";
         } else {
           pdfMessage.textContent =
-            "A verification code has been sent to your email address. Please enter it below to access the preview PDFs.";
+            "A verification code has been sent to your email address. Please enter it below to access the PDFs.";
         }
 
       } catch (error) {
@@ -365,7 +372,7 @@
         }
 
         pdfMessage.textContent =
-          "Verification successful. You may now open any of the preview PDFs below.";
+          "Verification successful. You may now open any of the PDFs below.";
 
         codeArea.style.display = "none";
         pdfButtons.style.display = "block";
