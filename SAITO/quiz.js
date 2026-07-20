@@ -299,6 +299,9 @@ nextBtn?.addEventListener("click", () => {
 function updateTopBar() {
   scoreEl.innerText = `Score: ${solved.length}`;
   attemptsEl.innerText = `Attempts left: ${attempts}`;
+
+  const disableFinish = solved.length === 0 && attempts > 15;
+  finishBtn.disabled = disableFinish;
 }
 
 async function endGame() {
@@ -395,13 +398,11 @@ async function generateCertificate() {
   }
 }
 
-// ─── FINISH BUTTON ─────────────────────────────────────
 finishBtn?.addEventListener("click", async () => {
   if (!window.confirm("Are you sure you want to finish the test?\nOnce submitted, you will not be able to continue working on it.")) return;
   await endGame();
 });
 
-// ─── TOUCH SWIPES ──────────────────────────────────────
 let touchStartX=0;
 spatialCanvas.addEventListener("touchstart", e=>{touchStartX=e.touches[0].clientX;});
 spatialCanvas.addEventListener("touchend", e=>{
@@ -410,5 +411,4 @@ spatialCanvas.addEventListener("touchend", e=>{
   if(dx<-50) nextBtn?.click();
 });
 
-// ─── INITIAL LOAD ─────────────────────────────────────
 loadUserProgress();
