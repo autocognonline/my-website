@@ -318,6 +318,11 @@
             <td>–</td>
           </tr>
           <tr>
+            <td><a href="noais2.html">NOAIS-Form 2</a></td>
+            <td id="finished-NOAIS2">–</td>
+            <td>–</td>
+          </tr>
+          <tr>
             <td><a href="noctae.html">NOCTÆ</a></td>
             <td id="finished-NOCTAE">–</td>
             <td>–</td>
@@ -398,6 +403,7 @@
       NEAITO: "neaito.html",
       NOACT: "noact.html",
       NOAIS1: "noais.html",
+      NOAIS2: "noais2.html",
       NOFRAT: "nofrat.html",
       OVAT33: "ovat.html",
       SAT: "https://nsl36.netlify.app/sequels/sat",
@@ -410,6 +416,7 @@
       NEAITO: "NEAITO",
       NOACT: "NOACT",
       NOAIS1: "NOAIS-Form 1",
+      NOAIS2: "NOAIS-Form 2",
       NOFRAT: "NOFRAT",
       OVAT33: "OVAT33",
       SAT: "SAT",
@@ -421,6 +428,7 @@
       NEAITO: "norms.html#norm-neaito",
       NOACT: "norms.html#norm-noact",
       NOAIS1: "norms.html#norm-noais",
+      NOAIS2: "norms.html#norm-noais2",
       NOCTAE: "norms.html#norm-noctae",
       NOFRAT: "norms.html#norm-nofrat",
       OVAT33: "norms.html#norm-ovat33",
@@ -582,7 +590,7 @@
 
       const labels = filteredBins.map(bin => bin.label);
       const finishedValues = filteredBins.map(bin => bin.finished);
-      const noUnfinished = ["NOCTAE", "HRCAS", "NOAIS1"].includes(testName);
+      const noUnfinished = ["NOCTAE", "HRCAS", "NOAIS1", "NOAIS2"].includes(testName);
 
       const unfinishedValues = filteredBins.map(bin =>
         noUnfinished ? 0 : bin.unfinished
