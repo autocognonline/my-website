@@ -1,7 +1,6 @@
 from supabase import create_client
 import os
 import json
-import html
 
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_SERVICE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
