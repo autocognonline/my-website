@@ -167,11 +167,12 @@ html_output = f"""<!DOCTYPE html>
       padding: 20px;
       border: 2px solid #000;
       border-radius: 10px;
-      background-color: #f9f9f9;
+      background-color: #ffffff;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }}
+
     .leaderboard-container::-webkit-scrollbar {{
       height: 6px;
     }}
