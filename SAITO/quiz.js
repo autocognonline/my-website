@@ -300,7 +300,7 @@ function updateTopBar() {
   scoreEl.innerText = `Score: ${solved.length}`;
   attemptsEl.innerText = `Attempts left: ${attempts}`;
 
-  const disableFinish = solved.length === 0 && attempts > 15;
+  const disableFinish = solved.length === 0 || attempts > 15;
   finishBtn.disabled = disableFinish;
 }
 
