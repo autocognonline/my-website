@@ -3,6 +3,8 @@ const API_URL="https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/nocis_api";
 const CERT_URL="https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/generate_certificate_noais2";
 const FULL_NORM_URL="https://qlmlvtohtkiycwtohqwk.supabase.co/storage/v1/object/public/noais2_norm/norm.json";
 
+const PDF_URL="https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_noais_pdf";
+
 const loginSection=document.getElementById("loginSection");
 const instructionsSection=document.getElementById("instructionsSection");
 const loginMsg=document.getElementById("loginMsg");
@@ -59,6 +61,47 @@ setTimeout(()=>passwordInput.value="",100);
 
 function getPassword(){
 return sessionStorage.getItem("password")||passwordInput.value.trim();
+}
+
+async function openPdf(pdf){
+const password=getPassword();
+if(!currentEmail||!password){
+alert("Please log in again.");
+return;
+}
+
+try{
+
+const res=await fetch(PDF_URL,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+email:currentEmail,
+password,
+pdf
+})
+});
+
+if(!res.ok){
+  const text = await res.text();
+  console.log("PDF ERROR:", res.status, text);
+  alert(text);
+  return;
+}
+const blob=await res.blob();
+
+const url=URL.createObjectURL(blob);
+
+window.open(url,"_blank","noopener");
+
+setTimeout(()=>URL.revokeObjectURL(url),60000);
+
+}catch(err){
+console.error(err);
+alert("Network error.");
+}
 }
 
 function finishLogin(payload,password){
@@ -444,6 +487,31 @@ startNumerical.onclick=()=>location.href=QUIZ_URLS.numerical;
 startVerbal.onclick=()=>location.href=QUIZ_URLS.verbal;
 startAbstract.onclick=()=>location.href=QUIZ_URLS.abstract;
 startLogical.onclick=()=>location.href=QUIZ_URLS.logical;
+
+document.getElementById("pdfSpatial")?.addEventListener("click",e=>{
+e.preventDefault();
+openPdf("spatial");
+});
+
+document.getElementById("pdfNumerical")?.addEventListener("click",e=>{
+e.preventDefault();
+openPdf("numerical");
+});
+
+document.getElementById("pdfVerbal")?.addEventListener("click",e=>{
+e.preventDefault();
+openPdf("verbal");
+});
+
+document.getElementById("pdfAbstract")?.addEventListener("click",e=>{
+e.preventDefault();
+openPdf("abstract");
+});
+
+document.getElementById("pdfLogical")?.addEventListener("click",e=>{
+e.preventDefault();
+openPdf("logical");
+});
 
 passwordInput.value="";
 restoreLogin();
