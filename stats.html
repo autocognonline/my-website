@@ -265,6 +265,45 @@
       text-align: center;
       color: #333;
     }
+
+    .video-popup {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+    }
+
+    .video-cell:hover {
+      background-color: #e8f4ff;
+    }
+
+    .video-cell {
+      cursor: pointer;
+    }
+
+    .video-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .video-content video {
+      width: min(90vw, 800px);
+      max-height: 80vh;
+      display: block;
+    }
+
+    .close {
+      float: right;
+      font-size: 32px;
+      cursor: pointer;
+      margin-bottom: 5px;
+    }
   </style>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
@@ -300,7 +339,7 @@
           <tr>
             <td><a href="naitor.html">NAITOR</a></td>
             <td id="finished-NAITOR">–</td>
-            <td id="unfinished-NAITOR">–</td>
+            <td id="unfinished-NAITOR" onclick="openVideo()" class="video-cell">–</td>
           </tr>
           <tr>
             <td><a href="neaito.html">NEAITO</a></td>
@@ -392,6 +431,17 @@
 
   <div class="section">
     <a class="button" href="index.html">Back to main page</a>
+  </div>
+
+  <div id="videoPopup" class="video-popup" onclick="closeVideo()">
+    <div class="video-content" onclick="event.stopPropagation()">
+      <span class="close" onclick="closeVideo()">&times;</span>
+
+      <video id="laughterVideo" controls playsinline controlsList="nodownload">
+        <source src="laughter.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
   </div>
 
   <script>
@@ -500,6 +550,25 @@
 
     Chart.register(blockBarPlugin);
 
+    function openVideo() {
+      const popup = document.getElementById("videoPopup");
+      const video = document.getElementById("laughterVideo");
+
+      popup.style.display = "block";
+      video.currentTime = 0;
+      video.play();
+    }
+
+    function closeVideo() {
+      const popup = document.getElementById("videoPopup");
+      const video = document.getElementById("laughterVideo");
+
+      video.pause();
+      popup.style.display = "none";
+    }
+
+    document.getElementById("laughterVideo").addEventListener("ended", closeVideo);
+
     function setGeneralStats(generalStats) {
       for (const stat of generalStats) {
         const finishedCell = document.getElementById(`finished-${stat.test_name}`);
@@ -510,7 +579,13 @@
         }
 
         if (unfinishedCell) {
-          unfinishedCell.textContent = stat.unfinished_submissions;
+          const link = unfinishedCell.querySelector("a");
+
+          if (link) {
+              link.textContent = stat.unfinished_submissions;
+          } else {
+              unfinishedCell.textContent = stat.unfinished_submissions;
+          }
         }
       }
     }
