@@ -424,6 +424,88 @@
     .details-grid > div:nth-last-child(-n + 2) {
       border-bottom: none;
     }
+    .test-filter {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 25px;
+      background: #ffffff;
+      border: 1px solid #e2e2e2;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+      text-align: left;
+    }
+
+    .filter-group {
+      margin-bottom: 20px;
+    }
+
+    .filter-group h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+    }
+
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .filter-options label {
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .results-title {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .filter-results {
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+    }
+
+    .filter-card {
+      width: 100%;
+      padding: 10px 18px;
+      background: #eeeeee;
+      border-radius: 10px;
+      border: 1px solid #000000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 45px;
+      box-sizing: border-box;
+    }
+
+    .filter-card a {
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      color: inherit;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .filter-card:hover {
+      background: #d9d9d9;
+      cursor: pointer;
+      transform: translateY(-1px);
+    }
+
+    .filter-card h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .filter-card ul {
+      margin-bottom: 0;
+    }
 
     @media (max-width: 768px) {
 
@@ -583,6 +665,65 @@
       <p>The tests are intended for individuals aged 16 and older.</p>
       <p>Whether you are seeking an intellectual challenge, pursuing a hobby, or simply curious about your abilities, you can attempt the tests available on this website free of charge.</p>
     </div>
+
+    <div class="test-filter">
+      <h2>Use this form to find a suitable test for you on this website</h2>
+      <div class="filter-group">
+        <h3>Are you Authenticated ?</h3>
+        <div class="filter-options">
+          <label><input type="radio" name="auth" value="yes"> Yes</label>
+          <label><input type="radio" name="auth" value="no" checked> No</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>Are you proficient in English ?</h3>
+        <div class="filter-options">
+          <label><input type="radio" name="english" value="yes"> Yes</label>
+          <label><input type="radio" name="english" value="no" checked> No</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>Are you knowledgeable and/or inclined to do research ?</h3>
+        <div class="filter-options">
+          <label><input type="radio" name="knowledge" value="yes"> Yes</label>
+          <label><input type="radio" name="knowledge" value="no" checked> No</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>Do you have a lot of time ?</h3>
+        <div class="filter-options">
+          <label><input type="radio" name="fast" value="yes"> Yes</label>
+          <label><input type="radio" name="fast" value="no" checked> No</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>Are you willing to pay a fee ?</h3>
+        <div class="filter-options">
+          <label><input type="radio" name="fee" value="yes"> Yes</label>
+          <label><input type="radio" name="fee" value="no" checked> No</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>Have you previously attempted high range tests ?</h3>
+        <div class="filter-options">
+          <label><input type="radio" name="difficulty" value="yes"> Yes</label>
+          <label><input type="radio" name="difficulty" value="no" checked> No</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>Is time pressure ok for you ?</h3>
+        <div class="filter-options">
+          <label><input type="radio" name="pressure" value="yes"> Yes</label>
+          <label><input type="radio" name="pressure" value="no" checked> No</label>
+        </div>
+      </div>
+      <button id="find-tests" class="button" type="button">
+        Find matching tests
+      </button>
+      <h2 class="results-title">Matching tests list:</h2>
+      <div id="filter-results" class="filter-results"></div>
+    </div>
+
   </div>
 
 
@@ -961,6 +1102,216 @@
   </div>
 
   <script>
+    const tests = [
+    {
+      name: "SAITO",
+      url: "saito.html",
+      auth: "no",
+      english: "no",
+      knowledge: "no",
+      fast: "yes",
+      fee: "no",
+      difficulty: "no",
+      pressure: "no"
+    },
+    {
+      name: "NOAIS 2 Numerical",
+      url: "noais2.html",
+      auth: "no",
+      english: "no",
+      knowledge: "no",
+      fast: "yes",
+      fee: "conditional",
+      difficulty: "no",
+      pressure: "no"
+    },
+    {
+      name: "NOAIS 2 Spatial",
+      url: "noais2.html",
+      auth: "no",
+      english: "no",
+      knowledge: "no",
+      fast: "yes",
+      fee: "conditional",
+      difficulty: "no",
+      pressure: "no"
+    },
+    {
+      name: "NOAIS 2 Abstract",
+      url: "noais2.html",
+      auth: "no",
+      english: "no",
+      knowledge: "no",
+      fast: "yes",
+      fee: "conditional",
+      difficulty: "no",
+      pressure: "no"
+    },
+    {
+      name: "NOAIS 2 Verbal",
+      url: "noais2.html",
+      auth: "no",
+      english: "no",
+      knowledge: "yes",
+      fast: "yes",
+      fee: "conditional",
+      difficulty: "no",
+      pressure: "no"
+    },
+    {
+      name: "NOAIS 2 Logical",
+      url: "noais2.html",
+      auth: "no",
+      english: "no",
+      knowledge: "yes",
+      fast: "yes",
+      fee: "conditional",
+      difficulty: "no",
+      pressure: "no"
+    },
+    {
+      name: "NOCTAE",
+      url: "noctae.html",
+      auth: "yes",
+      english: "no",
+      knowledge: "no",
+      fast: "yes",
+      fee: "no",
+      difficulty: "yes",
+      pressure: "yes"
+    },
+    {
+      name: "NOFRAT",
+      url: "nofrat.html",
+      auth: "yes",
+      english: "no",
+      knowledge: "no",
+      fast: "no",
+      fee: "no",
+      difficulty: "yes",
+      pressure: "no"
+    },
+    {
+      name: "SAT",
+      url: "https://nsl36.netlify.app/sequels/sat",
+      auth: "no",
+      english: "no",
+      knowledge: "no",
+      fast: "no",
+      fee: "yes",
+      difficulty: "no",
+      pressure: "no"
+    },
+    {
+      name: "NEAITO",
+      url: "neaito.html",
+      auth: "yes",
+      english: "yes",
+      knowledge: "yes",
+      fast: "no",
+      fee: "no",
+      difficulty: "yes",
+      pressure: "no"
+    },
+    {
+      name: "NAITOR",
+      url: "naitor.html",
+      auth: "yes",
+      english: "yes",
+      knowledge: "yes",
+      fast: "no",
+      fee: "no",
+      difficulty: "no",
+      pressure: "no"
+    },
+    {
+      name: "NOACT",
+      url: "noact.html",
+      auth: "yes",
+      english: "yes",
+      knowledge: "yes",
+      fast: "yes",
+      fee: "no",
+      difficulty: "no",
+      pressure: "no"
+    },
+    {
+      name: "OVAT33",
+      url: "ovat.html",
+      auth: "yes",
+      english: "yes",
+      knowledge: "yes",
+      fast: "yes",
+      fee: "no",
+      difficulty: "no",
+      pressure: "no"
+    }
+  ];
+
+  function getSelected(name) {
+
+    const selected = document.querySelector(
+      `input[name="${name}"]:checked`
+    );
+
+    return selected ? selected.value : null;
+  }
+
+  function matches(test) {
+    const auth = getSelected("auth");
+    const english = getSelected("english");
+    const knowledge = getSelected("knowledge");
+    const fast = getSelected("fast");
+    const fee = getSelected("fee");
+    const difficulty = getSelected("difficulty");
+    const pressure = getSelected("pressure");
+    if (auth === "no" && test.auth === "yes") {
+      return false;
+    }
+    if (english === "no" && test.english === "yes") {
+      return false;
+    }
+    if (knowledge === "no" && test.knowledge === "yes") {
+      return false;
+    }
+    if (fast === "no" && test.fast === "no") {
+      return false;
+    }
+    let testRequiresFee = test.fee;
+    if (test.fee === "conditional") {
+      testRequiresFee = auth === "yes" ? "no" : "yes";
+    }
+    if (fee === "no" && testRequiresFee === "yes") {
+      return false;
+    }
+    if (difficulty === "no" && test.difficulty === "yes") {
+      return false;
+    }
+    if (pressure === "no" && test.pressure === "yes") {
+      return false;
+    }
+    return true;
+  }
+
+  function updateResults() {
+    const container = document.getElementById("filter-results");
+    const matching = tests.filter(matches);
+    container.innerHTML = "";
+    if (matching.length === 0) {
+      container.innerHTML =
+        "<p>No tests match these criteria.</p>";
+      return;
+    }
+    matching.forEach(test => {
+      const card = document.createElement("div");
+      card.className = "filter-card";
+      card.innerHTML = `  <a href="${test.url}">    <h3>${test.name}</h3>  </a>`;
+      container.appendChild(card);
+    });
+  }
+
+  document.getElementById("find-tests").addEventListener("click",updateResults);
+
     document.addEventListener("DOMContentLoaded", () => {
 
       const CHECK_RANK_URL =
