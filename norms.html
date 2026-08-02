@@ -185,6 +185,61 @@
       margin: 0 auto;
     }
 
+    .table-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+
+    thead {
+      background: #0070ba;
+      color: white;
+    }
+
+    th, td {
+      padding: 14px 16px;
+    }
+
+    th {
+      font-weight: bold;
+      letter-spacing: 0.4px;
+    }
+
+    td {
+      border-bottom: 1px solid #ececec;
+    }
+    
+    th:not(:last-child),
+    td:not(:last-child) {
+      border-right: 2px solid #c9d8e6;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fbfe;
+    }
+
+    tbody tr:hover {
+      background: #eaf4fc;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    td:first-child {
+      font-weight: bold;
+      color: #333;
+    }
+
     @media (max-width: 768px) {
       .page {
         padding: 18px 14px 32px;
@@ -303,6 +358,37 @@
     <hr>
 
     <h1>Current norms</h1>
+
+    <p>Before consulting the norms, please review the estimated norm status shown in the table below.</p>
+    <p>All heterogeneous tests report scores on the Wechsler IQ scale (mean = 100, SD = 15). However, not all tests have yet been validated as measures of general intelligence. The "Confidence" column reflects the quality of the normative data only and does not indicate the construct validity of the test itself.</p>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Test</th>
+            <th>Lower score range</th>
+            <th>Average score range</th>
+            <th>Higher score range</th>
+            <th>Confidence</th>
+            <th>Sample size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>NAITOR</td><td>Deflated</td><td>Reasonable</td><td>Reasonable</td><td>Medium</td><td>0</td></tr>
+          <tr><td>NEAITO</td><td>Reasonable</td><td>Reasonable</td><td>Reasonable</td><td>Medium</td><td>0</td></tr>
+          <tr><td>NOCTAE</td><td>Deflated</td><td>Deflated</td><td>Reasonable</td><td>Low</td><td>0</td></tr>
+          <tr><td>NOACT</td><td>Inflated</td><td>Inflated</td><td>Inflated</td><td>Low</td><td>0</td></tr>
+          <tr><td>NOFRAT</td><td>Reasonable</td><td>Inflated</td><td>Reasonable</td><td>Medium</td><td>0</td></tr>
+          <tr><td>OVAT33</td><td>Deflated</td><td>Reasonable</td><td>Inflated</td><td>Low</td><td>0</td></tr>
+          <tr><td>SAT</td><td>Inflated</td><td>Reasonable</td><td>Reasonable</td><td>Medium</td><td>0</td></tr>
+          <tr><td>NOAIS 1</td><td>Deflated</td><td>Inflated</td><td>Reasonable</td><td>Low</td><td>0</td></tr>
+          <tr><td>NOAIS 2</td><td>Deflated</td><td>Deflated</td><td>Inflated</td><td>Low</td><td>0</td></tr>
+          <tr><td>SAITO</td><td>Inflated</td><td>Reasonable</td><td>Reasonable</td><td>High</td><td>50</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The current norms:</p>
 
     <div class="norm-list">
       <details id="norm-naitor">
