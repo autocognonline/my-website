@@ -359,7 +359,7 @@
           <tr>
             <td><a href="noais2.html">NOAIS-Form 2</a></td>
             <td id="finished-NOAIS2">–</td>
-            <td>–</td>
+            <td id="unfinished-NOAIS2">–</td>
           </tr>
           <tr>
             <td><a href="noctae.html">NOCTÆ</a></td>
@@ -668,7 +668,7 @@
 
       const labels = filteredBins.map(bin => bin.label);
       const finishedValues = filteredBins.map(bin => bin.finished);
-      const noUnfinished = ["NOCTAE", "HRCAS", "NOAIS1", "NOAIS2"].includes(testName);
+      const noUnfinished = ["NOCTAE", "HRCAS", "NOAIS1"].includes(testName);
 
       const unfinishedValues = filteredBins.map(bin =>
         noUnfinished ? 0 : bin.unfinished
