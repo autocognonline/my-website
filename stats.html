@@ -339,7 +339,7 @@
           <tr>
             <td><a href="naitor.html">NAITOR</a></td>
             <td id="finished-NAITOR">–</td>
-            <td id="unfinished-NAITOR" onclick="openVideo()" class="video-cell">–</td>
+            <td id="unfinished-NAITOR">–</td>
           </tr>
           <tr>
             <td><a href="neaito.html">NEAITO</a></td>
@@ -384,7 +384,7 @@
           <tr>
             <td><a href="saito.html">SAITO</a></td>
             <td id="finished-SAITO">–</td>
-            <td id="unfinished-SAITO" onclick="openVideo()" class="video-cell">–</td>
+            <td id="unfinished-SAITO">–</td>
           </tr>
           <tr>
             <td><a href="https://nsl36.netlify.app/sequels/sat">SAT</a></td>
@@ -552,25 +552,6 @@
     };
 
     Chart.register(blockBarPlugin);
-
-    function openVideo() {
-      const popup = document.getElementById("videoPopup");
-      const video = document.getElementById("laughterVideo");
-
-      popup.style.display = "block";
-      video.currentTime = 0;
-      video.play();
-    }
-
-    function closeVideo() {
-      const popup = document.getElementById("videoPopup");
-      const video = document.getElementById("laughterVideo");
-
-      video.pause();
-      popup.style.display = "none";
-    }
-
-    document.getElementById("laughterVideo").addEventListener("ended", closeVideo);
 
     function setGeneralStats(generalStats) {
       for (const stat of generalStats) {
