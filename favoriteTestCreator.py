@@ -171,17 +171,17 @@ def generate_html(counter, link_map):
         </p>
     
         <p>
-          It is a compilation of the tests that members of the
+          It is a compilation of tests taken by members of the
           <a href="https://nsl36.netlify.app/cognimetrica/society" target="_blank">
             Cognimetrica Society
           </a>
-          used to join the society, inspired by Ivan Ivec’s
+          upon joining the society, inspired by Ivan Ivec’s
           <a href="https://www.ultimaiq.net/ftests.htm" target="_blank">
             World Favorite IQ Tests
           </a>
           list.
         </p>
-    
+
         <p><strong>(with links and number of votes in parentheses)</strong></p>
       </div>
     
@@ -202,7 +202,7 @@ def generate_html(counter, link_map):
     html.append("""    </ul>
       </div>
     
-      <p>This list is automatically updated every 15 days.</p>
+      <p>This list is automatically updated every 30 days.</p>
     
       <hr>
     
