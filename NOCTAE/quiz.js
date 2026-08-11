@@ -14,7 +14,6 @@ const questionImg = document.getElementById("questionImg");
 const submitBtn = document.getElementById("submitBtn");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
-const finishBtn = document.getElementById("finishBtn");
 const spatialContainer = document.getElementById("spatialContainer");
 const spatialCanvas = document.getElementById("spatialCanvas");
 const rowsInput = document.getElementById("rowsInput");
@@ -410,10 +409,6 @@ function closeEndTestModal() {
   endTestModal.classList.remove("show");
   setTimeout(() => endTestModal.classList.add("hidden"), 200);
 }
-
-finishBtn?.addEventListener("click", () => {
-  openEndTestModal();
-});
 
 confirmEndBtn?.addEventListener("click", async () => {
   closeEndTestModal();
