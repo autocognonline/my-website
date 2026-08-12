@@ -507,6 +507,155 @@
       margin-bottom: 0;
     }
 
+    .form-card {
+      max-width: 1000px;
+      margin: 20px auto 10px auto;
+      padding: 25px;
+      background: #eeeeee;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      text-align: left;
+      box-sizing: border-box;
+    }
+
+    .form-card h3 {
+      margin: 0 0 22px 0;
+      font-size: 24px;
+      text-align: center;
+      color: #222;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 20px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 17px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 11px 12px;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.4;
+      color: #222;
+      background: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .field input,
+    .field select {
+      min-height: 44px;
+    }
+
+    .field textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: #0070ba;
+      box-shadow: 0 0 4px rgba(0,112,186,0.3);
+    }
+
+    .field textarea::placeholder,
+    .field input::placeholder {
+      color: #888;
+    }
+
+    .actions {
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .submit-button {
+      display: inline-block;
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 28px;
+
+      border: none;
+      border-radius: 8px;
+
+      background-color: #0070ba;
+      color: white;
+
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition:
+        background-color 0.3s ease,
+        transform 0.2s ease,
+        opacity 0.2s ease;
+    }
+
+    .submit-button:hover {
+      background-color: #005c99;
+      transform: translateY(-1px);
+    }
+
+    .submit-button:focus-visible {
+      outline: 3px solid #8ed0ff;
+      outline-offset: 2px;
+    }
+
+    .submit-button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+      transform: none;
+      opacity: 0.8;
+    }
+
+    .status {
+      width: 100%;
+      min-height: 24px;
+      margin: 12px 0 0 0;
+
+      font-size: 16px;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .status.success {
+      color: #176b2c;
+      font-weight: bold;
+    }
+
+    .status.error {
+      color: #a32020;
+      font-weight: bold;
+    }
+
     @media (max-width: 768px) {
 
       html,
@@ -613,6 +762,48 @@
       .details-grid > div {
         padding: 8px 10px;
       }
+
+      .form-card {
+        margin: 15px auto 5px auto;
+        padding: 18px 15px;
+      }
+
+      .form-card h3 {
+        font-size: 21px;
+        margin-bottom: 18px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .field label {
+        font-size: 16px;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        font-size: 16px;
+      }
+
+      .field textarea {
+        min-height: 160px;
+      }
+
+      .submit-button {
+        min-height: 48px;
+        font-size: 18px;
+      }
+
+      .status {
+        font-size: 15px;
+      }
     }
   </style>
 <!-- Google tag (gtag.js) -->
@@ -638,7 +829,6 @@
     Loading news...
     </div>
 
-
   <nav class="top-nav" aria-label="Page sections">
     <button class="tab-button active" type="button" data-target="intro-panel">Introduction</button>
     <button class="tab-button" type="button" data-target="contest-panel">NAITOR Contest</button>
@@ -647,9 +837,8 @@
     <button class="tab-button" type="button" data-target="misc-panel">Miscellaneous</button>
     <button class="tab-button" type="button" data-target="policies-panel">Policies & Procedures</button>
     <button class="tab-button" type="button" data-target="creators-panel">Other creators</button>
+    <button class="tab-button" type="button" data-target="msg-panel">Report issue</button>
   </nav>
-
-
 
   <div class="content-panel active" id="intro-panel">
     <h2>Introduction</h2>
@@ -1088,8 +1277,69 @@
       <p>Tests by Andrei Udriște.</p>
     </div>
   </div>
-  
 
+  </div>
+
+  <div class="content-panel" id="msg-panel">
+    <h2>Report an Issue or send a request</h2>
+    <p> Use this form to report a bug, an error or similar problems. You can also use this to request a password reset if you lost it.</p>
+
+    <section class="form-card">
+      <h3>Contact form</h3>
+
+      <form id="verification-form">
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="contact-email">Email address</label>
+            <input
+              id="contact-email"
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+              maxlength="254"
+            />
+          </div>
+
+          <div class="field">
+            <label for="message-type">Message type</label>
+            <select id="message-type" name="message_type">
+              <option value="bug">Bug / error</option>
+              <option value="password_reset">Password reset</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              maxlength="5000"
+              rows="8"
+            ></textarea>
+          </div>
+
+          <div class="field" style="position:absolute;left:-9999px;" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" type="text" name="website"  tabindex="-1"  autocomplete="off"/>
+          </div>
+
+          <div class="field full actions">
+            <button class="submit-button" id="contact-submit" type="submit" > Send message </button>
+            <p
+              id="form-status"
+              class="status"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </div>
+
+        </div>
+      </form>
+    </section>
   </div>
 
   <p style="text-align: left; font-size:0.9em; font-style:italic;">Project by M.-A. Nydegger 2025-2026</p>
@@ -1482,13 +1732,11 @@
         });
       }
 
-      const imgElement =
-        document.getElementById("slideshow-image");
+      const imgElement = document.getElementById("slideshow-image");
 
       if (imgElement) {
 
-        const progressFill =
-          document.getElementById("progress-fill");
+        const progressFill = document.getElementById("progress-fill");
 
         const totalImages = 49;
         const intervalTime = 120000;
@@ -1536,6 +1784,97 @@
 
         updateSlideshow();
         setInterval(updateSlideshow, 500);
+      }
+
+      const contactForm = document.getElementById("verification-form");
+      const contactSubmit = document.getElementById("contact-submit");
+      const contactStatus = document.getElementById("form-status");
+
+      const CONTACT_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/contact";
+
+      if (contactForm) {
+        contactForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          contactStatus.textContent = "";
+          contactStatus.className = "status";
+
+          const emailInput = document.getElementById("contact-email");
+
+          const messageInput = document.getElementById("message");
+
+          const messageTypeInput = document.getElementById("message-type");
+
+          const honeypotInput = document.getElementById("website");
+
+          const email = emailInput.value.trim();
+          const message = messageInput.value;
+          const messageType = messageTypeInput.value;
+
+          if (!email) {
+            contactStatus.textContent =
+              "Please enter your email address.";
+            return;
+          }
+
+          if (!message) {
+            contactStatus.textContent =
+              "Please enter a message.";
+            return;
+          }
+
+          if (message.length > 5000) {
+            contactStatus.textContent =
+              "Your message is too long.";
+            return;
+          }
+
+          contactSubmit.disabled = true;
+          contactSubmit.textContent = "Sending...";
+
+          try {
+            const response = await fetch(CONTACT_URL, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                email,
+                message,
+                message_type: messageType,
+                website: honeypotInput.value
+              })
+            });
+
+            const data = await response.json().catch(() => null);
+
+            if (!response.ok) {
+              throw new Error(
+                data?.error || "Could not send your message."
+              );
+            }
+
+            contactStatus.textContent =
+              data.message || "Your message has been sent.";
+
+            contactStatus.classList.add("success");
+
+            contactForm.reset();
+
+          } catch (error) {
+            console.error("Contact form error:", error);
+
+            contactStatus.textContent =
+              error.message ||
+              "Could not send your message. Please try again later.";
+
+            contactStatus.classList.add("error");
+
+          } finally {
+            contactSubmit.disabled = false;
+            contactSubmit.textContent = "Send message";
+          }
+        });
       }
 
     });
