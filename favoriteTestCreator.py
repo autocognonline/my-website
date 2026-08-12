@@ -182,7 +182,7 @@ def generate_html(counter, link_map):
           list.
         </p>
 
-        <p><strong>(with links and number of votes in parentheses)</strong></p>
+        <p><strong>(with links and number of uses in parentheses)</strong></p>
       </div>
     
       <hr>
