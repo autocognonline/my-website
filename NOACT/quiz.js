@@ -322,7 +322,7 @@ function showFinalResults() {
       );
 
       if (!res.ok) {
-        container.innerHTML = `<p style="color:red;">Certificate not available or wrong email.</p>`;
+        container.innerHTML = `<p style="color:red;">Certificate not available.</p>`;
         return;
       }
 
