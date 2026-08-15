@@ -754,50 +754,183 @@
 
     function normalizeTestName(name) {
       return String(name ?? "")
-        .normalize("NFKC")
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "") // remove accents
         .replace(/\u00A0/g, " ")
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, " ") // punctuation -> spaces
         .replace(/\s+/g, " ")
-        .trim()
-        .toLowerCase();
+        .trim();
     }
-    
-    function updateSelectedTest() {
-      const entered = normalizeTestName(testSearch.value);
-    
-      const match = availableTests.find(test => {
-      const cleanName = String(test.test_name).trim();
-      const author = String(test.author || "").trim();
 
+    function compactTestName(name) {
+      return normalizeTestName(name).replace(/\s+/g, "");
+    }
+
+    function levenshteinDistance(a, b) {
+      if (a === b) return 0;
+      if (!a.length) return b.length;
+      if (!b.length) return a.length;
+
+      // Keep b as the shorter string to reduce memory usage.
+      if (a.length < b.length) {
+        [a, b] = [b, a];
+      }
+
+      let previous = Array.from(
+        { length: b.length + 1 },
+        (_, i) => i
+      );
+
+      for (let i = 1; i <= a.length; i++) {
+        const current = [i];
+
+        for (let j = 1; j <= b.length; j++) {
+          const insertCost = current[j - 1] + 1;
+          const deleteCost = previous[j] + 1;
+          const replaceCost =
+            previous[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1);
+
+          current[j] = Math.min(
+            insertCost,
+            deleteCost,
+            replaceCost
+          );
+        }
+
+        previous = current;
+      }
+
+      return previous[b.length];
+    }
+
+    function fuzzyMatch(query, word) {
+      if (!query || !word) return false;
+
+      if (word.includes(query) || query.includes(word)) {
+        return true;
+      }
+
+      const length = Math.max(query.length, word.length);
+
+      let maxDistance = 0;
+
+      if (length >= 7) {
+        maxDistance = 2;
+      } else if (length >= 4) {
+        maxDistance = 1;
+      }
+
+      if (maxDistance === 0) {
+        return false;
+      }
+
+      return levenshteinDistance(query, word) <= maxDistance;
+    }
+
+    function testMatchesSearch(test, searchText) {
+      const cleanName = String(test.test_name || "").trim();
+      const author = String(test.author || "").trim();
       const display =
         author
           ? `${cleanName} (${author})`
           : cleanName;
+      const normalizedQuery = normalizeTestName(searchText);
+      if (!normalizedQuery) {
+        return false;
+      }
+      const normalizedDisplay = normalizeTestName(display);
+      const compactDisplay = compactTestName(display);
 
-      return normalizeTestName(display) === entered;
-    });
+      if (normalizedDisplay.includes(normalizedQuery)) {
+        return true;
+      }
+
+      const compactQuery = compactTestName(searchText);
+
+      if (
+        compactQuery &&
+        compactDisplay.includes(compactQuery)
+      ) {
+        return true;
+      }
+
+      const queryWords = normalizedQuery.split(" ");
+      const displayWords = normalizedDisplay.split(" ");
+
+      const allWordsMatch = queryWords.every(queryWord => {
+        return displayWords.some(displayWord =>
+          fuzzyMatch(queryWord, displayWord)
+        );
+      });
+
+      if (allWordsMatch) {
+        return true;
+      }
+
+      const compactWords = normalizedDisplay
+        .split(" ")
+        .map(word => word.replace(/\s+/g, ""));
+
+      if (
+        compactQuery &&
+        compactWords.some(word =>
+          fuzzyMatch(compactQuery, word)
+        )
+      ) {
+        return true;
+      }
+
+      if (
+        compactQuery.length >= 4 &&
+        compactDisplay.length >= 4 &&
+        fuzzyMatch(compactQuery, compactDisplay)
+      ) {
+        return true;
+      }
+      return false;
+    }
+        
     
+    function updateSelectedTest() {
+      const entered = testSearch.value.trim();
+
+      const match = availableTests.find(test => {
+        const cleanName = String(test.test_name || "").trim();
+        const author = String(test.author || "").trim();
+
+        const display =
+          author
+            ? `${cleanName} (${author})`
+            : cleanName;
+
+        // Selection should remain exact.
+        //
+        // The fuzzy logic is for displaying suggestions, not for
+        // deciding which test_id to submit.
+        return normalizeTestName(display) === normalizeTestName(entered);
+      });
+
       testIdInput.value = match ? match.test_id : "";
     }
+
 
     function populateTests(tests) {
       availableTests = tests || [];
       testsList.innerHTML = "";
-
       function refreshSuggestions() {
-        const prefix = testSearch.value.trim().toLowerCase();
-
-        if (!prefix) {
+        const query = testSearch.value.trim();
+        if (!query) {
           testsList.innerHTML = "";
+          testIdInput.value = "";
           return;
         }
-
         const matches = availableTests.filter(test =>
-          normalizeTestName(test.test_name).startsWith(normalizeTestName(prefix))
+          testMatchesSearch(test, query)
         );
-
         testsList.innerHTML = matches
           .map(test => {
-            const cleanName = String(test.test_name).trim();
+            const cleanName = String(test.test_name || "").trim();
             const author = String(test.author || "").trim();
 
             const display =
@@ -812,8 +945,8 @@
         updateSelectedTest();
       }
 
-      testSearch.addEventListener("input", refreshSuggestions);
-      testSearch.addEventListener("change", updateSelectedTest);
+      testSearch.oninput = refreshSuggestions;
+      testSearch.onchange = updateSelectedTest;
     }
 
     function updateCertificateSection(data) {
