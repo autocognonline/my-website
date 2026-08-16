@@ -240,7 +240,7 @@ html_output = f"""
   </div>
 
   <div class="section">
-    <p>The leaderboard is refreshed every 10 days, showcasing the scores of participants who opted to be listed.</p>
+    <p>The leaderboard is refreshed every 5 days, showcasing the scores of participants who opted to be listed.</p>
   </div>
   
   <div class="section">
