@@ -31,7 +31,7 @@
     }
 
     .page {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 40px 20px 70px;
     }
@@ -303,7 +303,7 @@
     .tabs {
       display: none;
       gap: 10px;
-      flex-wrap: wrap;
+      flex-wrap: inline;
       justify-content: center;
       margin: 0 0 24px;
     }
@@ -314,7 +314,7 @@
     .tab-panel,
     #login-section {
       width: 100%;
-      max-width: 900px;
+      max-width: 1000px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -347,7 +347,77 @@
     .toggle input:checked + .toggle-slider::before {
       transform: translateX(26px);
     }
+
+
+    .ocs-message {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 10px;
+      background: #f5f5f5;
+    }
+
+    .ocs-overall {
+      margin-top: 1.5rem;
+    }
+
+    .ocs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .ocs-card {
+      padding: 1.25rem;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .ocs-main-card {
+      text-align: center;
+      padding: 1.75rem;
+    }
+
+    .ocs-label {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    .ocs-card strong {
+      font-size: 2rem;
+      line-height: 1.1;
+    }
+
+    .ocs-secondary {
+      font-size: 0.85rem;
+      opacity: 0.65;
+    }
+
+    .ocs-full-tests {
+      margin-top: 1.5rem;
+    }
+
+    .ocs-details {
+      margin-top: 1.5rem;
+    }
+
+    .ocs-detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
     @media (max-width: 780px) {
+      .ocs-grid {
+        grid-template-columns: 1fr;
+      }
+
       .page {
         padding: 24px 12px 44px;
       }
@@ -435,25 +505,19 @@
       <button type="button" class="tab-button active" data-tab="submission-section">
         Submit Score
       </button>
-
       <button type="button" class="tab-button" data-tab="scores-section">
         List of scores on other author's tests
       </button>
-
       <button type="button" class="tab-button" data-tab="message-section">
         Comment
       </button>
-
       <button type="button" class="tab-button" data-tab="leaderboard-section">
         Leaderboard
       </button>
-
-      <button
-        type="button"
-        class="tab-button locked"
-        id="certificate-tab"
-        data-tab="certificate-section"
-      >
+      <button type="button" class="tab-button" data-tab="ocs-section">
+        OCS
+      </button>
+      <button type="button" class="tab-button locked" id="certificate-tab" data-tab="certificate-section">
         Certificate
       </button>
     </nav>
@@ -462,7 +526,7 @@
       <h3>Login</h3>
       <p class="form-intro">
         Enter the email address associated with your account. If this is your
-        first login, your personal 10-digit code will be sent to you by email.
+        first login, a 10-digit code will be sent to you by email.
       </p>
 
       <div id="email-step">
@@ -661,6 +725,83 @@
       </div>
     </section>
 
+    <section class="form-card hidden tab-panel" id="ocs-section">
+      <h3>Overall Cognitive Score</h3>
+
+      <div class="form-intro">
+        <p>
+          After taking enough subtests of each type you can see your average performance for each type and your average I.Q. from full tests.
+        </p>
+        <p>Discontinued tests are not used.</p>
+      </div>
+
+      <div id="ocs-loading" class="ocs-message hidden">
+        Loading your scores...
+      </div>
+
+      <div id="ocs-not-eligible" class="ocs-message hidden">
+        <strong>OCS not yet available</strong>
+        <p id="ocs-eligibility-message">
+          You need at least 2 subtests in each category.
+        </p>
+
+        <div id="ocs-requirements"></div>
+      </div>
+
+      <div id="ocs-content" class="hidden">
+
+        <div class="ocs-overall">
+          <div class="ocs-card ocs-main-card">
+            <span class="ocs-label">Average I.Q.</span>
+            <strong id="ocs-overall-score">–</strong>
+            <span id="ocs-full-test-count" class="ocs-secondary"></span>
+          </div>
+        </div>
+
+        <div class="ocs-grid">
+
+          <div class="ocs-card">
+            <span class="ocs-label">Verbal</span>
+            <strong id="ocs-verbal-score">–</strong>
+            <span id="ocs-verbal-count" class="ocs-secondary"></span>
+          </div>
+
+          <div class="ocs-card">
+            <span class="ocs-label">Numerical</span>
+            <strong id="ocs-numerical-score">–</strong>
+            <span id="ocs-numerical-count" class="ocs-secondary"></span>
+          </div>
+
+          <div class="ocs-card">
+            <span class="ocs-label">Spatial</span>
+            <strong id="ocs-spatial-score">–</strong>
+            <span id="ocs-spatial-count" class="ocs-secondary"></span>
+          </div>
+
+          <div class="ocs-card">
+            <span class="ocs-label">Abstract</span>
+            <strong id="ocs-abstract-score">–</strong>
+            <span id="ocs-abstract-count" class="ocs-secondary"></span>
+          </div>
+
+          <div class="ocs-card">
+            <span class="ocs-label">Logical</span>
+            <strong id="ocs-logical-score">–</strong>
+            <span id="ocs-logical-count" class="ocs-secondary"></span>
+          </div>
+
+        </div>
+
+        <div class="ocs-details">
+          <h4>Scores included</h4>
+          <div id="ocs-details-list"></div>
+        </div>
+
+      </div>
+
+      <p id="ocs-status" class="status"></p>
+    </section>
+
     <div class="footer-actions">
       <a class="button" href="index.html">Back to Main Page</a>
     </div>
@@ -668,8 +809,7 @@
   </div>
 
   <script>
-    const BASE =
-      "https://rvlubjoeicvrsozjaffd.supabase.co/functions/v1/score-login";
+    const BASE = "https://rvlubjoeicvrsozjaffd.supabase.co/functions/v1/score-login";
 
     let loggedEmail = "";
     let loginCode = "";
@@ -706,6 +846,11 @@
     const tabs = document.getElementById("tabs");
     const certificateTab = document.getElementById("certificate-tab");
 
+    const ocsSection = document.getElementById("ocs-section");
+    const ocsLoading = document.getElementById("ocs-loading");
+    const ocsNotEligible = document.getElementById("ocs-not-eligible");
+    const ocsContent = document.getElementById("ocs-content");
+
     function showTab(sectionId) {
       document.querySelectorAll(".tab-panel").forEach(panel => {
         panel.classList.add("hidden");
@@ -728,6 +873,117 @@
       });
     });
 
+    function formatOCSScore(value) {
+      if (
+        value === null ||
+        value === undefined ||
+        !Number.isFinite(Number(value))
+      ) {
+        return "–";
+      }
+      return Number(value).toFixed(1);
+    }
+
+    function renderOCS(ocs) {
+      ocsLoading.classList.add("hidden");
+      ocsNotEligible.classList.add("hidden");
+      ocsContent.classList.add("hidden");
+
+      if (!ocs) {
+        ocsNotEligible.classList.remove("hidden");
+        return;
+      }
+
+      if (!ocs.eligible) {
+        const messageElement =
+          document.getElementById("ocs-eligibility-message");
+
+        const requirementsElement =
+          document.getElementById("ocs-requirements");
+
+        messageElement.textContent =
+          "You need at least 2 subtests in each category.";
+
+        const categoryOrder = [
+          ["verbal", "Verbal"],
+          ["numerical", "Numerical"],
+          ["spatial", "Spatial"],
+          ["abstract", "Abstract"],
+          ["logical", "Logical"],
+        ];
+
+        requirementsElement.innerHTML = categoryOrder
+          .map(([key, label]) => {
+            const category = ocs.categories?.[key];
+            const count = category?.count ?? 0;
+            const remaining = Math.max(0, 2 - count);
+
+            return `
+              <div class="ocs-detail-row">
+                <span>${escapeHtml(label)}</span>
+                <span>
+                  ${count} subtest${count === 1 ? "" : "s"}
+                  ${
+                    remaining > 0
+                      ? ` - ${remaining} more needed`
+                      : " - complete"
+                  }
+                </span>
+              </div>
+            `;
+          })
+          .join("");
+
+        ocsNotEligible.classList.remove("hidden");
+        return;
+      }
+
+      ocsContent.classList.remove("hidden");
+
+      document.getElementById("ocs-overall-score").textContent =
+        formatOCSScore(ocs.full_test_average);
+
+      document.getElementById("ocs-full-test-count").textContent =
+        `Based on ${ocs.full_test_count} full test${
+          ocs.full_test_count === 1 ? "" : "s"
+        }`;
+
+      const categories = [
+        "verbal",
+        "numerical",
+        "spatial",
+        "abstract",
+        "logical",
+      ];
+
+      categories.forEach(category => {
+        const result = ocs.categories?.[category];
+
+        document.getElementById(
+          `ocs-${category}-score`
+        ).textContent = formatOCSScore(result?.average);
+
+        document.getElementById(
+          `ocs-${category}-count`
+        ).textContent =
+          `${result?.count || 0} subtest${
+            result?.count === 1 ? "" : "s"
+          }`;
+      });
+
+      const details =
+        document.getElementById("ocs-details-list");
+
+      details.innerHTML = (ocs.details || [])
+        .map(item => `
+          <div class="ocs-detail-row">
+            <span>
+              ${escapeHtml(item.test_name)}
+            </span>
+          </div>
+        `)
+        .join("");
+    }
 
     function escapeHtml(text) {
       return String(text ?? "")
@@ -755,10 +1011,10 @@
     function normalizeTestName(name) {
       return String(name ?? "")
         .normalize("NFKD")
-        .replace(/[\u0300-\u036f]/g, "") // remove accents
+        .replace(/[\u0300-\u036f]/g, "") 
         .replace(/\u00A0/g, " ")
         .toLowerCase()
-        .replace(/[^\p{L}\p{N}]+/gu, " ") // punctuation -> spaces
+        .replace(/[^\p{L}\p{N}]+/gu, " ") 
         .replace(/\s+/g, " ")
         .trim();
     }
@@ -772,7 +1028,6 @@
       if (!a.length) return b.length;
       if (!b.length) return a.length;
 
-      // Keep b as the shorter string to reduce memory usage.
       if (a.length < b.length) {
         [a, b] = [b, a];
       }
@@ -891,7 +1146,6 @@
       return false;
     }
         
-    
     function updateSelectedTest() {
       const entered = testSearch.value.trim();
 
@@ -903,11 +1157,6 @@
           author
             ? `${cleanName} (${author})`
             : cleanName;
-
-        // Selection should remain exact.
-        //
-        // The fuzzy logic is for displaying suggestions, not for
-        // deciding which test_id to submit.
         return normalizeTestName(display) === normalizeTestName(entered);
       });
 
@@ -991,6 +1240,7 @@
     }
 
     function renderLoggedInView(data) {
+      renderOCS(data.ocs);
       const visibleScores = (data.scores || []).filter(score => {
         const author = (score.tests?.author || "").toLowerCase();
         return !author.includes("nydegger");
