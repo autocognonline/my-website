@@ -1,3 +1,4 @@
+19 August 2026 - The Overall Cognitive Score (OCS) is now available in the score submission interface.
 12 August 2026 - Report issue form available.
 5 August 2026 - HRCAS estimated norm.
 1 August 2026 - A test selection form is available (introduction tab).
