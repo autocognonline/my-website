@@ -229,7 +229,7 @@ html_output = f"""
           <th>Rank</th>
           <th>Name</th>
           <th>Raw score</th>
-          <th>IQ (Wechsler scale)</th>
+          <th>I.Q. (Wechsler scale)</th>
           <th class="orange-header">Contest rank</th>
         </tr>
       </thead>
