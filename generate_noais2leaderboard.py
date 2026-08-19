@@ -327,8 +327,8 @@ html_output = f"""<!DOCTYPE html>
           <th>Rank</th>
           <th>Name</th>
           <th>Raw score</th>
-          <th>NVIQ</th>
-          <th>IQ (Wechsler scale)</th>
+          <th>N.V.I.Q.</th>
+          <th>I.Q. (Wechsler scale)</th>
         </tr>
       </thead>
 
