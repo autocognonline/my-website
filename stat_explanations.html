@@ -268,10 +268,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>&lt; 0.3</td><td>Bad</td></tr>
-              <tr><td>0.3 – 0.5</td><td>Suspicious</td></tr>
-              <tr><td>0.5 – 0.7</td><td>Average</td></tr>
-              <tr><td>&gt; 0.7</td><td>Good</td></tr>
+              <tr><td>\(Q_i < 0.30\)</td><td>Bad</td></tr>
+              <tr><td>\(0.30 \le Q_i < 0.50\)</td><td>Suspicious</td></tr>
+              <tr><td>\(0.50 \le Q_i < 0.70\)</td><td>Average</td></tr>
+              <tr><td>\(Q_i \ge 0.70\)</td><td>Good</td></tr>
             </tbody>
           </table>
         </div>
@@ -405,6 +405,46 @@
           \]
         </div>
       </div>
+
+      <div style="display: flex; justify-content: center;">
+        <table>
+          <thead>
+            <tr style="background-color: #0070ba; color: white; font-size: 21px;">
+              <th>Corrected point-biserial correlation</th>
+              <th>Interpretation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>\(r_{\mathrm{pb,corr}} < 0.00\)</td><td>Problematic</td></tr>
+            <tr><td>\(0.00 \le r_{\mathrm{pb,corr}} < 0.20\)</td><td>Very weak</td></tr>
+            <tr><td>\(0.20 \le r_{\mathrm{pb,corr}} < 0.30\)</td><td>Weak</td></tr>
+            <tr><td>\(0.30 \le r_{\mathrm{pb,corr}} < 0.40\)</td><td>Acceptable</td></tr>
+            <tr><td>\(0.40 \le r_{\mathrm{pb,corr}} < 0.70\)</td><td>Strong</td></tr>
+            <tr><td>\(r_{\mathrm{pb,corr}} \ge 0.70\)</td><td>Very strong</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Interpretation guidelines are not universal psychometric cutoffs.</p>
+
+      <p>
+        Rattray &amp; Jones (2007), <em>Essential elements of questionnaire design
+          and development</em>, Journal of Clinical Nursing.
+          <a href="https://doi.org/10.1111/j.1365-2702.2006.01573.x"
+            target="_blank" rel="noopener noreferrer">
+            https://doi.org/10.1111/j.1365-2702.2006.01573.x
+          </a>
+      </p>
+      <p>
+          Boateng et al. (2018), <em>Best Practices for Developing and Validating
+          Scales for Health, Social, and Behavioral Research: A Primer</em>,
+          Frontiers in Public Health.
+          <a href="https://doi.org/10.3389/fpubh.2018.00149"
+            target="_blank" rel="noopener noreferrer">
+            https://doi.org/10.3389/fpubh.2018.00149
+          </a>
+      </p>
+      
 
       <hr>
 
@@ -1042,10 +1082,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>&lt; 0.25</td><td>Easy</td></tr>
-            <tr><td>0.25 – 0.50</td><td>Moderate</td></tr>
-            <tr><td>0.50 – 0.75</td><td>Hard</td></tr>
-            <tr><td>&gt; 0.75</td><td>Hardest</td></tr>
+            <tr><td>\(\mathrm{SIH} < 0.25\)</td><td>Easy</td></tr>
+            <tr><td>\(0.25 \le \mathrm{SIH} < 0.50\)</td><td>Moderate</td></tr>
+            <tr><td>\(0.50 \le \mathrm{SIH} < 0.75\)</td><td>Hard</td></tr>
+            <tr><td>\(\mathrm{SIH} \ge 0.75\)</td><td>Hardest</td></tr>
           </tbody>
         </table>
       </div>
@@ -1131,24 +1171,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>&lt; 0.25</td><td>Minimal</td></tr>
-            <tr><td>0.25 – 0.40</td><td>Low</td></tr>
-            <tr><td>0.40 – 0.60</td><td>Medium</td></tr>
-            <tr><td>0.60 – 0.75</td><td>High</td></tr>
-            <tr><td>0.75 – 0.90</td><td>Very high</td></tr>
-            <tr><td>0.90 – 0.95</td><td>Severe</td></tr>
-            <tr><td>&gt; 0.95</td><td>Extreme</td></tr>
+            <tr><td>\(\mathrm{OTC} < 0.25\)</td><td>Minimal</td></tr>
+            <tr><td>\(0.25 \le \mathrm{OTC} < 0.40\)</td><td>Low</td></tr>
+            <tr><td>\(0.40 \le \mathrm{OTC} < 0.60\)</td><td>Medium</td></tr>
+            <tr><td>\(0.60 \le \mathrm{OTC} < 0.75\)</td><td>High</td></tr>
+            <tr><td>\(0.75 \le \mathrm{OTC} < 0.90\)</td><td>Very high</td></tr>
+            <tr><td>\(0.90 \le \mathrm{OTC} < 0.95\)</td><td>Severe</td></tr>
+            <tr><td>\(\mathrm{OTC} \ge 0.95\)</td><td>Extreme</td></tr>
           </tbody>
         </table>
       </div>
+
     </div>
   </div>  
 
 </body>
 
-
 </html>
-
-
-
-
