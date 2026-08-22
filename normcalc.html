@@ -336,18 +336,19 @@
     
       lastNormPayload = payload;
       downloadXlsxBtn.style.display = "inline-block";
+      const normRows = rows.filter(row => row.rawScore !== 0);
+      const raw1Row = normRows.find(row => row.rawScore === 1);
+    
       const displayRows = [];
     
-      const firstRow = rows[0];
-    
-      if (firstRow.rawScore === 1 && firstRow.standardScore !== null) {
+      if (raw1Row && raw1Row.standardScore !== null) {
         displayRows.push({
           rawScore: 0,
-          standardScore: `≤${firstRow.standardScore - 1}`
+          standardScore: `≤${raw1Row.standardScore - 1}`
         });
       }
     
-      rows.forEach(row => {
+      normRows.forEach(row => {
         displayRows.push({
           rawScore: row.rawScore,
           standardScore: row.standardScore
@@ -387,27 +388,24 @@
       showMessage(html, false);
     }
 
-      showMessage(html, false);
-    }
-
     function downloadNormTableXlsx() {
       if (!lastNormPayload || !lastNormPayload.normTable || !lastNormPayload.normTable.length) {
         return;
       }
+      const normRows = lastNormPayload.normTable.filter(row => row.rawScore !== 0);
     
-      const rows = lastNormPayload.normTable;
       const exportRows = [];
     
-      const firstRow = rows[0];
-
-      if (firstRow.rawScore === 1 && firstRow.standardScore !== null) {
+      const raw1Row = normRows.find(row => row.rawScore === 1);
+    
+      if (raw1Row && raw1Row.standardScore !== null) {
         exportRows.push({
           "Raw score": 0,
-          "Standard score": `≤${firstRow.standardScore - 1}`
+          "Standard score": `≤${raw1Row.standardScore - 1}`
         });
       }
     
-      rows.forEach(row => {
+      normRows.forEach(row => {
         exportRows.push({
           "Raw score": row.rawScore,
           "Standard score": row.standardScore
