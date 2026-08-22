@@ -327,21 +327,38 @@
 
     function renderNormTable(payload) {
       const rows = payload.normTable || [];
-
+    
       if (!rows.length) {
         showMessage("No norm table was returned.", true);
         return;
       }
-
+    
       lastNormPayload = payload;
       downloadXlsxBtn.style.display = "inline-block";
-
+      const displayRows = [];
+    
+      const firstRow = rows[0];
+    
+      if (firstRow.rawScore === 1 && firstRow.standardScore !== null) {
+        displayRows.push({
+          rawScore: 0,
+          standardScore: `≤${firstRow.standardScore - 1}`
+        });
+      }
+    
+      rows.forEach(row => {
+        displayRows.push({
+          rawScore: row.rawScore,
+          standardScore: row.standardScore
+        });
+      });
+    
       const html = `
         <div style="margin-bottom:12px;">
           <strong>Sample size:</strong> ${payload.sampleSize}<br>
           <strong>Items:</strong> ${payload.items}<br>
         </div>
-
+    
         <div style="overflow-x:auto;">
           <table style="width:100%; border-collapse:collapse; background:#fff;">
             <thead>
@@ -351,7 +368,7 @@
               </tr>
             </thead>
             <tbody>
-              ${rows.map((row, i) => `
+              ${displayRows.map((row, i) => `
                 <tr>
                   <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">
                     ${row.rawScore}
@@ -365,6 +382,9 @@
           </table>
         </div>
       `;
+    
+      showMessage(html, false);
+    }
 
       showMessage(html, false);
     }
@@ -373,18 +393,34 @@
       if (!lastNormPayload || !lastNormPayload.normTable || !lastNormPayload.normTable.length) {
         return;
       }
+    
+      const rows = lastNormPayload.normTable;
+      const exportRows = [];
+    
+      const firstRow = rows[0];
 
-      const exportRows = lastNormPayload.normTable.map(row => ({
-        "Raw score": row.rawScore,
-        "Standard score": row.standardScore
-      }));
-
+      if (firstRow.rawScore === 1 && firstRow.standardScore !== null) {
+        exportRows.push({
+          "Raw score": 0,
+          "Standard score": `≤${firstRow.standardScore - 1}`
+        });
+      }
+    
+      rows.forEach(row => {
+        exportRows.push({
+          "Raw score": row.rawScore,
+          "Standard score": row.standardScore
+        });
+      });
+    
       const worksheet = XLSX.utils.json_to_sheet(exportRows);
       const workbook = XLSX.utils.book_new();
-
+    
       XLSX.utils.book_append_sheet(workbook, worksheet, "Norm Table");
-
-      const originalName = fileInput.files[0]?.name?.replace(/\.[^/.]+$/, "") || "norm_table";
+    
+      const originalName =
+        fileInput.files[0]?.name?.replace(/\.[^/.]+$/, "") || "norm_table";
+    
       XLSX.writeFile(workbook, `${originalName}_norm_table.xlsx`);
     }
 
