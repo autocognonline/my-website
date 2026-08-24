@@ -458,7 +458,8 @@
           A higher g-loading indicates that the test is more strongly related to general intelligence, while a lower g-loading indicates that the test primarily measures specific abilities.
         </p>
         <p>
-          The g-loading is a correlation coefficient ranging from 0 to 1.
+          The estimated g-loading ranges from -1 to 1. Values closer to 1 indicate a stronger positive association with general intelligence, while values closer to -1 indicate a stronger negative association.
+          The estimated g-loading can be affected by factors such as restricted score range, ceiling effects, limited sample size, measurement error, and the particular set of comparison tests used. These factors can reduce the observed correlations and therefore lower the estimated g-loading.
         </p>
       </div>
       <h2>Definition</h2>
@@ -467,14 +468,66 @@
           Let \( r_1, r_2, \dots, r_k \) be the Pearson correlations a test has with \( k \) other tests, and let \( w_1, w_2, \dots, w_k \) be the corresponding weights (number of score pairs used to compute each correlation).
         </p>
         <p>
-          The estimated g-loading (\( g_\text{est}\)) is:
+          First, calculate the weighted mean correlation:
         </p>
         <div class="math-block">
           \[
-          g_\text{est} = \sqrt{ \frac{\sum_{i=1}^{k} w_i \, r_i^2}{\sum_{i=1}^{k} w_i} }
+          \bar r_w =
+          \frac{\sum_{i=1}^{k} w_i r_i}
+          {\sum_{i=1}^{k} w_i}
+          \]
+        </div>
+
+        <p>
+          The estimated g-loading (\(g_\text{est}\)) is then:
+        </p>
+        <div class="math-block">
+          \[
+          g_\text{est} =
+          \begin{cases}
+          \sqrt{\bar r_w}, & \bar r_w \geq 0 \\[6pt]
+          -\sqrt{|\bar r_w|}, & \bar r_w < 0
+          \end{cases}
+          \]
+        </div>
+
+        <p>
+          where
+        </p>
+        <div class="math-block">
+          \[
+          \bar r_w =
+          \frac{\sum_{i=1}^{k} w_i r_i}
+          {\sum_{i=1}^{k} w_i}
           \]
         </div>
       </div>
+
+      <div style="display: flex; justify-content: center;">
+        <table style="max-width: 1200px;">
+          <thead>
+            <tr style="background-color: #0070ba; color: white; font-size: 21px;">
+              <th style="min-width: 250px;">Estimated g-loading</th>
+              <th>Interpretation</th>
+              <th>Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>\(g_\text{est}  \ge 0.90\)</td><td>Exceptional</td><td>Exceptionally strong measure of general cognitive ability. Values this high are rarely achieved.</td></tr>
+            <tr><td>\(0.8 \le g_\text{est}  < 0.9\)</td><td>Excellent</td><td>Very strong measure of general cognitive ability, comparable to standardized cognitive tests.</td></tr>
+            <tr><td>\(0.7 \le g_\text{est}  < 0.8\)</td><td>Good</td><td>Strong measure of general cognitive ability, particularly meaningful for high range tests.</td></tr>
+            <tr><td>\(0.6 \le g_\text{est}  < 0.7\)</td><td>Acceptable</td><td>Meaningful measure of general cognitive ability, although specific abilities might contribute more substantially to the score.</td></tr>
+            <tr><td>\(0.5 \le g_\text{est}  < 0.6\)</td><td>Borderline</td><td>Provides useful information about general ability, but is better used as a subtest.</td></tr>
+            <tr><td>\(0.3\le g_\text{est}  < 0.5\)</td><td>Poor</td><td>Primarily reflects more specific cognitive abilities. A substantial number of such subtests would be needed to obtain a reliable estimate of general ability.</td></tr>
+            <tr><td>\(g_\text{est}  < 0.3\)</td><td>Problematic</td><td>Weak association with general cognitive ability. The test is better regarded as measuring a specific ability than as an I.Q. test.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>These categories are intended as practical benchmarks for comparing cognitive tests using this metric. They should not be confused with g-loadings derived from factor analysis. </p>
+      <a href="https://iq-tests-for-the-high-range.com/statistics/explained/estimated_g_factor_loading.html"
+            target="_blank" rel="noopener noreferrer">
+            Method used
+      </a>
 
       <hr>
 
