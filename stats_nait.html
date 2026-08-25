@@ -140,18 +140,20 @@
     background-color: revert;
   }
 
-  .thumbnail,
-  img,
-  iframe {
+  .thumbnail {
     max-width: 100%;
     height: auto;
-  }
-
-  .thumbnail,
-  img {
     border: 3px solid black;
     border-radius: 6px;
     cursor: zoom-in;
+    transition: transform 0.2s ease;
+  }
+  
+  .thumbnail.zoomed {
+    cursor: zoom-out;
+    transform: scale(1.8);
+    position: relative;
+    z-index: 1000;
   }
 
   .candidates-header th {
@@ -228,7 +230,7 @@
   <h2 style="text-align: center;">Timeline of all tests that led to the NAITOR:</h2>
 
   <a >
-    <img src="Timeline.png" alt="NAIT timeline" class="thumbnail">
+    <img src="Timeline.png" alt="NAIT timeline" class="thumbnail" onclick="this.classList.toggle('zoomed')">
   </a>
 
   <hr>
