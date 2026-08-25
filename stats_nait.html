@@ -140,10 +140,6 @@
     background-color: revert;
   }
 
-  #timeline-zoom {
-    display: none;
-  }
-  
   .thumbnail {
     max-width: 100%;
     height: auto;
@@ -152,24 +148,31 @@
     cursor: zoom-in;
   }
   
-  #timeline-zoom:checked + label {
+  /* Full-size image overlay */
+  .image-overlay {
+    display: none;
     position: fixed;
     inset: 0;
     z-index: 2000;
     background: rgba(0, 0, 0, 0.85);
-    display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
     cursor: zoom-out;
   }
   
-  #timeline-zoom:checked + label .thumbnail {
+  .image-overlay.active {
+    display: flex;
+  }
+  
+  .image-overlay img {
     max-width: 100%;
     max-height: 100%;
     width: auto;
     height: auto;
-    cursor: zoom-out;
+    object-fit: contain;
+    border: 3px solid black;
+    border-radius: 6px;
   }
 
   .candidates-header th {
@@ -245,11 +248,7 @@
 
   <h2 style="text-align: center;">Timeline of all tests that led to the NAITOR:</h2>
 
-  <input type="checkbox" id="timeline-zoom">
-
-  <label for="timeline-zoom">
-    <img src="Timeline.png" alt="NAIT timeline" class="thumbnail">
-  </label>
+  <img src="Timeline.png" alt="NAIT timeline" class="thumbnail" onclick="openImage(this)">
 
   <hr>
 
@@ -512,5 +511,22 @@
     <a class="button" href="stat_explanations.html">Statistical explanations</a>
     <a class="button" href="index.html">Back to main page</a>
   </div>
+  <script>
+    function openImage(image) {
+      const overlay = document.createElement("div");
+      overlay.className = "image-overlay active";
+  
+      const enlargedImage = document.createElement("img");
+      enlargedImage.src = image.src;
+      enlargedImage.alt = image.alt;
+  
+      overlay.appendChild(enlargedImage);
+      document.body.appendChild(overlay);
+  
+      overlay.onclick = function () {
+        overlay.remove();
+      };
+    }
+  </script>
 </body>
 </html>
