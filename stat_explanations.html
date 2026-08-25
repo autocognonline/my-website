@@ -161,7 +161,8 @@
         <li><a href="#g-loading-pca">g-loading (PCA Method)</a></li>
         <li><a href="#dim">Test Dimensionality</a></li>
         <li><a href="#item-rest">Corrected Point-Biserial Correlation</a></li>
-        <li><a href="#g-loading">Estimated g-loading</a></li>
+        <li><a href="#g-loading">Estimated g-loading (external)</a></li>
+        <li><a href="#g-loading2">Estimated g-loading (internal)</a></li>
         <li><a href="#kurt">Excess Kurtosis</a></li>
         <li><a href="#skewness">Skewness</a></li>
         <li><a href="#spearman-rho">Spearman Correlation Coefficient</a></li>
@@ -374,7 +375,7 @@
       <h2>Description</h2>
       <div class="section">
         <p>
-          The corrected point-biserial correlation, also called the item–rest correlation, measures the association between a single test item and the total test score excluding that item.
+          The corrected point-biserial correlation, also called the item-rest correlation, measures the association between a single test item and the total test score excluding that item.
         </p>
         <p>
           It indicates how well an item discriminates between individuals with higher and lower overall test performance, while avoiding artificial inflation caused by including the item in the total score.
@@ -448,7 +449,7 @@
 
       <hr>
 
-      <h1 id="g-loading">Estimated g-loading</h1>
+      <h1 id="g-loading">Estimated g-loading (external)</h1>
       <h2>Description</h2>
       <div class="section">
         <p>
@@ -490,6 +491,17 @@
           \end{cases}
           \]
         </div>
+
+        <p>
+          where
+        </p>
+        <div class="math-block">
+          \[
+          \bar r_w =
+          \frac{\sum_{i=1}^{k} w_i r_i}
+          {\sum_{i=1}^{k} w_i}
+          \]
+        </div>
       </div>
 
       <div style="display: flex; justify-content: center;">
@@ -519,6 +531,154 @@
       </a>
 
       <hr>
+
+      <h1 id="g-loading2">Estimated g-loading (internal)</h1>
+
+      <h2>Description</h2>
+      <div class="section">
+        <p>
+          The internal g-loading estimates how strongly a test's items
+          measure a common general ability. Unlike the external g-loading, which
+          looks at how a test correlates with other tests, the internal estimate
+          looks at how the items within the test relate to one another.
+        </p>
+        <p>
+          The internal g-loading ranges from 0 to 1. Values closer to 1 indicate
+          a stronger general factor within the test, while values closer to 0
+          indicate that the test's common variance is mainly associated with
+          more specific abilities.
+        </p>
+
+        <p>
+          The estimate is obtained using factor analysis followed by a
+          Schmid-Leiman analysis. These methods are used to separate the general
+          factor from more specific abilities measured by the test.
+        </p>
+
+        <p>
+          Because this estimate is based only on the questions within the test,
+          it can differ from the external g-loading. Both provide useful but
+          different information about the relationship between a test and
+          general intelligence.
+        </p>
+      </div>
+
+      <h2>Definition</h2>
+        <div class="section">
+          <p>
+            Let \(X\) be the item-score matrix. Exploratory factor analysis is applied
+            to \(X\), followed by a Schmid-Leiman transformation to separate the
+            general factor from group-specific factors.
+          </p>
+
+          <p>
+            Omega hierarchical is:
+          </p>
+
+          <div class="math-block">
+            \[
+            \omega_H =
+            \frac{\text{variance attributable to }g}
+                {\text{total score variance}}
+            \]
+          </div>
+
+          <p>
+            The internal g-loading is then defined as:
+          </p>
+
+          <div class="math-block">
+            \[
+            g_\text{internal} =
+            \sqrt{\omega_H}
+            \]
+          </div>
+
+          <p>
+            Therefore:
+          </p>
+
+          <div class="math-block">
+            \[
+            0 \leq g_\text{internal} \leq 1
+            \]
+          </div>
+        </div>
+
+      <div style="display: flex; justify-content: center;">
+        <table style="max-width: 1200px;">
+          <thead>
+            <tr style="background-color: #0070ba; color: white; font-size: 21px;">
+              <th style="min-width: 250px;">Internal g-loading</th>
+              <th>Interpretation</th>
+              <th>Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>\(g_\text{internal} \ge 0.95\)</td>
+              <td>Exceptional</td>
+              <td>
+                Values in this range are rarely observed.
+              </td>
+            </tr>
+            <tr>
+              <td>\(0.90 \le g_\text{internal} < 0.95\)</td>
+              <td>Very strong</td>
+              <td>
+                Comparable to values often found in comprehensive intelligence tests.
+              </td>
+            </tr>
+            <tr>
+              <td>\(0.80 \le g_\text{internal} < 0.90\)</td>
+              <td>Strong</td>
+              <td>
+                The general ability accounts for a large part of the score's variance.
+              </td>
+            </tr>
+            <tr>
+              <td>\(0.70 \le g_\text{internal} < 0.80\)</td>
+              <td>Moderate-strong</td>
+              <td>
+                Clear and meaningful general factor saturation but specific abilities make a more substantial contribution.
+              </td>
+            </tr>
+            <tr>
+              <td>\(0.60 \le g_\text{internal} < 0.70\)</td>
+              <td>Moderate</td>
+              <td>
+                A meaningful general factor is present alongside substantialcontributions from more specific abilities.
+              </td>
+            </tr>
+            <tr>
+              <td>\(0.50 \le g_\text{internal} < 0.60\)</td>
+              <td>Limited</td>
+              <td>
+                The general factor is present but accounts for a limited part of the score's variance. Values in this range can be expected for narrower cognitive subtests.
+              </td>
+            </tr>
+            <tr>
+              <td>\(g_\text{internal} < 0.50\)</td>
+              <td>Weak</td>
+              <td>
+                Relatively little of the score's variance is associated with the
+                general factor. This can be appropriate for tests or subtests
+                designed to measure a more specific ability.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        These categories are empirical benchmarks based on values observed in
+        established cognitive tests. They are not formal psychometric standards,
+        and values can vary depending on the test, sample, and statistical method
+        used.
+      </p>
+
+      <hr>
+
 
       <h1 id="kurt">Excess Kurtosis</h1>
       <h2>Description</h2>
