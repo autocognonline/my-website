@@ -219,7 +219,7 @@ html_output = f"""
 </head>
 <body>
   <div class="section">
-    <p>Estimated norm data used.</p>
+    <p>First preliminary norm data used.</p>
   </div>
   <div class="leaderboard-container">
     <h2>NAITOR Leaderboard</h2>
