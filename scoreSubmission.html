@@ -695,8 +695,9 @@
         <p>Discontinued tests are accepted if they have been taken by at least 30 candidates.</p>
       </div>
 
-      <form id="message-form">
+      <form id="message-form" enctype="multipart/form-data">
         <div class="form-grid">
+
           <div class="field full">
             <label for="user-message">Message</label>
             <textarea
@@ -707,10 +708,25 @@
               placeholder="Write your message here..."
             ></textarea>
           </div>
+
+          <div class="field full">
+            <label for="message-image">Image (optional)</label>
+            <input
+              id="message-image"
+              name="image"
+              type="file"
+              accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+            />
+            <div class="hint">
+              Optional. JPG or PNG only, maximum 2 MB.
+            </div>
+          </div>
+
           <div class="field full actions">
             <button type="submit">Send Message</button>
             <p id="message-status" class="status"></p>
           </div>
+
         </div>
       </form>
     </section>
@@ -1444,33 +1460,59 @@
       e.preventDefault();
 
       const status = document.getElementById("message-status");
-      const message = document.getElementById("user-message").value.trim();
+      const messageInput = document.getElementById("user-message");
+      const imageInput = document.getElementById("message-image");
+
+      const message = messageInput.value.trim();
+      const image = imageInput.files[0] || null;
 
       if (!message) {
         setStatus(status, "Please enter a message.", "error");
         return;
       }
 
+      // Client-side validation
+      if (image) {
+        const maxSize = 2 * 1024 * 1024; // 2 MB
+
+        if (image.size > maxSize) {
+          setStatus(status, "The image must be smaller than 2 MB.", "error");
+          return;
+        }
+
+        const allowedTypes = ["image/jpeg", "image/png"];
+
+        if (!allowedTypes.includes(image.type)) {
+          setStatus(status, "Only JPG and PNG images are accepted.", "error");
+          return;
+        }
+      }
+
       setStatus(status, "Sending message...", "loading");
 
       try {
+        const formData = new FormData();
+
+        formData.append("action", "submit_user_message");
+        formData.append("email", loggedEmail);
+        formData.append("code", loginCode);
+        formData.append("message", message);
+
+        if (image) {
+          formData.append("image", image);
+        }
+
         const res = await fetch(BASE, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            action: "submit_user_message",
-            email: loggedEmail,
-            code: loginCode,
-            message: message
-          })
+          body: formData,
         });
 
         const data = await res.json();
 
         if (!res.ok || data.success === false) {
-          throw new Error(data.error || "Message could not be sent.");
+          throw new Error(
+            data.error || "Message could not be sent."
+          );
         }
 
         setStatus(
@@ -1480,6 +1522,7 @@
         );
 
         e.target.reset();
+
       } catch (err) {
         setStatus(
           status,
@@ -1487,7 +1530,7 @@
           "error"
         );
       }
-});
+    });
 
     document.getElementById("send-code").addEventListener("click", async () => {
       loggedEmail = document.getElementById("login-email").value.trim();
@@ -1615,6 +1658,8 @@
 
       try {
         const formData = new FormData(e.target);
+
+        formData.append("action", "submit_score");
         formData.append("email", loggedEmail);
         formData.append("code", loginCode);
 
@@ -1637,6 +1682,7 @@
 
         e.target.reset();
         testIdInput.value = "";
+
       } catch (err) {
         setStatus(
           formStatus,
