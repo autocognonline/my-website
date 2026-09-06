@@ -232,7 +232,7 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false, markFinish
   if (decrementAttempt) payload.decrement_attempt = true;
 
   const body = await fetchQuizAPI(payload);
-  if (!body) return;
+  if (!body) return null;
 
   if (body?.user) {
     const u = body.user;
@@ -242,6 +242,8 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false, markFinish
     attempts = u.attempts ?? attempts;
     updateTopBar();
   }
+  
+  return body;
 }
 
 function showStatus(message, color = "black", duration = 1500) {
@@ -305,8 +307,17 @@ function updateTopBar() {
 }
 
 async function endGame() {
-  attempts = 0;
-  await updateDB({ markFinished: true });
+  const body = await updateDB({ markFinished: true });
+
+  if (!body?.user?.finished) {
+    showStatus(
+      "Cannot end the test.",
+      "crimson",
+      2500
+    );
+    return;
+  }
+
   showFinalResults();
 }
 
