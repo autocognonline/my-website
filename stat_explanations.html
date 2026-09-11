@@ -158,7 +158,7 @@
       <h2>Table of Contents</h2>
       <ul style="list-style-type: none; padding-left: 0;">
         <li><a href="#ivec-disc">Ivec Item Quality (Discrimination)</a></li>
-        <li><a href="#g-loading-pca">g-loading (PCA Method)</a></li>
+        <li><a href="#g-loading-subtest">g-loading for subtests</a></li>
         <li><a href="#dim">Test Dimensionality</a></li>
         <li><a href="#item-rest">Corrected Point-Biserial Correlation</a></li>
         <li><a href="#g-loading">Estimated g-loading (external)</a></li>
@@ -279,52 +279,71 @@
         <a href="https://ivec.ultimaiq.net/quality.htm" target="_blank">More Information about Ivec's quality</a>
       </div>
 
-
       <hr>
 
-      <h1 id="g-loading-pca">g-loading (PCA method)</h1>
-      <h2>Description</h2>
-      <div class="section">
-        <p>
-          When a test consists of multiple subtests, the general factor \( g \) can be estimated for each subtest using principal component analysis (PCA) applied to the subtest correlation matrix.
-        </p>
-        <p>
-          In this approach, the first principal component represents the direction of maximum shared variance among subtests and is commonly interpreted as an estimate of the general intelligence factor.
-        </p>
-        <p>
-          The g-loading is a correlation coefficient ranging from 0 to 1.
-        </p>
-      </div>
-      <h2>Definition</h2>
-      <div class="section">
-        <p>
-          Let \( \mathbf{R} \) be the correlation matrix of \( k \) subtests.
-        </p>
-        <p>
-          Let \( \lambda_1 \) be the largest eigenvalue of \( \mathbf{R} \), and let
-          \( \mathbf{v}_1 = (v_{11}, v_{21}, \dots, v_{k1}) \) be the corresponding normalized eigenvector.
-        </p>
-        <p>
-          The eigenvalues of the correlation matrix \( \mathbf{R} \) are obtained by solving the characteristic equation
-          \( \det(\mathbf{R} - \lambda \mathbf{I}) = 0 \), where \( \mathbf{I} \) is the identity matrix.
-        </p>
-        <p>
-          The eigenvector \( \mathbf{v}_1 \) associated with \( \lambda_1 \) is obtained by solving
-          \( (\mathbf{R} - \lambda_1 \mathbf{I}) \mathbf{v}_1 = \mathbf{0} \) and normalizing the solution so that
-          \( \| \mathbf{v}_1 \| = 1 \).
-        </p>
-        <p>
-          The PCA-based g-loading of subtest \( i \) is defined as:
-        </p>
-        <div class="math-block">
-          \[
-          g_i = \sqrt{\lambda_1} \, v_{i1}
-          \]
+      <h1 id="g-loading-subtest">g-loading for subtests</h1>
+
+        <h2>Description</h2>
+        <div class="section">
+          <p>
+            When a test consists of multiple subtests, the general factor \( g \) can be estimated for each subtest using single-factor minimum residual (MINRES) factor analysis applied to the subtest correlation matrix.
+            A single common factor is extracted from the correlations among the subtests. This factor represents the common variance shared by the subtests and is interpreted as an estimate of the general intelligence factor \( g \).
+            Unlike principal component analysis (PCA), which accounts for total variance, factor analysis models the common variance shared among the observed subtests. This makes factor analysis more appropriate when the objective is to estimate an underlying latent construct such as \( g \).
+            The g-loading is the standardized factor loading of each subtest on the extracted general factor. It indicates the strength of the relationship between the subtest and the estimated general factor.
+          </p>
         </div>
-        <p>
-          This quantity represents the correlation between subtest \( i \) and the first principal component, interpreted as an estimate of the general factor \( g \).
-        </p>
-      </div>
+        
+        <h2>Definition</h2>
+        <div class="section">
+          <p>
+            Let \( \mathbf{R} \) be the correlation matrix of \( k \) subtests.
+          </p>
+          <p>
+            In a single-factor model, the correlation matrix is represented as:
+          </p>
+          <div class="math-block">
+            \[
+            \mathbf{R} \approx \boldsymbol{\Lambda}\boldsymbol{\Lambda}^{\mathsf{T}} + \mathbf{\Psi}
+            \]
+          </div>
+          <p>
+            where \( \boldsymbol{\Lambda} \) is the \( k \times 1 \) vector of factor loadings and \( \mathbf{\Psi} \) is a diagonal matrix containing the unique variances of the subtests.
+          </p>
+          <p>
+            The MINRES method estimates the factor loadings by minimizing the residual differences between the observed correlations and the correlations reproduced by the common factor model. Specifically, the residual matrix is:
+          </p>
+          <div class="math-block">
+            \[
+            \mathbf{E} = \mathbf{R} - \boldsymbol{\Lambda}\boldsymbol{\Lambda}^{\mathsf{T}}
+            \]
+          </div>
+          <p>
+            MINRES estimates \( \boldsymbol{\Lambda} \) by minimizing the sum of the squared off-diagonal residuals:
+          </p>
+          <div class="math-block">
+            \[
+            \min_{\boldsymbol{\Lambda}}
+            \sum_{i \ne j}
+            \left(
+              r_{ij} - \lambda_i \lambda_j
+            \right)^2
+            \]
+          </div>
+          <p>
+            where \( r_{ij} \) is the observed correlation between subtests \( i \) and \( j \), and \( \lambda_i \) and \( \lambda_j \) are their loadings on the general factor.
+          </p>
+          <p>
+            The g-loading of subtest \( i \) is therefore given directly by its standardized loading on the extracted factor:
+          </p>
+          <div class="math-block">
+            \[
+            g_i = \lambda_i
+            \]
+          </div>
+          <p>
+            A higher absolute loading indicates a stronger relationship between the subtest and the estimated general factor \( g \). For interpretation, the factor is oriented so that the loadings are positive whenever possible.
+          </p>
+        </div>
 
       <hr>
 
