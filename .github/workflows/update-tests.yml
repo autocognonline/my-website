@@ -27,8 +27,8 @@ jobs:
 
       - name: Run script
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL_2 }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY_2 }}
+          SUPABASE_URL_2: ${{ secrets.SUPABASE_URL_2 }}
+          SUPABASE_KEY_2: ${{ secrets.SUPABASE_SERVICE_KEY_2 }}
         run: |
           python favoriteTestCreator.py
 
