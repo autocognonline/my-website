@@ -576,36 +576,21 @@ def generate_html(counter, link_map, all_tests):
 
 function openTab(tabName, button) {
 
-  // Hide all tabs
   const tabs = document.querySelectorAll(".tab-content");
-
   tabs.forEach(function(tab) {
     tab.classList.remove("active");
   });
-
-
-  // Remove active state from all tab buttons
   const buttons = document.querySelectorAll(".tab-button");
-
   buttons.forEach(function(btn) {
     btn.classList.remove("active");
   });
-
-
-  // Show selected tab
   document.getElementById(tabName).classList.add("active");
-
-
-  // Highlight selected button
   button.classList.add("active");
-
 }
 
 function filterTests() {
-
   const input = document.getElementById("testSearch");
   const filter = input.value.toLowerCase();
-
   const rows = document
     .getElementById("testsTableBody")
     .getElementsByTagName("tr");
@@ -619,9 +604,6 @@ function filterTests() {
     if (text.includes(filter)) {
 
       rows[i].style.display = "";
-
-      // Recalculate alternating colors based only
-      // on the rows currently visible.
       if (visibleRow % 2 === 0) {
         rows[i].classList.add("visible-even");
         rows[i].classList.remove("visible-odd");
@@ -635,7 +617,6 @@ function filterTests() {
     } else {
 
       rows[i].style.display = "none";
-
       rows[i].classList.remove("visible-even");
       rows[i].classList.remove("visible-odd");
     }
