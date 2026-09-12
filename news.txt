@@ -1,3 +1,4 @@
+12 September 2026 - Added a table of all database tests to the Favorite High Range Tests page.
 11 September 2026 - SAITO statistics updated outside of the schedule.
 31 August 2026 - NAITOR first preliminary norm.
 19 August 2026 - The Overall Cognitive Score (OCS) is now available in the score submission interface.
