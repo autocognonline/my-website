@@ -1,119 +1,300 @@
 <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <title>Favorite High Range Tests</title>
-      <style>
-        body {
-          font-family: Arial, sans-serif;
-          background: #f9f9f9;
-          margin: 30px;
-          text-align: center;
-          line-height: 1.6;
-        }
-    
-        h1 {
-          font-size: 36px;
-          margin-bottom: 30px;
-        }
-    
-        p {
-          max-width: 1000px;
-          margin: 10px auto;
-          font-size: 18px;
-          text-align: justify;
-        }
-    
-        a {
-          text-decoration: none;
-          font-size: 18px;
-        }
-    
-        .section {
-          margin: 50px auto;
-        }
-    
-        ul {
-          max-width: 800px;
-          margin: 20px auto;
-          text-align: left;
-          font-size: 17px;
-          line-height: 1.5;
-          padding-left: 20px;
-        }
-    
-        li {
-          padding: 2px 0;
-        }
-    
-        hr {
-          border: none;
-          height: 1px;
-          background-color: #ccc;
-          margin: 60px auto;
-          width: 80%;
-        }
-    
-        .button {
-          display: inline-block;
-          padding: 12px 28px;
-          font-size: 20px;
-          border-radius: 8px;
-          color: white;
-          background-color: #0070ba;
-          transition: background-color 0.3s ease;
-          margin: 5px;
-          min-width: 150px;
-        }
-    
-        .button:hover {
-          background-color: #005c99;
-        }
-      </style>
-      <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3XHMB3NM73', {
-          'send_page_view': true,
-          'allow_google_signals': true
-        });
-      </script>
+<html>
+<head>
+  <meta charset="utf-8">
 
-      <link rel="icon" href="favicon.png">
-    </head>
-    <body>
-    
-      <h1>Favorite High Range Tests</h1>
-    
-      <div class="section" style="max-width: 1000px;">
-        <p>
-          If you are new to high range tests, or simply want to explore new ones,
-          please consider the list below.
-        </p>
-    
-        <p>
-          It is a compilation of tests taken by members of the
-          <a href="https://nsl36.netlify.app/cognimetrica/society" target="_blank">
-            Cognimetrica Society
-          </a>
-          upon joining the society, inspired by Ivan Ivec’s
-          <a href="https://www.ultimaiq.net/ftests.htm" target="_blank">
-            World Favorite IQ Tests
-          </a>
-          list.
-        </p>
+  <title>Favorite High Range Tests</title>
 
-        <p><strong>(with links and number of uses in parentheses)</strong></p>
-      </div>
-    
-      <hr>
-    
-      <div class="section">
-        <ul>
-    
+  <style>
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    margin: 30px;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+
+  p {
+    max-width: 1000px;
+    margin: 10px auto;
+    font-size: 18px;
+    text-align: justify;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 18px;
+  }
+
+  .section {
+    margin: 50px auto;
+  }
+
+  ul {
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: left;
+    font-size: 17px;
+    line-height: 1.5;
+    padding-left: 20px;
+  }
+
+  li {
+    padding: 2px 0;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 60px auto;
+    width: 80%;
+  }
+
+  .tabs {
+    width: 80%;
+    margin: 0 auto 30px auto;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .tab-button {
+    border: none;
+    background: #e9e9e9;
+    padding: 12px 28px;
+    margin-right: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .tab-button:hover {
+    background: #ddd;
+  }
+
+  .tab-button.active {
+    background-color: #0070ba;
+    color: white;
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 12px 28px;
+    font-size: 20px;
+    border-radius: 8px;
+    color: white;
+    background-color: #0070ba;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+    min-width: 150px;
+  }
+
+  .button:hover {
+    background-color: #005c99;
+  }
+
+  .table-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    text-align: left;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    padding: 12px;
+    margin: 0 auto 20px auto;
+    display: block;
+    font-size: 17px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+  .tests-table-wrapper {
+    max-height: 70vh;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    background: white;
+  }
+
+  .tests-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .tests-table th {
+    position: sticky;
+    top: 0;
+    background: #0070ba;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    z-index: 1;
+    border-right: 1px solid #ddd;
+  }
+
+  .tests-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+  }
+
+  .tests-table th:last-child,
+  .tests-table td:last-child {
+    border-right: none;
+  }
+
+  .tests-table tr:nth-child(even) {
+    background: #f5f5f5;
+  }
+
+  .tests-table tr.visible-even {
+    background: white;
+  }
+
+  .tests-table tr.visible-odd {
+    background: #f5f5f5;
+  }
+
+  .tests-table tr.visible-even:hover,
+  .tests-table tr.visible-odd:hover,
+  .tests-table tr:hover {
+    background: #e8f3fa;
+  }
+
+  .author {
+    color: #555;
+  }
+
+  @media (max-width: 700px) {
+
+    body {
+      margin: 15px;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    .tab-button {
+      padding: 10px 15px;
+      font-size: 16px;
+    }
+
+    .tests-table {
+      font-size: 14px;
+    }
+
+    .tests-table th,
+    .tests-table td {
+      padding: 7px;
+    }
+
+  }
+
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+
+  <script>
+
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag(){
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-3XHMB3NM73', {
+      'send_page_view': true,
+      'allow_google_signals': true
+    });
+
+  </script>
+
+  <link rel="icon" href="favicon.png">
+
+</head>
+
+<body>
+
+<h1>Cognitive Tests</h1>
+
+<div class="tabs">
+
+  <button    class="tab-button active"    onclick="openTab('favorites', this)"  >
+    Favorite High Range Tests
+  </button>
+
+  <button    class="tab-button"    onclick="openTab('all-tests', this)"  >
+    All Tests
+  </button>
+</div>
+
+<div id="favorites" class="tab-content active">
+
+
+  <div class="section" style="max-width: 1000px;">
+
+    <p>
+      If you are new to high range tests, or simply want to explore new ones,
+      please consider the list below.
+    </p>
+
+
+    <p>
+      It is a compilation of tests taken by members of the
+      <a
+        href="https://nsl36.netlify.app/cognimetrica/society"
+        target="_blank"
+      >
+        Cognimetrica Society
+      </a>
+      upon joining the society, inspired by Ivan Ivec's
+      <a
+        href="https://www.ultimaiq.net/ftests.htm"
+        target="_blank"
+      >
+        World Favorite IQ Tests
+      </a>
+      list.
+    </p>
+
+
+    <p>
+      <strong>
+        (with links and number of uses in parentheses)
+      </strong>
+    </p>
+
+  </div>
+
+
+  <hr>
+
+
+  <div class="section">
+
+    <ul>
+
       <li><a href="http://ivec.ultimaiq.net/freefall.htm" target="_blank">FREE FALL</a> (5)</li>
       <li><a href="https://www.psiq.org/lux25.pdf" target="_blank">Lux25</a> (4)</li>
       <li><a href="https://www.psiq.org/wit.pdf" target="_blank">WIT</a> (4)</li>
@@ -172,24 +353,3422 @@
       <li><a href="https://tetratests.weebly.com/tetrastiq-light-test.html" target="_blank">TetrastIQ Light</a> (1)</li>
       <li><a href="https://iq-tests-for-the-high-range.com/tfg_ns16.html" target="_blank">TFG16-NS</a> (1)</li>
       <li><a href="https://kanji-love.wixsite.com/high-range-iq-test/the-ninja-test" target="_blank">The Ninja Test</a> (1)</li>
-      <li><a href="https://iq-tests-for-the-high-range.com/piper.html" target="_blank">The Piper's Test</a> (1)</li>
+      <li><a href="https://iq-tests-for-the-high-range.com/piper.html" target="_blank">The Piper&#x27;s Test</a> (1)</li>
       <li><a href="https://ivec.ultimaiq.net/triplexlt.htm" target="_blank">Triplex Light</a> (1)</li>
       <li><a href="https://ivec.ultimaiq.net/vermentary.htm" target="_blank">Vermentary</a> (1)</li>
       <li><a href="https://nsl36.netlify.app/cognimetrica/files/VRA60.pdf" target="_blank">VRA60</a> (1)</li>
-      <li><a href="https://nsl36.netlify.app/cognimetrica/files/X&Y;.pdf" target="_blank">X&Y</a> (1)</li>
+      <li><a href="https://nsl36.netlify.app/cognimetrica/files/X&amp;Y;.pdf" target="_blank">X&amp;Y</a> (1)</li>
       <li><a href="https://news.generiq.net/XVLingua/xvlingua%20test.html" target="_blank">XVLingua</a> (1)</li>
       <li><a href="https://psiq.org/zen.pdf" target="_blank">ZEN</a> (1)</li>
+
     </ul>
-      </div>
-    
-      <p>This list is automatically updated every 30 days.</p>
-    
-      <hr>
-    
-      <div class="section">
-        <a class="button" href="index.html">Back to main page</a><br><br>
-      </div>
-    
-    </body>
-    </html>
-    
+
+  </div>
+
+
+  <p>
+    This list is automatically updated every 30 days.
+  </p>
+
+
+</div>
+
+<div id="all-tests" class="tab-content">
+
+
+  <div class="section" style="max-width: 1000px;">
+
+    <p>
+      Complete list of tests in the database.
+      You can find a great amount of tests to take in this table but some of them are not scored anymore.
+    </p>
+
+  </div>
+
+
+  <div class="table-container">
+
+
+    <input
+      type="text"
+      id="testSearch"
+      class="search-box"
+      placeholder="Search by test name or author..."
+      onkeyup="filterTests()"
+    >
+
+
+    <div class="tests-table-wrapper">
+
+      <table class="tests-table">
+
+        <thead>
+
+          <tr>
+            <th>Test name</th>
+            <th>Author</th>
+          </tr>
+
+        </thead>
+
+
+        <tbody id="testsTableBody">
+
+          <tr>
+            <td>9I6 Test</td>
+            <td class="author">L. Dubois</td>
+          </tr>
+
+          <tr>
+            <td>A Paranoiac&#x27;s Torture - Intelligence Test Utilizing Diabolic Exactitude</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>A Relaxing Test</td>
+            <td class="author">D. Miller</td>
+          </tr>
+
+          <tr>
+            <td>A.S.A.T. 25</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>ABSOLUTE</td>
+            <td class="author">G. A. Grove</td>
+          </tr>
+
+          <tr>
+            <td>Abstract Reasoning Test</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Abstract Reasoning Test - ART</td>
+            <td class="author">D. Kutle</td>
+          </tr>
+
+          <tr>
+            <td>Abyss</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>Acumen 30</td>
+            <td class="author">D. Skrzos</td>
+          </tr>
+
+          <tr>
+            <td>AdSub</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Advanced Spatial Cognition Evaluation</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>AGLT</td>
+            <td class="author">A.A. Gangvik</td>
+          </tr>
+
+          <tr>
+            <td>AGLT38 - Abstract General Logic Test</td>
+            <td class="author">A.A. Gangvik</td>
+          </tr>
+
+          <tr>
+            <td>AITX30</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>Alchemix</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Algebrica</td>
+            <td class="author">M. Predavec</td>
+          </tr>
+
+          <tr>
+            <td>Alliteration Analogies Assessment</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Alliteration Associations Assessment</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Alpha-Num I</td>
+            <td class="author">J. Lorrimore</td>
+          </tr>
+
+          <tr>
+            <td>Alpha-Num II</td>
+            <td class="author">J. Lorrimore</td>
+          </tr>
+
+          <tr>
+            <td>Alphabet </td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>ALTE</td>
+            <td class="author">W. Li</td>
+          </tr>
+
+          <tr>
+            <td>Amathematical Patterns Test</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Amoriq Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>AMULET</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>AN25</td>
+            <td class="author">N. Joshi</td>
+          </tr>
+
+          <tr>
+            <td>Analogic 52</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>Analogica R</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>Analogicae Verborum Cryptica</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>ANALOGIX</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Analogix Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Analytica</td>
+            <td class="author">L. Dubravsky</td>
+          </tr>
+
+          <tr>
+            <td>Analytical Reasoning Test</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Analytiq-50</td>
+            <td class="author">N. Joshi</td>
+          </tr>
+
+          <tr>
+            <td>Ancient Pavilion Test</td>
+            <td class="author">Z. Wei</td>
+          </tr>
+
+          <tr>
+            <td>Andre Gangviks Cognitive Test -R</td>
+            <td class="author">A.A. Gangvik</td>
+          </tr>
+
+          <tr>
+            <td>ANGELIQ TEST</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>ANOTELEIA 44</td>
+            <td class="author">M. Predavec</td>
+          </tr>
+
+          <tr>
+            <td>Anumcha-Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>ARA</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Arcanum</td>
+            <td class="author">D. Kutle</td>
+          </tr>
+
+          <tr>
+            <td>Arete</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>ARI8MOI</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>ARITHMETIQ</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Army General Classification Test - AGCT</td>
+            <td class="author">U.S. Army</td>
+          </tr>
+
+          <tr>
+            <td>ASIT</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>ASMuDi</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Associative LIMIT</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Asterix</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Asteroid</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Astrolab 36</td>
+            <td class="author">A. Radojski / J.-M. Calut</td>
+          </tr>
+
+          <tr>
+            <td>ATT Culture Fair</td>
+            <td class="author">A. Hayles</td>
+          </tr>
+
+          <tr>
+            <td>ATTEST</td>
+            <td class="author">A. Hayles</td>
+          </tr>
+
+          <tr>
+            <td>Aura Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>AXIS Test</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>Backspace</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Best Of Analogies Test - BOANT</td>
+            <td class="author">M. Tiefenbacher</td>
+          </tr>
+
+          <tr>
+            <td>Best Of Associations Test - BOAST</td>
+            <td class="author">M. Tiefenbacher</td>
+          </tr>
+
+          <tr>
+            <td>Beta Testing</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>Black Marsh</td>
+            <td class="author">M. Kurosawa</td>
+          </tr>
+
+          <tr>
+            <td>BoniQ-Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Bowling</td>
+            <td class="author">H. Chen</td>
+          </tr>
+
+          <tr>
+            <td>Brainpower Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Buckets of Words</td>
+            <td class="author">D. Kutle</td>
+          </tr>
+
+          <tr>
+            <td>bysl3x</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>C.S.E. 9-12</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>Calculus Luminis Mensura</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>CAMS-V</td>
+            <td class="author">N. Kouda</td>
+          </tr>
+
+          <tr>
+            <td>Canopus</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Cartoons of Shock</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Cat Cafe</td>
+            <td class="author">M. Wu</td>
+          </tr>
+
+          <tr>
+            <td>CAT Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Cats Are Tailors</td>
+            <td class="author">M. Wu</td>
+          </tr>
+
+          <tr>
+            <td>Cats Are Tailors-Form II</td>
+            <td class="author">M. Wu</td>
+          </tr>
+
+          <tr>
+            <td>CELESTIAL</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>CEREBRIQ</td>
+            <td class="author">A. Leggieri</td>
+          </tr>
+
+          <tr>
+            <td>Challenger</td>
+            <td class="author">Z. Bijac</td>
+          </tr>
+
+          <tr>
+            <td>ChronIQ</td>
+            <td class="author">M. Lunardini / J. Gordon</td>
+          </tr>
+
+          <tr>
+            <td>CIONI</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Circle</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>CO33 - Core</td>
+            <td class="author">M. Radojevic</td>
+          </tr>
+
+          <tr>
+            <td>Cogitatus Logicae 30 Rev E</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Cogni 22</td>
+            <td class="author">D. Skrzos</td>
+          </tr>
+
+          <tr>
+            <td>Cogni 33</td>
+            <td class="author">D. Skrzos</td>
+          </tr>
+
+          <tr>
+            <td>Cogni 44</td>
+            <td class="author">D. Skrzos</td>
+          </tr>
+
+          <tr>
+            <td>COLOSSEUM</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Combined Numerical and Spatial sections of Test For Genius - Revision 2010</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Comix</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Comprehensive Online Reasoning Exam</td>
+            <td class="author">Cognitive Metrics</td>
+          </tr>
+
+          <tr>
+            <td>CONCEP-T</td>
+            <td class="author">L. Dubois</td>
+          </tr>
+
+          <tr>
+            <td>CoNumA</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Cooijmans Intelligence Test - Form 3E</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Cooijmans Intelligence Test - Form 4E</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Cooijmans Intelligence Test 5</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Cooijmans On-Line Test - Two-barrelled version</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>COSMIC</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>CPE-L</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>CPE-N</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>CPE-V</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Culture Fair Intelligence Test</td>
+            <td class="author">R. Cattell</td>
+          </tr>
+
+          <tr>
+            <td>Cyfers</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>Daster</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>De Golfstroomtest - Herziening 2019</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>De Laatste Test - Herziening 2019</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>De Roskam</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Death Numbers</td>
+            <td class="author">M. Wu</td>
+          </tr>
+
+          <tr>
+            <td>DeepSpeed</td>
+            <td class="author">M. Lunardini / E. Pretini</td>
+          </tr>
+
+          <tr>
+            <td>Dicing with death</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>DIGIT</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>Divine Psychometry</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>DO-S-32</td>
+            <td class="author">M.D. Chau</td>
+          </tr>
+
+          <tr>
+            <td>DOMEST-IQ</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Dominator</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Doniq Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Double Animal Alphabet</td>
+            <td class="author">C. McLaren</td>
+          </tr>
+
+          <tr>
+            <td>Double Threat</td>
+            <td class="author">M.D. Chau</td>
+          </tr>
+
+          <tr>
+            <td>Dragon Ball Test</td>
+            <td class="author">J. Li</td>
+          </tr>
+
+          <tr>
+            <td>Durham Test of Abstract Reasoning - R II</td>
+            <td class="author">N. Durham</td>
+          </tr>
+
+          <tr>
+            <td>Durham Verbal Analogies Quiz</td>
+            <td class="author">N. Durham</td>
+          </tr>
+
+          <tr>
+            <td>Echo Numbers</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>Eclipses</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>Einplex</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Elementary</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>ELI</td>
+            <td class="author">W. Li</td>
+          </tr>
+
+          <tr>
+            <td>EloLogics Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Eloquentia</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>EMC-30R</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>Encephalist-R</td>
+            <td class="author">X. Jouve</td>
+          </tr>
+
+          <tr>
+            <td>EngNum</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Enigmat</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>ENSDT 20</td>
+            <td class="author">M. Ripa</td>
+          </tr>
+
+          <tr>
+            <td>Esoterica</td>
+            <td class="author">M. Predavec</td>
+          </tr>
+
+          <tr>
+            <td>ESP</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Evolutionary Task Set 2^5</td>
+            <td class="author">J. Culkin / L. Smith</td>
+          </tr>
+
+          <tr>
+            <td>Exceptional Verbal Exam</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Explorer</td>
+            <td class="author">Z. Bijac</td>
+          </tr>
+
+          <tr>
+            <td>Extraordinary Number Intelligence Test-Form I</td>
+            <td class="author">T. Liang</td>
+          </tr>
+
+          <tr>
+            <td>EZ-IQ-Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>EZIQ</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>F.A.C.T.O.R.</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>Figurines</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>First Association Test</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>FIT-G</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>Flux</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>FNT-10 TEST</td>
+            <td class="author">X. Li</td>
+          </tr>
+
+          <tr>
+            <td>FOCUS</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Foritensum</td>
+            <td class="author">A. Gunnarsson</td>
+          </tr>
+
+          <tr>
+            <td>FORTY</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>FPT-10 Test</td>
+            <td class="author">X. Li</td>
+          </tr>
+
+          <tr>
+            <td>Free Fall</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>FVT-10 Test</td>
+            <td class="author">X. Li</td>
+          </tr>
+
+          <tr>
+            <td>G-Puzzles</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>G7</td>
+            <td class="author">G. Poli</td>
+          </tr>
+
+          <tr>
+            <td>Gaetan Polard&#x27;s Sequence Test
+ </td>
+            <td class="author">G. Polard</td>
+          </tr>
+
+          <tr>
+            <td>GAIA</td>
+            <td class="author">N. Kouda</td>
+          </tr>
+
+          <tr>
+            <td>GENE Verbal I</td>
+            <td class="author">I. Koukas</td>
+          </tr>
+
+          <tr>
+            <td>GENE Verbal II</td>
+            <td class="author">I. Koukas</td>
+          </tr>
+
+          <tr>
+            <td>GENESIS</td>
+            <td class="author">unknown</td>
+          </tr>
+
+          <tr>
+            <td>Genio Verbale-Numerico Universale</td>
+            <td class="author">M. Falchi</td>
+          </tr>
+
+          <tr>
+            <td>Genius Association Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Genius Test 1</td>
+            <td class="author">M. Tiefenbacher</td>
+          </tr>
+
+          <tr>
+            <td>Genius Test 2</td>
+            <td class="author">M. Tiefenbacher</td>
+          </tr>
+
+          <tr>
+            <td>GFO36 - gFORCE</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Giant Test</td>
+            <td class="author">M. Tiefenbacher</td>
+          </tr>
+
+          <tr>
+            <td>Gliaweb Raadselachtig Analogieënproefwerk</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Gliaweb Raadselachtige Associatie- en Analogieëntest</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Gliaweb Recycled Intelligence Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Gliaweb Riddled Intelligence Test (old version)</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Gliaweb Riddled Intelligence Test - Revision 2011</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Golem Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Gordian Knot</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Gradus 3</td>
+            <td class="author">T.A. Jorgensen</td>
+          </tr>
+
+          <tr>
+            <td>Gradus 3 Light</td>
+            <td class="author">T.A. Jorgensen</td>
+          </tr>
+
+          <tr>
+            <td>Hall of Sophia Test #2 </td>
+            <td class="author">G.A.E. Pliego</td>
+          </tr>
+
+          <tr>
+            <td>Hall of Sophia Verbal Test #1</td>
+            <td class="author">G.A.E. Pliego</td>
+          </tr>
+
+          <tr>
+            <td>Hardly Easy Relations</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>HART-26</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>Hat-triq</td>
+            <td class="author">A. Andersson</td>
+          </tr>
+
+          <tr>
+            <td>Hexa</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>HexaNum</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>HI-Qlass</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Hieroglyphica</td>
+            <td class="author">M. Predavec</td>
+          </tr>
+
+          <tr>
+            <td>High Range Cognitive Ability Scale - HRCAS</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>High Range Reasoning Test 38</td>
+            <td class="author">A. Radojski</td>
+          </tr>
+
+          <tr>
+            <td>Hiqu</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Holistic Quantitation in a Nonverbal Context</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>houdinIQ II</td>
+            <td class="author">A. Radojski</td>
+          </tr>
+
+          <tr>
+            <td>HUMANIQ</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Hyper -g- Loaded</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>HYPER-TesT</td>
+            <td class="author">L. Dubois</td>
+          </tr>
+
+          <tr>
+            <td>Hyperspatial</td>
+            <td class="author">J. Culkin</td>
+          </tr>
+
+          <tr>
+            <td>IC 23 - SAT50</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>IDF Test</td>
+            <td class="author">Israel Defense Forces</td>
+          </tr>
+
+          <tr>
+            <td>IGNITER</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>ILLUSION </td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Impostor</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Indigo Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>InFusion Test</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>INSC 2019</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>INSC 2024 - NGT-F</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Insight!</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>INSUCCESSION 40</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>Intelliquence</td>
+            <td class="author">N. Joshi</td>
+          </tr>
+
+          <tr>
+            <td>International Numerical Reasoning Contest 2018</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>International Numerical Sequences Contest 2017 / NPRA-F</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>International Spatial Reasoning Contest 2018 / SEE30</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>International Verbal Reasoning Contest 2017 / VCAA</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>International Verbal Reasoning Contest 2018</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Interrobang</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Introgers</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>IQX Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>IS-IS Pattern Recognition Exam </td>
+            <td class="author">L. E. Perez Ostoa</td>
+          </tr>
+
+          <tr>
+            <td>ISI-S Associations Test</td>
+            <td class="author">J. Wai</td>
+          </tr>
+
+          <tr>
+            <td>IVAC 23 - AT50</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>JCTI/TRI-52</td>
+            <td class="author">X. Jouve</td>
+          </tr>
+
+          <tr>
+            <td>JINA Test</td>
+            <td class="author">T. Shao</td>
+          </tr>
+
+          <tr>
+            <td>KABC-II</td>
+            <td class="author">A.S. Kaufman / N.L. Kaufman</td>
+          </tr>
+
+          <tr>
+            <td>KAIS</td>
+            <td class="author">N. Kouda</td>
+          </tr>
+
+          <tr>
+            <td>Kalix Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Kaufman Adolescent and Adult Intelligence Test</td>
+            <td class="author">A.S. Kaufman / N.L. Kaufman</td>
+          </tr>
+
+          <tr>
+            <td>Khaos Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Kvociento</td>
+            <td class="author">B. van Kaathoven</td>
+          </tr>
+
+          <tr>
+            <td>L&#x27;Orange</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>L.h.a.s.s.o.31 </td>
+            <td class="author">J.-O. Billet</td>
+          </tr>
+
+          <tr>
+            <td>L33tus Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>LA24 Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Laaglandse Aanlegtest - Herziening 2016</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>LABCUB</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Labyrinth of Spatial Puzzles</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Labyrinthine LIMIT</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>LAMT – Logical Analogy Matrix Test</td>
+            <td class="author">A.A. Gangvik</td>
+          </tr>
+
+          <tr>
+            <td>LAN Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Langdon Adult Intelligence Test - LAIT</td>
+            <td class="author">K. Langdon</td>
+          </tr>
+
+          <tr>
+            <td>Langdon Short Form Intelligence Test </td>
+            <td class="author">K. Langdon</td>
+          </tr>
+
+          <tr>
+            <td>LAPT</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>LARGE</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Last Association Test 2024</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>Last Association Test 2025</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>Laurent&#x27;s logical spatial test</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>LC-20</td>
+            <td class="author">M.D. Chau</td>
+          </tr>
+
+          <tr>
+            <td>LDA-SWaN</td>
+            <td class="author">G. Lombardi</td>
+          </tr>
+
+          <tr>
+            <td>LectIQ</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Leiter-3 </td>
+            <td class="author">G.H. Roid</td>
+          </tr>
+
+          <tr>
+            <td>Levant</td>
+            <td class="author">D. Kutle</td>
+          </tr>
+
+          <tr>
+            <td>LEVITATE</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Lexiq</td>
+            <td class="author">N. Soulios</td>
+          </tr>
+
+          <tr>
+            <td>Lieshout International Mesospheric Intelligence Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>LINGUA</td>
+            <td class="author">G. A. Grove</td>
+          </tr>
+
+          <tr>
+            <td>Lipt</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Logic Assessment--Numerical</td>
+            <td class="author">W. Li</td>
+          </tr>
+
+          <tr>
+            <td>Logic Assessment-Spatial</td>
+            <td class="author">W. Li</td>
+          </tr>
+
+          <tr>
+            <td>Logic Intelligence Test - Form I</td>
+            <td class="author">Z. Li</td>
+          </tr>
+
+          <tr>
+            <td>Logic Intelligence Test - Form II</td>
+            <td class="author">Z. Li</td>
+          </tr>
+
+          <tr>
+            <td>Logic-Z Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Logica Rigor Numerorum</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Logica Stella</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Logica Verbalis</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Logica Verbalis II</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Logica-Numerica I</td>
+            <td class="author">J. Lorrimore</td>
+          </tr>
+
+          <tr>
+            <td>Logical chains</td>
+            <td class="author">M.D. Chau</td>
+          </tr>
+
+          <tr>
+            <td>Logical Pattern Recognition</td>
+            <td class="author">W. Li</td>
+          </tr>
+
+          <tr>
+            <td>Logical Sequences Assessment</td>
+            <td class="author">P.F. Gonzalez</td>
+          </tr>
+
+          <tr>
+            <td>Logicaus Strictimanus 24</td>
+            <td class="author">R. Lato</td>
+          </tr>
+
+          <tr>
+            <td>Logicax</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Logicus Numeralis</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>LOGIK</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Logima Strictica 36</td>
+            <td class="author">R. Lato</td>
+          </tr>
+
+          <tr>
+            <td>Logix</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Logos Test - VC 2026</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Long Duration Spatial Exam</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>LRA</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>LRA-R</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>LS 60</td>
+            <td class="author">R. Lato</td>
+          </tr>
+
+          <tr>
+            <td>LSHR</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>LSHR Classic</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>LSHR Light</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>LUNAR</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>LUX 25</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>m-i-n-i-18</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Mach</td>
+            <td class="author">N. Soulios</td>
+          </tr>
+
+          <tr>
+            <td>Mach II</td>
+            <td class="author">N. Kouda</td>
+          </tr>
+
+          <tr>
+            <td>Magnum Opus 100</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Malaki Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Manipulator</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>Marco Complete Genius high iq test</td>
+            <td class="author">M. Falchi</td>
+          </tr>
+
+          <tr>
+            <td>Marco’s demanding genius compilation high iq test</td>
+            <td class="author">M. Falchi</td>
+          </tr>
+
+          <tr>
+            <td>Mathema</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>MATHODICA 22    </td>
+            <td class="author">M. Predavec</td>
+          </tr>
+
+          <tr>
+            <td>MATRIQ</td>
+            <td class="author">N. Soulios</td>
+          </tr>
+
+          <tr>
+            <td>Matrix-3x3</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>MCST 32</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>MCST 40</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>Medius Cifra Abstrusa</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Mentality</td>
+            <td class="author">A. Logica</td>
+          </tr>
+
+          <tr>
+            <td>METEOR</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>MFRA</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>MFRA-R</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Mini Tangyuan</td>
+            <td class="author">H. Chen</td>
+          </tr>
+
+          <tr>
+            <td>Mission iq test</td>
+            <td class="author">M. Falchi</td>
+          </tr>
+
+          <tr>
+            <td>MIXED LOGICAL EXAM</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Mohican Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Molecule</td>
+            <td class="author">J. Culkin / V. Lanari</td>
+          </tr>
+
+          <tr>
+            <td>Moon Test</td>
+            <td class="author">H. Melao Jr</td>
+          </tr>
+
+          <tr>
+            <td>Moriarty</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>Morphic Verbal Associations</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>MOSAIC</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Mountain</td>
+            <td class="author">J. Culkin</td>
+          </tr>
+
+          <tr>
+            <td>MRI-30R</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>MultDiv</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Multifactorial Intelligence Test - 36</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Mystery</td>
+            <td class="author">M. Wu</td>
+          </tr>
+
+          <tr>
+            <td>N-VRA</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>N-World</td>
+            <td class="author">M. Wu</td>
+          </tr>
+
+          <tr>
+            <td>NACT</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>NAIT</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>NAITOR</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>Narcissus&#x27; last stand</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Nate&#x27;s Hard Associations Test</td>
+            <td class="author">N. Durham</td>
+          </tr>
+
+          <tr>
+            <td>Nature</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>NEAITO</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>Neko Test v2</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>NGT-F &quot;old&quot;</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>NGT-F Short Version</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>NIN-Type:A</td>
+            <td class="author">N. Kouda</td>
+          </tr>
+
+          <tr>
+            <td>NIN-Type:B</td>
+            <td class="author">N. Kouda</td>
+          </tr>
+
+          <tr>
+            <td>NIN-Type:X</td>
+            <td class="author">N. Kouda</td>
+          </tr>
+
+          <tr>
+            <td>NIT-Form 1</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>NOACT</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>NOCTAE</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>NOFRAT</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>Normal Index</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>NPRA 36</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>NPRA-R</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>NuMax IQ Test</td>
+            <td class="author">N. Joshi</td>
+          </tr>
+
+          <tr>
+            <td>NUMBA</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>NUMBA2</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>NUMBA3</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Number Sense IQ test</td>
+            <td class="author">J. Moon</td>
+          </tr>
+
+          <tr>
+            <td>Numeralica</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Numeric Association Test</td>
+            <td class="author">M. Wu</td>
+          </tr>
+
+          <tr>
+            <td>Numeric Inspiration Test</td>
+            <td class="author">M. Wu</td>
+          </tr>
+
+          <tr>
+            <td>Numeric Inspiration Test - Form II</td>
+            <td class="author">M. Wu</td>
+          </tr>
+
+          <tr>
+            <td>Numeric Revivification</td>
+            <td class="author">M. Wu</td>
+          </tr>
+
+          <tr>
+            <td>Numerical and spatial sections of The Marathon Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Numerical Logical Pattern 30</td>
+            <td class="author">W. Li</td>
+          </tr>
+
+          <tr>
+            <td>Numerical section of Test For Genius - Revision 2010</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Numerical section of The Marathon Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Numerical Sequences Series I</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Numerical Sequences Series II</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Numerical Test I</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>Numerical Test II</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>Numericore</td>
+            <td class="author">D. Fourie</td>
+          </tr>
+
+          <tr>
+            <td>NumeriQ-32 Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Numerix</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Numero-IQ-Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Numerologica</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Numerus</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Numerus Classic</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Numerus Delight</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Numerus Light</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Numerus Light 2</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Numerus Strictus Logicae 36</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Numerus Strictus Logicae II</td>
+            <td class="author">A. Udriste / D. Skrzos</td>
+          </tr>
+
+          <tr>
+            <td>Numerus Ultrafun</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Numeureka</td>
+            <td class="author">N. Meloottu</td>
+          </tr>
+
+          <tr>
+            <td>Numeureka II</td>
+            <td class="author">N. Meloottu</td>
+          </tr>
+
+          <tr>
+            <td>Numina 4D</td>
+            <td class="author">L. Smith</td>
+          </tr>
+
+          <tr>
+            <td>Numiracle</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Numix</td>
+            <td class="author">M. Radojevic</td>
+          </tr>
+
+          <tr>
+            <td>Numodyssey</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>NVAT</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>NVCPE-R </td>
+            <td class="author">X. Jouve</td>
+          </tr>
+
+          <tr>
+            <td>NVRA 80</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Nydegger Online Automatic Intelligence Scale - Form 1</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>Nydegger Online Automatic Intelligence Scale - Form 2</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>OASIS</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>OCHE 30</td>
+            <td class="author">L. Smith</td>
+          </tr>
+
+          <tr>
+            <td>Octagon Test</td>
+            <td class="author">E. Pretini</td>
+          </tr>
+
+          <tr>
+            <td>Oh my god</td>
+            <td class="author">Y. Luo</td>
+          </tr>
+
+          <tr>
+            <td>OMEGA</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Only Idiots Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Orion</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>OVAL</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>OVAT 33</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>OX3 Test - Odd One Out</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Panthera Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Patent of genius high iq test</td>
+            <td class="author">M. Falchi</td>
+          </tr>
+
+          <tr>
+            <td>PatLet </td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>PATMOS</td>
+            <td class="author">D. Kutle</td>
+          </tr>
+
+          <tr>
+            <td>PatNum</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Paxilux Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Pert</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Pet rabbit Newton test</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>Pi Test</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>PINOT34</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>PIQTEST</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Plane &amp; Space &amp; Numbers</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>Platina Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>PMA32-E</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>POWER-SCALE</td>
+            <td class="author">L. Dubois</td>
+          </tr>
+
+          <tr>
+            <td>Preliminary Test </td>
+            <td class="author">N. Lygeros</td>
+          </tr>
+
+          <tr>
+            <td>PRIME</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>PrimePi</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Problems In Gentle Slopes of the first degree</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Problems In Gentle Slopes of the fourth degree</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Problems In Gentle Slopes of the second degree</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Problems In Gentle Slopes of the third degree</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Processor 40 Matrices</td>
+            <td class="author">E. Pretini</td>
+          </tr>
+
+          <tr>
+            <td>Prodigy IQ Test</td>
+            <td class="author">J. Moon</td>
+          </tr>
+
+          <tr>
+            <td>Psychometrically Activated Grids Acerbate Neuroticism</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Qing</td>
+            <td class="author">H. Chen</td>
+          </tr>
+
+          <tr>
+            <td>QOS Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Qoymans Multiple-Choice #5</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>QuantIQ V2</td>
+            <td class="author">K.E. Ferrell</td>
+          </tr>
+
+          <tr>
+            <td>Radium</td>
+            <td class="author">J. Culkin</td>
+          </tr>
+
+          <tr>
+            <td>RADIUS</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Random Feickery</td>
+            <td class="author">B. Feick</td>
+          </tr>
+
+          <tr>
+            <td>RAPM Set I</td>
+            <td class="author">J.C. Raven</td>
+          </tr>
+
+          <tr>
+            <td>RAPM Set II</td>
+            <td class="author">J.C. Raven</td>
+          </tr>
+
+          <tr>
+            <td>Reason - Revision 2008</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Reason Behind Multiple-Choice - Revision 2008</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>RedBlue</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Reduction Riddles</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Redux Riddles</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Redux Riddles II</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Register</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Relight30</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>Resquites Universal Fluid Intelligence Test</td>
+            <td class="author">J.C.M. Resquites</td>
+          </tr>
+
+          <tr>
+            <td>Resquites Universal Genius Test</td>
+            <td class="author">J.C.M. Resquites</td>
+          </tr>
+
+          <tr>
+            <td>Resquites Wide Range Test of Fluid Intelligence</td>
+            <td class="author">J.C.M. Resquites</td>
+          </tr>
+
+          <tr>
+            <td>Rhyming Riddles </td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>RimeTime</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Rising Riddles</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Road to Damascus</td>
+            <td class="author">D. Kutle</td>
+          </tr>
+
+          <tr>
+            <td>Rotor - beta</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>Russian Doll</td>
+            <td class="author">M.D. Chau</td>
+          </tr>
+
+          <tr>
+            <td>S.A.M. Light</td>
+            <td class="author">N. Kouda</td>
+          </tr>
+
+          <tr>
+            <td>S.P.a.R.C.</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>S.P.E. 6–12</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>SAITO</td>
+            <td class="author">M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>Scout </td>
+            <td class="author">T.A. Jorgensen</td>
+          </tr>
+
+          <tr>
+            <td>Sense 16</td>
+            <td class="author">D. Skrzos</td>
+          </tr>
+
+          <tr>
+            <td>Sense 25</td>
+            <td class="author">D. Skrzos</td>
+          </tr>
+
+          <tr>
+            <td>Sense 36</td>
+            <td class="author">D. Skrzos</td>
+          </tr>
+
+          <tr>
+            <td>SEQS 1</td>
+            <td class="author">L. Dubravsky</td>
+          </tr>
+
+          <tr>
+            <td>SEQS 2</td>
+            <td class="author">L. Dubravsky</td>
+          </tr>
+
+          <tr>
+            <td>Sequential Aptitude Test Using Rational Numbers</td>
+            <td class="author">J. Leonard</td>
+          </tr>
+
+          <tr>
+            <td>Sequentially Understanding Numbers</td>
+            <td class="author">J. Leonard</td>
+          </tr>
+
+          <tr>
+            <td>Seven Jokers - Associations</td>
+            <td class="author">M.D. Chau</td>
+          </tr>
+
+          <tr>
+            <td>Sigma Analogy Test</td>
+            <td class="author">L. King / P. Widsten</td>
+          </tr>
+
+          <tr>
+            <td>Sigma Test Extended
+</td>
+            <td class="author">H. Melao Jr</td>
+          </tr>
+
+          <tr>
+            <td>Sigma Test Fast</td>
+            <td class="author">H. Melao Jr</td>
+          </tr>
+
+          <tr>
+            <td>Sigma Test Light</td>
+            <td class="author">H. Melao Jr</td>
+          </tr>
+
+          <tr>
+            <td>Sigma Test Non Verbal</td>
+            <td class="author">H. Melao Jr</td>
+          </tr>
+
+          <tr>
+            <td>Silent Numbers</td>
+            <td class="author">J. Li</td>
+          </tr>
+
+          <tr>
+            <td>Silent Spatial 40</td>
+            <td class="author">J. Li</td>
+          </tr>
+
+          <tr>
+            <td>Simplex</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Simtollect</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>SLN-V</td>
+            <td class="author">G. Poli</td>
+          </tr>
+
+          <tr>
+            <td>SLN-V PART I</td>
+            <td class="author">G. Poli</td>
+          </tr>
+
+          <tr>
+            <td>Slosson Intelligence Test</td>
+            <td class="author">R.L. Slosson</td>
+          </tr>
+
+          <tr>
+            <td>SLSE 48</td>
+            <td class="author">J. Wai</td>
+          </tr>
+
+          <tr>
+            <td>SLSE I</td>
+            <td class="author">J. Wai</td>
+          </tr>
+
+          <tr>
+            <td>SLSE II</td>
+            <td class="author">J. Wai</td>
+          </tr>
+
+          <tr>
+            <td>SMT</td>
+            <td class="author">A.A. Gangvik</td>
+          </tr>
+
+          <tr>
+            <td>SOL</td>
+            <td class="author">W. Li</td>
+          </tr>
+
+          <tr>
+            <td>Solaris Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Spark</td>
+            <td class="author">N. Soulios</td>
+          </tr>
+
+          <tr>
+            <td>Spatial Ability Nonverbal Progressive Exam SYNAPSE</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Spatial Assessment Test</td>
+            <td class="author">A. Udriste / M.-A. Nydegger</td>
+          </tr>
+
+          <tr>
+            <td>Spatial Calculus-form II</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>Spatial Elements Examination 37</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Spatial Intelligence Timed Examination</td>
+            <td class="author">N. Joshi</td>
+          </tr>
+
+          <tr>
+            <td>Spatial section of Test For Genius - Revision 2004</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Spatial section of The Marathon Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>SPECTRA </td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>SPEED</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>SPIRAL</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Spot</td>
+            <td class="author">T.A. Jorgensen</td>
+          </tr>
+
+          <tr>
+            <td>SPUTNIK Fullscale Intelligence Test</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>SRA-F</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>SRA33 - Spatial Reasoning Assessment 33</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>SRT – Spatial Reasoning Test</td>
+            <td class="author">A.A. Gangvik</td>
+          </tr>
+
+          <tr>
+            <td>STADIUM</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Standard 2020</td>
+            <td class="author">L. Ludwig</td>
+          </tr>
+
+          <tr>
+            <td>Stanford-Binet Intelligence Scales, Fifth Edition</td>
+            <td class="author">G.H. Roid</td>
+          </tr>
+
+          <tr>
+            <td>Stanford-Binet Intelligence Scales, Fourth Edition</td>
+            <td class="author">R.L. Thorndike / E.P. Hagen / J.M. Sattler</td>
+          </tr>
+
+          <tr>
+            <td>Starter</td>
+            <td class="author">Z. Bijac</td>
+          </tr>
+
+          <tr>
+            <td>Summa logicae-64</td>
+            <td class="author">H. Chen</td>
+          </tr>
+
+          <tr>
+            <td>Super Numerix Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Symbolic Spatial Scale</td>
+            <td class="author">J. Culkin</td>
+          </tr>
+
+          <tr>
+            <td>SYMBOLIQ</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>Symmetries</td>
+            <td class="author">M. Lunardini / E. Pretini / J. Gordon</td>
+          </tr>
+
+          <tr>
+            <td>Synthesis Numerospatialis</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Tang</td>
+            <td class="author">H. Chen</td>
+          </tr>
+
+          <tr>
+            <td>TERO41</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Test for a mathematical mind</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>Test for Exceptional Spatial Talent 35</td>
+            <td class="author">L. Smith</td>
+          </tr>
+
+          <tr>
+            <td>Test For Genius</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Test For Genius - Revision 2004</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Test For Genius - Revision 2010</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Test For Genius - Revision 2016</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Test For Genius - Revision 2025</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Test of Interpretive Power</td>
+            <td class="author">G. A. Grove</td>
+          </tr>
+
+          <tr>
+            <td>Test of Logical RELATIONSHIPS</td>
+            <td class="author">G. A. Grove</td>
+          </tr>
+
+          <tr>
+            <td>Test of Logical RELATIONSHIPS - 2 </td>
+            <td class="author">G. A. Grove</td>
+          </tr>
+
+          <tr>
+            <td>Test of the Beheaded Man</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Tetragram</td>
+            <td class="author">G. Garofalo</td>
+          </tr>
+
+          <tr>
+            <td>Tetragram 2</td>
+            <td class="author">G. Garofalo</td>
+          </tr>
+
+          <tr>
+            <td>Tetraktys - NC 2026</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>TetrastIQ Light</td>
+            <td class="author">G. Garofalo</td>
+          </tr>
+
+          <tr>
+            <td>Tetrix</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>The Aion Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>The Alchemist Test</td>
+            <td class="author">A. El Husseini</td>
+          </tr>
+
+          <tr>
+            <td>The Bonsai Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>The Breeze</td>
+            <td class="author">B. Feick</td>
+          </tr>
+
+          <tr>
+            <td>The Ephesus Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>The Final Test – Revision 2013</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>The Gamma Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>The Gate Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>The GOBLIN Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>The Hammer Of Test-Hungry - Revision 2013</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>THE INHIQS CHALLENGE</td>
+            <td class="author">N. Joshi</td>
+          </tr>
+
+          <tr>
+            <td>The Marathon Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>The Marathon Test - Revision 2024</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>The Mental Inventor</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>The Nemesis Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>The Nemo (Spatial IQ) Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>The Ninja Test</td>
+            <td class="author">N. Kouda</td>
+          </tr>
+
+          <tr>
+            <td>The Numeric Intelligence Test</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>The Omega Contemplative Items Pool - Revised</td>
+            <td class="author">T. Smith / J. Willis</td>
+          </tr>
+
+          <tr>
+            <td>The Phi Test</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>The Piper&#x27;s Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>The Pirate Test</td>
+            <td class="author">D. Kutle</td>
+          </tr>
+
+          <tr>
+            <td>The Power Test</td>
+            <td class="author">R.K. Hoeflin</td>
+          </tr>
+
+          <tr>
+            <td>The Psychodrome</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>THE RISE OF THE EGGHEAD</td>
+            <td class="author">M. Falchi</td>
+          </tr>
+
+          <tr>
+            <td>The Sargasso Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>The Smell Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>The Tempest</td>
+            <td class="author">B. Feick</td>
+          </tr>
+
+          <tr>
+            <td>The THEOS Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>The Titan Test</td>
+            <td class="author">R.K. Hoeflin</td>
+          </tr>
+
+          <tr>
+            <td>The Turing Test</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>The Ultra Test</td>
+            <td class="author">R.K. Hoeflin</td>
+          </tr>
+
+          <tr>
+            <td>The Umbriel Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>The Witness</td>
+            <td class="author">C. Tang / X. Ji</td>
+          </tr>
+
+          <tr>
+            <td>The Zeus Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>The ZL-Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Three Sonnets</td>
+            <td class="author">H. Siemens</td>
+          </tr>
+
+          <tr>
+            <td>Tiny Biggy Logic Abstractioned high range IQ test</td>
+            <td class="author">M. Falchi</td>
+          </tr>
+
+          <tr>
+            <td>TNA (The Novel Adventure)</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>TONI-5 Test of Nonverbal Intelligence</td>
+            <td class="author">L. Brown / R.J. Sherbenou / S.K. Johnsen</td>
+          </tr>
+
+          <tr>
+            <td>Tractatus Logicus 37 </td>
+            <td class="author">C. Collin</td>
+          </tr>
+
+          <tr>
+            <td>Tractatus Numericus</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Tractatus Numericus 2</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>Trasendiq</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>Tribute</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>TRICKY 7</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>Triplex</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Triplex Light</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>TRIQT 30</td>
+            <td class="author">T. Sellen</td>
+          </tr>
+
+          <tr>
+            <td>TrymeTime</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>TUNE</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Two-Thirds InFusion</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>UC40 - Uncommonly Common IQ Test</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Ultimate logic test</td>
+            <td class="author">M. Falchi</td>
+          </tr>
+
+          <tr>
+            <td>Union 2</td>
+            <td class="author">H. Sjöberg</td>
+          </tr>
+
+          <tr>
+            <td>Unite</td>
+            <td class="author">N. Joshi</td>
+          </tr>
+
+          <tr>
+            <td>URAN</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>V.N.S. 3-8</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>V.P.M.R.T.</td>
+            <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>VAIT</td>
+            <td class="author">A. Edin</td>
+          </tr>
+
+          <tr>
+            <td>VAST32 - Verbal Ability Standardized Test VAST I</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Vault</td>
+            <td class="author">J. Arpin</td>
+          </tr>
+
+          <tr>
+            <td>Verba 66</td>
+            <td class="author">M. Predavec</td>
+          </tr>
+
+          <tr>
+            <td>Verbal Ability Standardized Test</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Verbal Assessment Test</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Verbal Power Test - 1</td>
+            <td class="author">K.R. Butt</td>
+          </tr>
+
+          <tr>
+            <td>Verbal Power Test - 2</td>
+            <td class="author">K.R. Butt</td>
+          </tr>
+
+          <tr>
+            <td>Verbal Power Test - 3</td>
+            <td class="author">K.R. Butt</td>
+          </tr>
+
+          <tr>
+            <td>Verbal section of The Marathon Test</td>
+            <td class="author">P. Cooijmans</td>
+          </tr>
+
+          <tr>
+            <td>Verbal Test of Pattern Recognition</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Verbal Test of Pattern Recognition II</td>
+            <td class="author">A. Udriste</td>
+          </tr>
+
+          <tr>
+            <td>Verbal-Numerical Power Test - 1</td>
+            <td class="author">K.R. Butt</td>
+          </tr>
+
+          <tr>
+            <td>Verbalectiq I</td>
+            <td class="author">B.S. Loe</td>
+          </tr>
+
+          <tr>
+            <td>VerbaNum</td>
+            <td class="author">N. Joshi</td>
+          </tr>
+
+          <tr>
+            <td>Verbathon</td>
+            <td class="author">N. Joshi</td>
+          </tr>
+
+          <tr>
+            <td>Verbatim</td>
+            <td class="author">N. Soulios</td>
+          </tr>
+
+          <tr>
+            <td>VERBIQ</td>
+            <td class="author">M. Radojevic</td>
+          </tr>
+
+          <tr>
+            <td>VERBIQ II</td>
+            <td class="author">M. Radojevic</td>
+          </tr>
+
+          <tr>
+            <td>Verllectual</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>Vermentary</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>VGT-F</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>VICE32 - Verbal Intelligence Cognitive Examination</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>VIPS I – Visual Image Pattern Sequence I</td>
+            <td class="author">A.A. Gangvik</td>
+          </tr>
+
+          <tr>
+            <td>VIPS II – Visual Image Pattern Sequence II</td>
+            <td class="author">A.A. Gangvik</td>
+          </tr>
+
+          <tr>
+            <td>VNPT-II</td>
+            <td class="author">K. Raymond</td>
+          </tr>
+
+          <tr>
+            <td>Volko Test of Deductive Reasoning</td>
+            <td class="author">C.-D. Volko</td>
+          </tr>
+
+          <tr>
+            <td>VPN Comprehensive Innovation Test</td>
+            <td class="author">X. Li</td>
+          </tr>
+
+          <tr>
+            <td>VRA 50</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>VRA 60</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>VRA-F</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>VRA-II</td>
+            <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>W-TEST</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>WARP</td>
+            <td class="author">N. Soulios</td>
+          </tr>
+
+          <tr>
+            <td>Wechsler Abbreviated Scale of Intelligence II</td>
+            <td class="author">D. Wechsler</td>
+          </tr>
+
+          <tr>
+            <td>Wechsler Adult Intelligence Scale (aggregate)</td>
+            <td class="author">D. Wechsler</td>
+          </tr>
+
+          <tr>
+            <td>Wechsler Adult Intelligence Scale III</td>
+            <td class="author">D. Wechsler</td>
+          </tr>
+
+          <tr>
+            <td>Wechsler Adult Intelligence Scale IV</td>
+            <td class="author">D. Wechsler</td>
+          </tr>
+
+          <tr>
+            <td>Wechsler Adult Intelligence Scale Revised</td>
+            <td class="author">D. Wechsler</td>
+          </tr>
+
+          <tr>
+            <td>Wechsler Adult Intelligence Scale V</td>
+            <td class="author">D. Wechsler</td>
+          </tr>
+
+          <tr>
+            <td>Wechsler Intelligence Scale for Children (aggregate)</td>
+            <td class="author">D. Wechsler</td>
+          </tr>
+
+          <tr>
+            <td>Wechsler Intelligence Scale for Children III</td>
+            <td class="author">D. Wechsler</td>
+          </tr>
+
+          <tr>
+            <td>Wechsler Intelligence Scale for Children IV</td>
+            <td class="author">D. Wechsler</td>
+          </tr>
+
+          <tr>
+            <td>Wechsler Intelligence Scale for Children V</td>
+            <td class="author">D. Wechsler</td>
+          </tr>
+
+          <tr>
+            <td>WJ-IV Tests of Cognitive Abilities</td>
+            <td class="author">F.A. Schrank / K.S. McGrew / N. Mather</td>
+          </tr>
+
+          <tr>
+            <td>Wonderland 2024</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>Wonderland 2025</td>
+            <td class="author">M. Scillitani</td>
+          </tr>
+
+          <tr>
+            <td>World Intelligence Championship 2014</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
+            <td>World Intelligence Test</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>World Intelligence Test Thricey</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>World Intelligence Test Two</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>X&amp;Y</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>X-16 Alphanumerical Intelligence Test </td>
+            <td class="author">H. Wee</td>
+          </tr>
+
+          <tr>
+            <td>X-Test</td>
+            <td class="author">M. Ripa</td>
+          </tr>
+
+          <tr>
+            <td>X10 Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Xen</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>XI-Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>XORUS TEST</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>Xpwmatrix</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>XVLingua</td>
+            <td class="author">M. Predavec</td>
+          </tr>
+
+          <tr>
+            <td>XYZ-Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>X’s and O’s</td>
+            <td class="author">A. Sepulveda</td>
+          </tr>
+
+          <tr>
+            <td>Yuan</td>
+            <td class="author">H. Chen</td>
+          </tr>
+
+          <tr>
+            <td>Z neuro test-form II</td>
+            <td class="author">P.L. Miranda</td>
+          </tr>
+
+          <tr>
+            <td>ZALPHANUM</td>
+            <td class="author">IQexams</td>
+          </tr>
+
+          <tr>
+            <td>ZD Master Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>ZD_Legenda_Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Zen</td>
+            <td class="author">J. Betts</td>
+          </tr>
+
+          <tr>
+            <td>Zodiac</td>
+            <td class="author">A. Toliopoulos</td>
+          </tr>
+
+          <tr>
+            <td>Zolly&#x27;s Culture Fair Intelligence Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Zolly&#x27;s Genius Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>ZollyDotTest-3</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>ZSI Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>ZSIT2</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>ZSIT3</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>Zultima Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>ZUN Test</td>
+            <td class="author">C. Backlund</td>
+          </tr>
+
+          <tr>
+            <td>¿SENSE?</td>
+            <td class="author">G. Poli</td>
+          </tr>
+
+          <tr>
+            <td>​IMAGE</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+          <tr>
+            <td>​Replacement Riddles</td>
+            <td class="author">J. Dorsey</td>
+          </tr>
+
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<hr>
+
+<div class="section">
+
+  <a
+    class="button"
+    href="index.html"
+  >
+    Back to main page
+  </a>
+
+</div>
+
+
+<script>
+
+function openTab(tabName, button) {
+
+  // Hide all tabs
+  const tabs = document.querySelectorAll(".tab-content");
+
+  tabs.forEach(function(tab) {
+    tab.classList.remove("active");
+  });
+
+
+  // Remove active state from all tab buttons
+  const buttons = document.querySelectorAll(".tab-button");
+
+  buttons.forEach(function(btn) {
+    btn.classList.remove("active");
+  });
+
+
+  // Show selected tab
+  document.getElementById(tabName).classList.add("active");
+
+
+  // Highlight selected button
+  button.classList.add("active");
+
+}
+
+function filterTests() {
+
+  const input = document.getElementById("testSearch");
+  const filter = input.value.toLowerCase();
+
+  const rows = document
+    .getElementById("testsTableBody")
+    .getElementsByTagName("tr");
+
+  let visibleRow = 0;
+
+  for (let i = 0; i < rows.length; i++) {
+
+    const text = rows[i].textContent.toLowerCase();
+
+    if (text.includes(filter)) {
+
+      rows[i].style.display = "";
+
+      // Recalculate alternating colors based only
+      // on the rows currently visible.
+      if (visibleRow % 2 === 0) {
+        rows[i].classList.add("visible-even");
+        rows[i].classList.remove("visible-odd");
+      } else {
+        rows[i].classList.add("visible-odd");
+        rows[i].classList.remove("visible-even");
+      }
+
+      visibleRow++;
+
+    } else {
+
+      rows[i].style.display = "none";
+
+      rows[i].classList.remove("visible-even");
+      rows[i].classList.remove("visible-odd");
+    }
+  }
+}
+
+
+</script>
+
+
+</body>
+</html>
