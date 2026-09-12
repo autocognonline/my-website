@@ -2,15 +2,15 @@ name: Update Favorite Tests List
 
 on:
   schedule:
-    - cron: "0 5 */30 * *"  
-  workflow_dispatch:     # allows manual run from GitHub UI
+    - cron: "0 5 */30 * *"
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write   # needed to push changes
+      contents: write
 
     steps:
       - name: Checkout repo
@@ -23,9 +23,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests beautifulsoup4
+          pip install requests beautifulsoup4 supabase
 
       - name: Run script
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
           python favoriteTestCreator.py
 
