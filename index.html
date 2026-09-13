@@ -1281,7 +1281,9 @@
 
   <div class="content-panel" id="msg-panel">
     <h2>Report an Issue or send a request</h2>
-    <p> Use this form to report a bug, an error or similar problems. You can also use this to request a password reset if you lost it.</p>
+    <p>Use this form to report bugs, errors, or other issues. You can also use it to request a password reset if you have lost your password.</p>
+    <p>Revocations are only allowed if there are attempts remaining on at least one item.</p>
+    <p>Do not use this form to ask questions.</p>
 
     <section class="form-card">
       <h3>Contact form</h3>
@@ -1306,6 +1308,7 @@
             <select id="message-type" name="message_type">
               <option value="bug">Bug / error</option>
               <option value="password_reset">Password reset</option>
+              <option value="revocation">Revoke finish status</option>
               <option value="other">Other</option>
             </select>
           </div>
@@ -1361,7 +1364,7 @@
       url: "saito.html",
       auth: "no",
       english: "no",
-      knowledge: "yes",
+      knowledge: "no",
       fast: "yes",
       fee: "no",
       difficulty: "no",
