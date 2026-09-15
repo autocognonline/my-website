@@ -1,4 +1,5 @@
 from supabase import create_client
+from datetime import datetime
 import os
 import json
 
@@ -104,6 +105,7 @@ rows_html = "\n".join(
     f"<td>{e['contest_rank']}</td></tr>"
     for i, e in enumerate(entries, 1)
 )
+last_updated = datetime.now().strftime("%d %B %Y")
 
 # (rest of the HTML is unchanged from what you already have)
 html_output = f"""
@@ -241,6 +243,7 @@ html_output = f"""
 
   <div class="section">
     <p>The leaderboard is refreshed every 5 days, showcasing the scores of participants who opted to be listed.</p>
+    <p>Last updated: {last_updated}</p>
   </div>
   
   <div class="section">
