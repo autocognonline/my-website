@@ -1,4 +1,5 @@
 from supabase import create_client
+from datetime import datetime
 import os
 import json
 
@@ -53,7 +54,7 @@ for idx, row in enumerate(rows):
         iq = f"≥ {iq}"
 
     rows_html += f"<tr><td>{idx + 1}</td><td>{name}</td><td>{score if score is not None else 'N/A'}</td><td>{iq}</td></tr>\n"
-
+last_updated = datetime.now().strftime("%d %B %Y")
 # Full HTML output
 html_output = f"""<!DOCTYPE html>
 <html lang="en">
@@ -190,6 +191,7 @@ html_output = f"""<!DOCTYPE html>
 
   <div class="section">
     <p>The leaderboard is refreshed every 5 days, showcasing the scores of participants who opted to be listed.</p>
+    <p>Last updated: {last_updated}</p>
   </div>
 
   <div class="section">
