@@ -1,4 +1,5 @@
 from supabase import create_client
+from datetime import datetime
 import os
 import json
 
@@ -98,7 +99,7 @@ for idx, entry in enumerate(combined):
         f"<td>{round(iq)}</td>"
         f"</tr>\n"
     )
-
+last_updated = datetime.now().strftime("%d %B %Y")
 # Full HTML output
 html_output = f"""<!DOCTYPE html>
 <html lang="en">
@@ -236,6 +237,7 @@ html_output = f"""<!DOCTYPE html>
 
   <div class="section">
     <p>The leaderboard is refreshed every 15 days, showcasing the scores of participants who opted to be listed.</p>
+    <p>Last updated: {last_updated}</p>
   </div>
 
   <div class="section">
