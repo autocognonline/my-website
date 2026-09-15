@@ -1,4 +1,5 @@
 from supabase import create_client
+from datetime import datetime
 import os
 import json
 import html
@@ -212,7 +213,7 @@ else:
 # ────────────────────────────────────────────────
 # 7. Full HTML output
 # ────────────────────────────────────────────────
-
+last_updated = datetime.now().strftime("%d %B %Y")
 html_output = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -340,6 +341,7 @@ html_output = f"""<!DOCTYPE html>
 
   <div class="section">
     <p>The leaderboard is refreshed every 5 days, showcasing the current scores of participants who opted to be listed.</p>
+    <p>Last updated: {last_updated}</p>
   </div>
 
   <div class="section">
