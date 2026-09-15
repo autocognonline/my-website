@@ -2,6 +2,7 @@ import os
 import html
 from collections import defaultdict
 from supabase import create_client
+from datetime import datetime
 import math
 
 OUTPUT_FILE = "contributorLeaderboard.html"
@@ -157,7 +158,7 @@ def main():
         <td colspan="6">No listed contributors yet.</td>
       </tr>
       """
-
+    last_updated = datetime.now().strftime("%d %B %Y")
     html_output = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -322,6 +323,7 @@ def main():
   <div class="section">
     <p class="note">
       The leaderboard is refreshed every 5 days and includes only participants who opted to be listed.
+      <p>Last updated: {last_updated}</p>
     </p>
   </div>
 
