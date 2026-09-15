@@ -155,7 +155,7 @@ html_output = f"""<!DOCTYPE html>
 </head>
 <body>
   <div class="section">
-    <p>First preliminary norm data used.</p>
+    <p>Estimated norm data used.</p>
   </div>
 
   <div class="leaderboard-container">
