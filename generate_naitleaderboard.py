@@ -42,28 +42,11 @@ def compute_attempts_left(attempts):
 
 res = (
     supabase.table("data_naitor")
-    .select("name, score, contest, leaderboard, attempts")
+    .select("name, score, leaderboard, attempts")
     .execute()
 )
 
 rows = res.data
-
-contest_rows = [
-    r for r in rows
-    if r.get("contest") and r.get("name") and len(r["name"]) >= 2
-]
-
-contest_rows.sort(
-    key=lambda r: (
-        -(r.get("score") or 0),
-        -compute_attempts_left(r.get("attempts"))
-    )
-)
-
-contest_rank_map = {
-    r["name"]: i
-    for i, r in enumerate(contest_rows, 1)
-}
 
 entries = []
 
@@ -80,13 +63,11 @@ for r in rows:
         iq = f"≥ {iq}"
 
     attempts_left = compute_attempts_left(r.get("attempts"))
-    contest_rank = contest_rank_map.get(name, " ") if r.get("contest") else " "
 
     entries.append({
         "name": name,
         "score": score,
         "iq": iq,
-        "contest_rank": contest_rank,
         "attempts_left": attempts_left,
     })
 
@@ -102,7 +83,6 @@ rows_html = "\n".join(
     f"<td>{e['name']}</td>"
     f"<td>{e['score']}</td>"
     f"<td>{e['iq']}</td>"
-    f"<td>{e['contest_rank']}</td></tr>"
     for i, e in enumerate(entries, 1)
 )
 last_updated = datetime.now().strftime("%d %B %Y")
@@ -232,7 +212,6 @@ html_output = f"""
           <th>Name</th>
           <th>Raw score</th>
           <th>I.Q. (Wechsler scale)</th>
-          <th class="orange-header">Contest rank</th>
         </tr>
       </thead>
       <tbody>
