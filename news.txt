@@ -1,3 +1,4 @@
+18 September 2026 - All test leaderboards removed.
 13 September 2026 - Candidates can now revoke the finished status for NAITOR, NEAITO, and NOAIS2 via the report issue form.
 12 September 2026 - Added a table of all database tests to the Favorite High Range Tests page.
 11 September 2026 - SAITO statistics updated outside of the schedule.
