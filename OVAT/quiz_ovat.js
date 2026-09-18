@@ -72,62 +72,12 @@ function updateTopBar(standardScore = null) {
   attemptsEl.textContent = `Attempts left: ${attempts}`;
 }
 
-async function loadLeaderboardState() {
-  try {
-    const res = await fetch(GET_ANSWER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, load: true })
-    });
-    if (!res.ok) return false;
-    const data = await res.json();
-    return data.leaderboard === true;
-  } catch {
-    return false;
-  }
-}
-
-async function initLeaderboardCheckbox() {
-  const checkbox = document.getElementById("leaderboardCheckbox");
-  const statusMsg = document.getElementById("leaderboardStatus");
-  if (!checkbox) return;
-
-  const isOnBoard = await loadLeaderboardState();
-  checkbox.checked = isOnBoard;
-
-  checkbox.addEventListener("change", async () => {
-    const wantLeaderboard = checkbox.checked;
-    try {
-      const r = await fetch(GET_ANSWER_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, update: { leaderboard: wantLeaderboard } })
-      });
-      if (r.ok) {
-        statusMsg.innerText = wantLeaderboard
-          ? "Added to leaderboard!"
-          : "Removed from leaderboard.";
-      } else {
-        statusMsg.innerText = "Failed. Try again.";
-      }
-    } catch {
-      statusMsg.innerText = "Network error";
-    }
-  });
-}
-
 function endQuiz(standardScore, rawScore) {
   finished = true;
   document.querySelector(".container").innerHTML = `
     <h2 style="text-align:center">OVAT33 Completed</h2>
     <p style="text-align:center"><strong>Raw score:</strong> ${rawScore} / ${TOTAL_ITEMS}</p>
     <p style="text-align:center"><strong>Standard score (Wechsler Scale):</strong> ${standardScore}</p>
-
-    <label style="display:flex; align-items:center; gap:8px; margin-top:20px;">
-      <input type="checkbox" id="leaderboardCheckbox">
-      Be visible on the NOAIS - Form 1 leaderboard
-    </label>
-    <p id="leaderboardStatus" style="margin-top:10px; font-weight:bold;"></p>
 
     <div class="section"; margin-top:20px;">
       <p>You can only see your NOAIS - Form 1 certificate if you have also completed NOFRAT !</p>
@@ -140,8 +90,6 @@ function endQuiz(standardScore, rawScore) {
 
     <div id="result" style="margin-top: 20px;"></div>
   `;
-
-  initLeaderboardCheckbox();
 
   document.getElementById("certForm").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -254,10 +202,5 @@ if (submitBtn) {
     if (ok) submitAll();
   });
 }
-
 loadProgress();
-
 updateTopBar();
-
-
-
