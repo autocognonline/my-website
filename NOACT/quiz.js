@@ -255,36 +255,13 @@ function updateTopBar() {
   attemptsEl.innerText = `Attempts left: ${attempts}`;
 }
 
-async function loadLeaderboardState() {
-  try {
-    const res = await fetch(UPDATE_USER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    });
-    if (!res.ok) return false;
-    const payload = await res.json().catch(()=>({}));
-    const user = payload.user ?? payload;
-    return user?.leaderboard === true;
-  } catch {
-    return false;
-  }
-}
-
 function showFinalResults() {
   const iq = normoCache?.[solved.length] ?? "N/A";
   document.querySelector(".container").innerHTML = `
     <h2>Test Completed</h2>
     <p><strong>Raw score:</strong> ${solved.length} / ${TOTAL_ITEMS}</p>
     <p><strong>Estimated IQ (Wechsler Scale):</strong> ${iq}</p>
-
-    <label style="display:flex; align-items:center; gap:8px; margin-top:20px;">
-      <input type="checkbox" id="leaderboardCheckbox">
-      Be visible on the leaderboard
-    </label>
-
-    <p id="leaderboardStatus" style="margin-top:10px; font-weight:bold;"></p>
-    
+   
     <div style="text-align:center; margin-top:20px;">
       <button id="changeUsernameBtn">Change Username</button>
     </div>
@@ -298,11 +275,6 @@ function showFinalResults() {
     <div id="result" style="margin-top: 20px;"></div>
 
   `;
-
-  const checkbox = document.getElementById("leaderboardCheckbox");
-  const statusMsg = document.getElementById("leaderboardStatus");
-
-  loadLeaderboardState().then(isOnBoard => { if (checkbox) checkbox.checked = isOnBoard; });
 
   document.getElementById("certForm").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -336,23 +308,6 @@ function showFinalResults() {
     }
   });
 
-  checkbox?.addEventListener("change", async () => {
-    const wantLeaderboard = checkbox.checked;
-    try {
-      const r = await fetch(UPDATE_USER_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, update: { leaderboard: wantLeaderboard } })
-      });
-      if (r.ok) {
-        statusMsg.innerText = wantLeaderboard ? "Added to leaderboard!" : "Removed from leaderboard.";
-      } else {
-        statusMsg.innerText = "Failed. Try again.";
-      }
-    } catch {
-      statusMsg.innerText = "Network error";
-    }
-  });
   document.getElementById("changeUsernameBtn")
     ?.addEventListener("click", (e) => {
       e.preventDefault();
