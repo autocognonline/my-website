@@ -325,7 +325,7 @@ function loadQuestionByIndex(index) {
     if (answerInput2) answerInput2.style.display = "none";
     updateSpatialGridFromInputs();
   } else {
-    spatialContainer.classList.add("hidden");  // hide container
+    spatialContainer.classList.add("hidden"); 
     answerInput1.style.display = "block";
 
     if (TWO_ANSWERS.includes(index)) {
@@ -437,7 +437,6 @@ if (submitBtn) submitBtn.onclick = async () => {
       const input2 = input2El.value.trim();
       if (!input1 || !input2) return;
 
-      // Order-independent submission
       const sorted = [input1, input2]
         .map(v => normalizeClient(v))
         .sort();
@@ -521,22 +520,6 @@ function updateTopBar() {
   }
 }
 
-async function loadLeaderboardState() {
-  try {
-    const res = await fetch(UPDATE_USER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    });
-    if (!res.ok) return false;
-    const payload = await res.json().catch(()=>({}));
-    const user = payload.user ?? payload;
-    return user?.leaderboard === true;
-  } catch {
-    return false;
-  }
-}
-
 function showFinalResults() {
   const toggleVideoLink = document.getElementById("toggleVideoLink");
   toggleVideoLink?.parentElement?.remove();
@@ -554,13 +537,6 @@ function showFinalResults() {
     <h2>Test Completed</h2>
     <p><strong>Raw score:</strong> ${rawScore} / ${TOTAL_ITEMS}</p>
     <p><strong>Estimated IQ (Wechsler Scale):</strong> ${iq}</p>
-
-    <label style="display:flex; align-items:center; gap:8px; margin-top:20px;">
-      <input type="checkbox" id="leaderboardCheckbox">
-      Be visible on the NEAITO leaderboard
-    </label>
-
-    <p id="leaderboardStatus" style="margin-top:10px; font-weight:bold;"></p>
     
     <div style="text-align:center; margin-top:20px;">
       <button id="changeUsernameBtn">Change Username</button>
@@ -574,11 +550,6 @@ function showFinalResults() {
 
     <div id="result" style="margin-top: 20px;"></div>
   `;
-
-  const checkbox = document.getElementById("leaderboardCheckbox");
-  const statusMsg = document.getElementById("leaderboardStatus");
-
-  loadLeaderboardState().then(isOnBoard => { if (checkbox) checkbox.checked = isOnBoard; });
 
   document.getElementById("certForm").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -603,24 +574,6 @@ function showFinalResults() {
     } catch (err) {
       container.innerHTML = `<p style="color:red;">An error occurred. Please try again later.</p>`;
       console.error(err);
-    }
-  });
-
-  checkbox?.addEventListener("change", async () => {
-    const wantLeaderboard = checkbox.checked;
-    try {
-      const r = await fetch(UPDATE_USER_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({        email,        password,                       update: { leaderboard: wantLeaderboard }      })
-      });
-      if (r.ok) {
-        statusMsg.innerText = wantLeaderboard ? "Added to leaderboard!" : "Removed from leaderboard.";
-      } else {
-        statusMsg.innerText = "Failed. Try again.";
-      }
-    } catch {
-      statusMsg.innerText = "Network error";
     }
   });
 
@@ -658,9 +611,4 @@ finishBtn?.addEventListener("click", async () => {
   if (finished) showFinalResults();
 });
 
-
 loadUserProgress();
-
-
-
-
