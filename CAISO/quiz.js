@@ -145,12 +145,11 @@ spatialCanvas.addEventListener(
   }
 );
 
-let longPressTimer = null;
-let longPressStartX = 0;
-let longPressStartY = 0;
+let touchStartX = 0;
+let touchStartY = 0;
+let touchMoved = false;
 
-const LONG_PRESS_DURATION = 500;
-const LONG_PRESS_MOVE_TOLERANCE = 10;
+const TOUCH_MOVE_TOLERANCE = 10;
 
 spatialCanvas.addEventListener(
   "touchstart",
@@ -159,19 +158,9 @@ spatialCanvas.addEventListener(
 
     const touch = e.touches[0];
 
-    longPressStartX = touch.clientX;
-    longPressStartY = touch.clientY;
-
-    clearTimeout(longPressTimer);
-
-    longPressTimer = setTimeout(() => {
-      toggleSpatialCellFromCoordinates(
-        longPressStartX,
-        longPressStartY
-      );
-
-      longPressTimer = null;
-    }, LONG_PRESS_DURATION);
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    touchMoved = false;
   },
   { passive: true }
 );
@@ -180,7 +169,6 @@ spatialCanvas.addEventListener(
   "touchmove",
   e => {
     if (
-      !longPressTimer ||
       e.touches.length !== 1
     ) {
       return;
@@ -189,36 +177,41 @@ spatialCanvas.addEventListener(
     const touch = e.touches[0];
 
     const dx =
-      touch.clientX - longPressStartX;
+      touch.clientX - touchStartX;
 
     const dy =
-      touch.clientY - longPressStartY;
+      touch.clientY - touchStartY;
 
     if (
-      Math.sqrt(dx * dx + dy * dy) >
-      LONG_PRESS_MOVE_TOLERANCE
+      Math.sqrt(
+        dx * dx +
+        dy * dy
+      ) > TOUCH_MOVE_TOLERANCE
     ) {
-      clearTimeout(longPressTimer);
-      longPressTimer = null;
+      touchMoved = true;
     }
   },
   { passive: true }
 );
 
-function cancelLongPress() {
-  clearTimeout(longPressTimer);
-  longPressTimer = null;
-}
-
 spatialCanvas.addEventListener(
   "touchend",
-  cancelLongPress,
+  e => {
+    if (touchMoved) return;
+
+    toggleSpatialCellFromCoordinates(
+      touchStartX,
+      touchStartY
+    );
+  },
   { passive: true }
 );
 
 spatialCanvas.addEventListener(
   "touchcancel",
-  cancelLongPress,
+  () => {
+    touchMoved = true;
+  },
   { passive: true }
 );
 
