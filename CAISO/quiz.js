@@ -71,15 +71,20 @@ function drawSpatialGrid() {
 }
 
 function updateSpatialGridFromInputs() {
-  const rows = Math.min(
-    6,
-    Math.max(1, Number(rowsInput.value))
-  );
+  let rows = Number(rowsInput.value);
+  let cols = Number(colsInput.value);
 
-  const cols = Math.min(
-    12,
-    Math.max(1, Number(colsInput.value))
-  );
+  if (!Number.isFinite(rows)) rows = 2;
+  if (!Number.isFinite(cols)) cols = 2;
+
+  rows = Math.trunc(rows);
+  cols = Math.trunc(cols);
+
+  rows = Math.min(6, Math.max(2, rows));
+  cols = Math.min(12, Math.max(2, cols));
+
+  rowsInput.value = rows;
+  colsInput.value = cols;
 
   initSpatialGrid(rows, cols);
 }
