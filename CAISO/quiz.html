@@ -227,6 +227,29 @@
     <a href="CAISO.pdf">Items pdf</a>
   </section>
 </div>
+<script>
+rowsInput.addEventListener("blur", () => {
+  let val = Number(rowsInput.value);
+
+  if (!Number.isFinite(val)) val = 1;
+
+  val = Math.trunc(val);
+  val = Math.min(6, Math.max(1, val));
+
+  rowsInput.value = val;
+});
+
+colsInput.addEventListener("blur", () => {
+  let val = Number(colsInput.value);
+
+  if (!Number.isFinite(val)) val = 1;
+
+  val = Math.trunc(val);
+  val = Math.min(12, Math.max(1, val));
+
+  colsInput.value = val;
+});
+</script>
 <script src="quiz.js?v=2"></script>
 </body>
 </html>
