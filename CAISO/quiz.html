@@ -231,10 +231,10 @@
 rowsInput.addEventListener("blur", () => {
   let val = Number(rowsInput.value);
 
-  if (!Number.isFinite(val)) val = 1;
+  if (!Number.isFinite(val)) val = 2;
 
   val = Math.trunc(val);
-  val = Math.min(6, Math.max(1, val));
+  val = Math.min(6, Math.max(2, val));
 
   rowsInput.value = val;
 });
@@ -242,14 +242,14 @@ rowsInput.addEventListener("blur", () => {
 colsInput.addEventListener("blur", () => {
   let val = Number(colsInput.value);
 
-  if (!Number.isFinite(val)) val = 1;
+  if (!Number.isFinite(val)) val = 2;
 
   val = Math.trunc(val);
-  val = Math.min(12, Math.max(1, val));
+  val = Math.min(12, Math.max(2, val));
 
   colsInput.value = val;
 });
 </script>
-<script src="quiz.js?v=2"></script>
+<script src="quiz.js?v=3"></script>
 </body>
 </html>
