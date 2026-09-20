@@ -1,3 +1,4 @@
+20 September 2026 - CAISO (battery) is available.
 20 September 2026 - SAITO's certificate modified.
 18 September 2026 - All tests' leaderboards removed.
 13 September 2026 - Candidates can now revoke the finished status for NAITOR, NEAITO, and NOAIS2 via the report issue form.
