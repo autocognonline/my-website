@@ -388,12 +388,6 @@ function findNextUnsolved(
         current = CAISO_LAST_ID;
       }
     }
-
-    // Item 56 is the trap and must never be presented normally.
-    if (current === 56) {
-      continue;
-    }
-
     const isSolved =
       solved.includes(current);
 
