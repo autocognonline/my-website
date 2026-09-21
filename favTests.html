@@ -380,7 +380,7 @@
 
     <p>
       Complete list of tests in the database.
-      You can find a great amount of tests to take in this table but some of them are not scored anymore.
+      You can find a great number of tests to take in this table but some of them are not scored anymore.
     </p>
 
   </div>
@@ -477,6 +477,11 @@
           <tr>
             <td>AGLT38 - Abstract General Logic Test</td>
             <td class="author">A.A. Gangvik</td>
+          </tr>
+
+          <tr>
+            <td>AIR16-MC</td>
+            <td class="author">J. Culkin</td>
           </tr>
 
           <tr>
@@ -592,6 +597,11 @@
           <tr>
             <td>Andre Gangviks Cognitive Test -R</td>
             <td class="author">A.A. Gangvik</td>
+          </tr>
+
+          <tr>
+            <td>ANDROMEDA</td>
+            <td class="author">J. Culkin</td>
           </tr>
 
           <tr>
@@ -742,6 +752,11 @@
           <tr>
             <td>C.S.E. 9-12</td>
             <td class="author">R. Myers</td>
+          </tr>
+
+          <tr>
+            <td>CAISO</td>
+            <td class="author">M.-A. Nydegger</td>
           </tr>
 
           <tr>
@@ -1025,6 +1040,11 @@
           </tr>
 
           <tr>
+            <td>Elegant Origin</td>
+            <td class="author">M. Kurosawa</td>
+          </tr>
+
+          <tr>
             <td>Elementary</td>
             <td class="author">I. Ivec</td>
           </tr>
@@ -1180,8 +1200,7 @@
           </tr>
 
           <tr>
-            <td>Gaetan Polard&#x27;s Sequence Test
- </td>
+            <td>Gaetan Polard&#x27;s Sequence Test</td>
             <td class="author">G. Polard</td>
           </tr>
 
@@ -1441,6 +1460,11 @@
           </tr>
 
           <tr>
+            <td>International Spatial 33</td>
+            <td class="author">J. Culkin</td>
+          </tr>
+
+          <tr>
             <td>International Spatial Reasoning Contest 2018 / SEE30</td>
             <td class="author">T. Prousalis</td>
           </tr>
@@ -1636,8 +1660,13 @@
           </tr>
 
           <tr>
+            <td>Level</td>
+            <td class="author">L. Smith</td>
+          </tr>
+
+          <tr>
             <td>LEVITATE</td>
-            <td class="author">IQexams</td>
+            <td class="author">A. Lawson</td>
           </tr>
 
           <tr>
@@ -2078,6 +2107,11 @@
           <tr>
             <td>NPRA-R</td>
             <td class="author">T. Prousalis</td>
+          </tr>
+
+          <tr>
+            <td>NU-MATRIX</td>
+            <td class="author">J. Culkin</td>
           </tr>
 
           <tr>
@@ -2616,6 +2650,11 @@
           </tr>
 
           <tr>
+            <td>Scope</td>
+            <td class="author">L. Smith</td>
+          </tr>
+
+          <tr>
             <td>Scout </td>
             <td class="author">T.A. Jorgensen</td>
           </tr>
@@ -2707,6 +2746,11 @@
           </tr>
 
           <tr>
+            <td>Skillr</td>
+            <td class="author">J. Culkin</td>
+          </tr>
+
+          <tr>
             <td>SLN-V</td>
             <td class="author">G. Poli</td>
           </tr>
@@ -2779,6 +2823,11 @@
           <tr>
             <td>Spatial Intelligence Timed Examination</td>
             <td class="author">N. Joshi</td>
+          </tr>
+
+          <tr>
+            <td>Spatial Reasoning Assessment - SRA</td>
+            <td class="author">T. Prousalis</td>
           </tr>
 
           <tr>
@@ -3367,6 +3416,11 @@
           </tr>
 
           <tr>
+            <td>Vercenthon</td>
+            <td class="author">I. Ivec</td>
+          </tr>
+
+          <tr>
             <td>Verllectual</td>
             <td class="author">I. Ivec</td>
           </tr>
@@ -3700,36 +3754,21 @@
 
 function openTab(tabName, button) {
 
-  // Hide all tabs
   const tabs = document.querySelectorAll(".tab-content");
-
   tabs.forEach(function(tab) {
     tab.classList.remove("active");
   });
-
-
-  // Remove active state from all tab buttons
   const buttons = document.querySelectorAll(".tab-button");
-
   buttons.forEach(function(btn) {
     btn.classList.remove("active");
   });
-
-
-  // Show selected tab
   document.getElementById(tabName).classList.add("active");
-
-
-  // Highlight selected button
   button.classList.add("active");
-
 }
 
 function filterTests() {
-
   const input = document.getElementById("testSearch");
   const filter = input.value.toLowerCase();
-
   const rows = document
     .getElementById("testsTableBody")
     .getElementsByTagName("tr");
@@ -3743,9 +3782,6 @@ function filterTests() {
     if (text.includes(filter)) {
 
       rows[i].style.display = "";
-
-      // Recalculate alternating colors based only
-      // on the rows currently visible.
       if (visibleRow % 2 === 0) {
         rows[i].classList.add("visible-even");
         rows[i].classList.remove("visible-odd");
@@ -3759,7 +3795,6 @@ function filterTests() {
     } else {
 
       rows[i].style.display = "none";
-
       rows[i].classList.remove("visible-even");
       rows[i].classList.remove("visible-odd");
     }
