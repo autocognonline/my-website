@@ -485,7 +485,7 @@ def generate_html(counter, link_map, all_tests):
 
     <p>
       Complete list of tests in the database.
-      You can find a great amount of tests to take in this table but some of them are not scored anymore.
+      You can find a great number of tests to take in this table but some of them are not scored anymore.
     </p>
 
   </div>
