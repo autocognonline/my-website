@@ -29,6 +29,12 @@
       gap: 18px;
     }
 
+    button:disabled,
+    input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     h1.title {
       text-align: center;
       margin: 10px 0 25px 0;
@@ -280,7 +286,6 @@
     </div>
 
     <div class="controls">
-      <button id="changeUsernameBtn" type="button">Change Username</button>
       <button id="finishBtn" type="button">End Test</button>
     </div>
 
@@ -290,19 +295,6 @@
 
     <a href="734trgzgcgcq3gfq3v061.pdf" class="pdf-link">Items pdf</a>
   </section>
-</div>
-
-<div id="changeUsernameModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="changeUsernameTitle">
-  <div class="modal-backdrop"></div>
-  <div class="modal-box" role="document">
-    <h3 id="changeUsernameTitle">Change username</h3>
-    <input id="newUsernameInput" type="text" placeholder="New username" autocomplete="off">
-    <div class="modal-actions">
-      <button id="saveUsernameBtn" type="button">Save</button>
-      <button id="cancelUsernameBtn" type="button">Cancel</button>
-    </div>
-    <p id="usernameStatus" class="status-msg" aria-live="polite"></p>
-  </div>
 </div>
 
 <script>
@@ -321,7 +313,7 @@ colsInput.addEventListener("blur", () => {
 });
 </script>
     
-<script src="quiz.js?v=6"></script>
+<script src="quiz.js?v=7"></script>
 
 </body>
 
