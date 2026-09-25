@@ -25,6 +25,31 @@ const CELL_SIZE = 40;
 
 let spatialGrid = [];
 
+const paymentNotice = document.getElementById("paymentNotice");
+
+function updatePaidState() {
+  const controls = [
+    submitBtn,
+    finishBtn,
+    document.getElementById("answerInput1"),
+    document.getElementById("answerInput2"),
+    document.getElementById("answerInput3"),
+    rowsInput,
+    colsInput,
+    resetCanvasBtn
+  ];
+
+  controls.forEach(el => {
+    if (el) {
+      el.disabled = !paid;
+    }
+  });
+
+  if (paymentNotice) {
+    paymentNotice.classList.toggle("hidden", paid);
+  }
+}
+
 function initSpatialGrid(rows, cols) {
   spatialGrid = Array.from({ length: rows }, () =>
     Array.from({ length: cols }, () => 0)
@@ -108,106 +133,7 @@ function showStatusPopup(message, isCorrect) {
   }, 1000);
 }
 
-const changeUsernameModal = document.getElementById("changeUsernameModal");
-const newUsernameInput = document.getElementById("newUsernameInput");
-const usernameStatus = document.getElementById("usernameStatus");
-const changeUsernameBtn = document.getElementById("changeUsernameBtn");
-const saveUsernameBtn = document.getElementById("saveUsernameBtn");
-const cancelUsernameBtn = document.getElementById("cancelUsernameBtn");
-
-function openUsernameModal() {
-  newUsernameInput.value = localStorage.getItem("username") || "";
-  usernameStatus.textContent = "";
-  changeUsernameModal.classList.remove("hidden");
-  changeUsernameModal.setAttribute("aria-hidden", "false");
-
-  setTimeout(() => {
-    changeUsernameModal.classList.add("show");
-    newUsernameInput.focus();
-  }, 50);
-}
-
-function closeUsernameModal() {
-  changeUsernameModal.classList.remove("show");
-
-  setTimeout(() => {
-    changeUsernameModal.classList.add("hidden");
-    changeUsernameModal.setAttribute("aria-hidden", "true");
-    usernameStatus.textContent = "";
-  }, 200);
-}
-
-changeUsernameBtn.addEventListener("click", () => {
-  openUsernameModal();
-});
-
-cancelUsernameBtn.addEventListener("click", () => {
-  closeUsernameModal();
-});
-
-changeUsernameModal.addEventListener("click", (e) => {
-  if (e.target === changeUsernameModal) {
-    closeUsernameModal();
-  }
-});
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !changeUsernameModal.classList.contains("hidden")) {
-    closeUsernameModal();
-  }
-});
-
-saveUsernameBtn?.addEventListener("click", async (e) => {
-  e.preventDefault();
-  const newName = newUsernameInput.value.trim();
-
-  if (!newName) {
-    usernameStatus.style.color = "crimson";
-    usernameStatus.textContent = "Username cannot be empty";
-    return;
-  }
-
-  usernameStatus.style.color = "#2a7a2a";
-  usernameStatus.textContent = "Updating…";
-
-  try {
-    const res = await fetch(UPDATE_USER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({     email,     password,        update: { name: newName }   })
-    });
-
-    if (!res.ok) {
-      const txt = await res.text().catch(() => "");
-      console.error("Username update failed:", txt);
-      usernameStatus.style.color = "crimson";
-      usernameStatus.textContent = "Update failed";
-      return;
-    }
-
-    const payload = await res.json();
-
-    if (payload?.error) {
-      usernameStatus.style.color = "crimson";
-      usernameStatus.textContent = payload.error || "Update failed";
-      return;
-    }
-
-    localStorage.setItem("username", newName);
-    usernameStatus.style.color = "#2a7a2a";
-    usernameStatus.textContent = "Updated!";
-
-    setTimeout(() => closeUsernameModal(), 900);
-
-  } catch (err) {
-    console.error("Username update error:", err);
-    usernameStatus.style.color = "crimson";
-    usernameStatus.textContent = "Network error";
-  }
-});
-
 let email = localStorage.getItem("email");
-let username = localStorage.getItem("username") || "";
 let password = sessionStorage.getItem("password");
 
 if (!email || !password) {
@@ -218,6 +144,7 @@ let solved = [];
 let attempts = Array(TOTAL_ITEMS).fill(TOTAL_ATTEMPTS); // per-item attempts array
 let currentIndex = 0; // 1...80
 let normoCache = null;
+let paid = false;
 
 async function loadNorm() {
   try {
@@ -262,6 +189,9 @@ async function loadUserProgress() {
     const payload = await res.json().catch(()=>({}));
     const user = payload.user ?? payload;
 
+    paid = user?.paid === true;
+    updatePaidState();
+
     const serverSolved = Array.isArray(user?.solved_ids)
       ? user.solved_ids.map(x => Number(x))
       : [];
@@ -277,10 +207,7 @@ async function loadUserProgress() {
     } else {
       solved = [];
     }
-
-    username = localStorage.getItem("username") || user?.name || username;
-    if (username) localStorage.setItem("username", username);
-
+    
     updateTopBar();
     if (user?.finished === true) {
       return showFinalResults();
@@ -451,6 +378,10 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
 }
 
 if (submitBtn) submitBtn.onclick = async () => {
+  if (!paid) {
+    showStatusPopup("Payment is required.", false);
+    return;
+  }
   let rawAns;
   if (SPATIAL_ITEMS.includes(currentIndex)) {
     rawAns = serializeSpatialAnswer();
@@ -565,10 +496,6 @@ function showFinalResults() {
     <p><strong>Raw score:</strong> ${rawScore} / ${TOTAL_ITEMS}</p>
     <p><strong>Estimated IQ (Wechsler Scale):</strong> ${iq}</p>
     
-    <div style="text-align:center; margin-top:20px;">
-      <button id="changeUsernameBtn">Change Username</button>
-    </div>
-
     <form id="certForm" style="margin-top: 20px;">
       <label>Email:</label>
       <input type="email" id="email" value="${email}" readonly />
@@ -605,15 +532,12 @@ function showFinalResults() {
       console.error(err);
     }
   });
-
-  document.getElementById("changeUsernameBtn")
-    ?.addEventListener("click", (e) => {
-      e.preventDefault();
-      openUsernameModal();
-    });
 }
 
 async function endGame() {
+  if (!paid) {
+    return;
+  }
   const res = await updateDB({ extraUpdate: { finished: true } });
 
   if (res?.error) {
@@ -625,18 +549,23 @@ async function endGame() {
 }
 
 finishBtn?.addEventListener("click", async () => {
+  if (!paid) {
+    return;
+  }
   const ok = window.confirm(
     "Are you sure you want to finish the test?\nOnce submitted, you will not be able to continue working on it."
   );
   if (!ok) return;
-
-  const res = await updateDB({ extraUpdate: { finished: true } });
-
+  const res = await updateDB({
+    extraUpdate: { finished: true }
+  });
   if (res?.error) {
-    alert(res.error || "You cannot finish the test in less than 24 hours.");
+    alert(
+      res.error ||
+      "You cannot finish the test in less than 24 hours."
+    );
     return;
   }
-
   showFinalResults();
 });
 
