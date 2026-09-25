@@ -4,16 +4,13 @@ const UPDATE_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/update
 const loginSection = document.getElementById("loginSection");
 const instructionsSection = document.getElementById("instructionsSection");
 const loginMsg = document.getElementById("loginMsg");
-
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
-
 const loginBtn = document.getElementById("loginBtn");
 const startTestBtn = document.getElementById("startTestBtn");
 
 let email = "";
 let password = sessionStorage.getItem("password") || "";
-let currentUser = null;
 
 function showInstructions() {
   loginSection.classList.add("hidden");
@@ -27,8 +24,6 @@ function finishLogin(user) {
     return;
   }
 
-  currentUser = user;
-
   localStorage.setItem("email", email);
 
   if (user.start) {
@@ -40,7 +35,7 @@ function finishLogin(user) {
 
 async function login() {
   email = emailInput.value.trim().toLowerCase();
-  const pw = passwordInput.value;
+  const pw = passwordInput.value.trim();
 
   if (!email) {
     loginMsg.innerText = "Enter email.";
@@ -53,13 +48,8 @@ async function login() {
   try {
     const res = await fetch(LOGIN_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        password: pw
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password: pw })
     });
 
     const payload = await res.json().catch(() => ({}));
@@ -70,47 +60,22 @@ async function login() {
       return;
     }
 
-    // First-time user:
-    // update_user_naitor will create the data_naitor row.
-    if (payload.user === null) {
-      currentUser = null;
-
-      loginMsg.innerText =
-        "Authenticated. Click Start Test to continue.";
-
-      passwordInput.type = "text";
-      passwordInput.classList.remove("hidden");
-      passwordInput.value = "";
-
-      loginBtn.disabled = false;
-      return;
-    }
-
-    // Password needs to be entered
     if (payload.need_password) {
       passwordInput.type = "text";
       passwordInput.classList.remove("hidden");
       passwordInput.value = "";
-
-      if (payload.emailed) {
-        loginMsg.innerText =
-          "A password has been sent to your email. Check your spam folder if necessary.";
-      } else {
-        loginMsg.innerText = "Enter your password.";
-      }
-
+      passwordInput.focus();
+      loginMsg.innerText = payload.emailed ? "A password has been sent to your email. Check your spam folder if necessary." : "Enter your password.";
       loginBtn.disabled = false;
       return;
     }
 
     password = pw;
     sessionStorage.setItem("password", pw);
-
     finishLogin(payload.user);
 
   } catch (err) {
-    console.error(err);
-
+    console.error("Login error:", err);
     loginMsg.innerText = "Network error.";
     loginBtn.disabled = false;
   }
@@ -121,11 +86,7 @@ startTestBtn?.addEventListener("click", async () => {
   startTestBtn.innerText = "Starting…";
 
   try {
-    const pw =
-      sessionStorage.getItem("password") ||
-      password ||
-      passwordInput.value ||
-      "";
+    const pw = sessionStorage.getItem("password") || password || "";
 
     if (!email || !pw) {
       loginMsg.innerText = "Email and password required.";
@@ -136,24 +97,14 @@ startTestBtn?.addEventListener("click", async () => {
 
     const res = await fetch(UPDATE_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        password: pw,
-        update: {
-          started: true
-        }
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password: pw, update: { started: true } })
     });
 
     const payload = await res.json().catch(() => ({}));
 
     if (!res.ok || payload?.error) {
-      loginMsg.innerText =
-        payload?.error || "Failed to start test.";
-
+      loginMsg.innerText = payload?.error || "Failed to start test.";
       startTestBtn.disabled = false;
       startTestBtn.innerText = "Start Test";
       return;
@@ -162,14 +113,11 @@ startTestBtn?.addEventListener("click", async () => {
     password = pw;
     sessionStorage.setItem("password", pw);
     localStorage.setItem("email", email);
-
     location.replace("quiz.html");
 
   } catch (err) {
     console.error("Start Test error:", err);
-
     loginMsg.innerText = "Network error.";
-
     startTestBtn.disabled = false;
     startTestBtn.innerText = "Start Test";
   }
