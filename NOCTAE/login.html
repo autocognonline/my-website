@@ -23,6 +23,13 @@
       box-sizing: border-box;
     }
 
+    button:disabled {
+      background: #aaa !important;
+      color: #666 !important;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
     .login-box {
       width: 100%;
       max-width: 800px;
@@ -110,7 +117,6 @@
 
     <div id="loginSection">
       <input id="email" class="login-input" type="email" placeholder="Email" required>
-      <input id="username" class="login-input hidden" type="text" placeholder="Username" autocomplete="off">
       <input id="password" class="login-input hidden" type="password" placeholder="Password">
       <button id="loginBtn">Login</button>
       <p id="loginMsg"></p>
@@ -136,6 +142,6 @@
   </div>
 </div>
 
-<script src="auth.js?v=1"></script>
+<script src="auth.js?v=2"></script>
 </body>
 </html>
