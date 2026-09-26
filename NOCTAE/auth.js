@@ -6,19 +6,24 @@ const instructionsSection = document.getElementById("instructionsSection");
 const loginMsg = document.getElementById("loginMsg");
 
 const emailInput = document.getElementById("email");
-const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
 
 const loginBtn = document.getElementById("loginBtn");
 const startTestBtn = document.getElementById("startTestBtn");
 
 let email = "";
-let username = "";
 let password = sessionStorage.getItem("password") || "";
+let paid = false;
 
-function showInstructions() {
+function showInstructions(user) {
   loginSection.classList.add("hidden");
   instructionsSection.classList.remove("hidden");
+
+  paid = user?.paid === true;
+
+  if (startTestBtn) {
+    startTestBtn.disabled = !paid;
+  }
 }
 
 function finishLogin(user) {
@@ -28,21 +33,18 @@ function finishLogin(user) {
     return;
   }
 
-  username = user.name || "";
-
   localStorage.setItem("email", email);
-  localStorage.setItem("username", username);
 
-  if (user.start) { // user already started
+  if (user.start) {
     location.replace("quiz.html");
   } else {
-    showInstructions();
+    showInstructions(user);
   }
 }
 
 async function login() {
-  email = emailInput.value.trim();
-  const pw = passwordInput.value; // local variable to avoid shadowing
+  email = emailInput.value.trim().toLowerCase();
+  const pw = passwordInput.value;
 
   if (!email) {
     loginMsg.innerText = "Enter email.";
@@ -67,28 +69,14 @@ async function login() {
       return;
     }
 
-    if (payload.user === null) {
-      usernameInput.classList.remove("hidden");
-      passwordInput.classList.add("hidden");
-
-      loginMsg.innerText = "Authenticated. Please pick a username to continue.";
-
-      usernameInput.focus();
-      loginBtn.onclick = register;
-      loginBtn.disabled = false;
-      return;
-    }
-
     if (payload.need_password) {
       passwordInput.type = "text";
       passwordInput.classList.remove("hidden");
       passwordInput.value = "";
 
-      if (payload.emailed) {
-        loginMsg.innerText = "A password has been sent to your email. Check your spam folder if necessary.";
-      } else {
-        loginMsg.innerText = "Enter your password.";
-      }
+      loginMsg.innerText = payload.emailed
+        ? "A password has been sent to your email. Check your spam folder if necessary."
+        : "Enter your password.";
 
       loginBtn.disabled = false;
       return;
@@ -106,57 +94,9 @@ async function login() {
   }
 }
 
-async function register() {
-  username = usernameInput.value.trim();
-
-  if (!username) {
-    loginMsg.innerText = "Username required.";
-    return;
-  }
-
-  loginBtn.disabled = true;
-  loginMsg.innerText = "Creating account…";
-
-  try {
-    const res = await fetch(UPDATE_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        update: { name: username }
-      })
-    });
-
-    const payload = await res.json();
-
-    if (!res.ok || payload?.error) {
-      loginMsg.innerText = payload?.error || "Failed to register.";
-      loginBtn.disabled = false;
-      return;
-    }
-
-    try {
-      localStorage.setItem("pwd_ack_" + email, "true");
-    } catch (e) {}
-
-    usernameInput.classList.add("hidden");
-
-    loginMsg.innerText = "A password has been sent to your email. Check your spam folder if necessary.";
-
-    passwordInput.type = "text";
-    passwordInput.classList.remove("hidden");
-    passwordInput.value = "";
-
-    loginBtn.onclick = login;
-    loginBtn.disabled = false;
-  } catch (err) {
-    console.error(err);
-    loginMsg.innerText = "Network error.";
-    loginBtn.disabled = false;
-  }
-}
-
 startTestBtn?.addEventListener("click", async () => {
+  if (!paid) return;
+
   startTestBtn.disabled = true;
   startTestBtn.innerText = "Starting…";
 
@@ -176,7 +116,7 @@ startTestBtn?.addEventListener("click", async () => {
       body: JSON.stringify({
         email,
         password: pw,
-        update: { started: true } 
+        update: { started: true }
       })
     });
 
@@ -193,6 +133,7 @@ startTestBtn?.addEventListener("click", async () => {
     sessionStorage.setItem("password", pw);
 
     location.replace("quiz.html");
+
   } catch (err) {
     console.error("Start Test error:", err);
     loginMsg.innerText = "Network error.";
