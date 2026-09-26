@@ -222,10 +222,13 @@ async function startTestIfNeeded(user) {
 
 async function endGameBecauseTimeExpired() {
   showStatusPopup("Time is over.", false);
+
   try {
     await updateDB({ extraUpdate: { finished: true } });
-  } catch (_) {}
-  showFinalResults();
+    showFinalResults();
+  } catch (err) {
+    console.error("Failed to finalize expired test:", err);
+  }
 }
 
 async function fetchPrivateAsset(path) {
@@ -558,8 +561,13 @@ async function loadUserProgress() {
 
     const firstAvailable = findNextUnsolved(0, true);
     if (!firstAvailable) {
-      await updateDB({ extraUpdate: { finished: true } });
-      return showFinalResults();
+      try {
+        await updateDB({ extraUpdate: { finished: true } });
+        return showFinalResults();
+      } catch (err) {
+        console.error("Failed to finalize test:", err);
+        return;
+      }
     }
 
     await loadQuestionByIndex(firstAvailable);
@@ -741,8 +749,15 @@ function showFinalResults() {
 }
 
 async function endGame() {
-  await updateDB({ extraUpdate: { finished: true } });
-  showFinalResults();
+  try {
+    const result = await updateDB({ extraUpdate: { finished: true } });
+
+    if (result?.user?.finished === true) {
+      showFinalResults();
+    }
+  } catch (err) {
+    console.error("Failed to finish test:", err);
+  }
 }
 
 applyDarkMode();
