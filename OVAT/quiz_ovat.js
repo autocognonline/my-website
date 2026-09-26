@@ -17,6 +17,7 @@ if (!email || !password) {
 let solved = [];
 let attempts = 3;
 let finished = false;
+let paid = false;
 
 function collectAnswers() {
   const answers = [];
@@ -139,7 +140,10 @@ async function loadProgress() {
     solved = Array.isArray(data.solved_ids) ? data.solved_ids : [];
     attempts = data.attempts ?? 3;
     finished = data.finished ?? false;
-
+    paid = data.paid === true;
+    
+    if (submitBtn) submitBtn.disabled = !paid;
+    
     hideSolvedItems();
     updateTopBar(data.standard_score ?? null);
 
