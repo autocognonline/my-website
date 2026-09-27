@@ -64,9 +64,7 @@ async function login() {
     }
 
     if (payload.user === null) {
-      passwordInput.classList.add("hidden");
-      loginBtn.onclick = register;
-      loginBtn.disabled = false;
+      await register();
       return;
     }
 
@@ -126,16 +124,21 @@ async function register() {
     }
 
     if (payload?.password_sent) {
-      loginMsg.innerText = "A password has been sent to your email. Check your spam folder if necessary.";
+      loginMsg.innerText =
+        "A password has been sent to your email. Check your spam folder if necessary.";
     } else {
-      // fallback message if backend didn't send e-mail for some reason
-      loginMsg.innerText = "Account created. Enter your password if you have one, otherwise check your email.";
+      loginMsg.innerText =
+        "Account created. Enter your password if you have one, otherwise check your email.";
     }
+    
+    localStorage.setItem("email", email);
     
     passwordInput.type = "password";
     passwordInput.classList.remove("hidden");
     passwordInput.value = "";
+    passwordInput.focus();
     
+    loginBtn.innerText = "Login";
     loginBtn.onclick = login;
     loginBtn.disabled = false;
   } catch (err) {
