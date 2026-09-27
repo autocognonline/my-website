@@ -64,10 +64,7 @@ if (!res.ok || payload?.error) {
 }
 
 if (payload.create_user) {
-  passwordInput.classList.add("hidden");
-  loginBtn.onclick = register;
-  loginBtn.disabled = false;
-  return;
+  return await register();
 }
 
 if (payload.create_password) {
@@ -119,47 +116,44 @@ loginBtn.disabled = false;
 }
 
 async function register() {
+  loginBtn.disabled = true;
+  loginMsg.innerText = "Creating account…";
 
-loginBtn.disabled = true;
-loginMsg.innerText = "Creating account…";
+  try {
+    const res = await fetch(UPDATE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, update: {} })
+    });
 
-try {
-const res = await fetch(UPDATE_URL, {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({
-email,
-update: {}
-})
-});
+    const payload = await res.json();
 
-const payload = await res.json();
+    if (!res.ok || payload?.error) {
+      loginMsg.innerText = payload?.error || "Failed to create account.";
+      loginBtn.disabled = false;
+      return;
+    }
 
-if (!res.ok || payload?.error) {
-  loginMsg.innerText = payload?.error || "Failed to register.";
-  loginBtn.disabled = false;
-  return;
-}
+    try {
+      localStorage.setItem("pwd_ack_" + email, "true");
+    } catch (e) {}
 
-try {
-  localStorage.setItem("pwd_ack_" + email, "true");
-} catch (e) {
-}
+    passwordInput.classList.remove("hidden");
+    passwordInput.type = "password";
+    passwordInput.value = "";
+    passwordInput.removeAttribute("readonly");
 
-loginMsg.innerText ="A password has been sent to your email. Check your spam folder if necessary.";
+    loginMsg.innerText = payload.email_error
+      ? "Your account was created, but the password email could not be sent."
+      : "Your password has been sent to your email. Check your spam folder if necessary.";
 
-passwordInput.classList.remove("hidden");
-passwordInput.value = "";
-
-loginBtn.onclick = login;
-loginBtn.disabled = false;
-
-
-} catch (err) {
-console.error(err);
-loginMsg.innerText = "Network error.";
-loginBtn.disabled = false;
-}
+    loginBtn.onclick = login;
+    loginBtn.disabled = false;
+  } catch (err) {
+    console.error(err);
+    loginMsg.innerText = "Network error.";
+    loginBtn.disabled = false;
+  }
 }
 
 startTestBtn?.addEventListener("click", async () => {
