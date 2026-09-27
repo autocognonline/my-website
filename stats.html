@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Statistics</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -246,18 +248,6 @@
       margin-top: 10px;
     }
 
-    .loading-message,
-    .error-message {
-      max-width: 900px;
-      margin: 20px auto;
-      font-size: 18px;
-      text-align: center;
-    }
-
-    .error-message {
-      color: #b42318;
-    }
-
     .histogram-note {
       max-width: 1000px;
       margin: 10px auto 20px auto;
@@ -307,10 +297,16 @@
   </style>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
     gtag('js', new Date());
+
     gtag('config', 'G-3XHMB3NM73', {
       'send_page_view': true,
       'allow_google_signals': true
@@ -318,120 +314,153 @@
   </script>
 
   <link rel="icon" href="favicon.png">
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+
 </head>
+
 <body>
+
   <h1>Statistical report</h1>
 
   <div class="section" style="max-width: 900px;">
     <div class="table-container">
-      <h2>General</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Test name</th>
-            <th>Finished submissions</th>
-            <th>Unfinished submissions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><a href="caiso.html">CAISO</a></td>
-            <td id="finished-CAISO">–</td>
-            <td id="unfinished-CAISO">–</td>
-          </tr>
-          <tr>
-            <td><a href="hrcas.html">HRCAS</a></td>
-            <td id="finished-HRCAS">–</td>
-            <td>–</td>
-          </tr>
-          <tr>
-            <td><a href="naitor.html">NAITOR</a></td>
-            <td id="finished-NAITOR">–</td>
-            <td id="unfinished-NAITOR">–</td>
-          </tr>
-          <tr>
-            <td><a href="neaito.html">NEAITO</a></td>
-            <td id="finished-NEAITO">–</td>
-            <td id="unfinished-NEAITO">–</td>
-          </tr>
-          <tr>
-            <td><a href="noact.html">NOACT</a></td>
-            <td id="finished-NOACT">–</td>
-            <td id="unfinished-NOACT">–</td>
-          </tr>
-          <tr>
-            <td><a href="noais.html">NOAIS-Form 1</a></td>
-            <td id="finished-NOAIS1">–</td>
-            <td>–</td>
-          </tr>
-          <tr>
-            <td><a href="noais2.html">NOAIS-Form 2</a></td>
-            <td id="finished-NOAIS2">–</td>
-            <td id="unfinished-NOAIS2">–</td>
-          </tr>
-          <tr>
-            <td><a href="noctae.html">NOCTÆ</a></td>
-            <td id="finished-NOCTAE">–</td>
-            <td>–</td>
-          </tr>
-          <tr>
-            <td><a href="nofrat.html">NOFRAT</a></td>
-            <td id="finished-NOFRAT">–</td>
-            <td id="unfinished-NOFRAT">–</td>
-          </tr>
-          <tr>
-            <td><a href="ovat.html">OVAT33</a></td>
-            <td id="finished-OVAT33">–</td>
-            <td id="unfinished-OVAT33">–</td>
-          </tr>
-          <tr>
-            <td><a href="saito.html">SAITO</a></td>
-            <td id="finished-SAITO">–</td>
-            <td id="unfinished-SAITO">–</td>
-          </tr>
-          <tr>
-            <td><a href="https://nsl36.netlify.app/sequels/sat">SAT</a></td>
-            <td id="finished-SAT">–</td>
-            <td id="unfinished-SAT">–</td>
-          </tr>
-        </tbody>
-      </table>
+ 
+  <h2>General</h2>
 
-      <div class="updated-at" id="updated-at"></div>
-    </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Test name</th>
+        <th>Finished submissions</th>
+        <th>Unfinished submissions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr>
+        <td><a href="caiso.html">CAISO</a></td>
+        <td id="finished-CAISO">–</td>
+        <td id="unfinished-CAISO">–</td>
+      </tr>
+
+      <tr>
+        <td><a href="hrcas.html">HRCAS</a></td>
+        <td id="finished-HRCAS">–</td>
+        <td>–</td>
+      </tr>
+
+      <tr>
+        <td><a href="naitor.html">NAITOR</a></td>
+        <td id="finished-NAITOR">–</td>
+        <td id="unfinished-NAITOR">–</td>
+      </tr>
+
+      <tr>
+        <td><a href="neaito.html">NEAITO</a></td>
+        <td id="finished-NEAITO">–</td>
+        <td id="unfinished-NEAITO">–</td>
+      </tr>
+
+      <tr>
+        <td><a href="noact.html">NOACT</a></td>
+        <td id="finished-NOACT">–</td>
+        <td id="unfinished-NOACT">–</td>
+      </tr>
+
+      <tr>
+        <td><a href="noais.html">NOAIS-Form 1</a></td>
+        <td id="finished-NOAIS1">–</td>
+        <td>–</td>
+      </tr>
+
+      <tr>
+        <td><a href="noais2.html">NOAIS-Form 2</a></td>
+        <td id="finished-NOAIS2">–</td>
+        <td id="unfinished-NOAIS2">–</td>
+      </tr>
+
+      <tr>
+        <td><a href="noctae.html">NOCTÆ</a></td>
+        <td id="finished-NOCTAE">–</td>
+        <td>–</td>
+      </tr>
+
+      <tr>
+        <td><a href="nofrat.html">NOFRAT</a></td>
+        <td id="finished-NOFRAT">–</td>
+        <td id="unfinished-NOFRAT">–</td>
+      </tr>
+
+      <tr>
+        <td><a href="ovat.html">OVAT33</a></td>
+        <td id="finished-OVAT33">–</td>
+        <td id="unfinished-OVAT33">–</td>
+      </tr>
+
+      <tr>
+        <td><a href="saito.html">SAITO</a></td>
+        <td id="finished-SAITO">–</td>
+        <td id="unfinished-SAITO">–</td>
+      </tr>
+
+      <tr>
+        <td>
+          <a href="https://nsl36.netlify.app/sequels/sat">SAT</a>
+        </td>
+        <td id="finished-SAT">–</td>
+        <td id="unfinished-SAT">–</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="updated-at" id="updated-at"></div>
+
+</div>
+ 
+
   </div>
 
   <h2>Live raw score histograms</h2>
+
   <p class="histogram-note">
     Each small rectangle represents one submission. Black rectangles correspond to finished submissions and green rectangles to unfinished submissions.
   </p>
-  <div id="loading-message" class="loading-message">Loading statistics…</div>
-  <div id="error-message" class="error-message" style="display:none;"></div>
-  <div id="charts-container"></div>
 
+  <div id="charts-container"></div>
 
   <h2>Statistics of current tests</h2>
 
   <div class="section">
-    <div class="test-row">
-      <a class="button" href="stats_saito.html">SAITO</a>
-      <p>Current statistics and information about SAITO.</p>
-    </div>
+
+ 
+<div class="test-row">
+  <a class="button" href="stats_saito.html">SAITO</a>
+  <p>Current statistics and information about SAITO.</p>
+</div>
+ 
+
   </div>
 
   <h2>Statistics of discontinued tests</h2>
 
   <div class="section">
-    <div class="test-row">
-      <a class="button" href="stats_NIT.html">NIT-Form 1</a>
-      <p>Some information about NIT-Form 1.</p>
-    </div>
-    <div class="test-row">
-      <a class="button" href="stats_nait.html">NAIT</a>
-      <p>Some information about NAIT.</p>
-    </div>
+
+ 
+<div class="test-row">
+  <a class="button" href="stats_NIT.html">NIT-Form 1</a>
+  <p>Some information about NIT-Form 1.</p>
+</div>
+
+<div class="test-row">
+  <a class="button" href="stats_nait.html">NAIT</a>
+  <p>Some information about NAIT.</p>
+</div>
+ 
+
   </div>
 
   <div class="section">
@@ -439,18 +468,32 @@
   </div>
 
   <div id="videoPopup" class="video-popup" onclick="closeVideo()">
-    <div class="video-content" onclick="event.stopPropagation()">
-      <span class="close" onclick="closeVideo()">&times;</span>
 
-      <video id="laughterVideo" controls playsinline controlsList="nodownload">
-        <source src="laughter.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
+ 
+<div class="video-content" onclick="event.stopPropagation()">
+
+  <span class="close" onclick="closeVideo()">&times;</span>
+
+  <video
+    id="laughterVideo"
+    controls
+    playsinline
+    controlsList="nodownload"
+  >
+    <source src="laughter.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+</div>
+ 
+
   </div>
 
   <script>
-    const STATS_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/storage/v1/object/public/public-stats/stats.json";
+    const STATS_DATA = __STATS_DATA__;
+  </script>
+
+  <script>
 
     const TEST_LINKS = {
       HRCAS: "hrcas.html",
@@ -467,6 +510,7 @@
       CAISO: "caiso.html"
     };
 
+
     const TEST_DISPLAY_NAMES = {
       HRCAS: "HRCAS",
       NOCTAE: "NOCTÆ",
@@ -482,6 +526,7 @@
       CAISO: "CAISO"
     };
 
+
     const TEST_NORM_LINKS = {
       NAITOR: "norms.html#norm-naitor",
       NEAITO: "norms.html#norm-neaito",
@@ -496,172 +541,360 @@
       SAT: "norms.html#norm-sat"
     };
 
+
     const blockBarPlugin = {
+
       id: "blockBarPlugin",
+
       afterDatasetsDraw(chart, args, pluginOptions) {
+
         const { ctx, scales } = chart;
         const yScale = scales.y;
 
         const datasets = chart.data.datasets;
-        if (!datasets || datasets.length === 0) return;
+
+        if (!datasets || datasets.length === 0) {
+          return;
+        }
 
         const meta0 = chart.getDatasetMeta(0);
-        if (!meta0 || !meta0.data) return;
 
-        const blockGap = pluginOptions?.blockGap ?? 2;
-        const sidePadding = pluginOptions?.sidePadding ?? 8;
+        if (!meta0 || !meta0.data) {
+          return;
+        }
 
-        for (let i = 0; i < meta0.data.length; i++) {
+        const blockGap =
+          pluginOptions?.blockGap ?? 2;
+
+        const sidePadding =
+          pluginOptions?.sidePadding ?? 8;
+
+
+        for (
+          let i = 0;
+          i < meta0.data.length;
+          i++
+        ) {
+
           const barElement = meta0.data[i];
-          if (!barElement) continue;
+
+          if (!barElement) {
+            continue;
+          }
 
           const x = barElement.x;
-          const baseY = yScale.getPixelForValue(0);
-          const finishedValue = Number(datasets[0]?.data?.[i] ?? 0);
-          const unfinishedValue = Number(datasets[1]?.data?.[i] ?? 0);
-          const totalValue = finishedValue + unfinishedValue;
 
-          if (totalValue <= 0) continue;
+          const baseY =
+            yScale.getPixelForValue(0);
 
-          const barWidth = Math.max(10, barElement.width - sidePadding * 2);
-          const pixelZero = yScale.getPixelForValue(0);
-          const pixelOne = yScale.getPixelForValue(1);
-          const unitHeight = Math.abs(pixelZero - pixelOne) - blockGap;
+          const finishedValue =
+            Number(
+              datasets[0]?.data?.[i] ?? 0
+            );
 
-          if (unitHeight <= 0) continue;
+          const unfinishedValue =
+            Number(
+              datasets[1]?.data?.[i] ?? 0
+            );
+
+          const totalValue =
+            finishedValue + unfinishedValue;
+
+          if (totalValue <= 0) {
+            continue;
+          }
+
+          const barWidth = Math.max(
+            10,
+            barElement.width - sidePadding * 2
+          );
+
+          const pixelZero =
+            yScale.getPixelForValue(0);
+
+          const pixelOne =
+            yScale.getPixelForValue(1);
+
+          const unitHeight =
+            Math.abs(pixelZero - pixelOne) -
+            blockGap;
+
+          if (unitHeight <= 0) {
+            continue;
+          }
 
           let currentCount = 0;
 
+
           const drawBlock = (color) => {
-            const yTop = baseY - (currentCount + 1) * (unitHeight + blockGap);
+
+            const yTop =
+              baseY -
+              (currentCount + 1) *
+              (unitHeight + blockGap);
 
             ctx.save();
+
             ctx.fillStyle = color;
+
             ctx.fillRect(
               x - barWidth / 2,
               yTop,
               barWidth,
               unitHeight
             );
+
             ctx.restore();
 
             currentCount += 1;
           };
 
-          for (let j = 0; j < finishedValue; j++) {
+
+          for (
+            let j = 0;
+            j < finishedValue;
+            j++
+          ) {
             drawBlock("#000000");
           }
 
-          for (let j = 0; j < unfinishedValue; j++) {
+
+          for (
+            let j = 0;
+            j < unfinishedValue;
+            j++
+          ) {
             drawBlock("#2e8b57");
           }
+
         }
       }
     };
 
+
     Chart.register(blockBarPlugin);
 
+
     function setGeneralStats(generalStats) {
+
       for (const stat of generalStats) {
-        const finishedCell = document.getElementById(`finished-${stat.test_name}`);
-        const unfinishedCell = document.getElementById(`unfinished-${stat.test_name}`);
+
+        const finishedCell =
+          document.getElementById(
+            `finished-${stat.test_name}`
+          );
+
+        const unfinishedCell =
+          document.getElementById(
+            `unfinished-${stat.test_name}`
+          );
+
 
         if (finishedCell) {
-          finishedCell.textContent = stat.finished_submissions;
+          finishedCell.textContent =
+            stat.finished_submissions;
         }
 
+
         if (unfinishedCell) {
-          const link = unfinishedCell.querySelector("a");
+
+          const link =
+            unfinishedCell.querySelector("a");
 
           if (link) {
-              link.textContent = stat.unfinished_submissions;
+
+            link.textContent =
+              stat.unfinished_submissions;
+
           } else {
-              unfinishedCell.textContent = stat.unfinished_submissions;
+
+            unfinishedCell.textContent =
+              stat.unfinished_submissions;
+
           }
         }
       }
     }
 
+
     function formatDate(isoString) {
+
       const date = new Date(isoString);
 
-      if (Number.isNaN(date.getTime())) return "";
+      if (Number.isNaN(date.getTime())) {
+        return "";
+      }
 
-      const formatted = date.toLocaleString("en-GB", {
-        timeZone: "Europe/Zurich",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-      });
+      const formatted =
+        date.toLocaleString(
+          "en-GB",
+          {
+            timeZone: "Europe/Zurich",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        );
 
       return `Last updated: ${formatted} (CET/CEST)`;
     }
 
-    function createChartSection(testName, histogramData) {
-      const filteredBins = histogramData.bins.filter(
-        bin => {
-          const unfinished = testName === "NOCTAE" ? 0 : bin.unfinished;
-          return bin.finished > 0 || unfinished > 0;
-        }
-      );
+
+    function createChartSection(
+      testName,
+      histogramData
+    ) {
+
+      const filteredBins =
+        histogramData.bins.filter(
+          bin => {
+
+            const unfinished =
+              testName === "NOCTAE"
+                ? 0
+                : bin.unfinished;
+
+            return (
+              bin.finished > 0 ||
+              unfinished > 0
+            );
+          }
+        );
+
 
       if (filteredBins.length === 0) {
         return;
       }
 
-      const chartsContainer = document.getElementById("charts-container");
 
-      const section = document.createElement("div");
-      section.className = "chart-section";
+      const chartsContainer =
+        document.getElementById(
+          "charts-container"
+        );
 
-      const title = document.createElement("h3");
-      title.className = "chart-title";
 
-      const titleLink = document.createElement("a");
-      titleLink.href = TEST_LINKS[testName] || "#";
-      titleLink.textContent = TEST_DISPLAY_NAMES[testName] || testName;
+      const section =
+        document.createElement("div");
+
+      section.className =
+        "chart-section";
+
+
+      const title =
+        document.createElement("h3");
+
+      title.className =
+        "chart-title";
+
+
+      const titleLink =
+        document.createElement("a");
+
+      titleLink.href =
+        TEST_LINKS[testName] || "#";
+
+      titleLink.textContent =
+        TEST_DISPLAY_NAMES[testName] ||
+        testName;
+
       title.appendChild(titleLink);
 
-      const titleText = document.createElement("span");
-      titleText.textContent = " score distribution";
+
+      const titleText =
+        document.createElement("span");
+
+      titleText.textContent =
+        " score distribution";
+
       title.appendChild(titleText);
 
-      const normLinkUrl = TEST_NORM_LINKS[testName];
+
+      const normLinkUrl =
+        TEST_NORM_LINKS[testName];
+
+
       if (normLinkUrl) {
-        const separator = document.createElement("span");
+
+        const separator =
+          document.createElement("span");
+
         separator.textContent = " • ";
         separator.style.color = "#666";
+
         title.appendChild(separator);
 
-        const normLink = document.createElement("a");
-        normLink.href = normLinkUrl;
-        normLink.textContent = "See norm";
-        normLink.style.fontSize = "20px";
-        normLink.style.color = "#0070ba";
+
+        const normLink =
+          document.createElement("a");
+
+        normLink.href =
+          normLinkUrl;
+
+        normLink.textContent =
+          "See norm";
+
+        normLink.style.fontSize =
+          "20px";
+
+        normLink.style.color =
+          "#0070ba";
 
         title.appendChild(normLink);
       }
 
-      const wrap = document.createElement("div");
-      wrap.className = "chart-wrap";
 
-      const canvas = document.createElement("canvas");
-      canvas.id = `chart-${testName}`;
+      const wrap =
+        document.createElement("div");
+
+      wrap.className =
+        "chart-wrap";
+
+
+      const canvas =
+        document.createElement("canvas");
+
+      canvas.id =
+        `chart-${testName}`;
+
 
       wrap.appendChild(canvas);
+
       section.appendChild(title);
       section.appendChild(wrap);
+
       chartsContainer.appendChild(section);
 
-      const labels = filteredBins.map(bin => bin.label);
-      const finishedValues = filteredBins.map(bin => bin.finished);
-      const noUnfinished = ["NOCTAE", "HRCAS", "NOAIS1"].includes(testName);
 
-      const unfinishedValues = filteredBins.map(bin =>
-        noUnfinished ? 0 : bin.unfinished
-      );
+      const labels =
+        filteredBins.map(
+          bin => bin.label
+        );
+
+
+      const finishedValues =
+        filteredBins.map(
+          bin => bin.finished
+        );
+
+
+      const noUnfinished =
+        [
+          "NOCTAE",
+          "HRCAS",
+          "NOAIS1"
+        ].includes(testName);
+
+
+      const unfinishedValues =
+        filteredBins.map(
+          bin =>
+            noUnfinished
+              ? 0
+              : bin.unfinished
+        );
+
 
       const datasets = [
         {
@@ -675,7 +908,9 @@
         }
       ];
 
+
       if (!noUnfinished) {
+
         datasets.push({
           label: "Unfinished",
           data: unfinishedValues,
@@ -685,116 +920,167 @@
           stack: "submissions",
           grouped: false
         });
+
       }
 
-      new Chart(canvas.getContext("2d"), {
-        type: "bar",
-        data: {
-          labels,
-          datasets
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false
+
+      new Chart(
+        canvas.getContext("2d"),
+        {
+          type: "bar",
+
+          data: {
+            labels,
+            datasets
+          },
+
+          options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+              legend: {
+                display: false
+              },
+
+              tooltip: {
+
+                mode: "index",
+
+                intersect: false,
+
+                callbacks: {
+
+                  label: function(context) {
+
+                    return `${context.dataset.label}: ${context.raw}`;
+
+                  }
+                }
+              },
+
+              blockBarPlugin: {
+                blockGap: 2,
+                sidePadding: 8
+              }
             },
-            tooltip: {
+
+            interaction: {
               mode: "index",
-              intersect: false,
-              callbacks: {
-                label: function(context) {
-                  return `${context.dataset.label}: ${context.raw}`;
+              intersect: false
+            },
+
+            scales: {
+
+              x: {
+
+                stacked: true,
+
+                grid: {
+                  display: false
+                },
+
+                title: {
+                  display: true,
+                  text: "Score range"
+                }
+              },
+
+              y: {
+
+                stacked: true,
+
+                beginAtZero: true,
+
+                ticks: {
+                  stepSize: 1,
+                  precision: 0
+                },
+
+                grid: {
+                  display: false
+                },
+
+                title: {
+                  display: true,
+                  text: "Number of scores"
                 }
               }
-            },
-            blockBarPlugin: {
-              blockGap: 2,
-              sidePadding: 8
-            }
-          },
-          interaction: {
-            mode: "index",
-            intersect: false
-          },
-          scales: {
-            x: {
-              stacked: true,
-              grid: {
-                display: false
-              },
-              title: {
-                display: true,
-                text: "Score range"
-              }
-            },
-            y: {
-              stacked: true,
-              beginAtZero: true,
-              ticks: {
-                stepSize: 1,
-                precision: 0
-              },
-              grid: {
-                display: false
-              },
-              title: {
-                display: true,
-                text: "Number of scores"
-              }
             }
           }
         }
-      });
+      );
     }
 
-    async function loadStats() {
-      const loadingEl = document.getElementById("loading-message");
-      const errorEl = document.getElementById("error-message");
+    function loadStats() {
 
-      try {
-        const response = await fetch(STATS_URL, { cache: "no-store" });
-        if (!response.ok) {
-          throw new Error(`Failed to fetch stats: HTTP ${response.status}`);
-        }
+      const data = STATS_DATA;
 
-        const data = await response.json();
 
-        if (Array.isArray(data.general)) {
-          setGeneralStats(data.general);
-        }
+      if (Array.isArray(data.general)) {
 
-        if (data.generated_at) {
-          document.getElementById("updated-at").textContent = formatDate(data.generated_at);
-        }
+        setGeneralStats(
+          data.general
+        );
+      }
 
-        if (data.histograms && typeof data.histograms === "object") {
-          const sortedTests = Object.keys(data.histograms).sort();
 
-          for (const testName of sortedTests) {
-            const histogramData = data.histograms[testName];
+      if (data.generated_at) {
 
-            if (
-              histogramData &&
-              Array.isArray(histogramData.bins) &&
-              histogramData.bins.length > 0
-            ) {
-              createChartSection(testName, histogramData);
-            }
+        document.getElementById(
+          "updated-at"
+        ).textContent =
+          formatDate(
+            data.generated_at
+          );
+      }
+
+
+      if (
+        data.histograms &&
+        typeof data.histograms === "object"
+      ) {
+
+        const sortedTests =
+          Object.keys(
+            data.histograms
+          ).sort();
+
+
+        for (
+          const testName
+          of sortedTests
+        ) {
+
+          const histogramData =
+            data.histograms[testName];
+
+
+          if (
+            histogramData &&
+            Array.isArray(
+              histogramData.bins
+            ) &&
+            histogramData.bins.length > 0
+          ) {
+
+            createChartSection(
+              testName,
+              histogramData
+            );
+
           }
         }
-
-        loadingEl.style.display = "none";
-      } catch (error) {
-        console.error(error);
-        loadingEl.style.display = "none";
-        errorEl.style.display = "block";
-        errorEl.textContent = "Could not load statistics right now.";
       }
     }
 
+
     loadStats();
+
   </script>
+
 </body>
 </html>
