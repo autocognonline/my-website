@@ -6,7 +6,6 @@ import requests
 
 
 FUNCTION_URL = os.environ["SUPABASE_FUNCTION_URL"]
-API_SECRET = os.environ["STATS_API_SECRET"]
 
 HTML_FILE = Path("stats.html")
 
@@ -14,9 +13,6 @@ HTML_FILE = Path("stats.html")
 def get_statistics():
     response = requests.get(
         FUNCTION_URL,
-        headers={
-            "x-stats-secret": API_SECRET
-        },
         timeout=120,
     )
 
@@ -25,10 +21,14 @@ def get_statistics():
     data = response.json()
 
     if "general" not in data:
-        raise RuntimeError("Statistics response does not contain 'general'.")
+        raise RuntimeError(
+            "Statistics response does not contain 'general'."
+        )
 
     if "histograms" not in data:
-        raise RuntimeError("Statistics response does not contain 'histograms'.")
+        raise RuntimeError(
+            "Statistics response does not contain 'histograms'."
+        )
 
     return data
 
@@ -51,7 +51,10 @@ def update_html(stats):
 
     replacement = f"const STATS_DATA = {stats_json};"
 
-    html = html.replace(marker, replacement)
+    html = html.replace(
+        marker,
+        replacement,
+    )
 
     HTML_FILE.write_text(
         html,
@@ -61,6 +64,7 @@ def update_html(stats):
 
 def main():
     print("Fetching statistics from Supabase...")
+
     stats = get_statistics()
 
     print(
@@ -69,6 +73,7 @@ def main():
     )
 
     print("Updating stats.html...")
+
     update_html(stats)
 
     print("Done.")
