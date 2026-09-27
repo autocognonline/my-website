@@ -29,7 +29,6 @@ jobs:
       - name: Update statistics
         env:
           SUPABASE_FUNCTION_URL: ${{ secrets.SUPABASE_FUNCTION_URL }}
-          STATS_API_SECRET: ${{ secrets.STATS_API_SECRET }}
         run: |
           python update_stats.py
 
