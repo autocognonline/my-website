@@ -1,15 +1,9 @@
 import json
 import os
 from pathlib import Path
-
 import requests
-
-
-FUNCTION_URL = os.environ["SUPABASE_FUNCTION_URL"]
-
+FUNCTION_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/stats-endpoint"
 HTML_FILE = Path("stats.html")
-
-
 def get_statistics():
     response = requests.get(
         FUNCTION_URL,
@@ -31,8 +25,6 @@ def get_statistics():
         )
 
     return data
-
-
 def update_html(stats):
     html = HTML_FILE.read_text(encoding="utf-8")
 
@@ -60,24 +52,15 @@ def update_html(stats):
         html,
         encoding="utf-8",
     )
-
-
 def main():
     print("Fetching statistics from Supabase...")
-
     stats = get_statistics()
-
     print(
         f"Statistics generated at: "
         f"{stats.get('generated_at', 'unknown')}"
     )
-
     print("Updating stats.html...")
-
     update_html(stats)
-
     print("Done.")
-
-
 if __name__ == "__main__":
     main()
