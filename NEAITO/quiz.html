@@ -254,7 +254,6 @@
     </div>
 
     <div class="controls">
-      <button id="changeUsernameBtn" type="button">Change Username</button>
       <button id="finishBtn" type="button">End Test</button>
     </div>
 
@@ -265,19 +264,6 @@
     <a href="v87n7azv0a32bbgag.pdf">Items pdf</a>
   </section>
 </div>
-
-<div id="changeUsernameModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="changeUsernameTitle">
-  <div class="modal-backdrop"></div>
-  <div class="modal-box" role="document">
-    <h3 id="changeUsernameTitle">Change username</h3>
-    <input id="newUsernameInput" type="text" placeholder="New username" autocomplete="off">
-    <div class="modal-actions">
-      <button id="saveUsernameBtn" type="button">Save</button>
-      <button id="cancelUsernameBtn" type="button">Cancel</button>
-    </div>
-    <p id="usernameStatus" class="status-msg" aria-live="polite"></p>
-  </div>
-</div>
   
 <script>
 rowsInput.addEventListener("blur", () => {
@@ -286,7 +272,6 @@ rowsInput.addEventListener("blur", () => {
   if (val > 6) val = 6;
   rowsInput.value = val;
 });
-
 colsInput.addEventListener("blur", () => {
   let val = Number(colsInput.value);
   if (isNaN(val) || val < 1) val = 1;
@@ -294,13 +279,6 @@ colsInput.addEventListener("blur", () => {
   colsInput.value = val;
 });
 </script>
-  
 <script src="quiz.js?v=8.1"></script>
-
 </body>
-
 </html>
-
-
-
-
