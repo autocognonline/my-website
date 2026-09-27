@@ -517,9 +517,6 @@
       <button type="button" class="tab-button" data-tab="ocs-section">
         OCS
       </button>
-      <button type="button" class="tab-button locked" id="certificate-tab" data-tab="certificate-section">
-        Certificate
-      </button>
     </nav>
 
     <section class="form-card" id="login-section">
@@ -650,40 +647,6 @@
       </div>
 
       <p id="leaderboard-status" class="status"></p>
-    </section>
-
-    <section class="form-card hidden tab-panel" id="certificate-section">
-      <h3>Request a certificate</h3>
-
-      <p class="form-intro">
-        You have at least 10 validated submissions. Enter the test name for which
-        you would like to request a certificate.
-      </p>
-
-      <form id="certificate-form">
-        <div class="form-grid">
-          <div class="field full">
-            <label for="certificate-test-name">Test name</label>
-
-            <input
-              id="certificate-test-name"
-              name="test_name"
-              type="text"
-              placeholder="Enter the test name"
-              required
-            />
-          </div>
-
-          <div class="field full actions">
-            <button type="submit">Request Certificate</button>
-            <p id="certificate-status" class="status"></p>
-          </div>
-        </div>
-      </form>
-
-      <div id="certificate-success" class="hidden">
-        <p id="certificate-success-message" class="status success"></p>
-      </div>
     </section>
 
     <section class="form-card hidden tab-panel" id="message-section">
@@ -836,7 +799,6 @@
     const loginSection = document.getElementById("login-section");
     const emailStep = document.getElementById("email-step");
     const codeStep = document.getElementById("code-step");
-    const certificateSection = document.getElementById("certificate-section");
     const submittedCount = document.getElementById("submitted-count");
     const loginStatus = document.getElementById("login-status");
     const scoresSection = document.getElementById("scores-section");
@@ -849,10 +811,6 @@
     const testsList = document.getElementById("tests-list");
     const testIdInput = document.getElementById("test-id");
 
-    const certificateForm = document.getElementById("certificate-form");
-    const certificateSuccess = document.getElementById("certificate-success");
-    const certificateSuccessMessage = document.getElementById("certificate-success-message");
-
     const messageSection = document.getElementById("message-section");
     const messageForm = document.getElementById("message-form");
 
@@ -861,7 +819,6 @@
     const leaderboardStatus = document.getElementById("leaderboard-status");
 
     const tabs = document.getElementById("tabs");
-    const certificateTab = document.getElementById("certificate-tab");
 
     const ocsSection = document.getElementById("ocs-section");
     const ocsLoading = document.getElementById("ocs-loading");
@@ -1215,47 +1172,6 @@
       testSearch.onchange = updateSelectedTest;
     }
 
-    function updateCertificateSection(data) {
-      const validated = data.validated_count ?? 0;
-      const pendingCertificate = data.pending_certificate;
-
-      const unlocked = validated >= testNumber || pendingCertificate;
-
-      if (!unlocked) {
-        certificateTab.classList.add("locked");
-        certificateSection.classList.add("hidden");
-        return;
-      }
-
-      certificateTab.classList.remove("locked");
-
-      if (pendingCertificate) {
-        certificateForm.classList.add("hidden");
-        certificateSuccess.classList.remove("hidden");
-
-        let message =
-          `You requested a certificate for "${pendingCertificate.test_name}". `;
-
-        switch ((pendingCertificate.status || "").toLowerCase()) {
-          case "approved":
-            message += "Your certificate request has been approved.";
-            break;
-          case "rejected":
-            message += "Your certificate request was rejected.";
-            break;
-          default:
-            message += "Your request is pending. Please be patient.";
-            break;
-        }
-
-        certificateSuccessMessage.textContent = message;
-        return;
-      }
-
-      certificateForm.classList.remove("hidden");
-      certificateSuccess.classList.add("hidden");
-    }
-
     function renderLoggedInView(data) {
       renderOCS(data.ocs);
       const visibleScores = (data.scores || []).filter(score => {
@@ -1304,8 +1220,6 @@
         `You have submitted ${submitted} score(s), ` +
         `${validated} are validated. ` ;
 
-      updateCertificateSection(data);
-
       loginSection.classList.add("hidden");
 
       tabs.classList.add("visible");
@@ -1314,7 +1228,6 @@
       scoresSection.classList.add("hidden");
       messageSection.classList.add("hidden");
       leaderboardSection.classList.add("hidden");
-      certificateSection.classList.add("hidden");
 
       showTab("submission-section");
     }
@@ -1363,60 +1276,6 @@
         loginSection.classList.remove("hidden");
       }
     }
-
-    certificateForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const status = document.getElementById("certificate-status");
-
-      const testName =
-        document.getElementById("certificate-test-name")
-          .value
-          .trim();
-
-      if (!testName) {
-        setStatus(status, "Please enter a test name.", "error");
-        return;
-      }
-
-      setStatus(status, "Submitting certificate request...", "loading");
-
-      try {
-        const res = await fetch(BASE, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            action: "request_certificate",
-            email: loggedEmail,
-            code: loginCode,
-            test_name: testName
-          })
-        });
-
-        const data = await res.json();
-
-        if (!res.ok || data.success === false) {
-          throw new Error(data.error || "Certificate request failed.");
-        }
-
-        certificateForm.classList.add("hidden");
-
-        certificateSuccess.classList.remove("hidden");
-
-        certificateSuccessMessage.textContent =
-          `You requested a certificate for "${testName}". ` +
-          `Your request is pending. Please be patient.`;
-
-      } catch (err) {
-        setStatus(
-          status,
-          err.message || "An unexpected error occurred.",
-          "error"
-        );
-      }
-    });
 
     leaderboardCheckbox.addEventListener("change", async () => {
       setStatus(leaderboardStatus, "Updating preference...", "loading");
