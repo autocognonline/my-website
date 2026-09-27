@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from pathlib import Path
 import requests
 FUNCTION_URL = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/stats-endpoint"
@@ -28,13 +29,6 @@ def get_statistics():
 def update_html(stats):
     html = HTML_FILE.read_text(encoding="utf-8")
 
-    marker = "const STATS_DATA = __STATS_DATA__;"
-
-    if marker not in html:
-        raise RuntimeError(
-            "Could not find statistics marker in stats.html."
-        )
-
     stats_json = json.dumps(
         stats,
         ensure_ascii=False,
@@ -43,13 +37,23 @@ def update_html(stats):
 
     replacement = f"const STATS_DATA = {stats_json};"
 
-    html = html.replace(
-        marker,
+    pattern = r"const\s+STATS_DATA\s*=\s*\{.*?\};"
+
+    new_html, count = re.subn(
+        pattern,
         replacement,
+        html,
+        count=1,
+        flags=re.DOTALL,
     )
 
+    if count != 1:
+        raise RuntimeError(
+            "Could not find the STATS_DATA block in stats.html."
+        )
+
     HTML_FILE.write_text(
-        html,
+        new_html,
         encoding="utf-8",
     )
 def main():
