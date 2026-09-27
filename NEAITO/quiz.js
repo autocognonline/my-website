@@ -107,108 +107,7 @@ function showStatusPopup(message, isCorrect) {
   }, 1000);
 }
 
-const changeUsernameModal = document.getElementById("changeUsernameModal");
-const newUsernameInput = document.getElementById("newUsernameInput");
-const usernameStatus = document.getElementById("usernameStatus");
-const changeUsernameBtn = document.getElementById("changeUsernameBtn");
-const saveUsernameBtn = document.getElementById("saveUsernameBtn");
-const cancelUsernameBtn = document.getElementById("cancelUsernameBtn");
-
-function openUsernameModal() {
-  newUsernameInput.value = localStorage.getItem("username") || "";
-  usernameStatus.textContent = "";
-  changeUsernameModal.classList.remove("hidden");
-  changeUsernameModal.setAttribute("aria-hidden", "false");
-
-  setTimeout(() => {
-    changeUsernameModal.classList.add("show");
-    newUsernameInput.focus();
-  }, 50);
-}
-
-function closeUsernameModal() {
-  changeUsernameModal.classList.remove("show");
-
-  setTimeout(() => {
-    changeUsernameModal.classList.add("hidden");
-    changeUsernameModal.setAttribute("aria-hidden", "true");
-    usernameStatus.textContent = "";
-  }, 200);
-}
-
-changeUsernameBtn.addEventListener("click", () => {
-  openUsernameModal();
-});
-
-cancelUsernameBtn.addEventListener("click", () => {
-  closeUsernameModal();
-});
-
-changeUsernameModal.addEventListener("click", (e) => {
-  if (e.target === changeUsernameModal) {
-    closeUsernameModal();
-  }
-});
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !changeUsernameModal.classList.contains("hidden")) {
-    closeUsernameModal();
-  }
-});
-
-saveUsernameBtn?.addEventListener("click", async (e) => {
-  e.preventDefault();
-  const newName = newUsernameInput.value.trim();
-
-  if (!newName) {
-    usernameStatus.style.color = "crimson";
-    usernameStatus.textContent = "Username cannot be empty";
-    return;
-  }
-
-  usernameStatus.style.color = "#2a7a2a";
-  usernameStatus.textContent = "Updating…";
-
-  try {
-    const res = await fetch(UPDATE_USER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({     email,     password,        update: { name: newName }   })
-    });
-
-    if (!res.ok) {
-      const txt = await res.text().catch(() => "");
-      console.error("Username update failed:", txt);
-      usernameStatus.style.color = "crimson";
-      usernameStatus.textContent = "Update failed";
-      return;
-    }
-
-    const payload = await res.json();
-
-    if (payload?.error) {
-      usernameStatus.style.color = "crimson";
-      usernameStatus.textContent = payload.error || "Update failed";
-      return;
-    }
-
-    // Update locally
-    localStorage.setItem("username", newName);
-    usernameStatus.style.color = "#2a7a2a";
-    usernameStatus.textContent = "Updated!";
-
-    // Close modal shortly after
-    setTimeout(() => closeUsernameModal(), 900);
-
-  } catch (err) {
-    console.error("Username update error:", err);
-    usernameStatus.style.color = "crimson";
-    usernameStatus.textContent = "Network error";
-  }
-});
-
 let email = localStorage.getItem("email");
-let username = localStorage.getItem("username") || "";
 let password = sessionStorage.getItem("password");
 
 if (!email || !password) {
@@ -276,9 +175,6 @@ async function loadUserProgress() {
     } else {
       attempts = Array(TOTAL_ITEMS).fill(TOTAL_ATTEMPTS);
     }
-
-    username = localStorage.getItem("username") || user?.name || username;
-    if (username) localStorage.setItem("username", username);
 
     updateTopBar();
 
@@ -537,14 +433,8 @@ function showFinalResults() {
     <h2>Test Completed</h2>
     <p><strong>Raw score:</strong> ${rawScore} / ${TOTAL_ITEMS}</p>
     <p><strong>Estimated IQ (Wechsler Scale):</strong> ${iq}</p>
-    
-    <div style="text-align:center; margin-top:20px;">
-      <button id="changeUsernameBtn">Change Username</button>
-    </div>
 
     <form id="certForm" style="margin-top: 20px;">
-      <label>Email:</label>
-      <input type="email" id="email" value="${email}" readonly />
       <button type="submit" class="button">Show Certificate</button>
     </form>
 
@@ -553,7 +443,6 @@ function showFinalResults() {
 
   document.getElementById("certForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
     const container = document.getElementById("result");
     container.innerHTML = `<p style="font-weight:bold;">Certificate is being generated…</p>`;
     try {
@@ -576,12 +465,6 @@ function showFinalResults() {
       console.error(err);
     }
   });
-
-  document.getElementById("changeUsernameBtn")
-    ?.addEventListener("click", (e) => {
-      e.preventDefault();
-      openUsernameModal();
-    });
 }
 
 async function tryFinishTest() {
