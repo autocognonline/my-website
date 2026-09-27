@@ -71,6 +71,19 @@ button:hover {
   transform: scale(1.05);
 }
 
+button:disabled {
+  background: #c7cbd1;
+  color: #6b7078;
+  cursor: not-allowed;
+  opacity: 1;
+  transform: none;
+}
+
+button:disabled:hover {
+  background: #c7cbd1;
+  transform: none;
+}
+
 .answer-container {
   display: flex;
   gap: 8px;
@@ -123,6 +136,17 @@ body.dark-mode button {
 
 body.dark-mode button:hover {
   background: #777;
+}
+
+body.dark-mode button:disabled {
+  background: #3f4247;
+  color: #888c93;
+  cursor: not-allowed;
+}
+
+body.dark-mode button:disabled:hover {
+  background: #3f4247;
+  transform: none;
 }
 
 .modal {
