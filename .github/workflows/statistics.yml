@@ -27,8 +27,6 @@ jobs:
           pip install requests
 
       - name: Update statistics
-        env:
-          SUPABASE_FUNCTION_URL: ${{ secrets.SUPABASE_FUNCTION_URL }}
         run: |
           python update_stats.py
 
