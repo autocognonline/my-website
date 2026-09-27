@@ -15,15 +15,7 @@ const nextBtn       = document.getElementById("nextBtn");
 const darkModeBtn   = document.getElementById("darkModeBtn");
 const finishBtn = document.getElementById("finishBtn");
 
-const changeUsernameBtn = document.getElementById("changeUsernameBtn");
-const changeUsernameModal = document.getElementById("changeUsernameModal");
-const newUsernameInput = document.getElementById("newUsernameInput");
-const saveUsernameBtn = document.getElementById("saveUsernameBtn");
-const cancelUsernameBtn = document.getElementById("cancelUsernameBtn");
-const usernameStatus = document.getElementById("usernameStatus");
-
 let email = localStorage.getItem("email");
-let username = localStorage.getItem("username") || "";
 
 if (!email) {
   window.location.href = "login.html";
@@ -99,8 +91,6 @@ async function loadUserProgress() {
 
     solved = Array.isArray(user?.solved_ids) ? user.solved_ids : [];
     attempts = (user?.attempts ?? TOTAL_ATTEMPTS);
-    username = localStorage.getItem("username") || user?.name || username;
-    if (username) localStorage.setItem("username", username);
     updateTopBar();
 
     if (solved.length >= TOTAL_ITEMS || attempts <= 0) {
@@ -262,13 +252,7 @@ function showFinalResults() {
     <p><strong>Raw score:</strong> ${solved.length} / ${TOTAL_ITEMS}</p>
     <p><strong>Estimated IQ (Wechsler Scale):</strong> ${iq}</p>
    
-    <div style="text-align:center; margin-top:20px;">
-      <button id="changeUsernameBtn">Change Username</button>
-    </div>
-
     <form id="certForm" style="margin-top: 20px;">
-      <label>Email:</label>
-      <input type="email" id="email" value="${email}" readonly />
       <button type="submit" class="button">Show Certificate</button>
     </form>
 
@@ -308,11 +292,6 @@ function showFinalResults() {
     }
   });
 
-  document.getElementById("changeUsernameBtn")
-    ?.addEventListener("click", (e) => {
-      e.preventDefault();
-      openUsernameModal();
-    });
 }
 
 async function endGame() {
@@ -320,66 +299,6 @@ async function endGame() {
   await updateDB({ extraUpdate: { finished: true } });
   showFinalResults();
 }
-
-function openUsernameModal() {
-  newUsernameInput.value = localStorage.getItem("username") || "";
-  usernameStatus.textContent = "";
-  changeUsernameModal.classList.remove("hidden");
-  changeUsernameModal.setAttribute("aria-hidden", "false");
-  setTimeout(() => newUsernameInput.focus(), 50);
-}
-function closeUsernameModal() {
-  changeUsernameModal.classList.add("hidden");
-  changeUsernameModal.setAttribute("aria-hidden", "true");
-  usernameStatus.textContent = "";
-}
-changeUsernameBtn?.addEventListener("click", (e) => { e.preventDefault(); openUsernameModal(); });
-cancelUsernameBtn?.addEventListener("click", (e) => { e.preventDefault(); closeUsernameModal(); });
-changeUsernameModal?.addEventListener("click", (e) => {
-  if (e.target === changeUsernameModal) closeUsernameModal();
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !changeUsernameModal.classList.contains("hidden")) closeUsernameModal();
-});
-
-saveUsernameBtn?.addEventListener("click", async (e) => {
-  e.preventDefault();
-  const newName = newUsernameInput.value.trim();
-  if (!newName) {
-    usernameStatus.style.color = "crimson";
-    usernameStatus.textContent = "Username cannot be empty";
-    return;
-  }
-
-  usernameStatus.style.color = "#2a7a2a";
-  usernameStatus.textContent = "Updating…";
-
-  try {
-    const res = await fetch(UPDATE_USER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, update: { name: newName } })
-    });
-
-    if (!res.ok) {
-      const txt = await res.text().catch(()=>"");
-      console.error("Username update failed:", txt);
-      usernameStatus.style.color = "crimson";
-      usernameStatus.textContent = "Update failed";
-      return;
-    }
-
-    localStorage.setItem("username", newName);
-    usernameStatus.style.color = "#2a7a2a";
-    usernameStatus.textContent = "Updated!";
-    setTimeout(() => closeUsernameModal(), 900);
-
-  } catch (err) {
-    console.error("Username update error:", err);
-    usernameStatus.style.color = "crimson";
-    usernameStatus.textContent = "Network error";
-  }
-});
 
 finishBtn?.addEventListener("click", async () => {
   const ok = window.confirm(
@@ -393,7 +312,6 @@ finishBtn?.addEventListener("click", async () => {
   showFinalResults();
 });
 
-
 darkModeBtn?.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
   const isDark = document.body.classList.contains("dark-mode");
@@ -402,10 +320,3 @@ darkModeBtn?.addEventListener("click", () => {
 });
 
 loadUserProgress();
-
-
-
-
-
-
-
