@@ -268,7 +268,6 @@ function showFinalResults() {
 
   document.getElementById("certForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const emailField = document.getElementById("email").value;
     const container = document.getElementById("result");
 
     container.innerHTML = `<p style="font-weight:bold;">Certificate is being generated…</p>`;
@@ -279,7 +278,7 @@ function showFinalResults() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: emailField }),
+          body: JSON.stringify({ email }),
         }
       );
 
