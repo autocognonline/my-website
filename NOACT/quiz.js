@@ -30,6 +30,7 @@ let solved = [];
 let attempts = TOTAL_ATTEMPTS;
 let currentIndex = 0;
 let normoCache = null;
+let paid = false;
 
 const savedTheme = localStorage.getItem("darkMode");
 if (savedTheme === "enabled") {
@@ -81,6 +82,10 @@ async function loadUserProgress() {
 
     const payload = await res.json().catch(()=>({}));
     const user = payload.user ?? payload;
+
+    paid = user?.paid === true;
+    if (submitBtn) submitBtn.disabled = !paid;
+    if (finishBtn) finishBtn.disabled = !paid;
 
     if (user?.finished === true) {
       solved = Array.isArray(user.solved_ids) ? user.solved_ids : [];
@@ -191,6 +196,7 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
 }
 
 if (submitBtn) submitBtn.onclick = async () => {
+  if (!paid) return;
   const rawAns = answerInput.value;
   if (!rawAns || !rawAns.trim()) return;
 
@@ -301,6 +307,7 @@ async function endGame() {
 }
 
 finishBtn?.addEventListener("click", async () => {
+  if (!paid) return;
   const ok = window.confirm(
     "Are you sure you want to finish the test?\nOnce submitted, you won't be able to continue working on it."
   );
