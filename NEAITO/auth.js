@@ -6,14 +6,12 @@ const instructionsSection = document.getElementById("instructionsSection");
 const loginMsg = document.getElementById("loginMsg");
 
 const emailInput = document.getElementById("email");
-const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
 
 const loginBtn = document.getElementById("loginBtn");
 const startTestBtn = document.getElementById("startTestBtn");
 
 let email = "";
-let username = "";
 let password = sessionStorage.getItem("password") || "";
 
 function showInstructions() {
@@ -27,12 +25,6 @@ function finishLogin(user) {
     loginBtn.disabled = false;
     return;
   }
-
-  username = user.name || "";
-
-  localStorage.setItem("email", email);
-  localStorage.setItem("username", username);
-
   if (user.start) { // user already started
     location.replace("quiz.html");
   } else {
@@ -68,12 +60,7 @@ async function login() {
     }
 
     if (payload.user === null) {
-      usernameInput.classList.remove("hidden");
       passwordInput.classList.add("hidden");
-
-      loginMsg.innerText = "Authenticated. Please pick a username to continue.";
-
-      usernameInput.focus();
       loginBtn.onclick = register;
       loginBtn.disabled = false;
       return;
@@ -107,13 +94,6 @@ async function login() {
 }
 
 async function register() {
-  username = usernameInput.value.trim();
-
-  if (!username) {
-    loginMsg.innerText = "Username required.";
-    return;
-  }
-
   loginBtn.disabled = true;
   loginMsg.innerText = "Creating account…";
 
@@ -123,7 +103,7 @@ async function register() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email,
-        update: { name: username }
+        update: { }
       })
     });
 
@@ -138,8 +118,6 @@ async function register() {
     try {
       localStorage.setItem("pwd_ack_" + email, "true");
     } catch (e) {}
-
-    usernameInput.classList.add("hidden");
 
     loginMsg.innerText = "A password has been sent to your email. Check your spam folder if necessary.";
 
