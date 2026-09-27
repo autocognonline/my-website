@@ -6,14 +6,12 @@ const instructionsSection = document.getElementById("instructionsSection");
 const loginMsg = document.getElementById("loginMsg");
 
 const emailInput = document.getElementById("email");
-const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
 
 const loginBtn = document.getElementById("loginBtn");
 const startTestBtn = document.getElementById("startTestBtn");
 
 let email = "";
-let username = "";
 let password = "";
 
 function showInstructions() {
@@ -28,10 +26,7 @@ loginBtn.disabled = false;
 return;
 }
 
-username = user.name || "";
-
 localStorage.setItem("email", email);
-localStorage.setItem("username", username);
 sessionStorage.setItem("password", password);
 
 if (user.started) {
@@ -69,10 +64,7 @@ if (!res.ok || payload?.error) {
 }
 
 if (payload.create_user) {
-  usernameInput.classList.remove("hidden");
   passwordInput.classList.add("hidden");
-  loginMsg.innerText = "Please choose an username.";
-  usernameInput.focus();
   loginBtn.onclick = register;
   loginBtn.disabled = false;
   return;
@@ -127,12 +119,6 @@ loginBtn.disabled = false;
 }
 
 async function register() {
-username = usernameInput.value.trim();
-
-if (!username) {
-loginMsg.innerText = "Username required.";
-return;
-}
 
 loginBtn.disabled = true;
 loginMsg.innerText = "Creating account…";
@@ -143,7 +129,7 @@ method: "POST",
 headers: { "Content-Type": "application/json" },
 body: JSON.stringify({
 email,
-update: { name: username }
+update: {}
 })
 });
 
@@ -159,8 +145,6 @@ try {
   localStorage.setItem("pwd_ack_" + email, "true");
 } catch (e) {
 }
-
-usernameInput.classList.add("hidden");
 
 loginMsg.innerText ="A password has been sent to your email. Check your spam folder if necessary.";
 
@@ -214,8 +198,3 @@ startTestBtn.innerText = "Start Test";
 });
 
 loginBtn.onclick = login;
-
-
-
-
-
