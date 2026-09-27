@@ -105,6 +105,7 @@ let solved = [];
 let attempts = TOTAL_ATTEMPTS;
 let currentIndex = 0;
 let normoCache = null;
+let paid = false;
 
 const savedTheme = localStorage.getItem("darkMode");
 if (savedTheme === "enabled") {
@@ -137,6 +138,28 @@ function blockUI() {
     </div>
   `;
 }
+
+function updatePaidUI() {
+  const unpaid = paid !== true;
+  if (submitBtn) {
+    submitBtn.disabled = unpaid;
+    submitBtn.style.opacity = unpaid ? "0.5" : "";
+    submitBtn.style.cursor = unpaid ? "not-allowed" : "";
+  }
+  if (finishBtn) {
+    finishBtn.disabled = unpaid;
+    finishBtn.style.opacity = unpaid ? "0.5" : "";
+    finishBtn.style.cursor = unpaid
+      ? "not-allowed"
+      : "";
+  }
+  if (unpaid) {
+    statusEl.innerText =
+      "Payment is required to submit answers and finish the test.";
+    statusEl.style.color = "#777";
+  }
+}
+
 async function loadNormo() {
   try {
     const r = await fetch('https://qlmlvtohtkiycwtohqwk.supabase.co/storage/v1/object/public/questions2/normfr.json');
@@ -179,6 +202,8 @@ async function loadUserProgress() {
 
     const payload = await res.json().catch(()=>({}));
     const user = payload.user ?? payload;
+    paid = user?.paid === true;
+    updatePaidUI();
 
     if (user?.finished === true) {
       solved = Array.isArray(user.solved_ids) ? user.solved_ids : [];
@@ -298,6 +323,12 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
 }
 
 if (submitBtn) submitBtn.onclick = async () => {
+  if (!paid) {
+    statusEl.style.color = "#777";
+    statusEl.innerText =
+      "Payment is required to submit answers.";
+    return;
+  }
   let rawAns;
 
   if (SPATIAL_ITEMS.includes(currentIndex)) {
@@ -379,7 +410,6 @@ function showFinalResults() {
 
   document.getElementById("certForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
     const container = document.getElementById("result");
 
     container.innerHTML = `<p style="font-weight:bold;">Certificate is being generated…</p>`;
@@ -390,7 +420,7 @@ function showFinalResults() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({  email}),
         }
       );
 
@@ -411,6 +441,12 @@ function showFinalResults() {
 }
 
 async function endGame() {
+  if (!paid) {
+    statusEl.style.color = "#777";
+    statusEl.innerText =
+      "Payment is required to finish the test.";
+    return;
+  }
   attempts = 0;
   await updateDB({ extraUpdate: { finished: true } });
   showFinalResults();
@@ -424,6 +460,12 @@ darkModeBtn?.addEventListener("click", () => {
 });
 
 finishBtn?.addEventListener("click", async () => {
+  if (!paid) {
+    statusEl.style.color = "#777";
+    statusEl.innerText =
+      "Payment is required to finish the test.";
+    return;
+  }
   const ok = window.confirm(
     "Are you sure you want to finish the test?\nOnce submitted, you will not be able to continue working on it."
   );
