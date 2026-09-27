@@ -21,10 +21,14 @@ function showInstructions() {
 
 function finishLogin(user) {
   if (!user) {
-    loginMsg.innerText = "Login succeeded but user data missing. Try again.";
+    loginMsg.innerText =
+      "Login succeeded but user data missing. Try again.";
+
     loginBtn.disabled = false;
     return;
   }
+  localStorage.setItem("email", email);
+  sessionStorage.setItem("password", password);
   if (user.started) {
     location.replace("quiz.html");
   } else {
