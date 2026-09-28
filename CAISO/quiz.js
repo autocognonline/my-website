@@ -7,7 +7,7 @@ const CAISO_LAST_ID = 56;
 const TOTAL_ATTEMPTS = 3;
 
 const SPATIAL_ITEMS = [35, 37, 44, 50, 55];
-const TWO_ANSWERS = [47, 54];
+const TWO_ANSWERS = [47, 51, 54];
 
 let testStart = null;
 const MIN_LOST_ATTEMPTS_TO_FINISH = 5;
