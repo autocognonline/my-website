@@ -546,8 +546,7 @@ function loadQuestionByIndex(index) {
   const imageIndex =
     index - CAISO_FIRST_ID + 1;
 
-  questionImg.src =
-    `${GET_QUIZ_IMAGE_URL}?bucket=caiso_questions_items&index=${imageIndex}&email=${storedEmail}&password=${storedPassword}`;
+  questionImg.src = `${GET_QUIZ_IMAGE_URL}?bucket=caiso_questions_items&index=${imageIndex}&email=${storedEmail}&password=${storedPassword}`;
 
   const answerInput1 =
     document.getElementById(
@@ -976,8 +975,6 @@ function showFinalResults() {
     <p><strong>Raw score:</strong> ${rawScore} / 56</p>
     <p><strong>Estimated IQ (Wechsler Scale):</strong> ${iq}</p>
     <form id="certForm" style="margin-top: 20px;">
-      <label>Email:</label>
-      <input type="email" id="email" value="${email}" readonly />
       <button type="submit" class="button">Show Certificate</button>
     </form>
     <div id="result" style="margin-top: 20px;"></div>
