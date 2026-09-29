@@ -986,12 +986,6 @@ function showFinalResults() {
       "submit",
       async e => {
         e.preventDefault();
-
-        const email =
-          document.getElementById(
-            "email"
-          ).value;
-
         const container =
           document.getElementById(
             "result"
