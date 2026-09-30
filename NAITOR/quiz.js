@@ -479,9 +479,6 @@ function updateTopBar() {
 }
 
 function showFinalResults() {
-  const toggleVideoLink = document.getElementById("toggleVideoLink");
-  toggleVideoLink?.parentElement?.remove();
-
   const rawScore = solved.length;
   let iq = normoCache?.[rawScore] ?? "N/A";
   
@@ -507,7 +504,6 @@ function showFinalResults() {
 
   document.getElementById("certForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
     const container = document.getElementById("result");
     container.innerHTML = `<p style="font-weight:bold;">Certificate is being generated…</p>`;
     try {
