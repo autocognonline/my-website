@@ -709,8 +709,6 @@ function showFinalResults() {
     <p><strong>Estimated IQ (Wechsler Scale):</strong> ${iq}</p>
 
     <form id="certForm" style="margin-top: 20px;">
-      <label>Email:</label>
-      <input type="email" id="email" value="${email}" readonly />
       <button type="submit" class="button">Show Certificate</button>
     </form>
 
@@ -730,7 +728,7 @@ function showFinalResults() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: emailValue }),
+          body: JSON.stringify({ email}),
         }
       );
 
