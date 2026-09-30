@@ -34,7 +34,7 @@ function finishLogin(user) {
 }
 
 async function login() {
-  email = emailInput.value.trim().toLowerCase();
+  email = emailInput.value.trim();
   const pw = passwordInput.value.trim();
 
   if (!email) {
