@@ -104,74 +104,132 @@ alert("Network error.");
 }
 }
 
-function finishLogin(payload,password){
-const permissions=payload.permissions||{};
+function finishLogin(payload, password) {
+  const permissions = payload.permissions || {};
 
-localStorage.setItem("email",currentEmail);
-localStorage.setItem("noais_email",currentEmail);
-localStorage.setItem("nocis_logged_in","true");
-localStorage.setItem("nocis_permissions",JSON.stringify(permissions));
-sessionStorage.setItem("password",password);
+  localStorage.setItem("email", currentEmail);
+  localStorage.setItem("noais_email", currentEmail);
+  localStorage.setItem("nocis_logged_in", "true");
+  localStorage.setItem(
+    "nocis_permissions",
+    JSON.stringify(permissions)
+  );
 
-window.loggedEmail=currentEmail;
-passwordInput.value="";
+  sessionStorage.setItem("password", password);
 
-loginSection.classList.add("hidden");
-instructionsSection.classList.remove("hidden");
+  window.loggedEmail = currentEmail;
+  passwordInput.value = "";
 
-showAllowedQuizButtons(permissions);
-loadLeaderboardChoice();
-loadRawScore();
+  loginSection.classList.add("hidden");
+  instructionsSection.classList.remove("hidden");
+
+  showAllowedQuizButtons(permissions);
+
+  loadRawScore();
 }
-function restoreLogin(){
-const savedEmail=localStorage.getItem("email");
-const savedPassword=sessionStorage.getItem("password");
-const loggedIn=localStorage.getItem("nocis_logged_in")==="true";
+async function validateStoredLogin() {
+  const email = localStorage.getItem("email");
+  const password = sessionStorage.getItem("password");
 
-passwordInput.value="";
+  if (!email || !password) {
+    return false;
+  }
 
-if(!savedEmail||!savedPassword||!loggedIn){
-localStorage.removeItem("email");
-localStorage.removeItem("noais_email");
-localStorage.removeItem("nocis_logged_in");
-localStorage.removeItem("nocis_permissions");
+  try {
+    const res = await fetch(LOGIN_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email,
+        password
+      })
+    });
 
-currentEmail="";
-passwordStage=false;
-loginInProgress=false;
+    const payload = await res.json().catch(() => ({}));
 
-emailInput.value="";
-passwordInput.value="";
-passwordInput.classList.add("hidden");
-passwordInput.setAttribute("readonly","readonly");
+    if (!res.ok || !payload.ok) {
+      return false;
+    }
 
-loginBtn.innerText="Login";
-loginBtn.disabled=false;
-loginMsg.innerText="";
+    localStorage.setItem(
+      "nocis_permissions",
+      JSON.stringify(payload.permissions || {})
+    );
 
-loginSection.classList.remove("hidden");
-instructionsSection.classList.add("hidden");
-hideAllQuizButtons();
-return;
+    return true;
+
+  } catch (err) {
+    console.error("Login validation failed:", err);
+    return false;
+  }
 }
 
-currentEmail=savedEmail;
-window.loggedEmail=savedEmail;
-emailInput.value=savedEmail;
+async function restoreLogin() {
+  const savedEmail = localStorage.getItem("email");
+  const savedPassword = sessionStorage.getItem("password");
+  const loggedIn =
+    localStorage.getItem("nocis_logged_in") === "true";
 
-let permissions={};
+  passwordInput.value = "";
 
-try{
-permissions=JSON.parse(localStorage.getItem("nocis_permissions")||"{}");
-}catch{
-permissions={};
-}
+  if (!savedEmail || !savedPassword || !loggedIn) {
+    localStorage.removeItem("email");
+    localStorage.removeItem("noais_email");
+    localStorage.removeItem("nocis_logged_in");
+    localStorage.removeItem("nocis_permissions");
 
-loginSection.classList.add("hidden");
-instructionsSection.classList.remove("hidden");
-showAllowedQuizButtons(permissions);
-loadLeaderboardChoice();
-loadRawScore();
+    sessionStorage.removeItem("password");
+
+    currentEmail = "";
+    passwordStage = false;
+    loginInProgress = false;
+
+    emailInput.value = "";
+    passwordInput.value = "";
+    passwordInput.classList.add("hidden");
+    passwordInput.setAttribute("readonly", "readonly");
+
+    loginBtn.innerText = "Login";
+    loginBtn.disabled = false;
+    loginMsg.innerText = "";
+
+    loginSection.classList.remove("hidden");
+    instructionsSection.classList.add("hidden");
+
+    hideAllQuizButtons();
+
+    return;
+  }
+
+  currentEmail = savedEmail;
+  window.loggedEmail = savedEmail;
+  emailInput.value = savedEmail;
+
+  const valid = await validateStoredLogin();
+
+  if (!valid) {
+    resetLoginPage();
+    return;
+  }
+
+  let permissions = {};
+
+  try {
+    permissions = JSON.parse(
+      localStorage.getItem("nocis_permissions") || "{}"
+    );
+  } catch {
+    permissions = {};
+  }
+
+  loginSection.classList.add("hidden");
+  instructionsSection.classList.remove("hidden");
+
+  showAllowedQuizButtons(permissions);
+
+  loadRawScore();
 }
 
 function resetLoginPage(){
@@ -369,34 +427,6 @@ btn.textContent="Generate Certificate";
 }
 }
 
-async function loadLeaderboardChoice(){
-const checkbox=document.getElementById("leaderboardCheckbox");
-const password=getPassword();
-
-if(!checkbox||!currentEmail||!password)return;
-
-try{
-const res=await fetch(API_URL,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-action:"update_user",
-email:currentEmail,
-password,
-subtest:"spatial"
-})
-});
-
-if(!res.ok)return;
-
-const payload=await res.json().catch(()=>({}));
-checkbox.checked=payload?.user?.leaderboard===true;
-
-}catch(err){
-console.error(err);
-}
-}
-
 loginBtn.addEventListener("click",login);
 
 passwordInput.addEventListener("keydown",e=>{
@@ -424,48 +454,6 @@ loginMsg.innerText="";
 });
 
 document.getElementById("generateCertBtn")?.addEventListener("click",generateCertificate);
-
-document.addEventListener("change",async e=>{
-if(e.target?.id!=="leaderboardCheckbox")return;
-
-const checkbox=e.target;
-const status=document.getElementById("leaderboardStatus");
-const checked=checkbox.checked;
-const password=getPassword();
-
-if(!password){
-checkbox.checked=!checked;
-if(status)status.innerText="Login information is missing.";
-return;
-}
-
-checkbox.disabled=true;
-if(status)status.innerText="Saving…";
-
-try{
-const res=await fetch(API_URL,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-action:"update_user",
-email:currentEmail,
-password,
-subtest:"spatial",
-update:{leaderboard:checked}
-})
-});
-
-if(!res.ok)checkbox.checked=!checked;
-if(status)status.innerText=res.ok?"Saved.":"Could not save.";
-
-}catch(err){
-console.error(err);
-checkbox.checked=!checked;
-if(status)status.innerText="Could not save.";
-}finally{
-checkbox.disabled=false;
-}
-});
 
 document.addEventListener("click",e=>{
 const btn=e.target.closest(".tab-btn");
