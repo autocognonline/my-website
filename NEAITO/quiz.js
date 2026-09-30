@@ -3,9 +3,9 @@ const GET_ANSWER_URL  = "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/g
 const GET_QUIZ_IMAGE_URL =  "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/get_quiz_image";
 
 const TOTAL_ITEMS = 60;
-const TOTAL_ATTEMPTS = 4; // attempts per item
+const TOTAL_ATTEMPTS = 4;
 const SPATIAL_ITEMS = [10, 20, 22, 29, 32, 33, 43, 47, 52, 53];
-const TWO_ANSWERS = [1, 24, 25, 27, 44, 48, 55]; // items that must have two answers provided by the user
+const TWO_ANSWERS = [1, 24, 25, 27, 44, 48, 55]; 
 
 const scoreEl       = document.getElementById("scoreEl");
 const attemptsEl    = document.getElementById("attemptsEl");
@@ -114,10 +114,29 @@ if (!email || !password) {
   window.location.href = "login.html";
 }
 
-let solved = []; 
+let solved = [];
 let attempts = Array(TOTAL_ITEMS).fill(TOTAL_ATTEMPTS); // per-item attempts array
 let currentIndex = 0; // 1...60
 let normoCache = null;
+let paid = false;
+
+function applyPaidState() {
+  const enabled = paid === true;
+
+  if (submitBtn) {
+    submitBtn.disabled = !enabled;
+    submitBtn.style.background = enabled ? "" : "#999";
+    submitBtn.style.cursor = enabled ? "pointer" : "not-allowed";
+    submitBtn.title = enabled ? "" : "Payment required before submitting answers.";
+  }
+
+  if (finishBtn) {
+    finishBtn.disabled = !enabled;
+    finishBtn.style.background = enabled ? "" : "#999";
+    finishBtn.style.cursor = enabled ? "pointer" : "not-allowed";
+    finishBtn.title = enabled ? "" : "Payment required before finishing the test.";
+  }
+}
 
 async function loadNorm() {
   try {
@@ -163,6 +182,9 @@ async function loadUserProgress() {
 
     const payload = await res.json().catch(()=>({}));
     const user = payload.user ?? payload;
+
+    paid = user?.paid === true;
+    applyPaidState();
 
     solved = Array.isArray(user?.solved_ids)
       ? user.solved_ids.map(x => Number(x))
@@ -256,7 +278,7 @@ if (nextBtn) nextBtn.onclick = () => {
   loadQuestionByIndex(next);
 };
 
-async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
+async function updateDB({ extraUpdate = {}, decrementAttempt = false, solvedItem = null } = {}) {
   const cleanEmail = String(email || "").trim();
   if (!cleanEmail) return;
 
@@ -281,6 +303,10 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
     payload.question_index = Math.max(0, currentIndex - 1);
   }
 
+  if (Number.isInteger(solvedItem)) {
+    payload.solved_item = solvedItem;
+  }
+
   try {
     const res = await fetch(UPDATE_USER_URL, {
       method: "POST",
@@ -297,6 +323,9 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
 
     if (body?.user) {
       const u = body.user;
+
+      paid = u?.paid === true;
+      applyPaidState();
 
       solved = Array.isArray(u.solved_ids)
         ? u.solved_ids.map(x => Number.isFinite(Number(x)) ? Number(x) : x)
@@ -321,6 +350,12 @@ async function updateDB({ extraUpdate = {}, decrementAttempt = false } = {}) {
 }
 
 if (submitBtn) submitBtn.onclick = async () => {
+  if (!paid) {
+    showStatusPopup("Payment required.", false);
+    applyPaidState();
+    return;
+  }
+
   let rawAns;
 
   if (SPATIAL_ITEMS.includes(currentIndex)) {
@@ -368,7 +403,10 @@ if (submitBtn) submitBtn.onclick = async () => {
     if (correct) {
       if (!solved.includes(currentIndex)) solved.push(currentIndex);
 
-      await updateDB({ extraUpdate: {} });
+      await updateDB({
+        extraUpdate: {},
+        solvedItem: currentIndex
+      });
 
       updateTopBar();
       showStatusPopup("Correct!", true);
@@ -468,6 +506,11 @@ function showFinalResults() {
 }
 
 async function tryFinishTest() {
+  if (!paid) {
+    applyPaidState();
+    return false;
+  }
+
   const result = await updateDB({ extraUpdate: { finished: true } });
 
   if (result?.error) {
@@ -479,6 +522,12 @@ async function tryFinishTest() {
 }
 
 async function endGame() {
+  if (!paid) {
+    applyPaidState();
+    showStatusPopup("Payment required to finish the test.", false);
+    return;
+  }
+
   const finished = await tryFinishTest();
   if (finished) showFinalResults();
 }
