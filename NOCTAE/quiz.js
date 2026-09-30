@@ -717,8 +717,6 @@ function showFinalResults() {
 
   document.getElementById("certForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    const emailValue = document.getElementById("email").value;
     const container = document.getElementById("result");
     container.innerHTML = `<p style="font-weight:bold;">Certificate is being generated…</p>`;
 
