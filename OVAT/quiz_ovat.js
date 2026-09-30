@@ -58,7 +58,7 @@ function showBigPopup(message, isError = false) {
 
   setTimeout(() => {
     overlay.classList.remove("show");
-  }, 5000);
+  }, 2500);
 }
 
 function hideSolvedItems() {
