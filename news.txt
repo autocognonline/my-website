@@ -1,3 +1,6 @@
+1 October 2026 - CAISO modified to fit the high difficulty requirements.
+1 October 2026 - Private tests require a fee.
+1 October 2026 - Tests apps available again.
 25 September 2026 - All tests' apps unavailable until further notice.
 20 September 2026 - CAISO (battery) is available.
 20 September 2026 - SAITO's certificate modified.
