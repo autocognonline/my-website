@@ -160,6 +160,63 @@
       margin: 8px auto;
     }
 
+    .nested-table {
+      width: 100%;
+      min-width: 0;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 16px;
+      background: transparent;
+    }
+
+    .nested-table thead {
+      background: transparent;
+      color: #333;
+    }
+
+    .nested-table th,
+    .nested-table td {
+      padding: 7px 10px;
+      border: none;
+      border-bottom: 1px solid #e5e5e5;
+      text-align: center !important;
+      font-weight: normal;
+    }
+
+    .nested-table th {
+      font-size: 14px;
+      font-weight: bold;
+      color: #666;
+      background: transparent;
+    }
+
+    .nested-table tbody tr {
+      background: transparent !important;
+    }
+
+    .nested-table tbody tr:hover {
+      background: transparent !important;
+    }
+
+    .nested-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .nested-table td:first-child {
+      font-weight: normal;
+      color: #333;
+      text-align: center !important;
+    }
+
+    .nested-table td:last-child {
+      font-weight: bold;
+      color: #16803c;
+    }
+
+    .noais-fees {
+      padding: 8px 16px !important;
+    }
+
     hr {
       border: none;
       height: 1px;
@@ -272,16 +329,42 @@
             <td class="not-available">Not applicable</td>
             <td class="free">Free</td>
           </tr>
-          <tr>
-            <td>NOAIS - Form 2</td>
-            <td>€ 15</td>
-            <td class="free">Free</td>
-          </tr>
-          <tr>
-            <td>NOAIS - individual subtest</td>
-            <td>€ 4</td>
-            <td class="not-available">Not applicable</td>
-          </tr>
+          <tr class="noais-row">
+  <td>NOAIS - Form 2</td>
+  <td class="noais-fees">
+    <table class="nested-table">
+      <thead>
+        <tr>
+          <th>Subtests</th>
+          <th>Fee</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>€ 4</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>€ 8</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>€ 12</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>€ 15</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>€ 15</td>
+        </tr>
+      </tbody>
+    </table>
+  </td>
+  <td class="free">Free</td>
+</tr>
           <tr>
             <td>NOCTÆ</td>
             <td>€ 9</td>
