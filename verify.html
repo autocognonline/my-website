@@ -405,6 +405,7 @@
       const rawScore = certificate.raw_score ?? certificate.rawScore ?? certificate.score;
       const normStatus = certificate.norm_status ?? certificate.normStatus;
       const date = certificate.date ?? certificate.certificate_date ?? certificate.created_at;
+      const iqScore = certificate.iq_score;
 
       if (id == null || name == null) {
         showMessage("The verification service returned incomplete certificate information. Please try again later.");
@@ -415,6 +416,7 @@
         ["Certificate ID", id],
         ["Candidate name", name],
         ["Raw score", rawScore == null ? "Not provided" : rawScore],
+        ["I.Q. score", iqScore == null ? "Missing" : iqScore],
         ["Norm status", normStatus ?? "Not provided"],
         ["Certificate date", formatDate(date)]
       ];
