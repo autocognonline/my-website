@@ -1,3 +1,4 @@
+26 October 2026 - More information added in the statistical report.
 14 October 2026 - Certificate IDs updated. Regenerate your certificate if needed.
 1 October 2026 - CAISO modified to fit the high difficulty requirements.
 1 October 2026 - Private tests require a fee.
