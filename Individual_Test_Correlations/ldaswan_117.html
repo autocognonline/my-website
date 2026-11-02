@@ -1,0 +1,896 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <title>Correlations - LDA-SWaN</title>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 30px;
+        background: #f7f8fa;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .info {
+        text-align: center;
+        color: #555;
+        line-height: 1.8;
+    }
+
+    .table-container {
+        max-width: 1100px;
+        margin: 25px auto;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border: 1px solid #999;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background: #0070ba;
+        color: white;
+        border: 1px solid #00558e;
+    }
+
+    tr:hover {
+        background: #f0f5f9;
+    }
+
+    a {
+        color: #0070ba;
+        text-decoration: none;
+    }
+    </style>
+    </head>
+
+    <body>
+
+    <h2>LDA-SWaN</h2>
+
+    <div class="info">
+        <strong>Author(s):</strong> G. Lombardi<br>
+        <strong>Candidates:</strong> 6<br>
+        <strong>Test connections:</strong> 88<br>
+        <strong>Estimated g-loading:</strong> -0.175
+    </div>
+
+    <div class="table-container">
+
+    <table>
+
+    <thead>
+    <tr>
+        <th>Test Name</th>
+        <th>Author(s)</th>
+        <th>Spearman ρ</th>
+        <th>Pearson r</th>
+        <th>p value for r</th>
+        <th>Pairs</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+            <tr>
+                <td>NOFRAT</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.866</td>
+                <td>1.000</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>ENSDT 20</td>
+                <td>M. Ripa</td>
+                <td>0.866</td>
+                <td>1.000</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>CAISO_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.866</td>
+                <td>1.000</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Logima Strictica 36</td>
+                <td>R. Lato</td>
+                <td>1.000</td>
+                <td>0.968</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NOFRAT_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.500</td>
+                <td>0.964</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Reduction Riddles</td>
+                <td>J. Dorsey</td>
+                <td>0.866</td>
+                <td>0.949</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Lieshout International Mesospheric Intelligence Test</td>
+                <td>P. Cooijmans</td>
+                <td>1.000</td>
+                <td>0.916</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>INSC 2019</td>
+                <td>T. Prousalis</td>
+                <td>0.866</td>
+                <td>0.884</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>International Verbal Reasoning Contest 2017 / VCAA</td>
+                <td>T. Prousalis</td>
+                <td>1.000</td>
+                <td>0.862</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Associative LIMIT</td>
+                <td>P. Cooijmans</td>
+                <td>1.000</td>
+                <td>0.861</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>METEOR</td>
+                <td>J. Dorsey</td>
+                <td>0.500</td>
+                <td>0.851</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Problems In Gentle Slopes of the third degree</td>
+                <td>P. Cooijmans</td>
+                <td>0.500</td>
+                <td>0.851</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>PatNum</td>
+                <td>J. Dorsey</td>
+                <td>0.894</td>
+                <td>0.754</td>
+                <td><i>0.141</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>COSMIC</td>
+                <td>J. Dorsey</td>
+                <td>0.894</td>
+                <td>0.754</td>
+                <td><i>0.141</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Numerus</td>
+                <td>I. Ivec</td>
+                <td>1.000</td>
+                <td>0.747</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Nydegger Online Automatic Intelligence Scale - Form 1</td>
+                <td>M.-A. Nydegger</td>
+                <td>1.000</td>
+                <td>0.714</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Verbal Test of Pattern Recognition</td>
+                <td>A. Udriste</td>
+                <td>0.500</td>
+                <td>0.604</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Numerus Light</td>
+                <td>I. Ivec</td>
+                <td>0.500</td>
+                <td>0.595</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.632</td>
+                <td>0.592</td>
+                <td><i>0.293</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>SPECTRA </td>
+                <td>J. Dorsey</td>
+                <td>0.200</td>
+                <td>0.556</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Arcanum</td>
+                <td>D. Kutle</td>
+                <td>0.500</td>
+                <td>0.544</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Gordian Knot</td>
+                <td>T. Prousalis</td>
+                <td>0.500</td>
+                <td>0.535</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NEAITO_Logical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.866</td>
+                <td>0.524</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.707</td>
+                <td>0.516</td>
+                <td><i>0.373</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Numericore</td>
+                <td>D. Fourie</td>
+                <td>0.632</td>
+                <td>0.513</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.354</td>
+                <td>0.510</td>
+                <td><i>0.380</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Logical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.354</td>
+                <td>0.483</td>
+                <td><i>0.410</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>​IMAGE</td>
+                <td>J. Dorsey</td>
+                <td>0.000</td>
+                <td>0.475</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NEAITO_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>0.475</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>CAISO_Logical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>0.475</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Asterix</td>
+                <td>J. Betts</td>
+                <td>0.500</td>
+                <td>0.423</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>OVAT 33</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.205</td>
+                <td>0.412</td>
+                <td><i>0.491</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT_Logical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.369</td>
+                <td>0.377</td>
+                <td><i>0.531</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>CAISO</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.500</td>
+                <td>0.217</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>LSHR Light</td>
+                <td>I. Ivec</td>
+                <td>-0.211</td>
+                <td>0.200</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>The Marathon Test</td>
+                <td>P. Cooijmans</td>
+                <td>0.500</td>
+                <td>0.171</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NVRA 80</td>
+                <td>T. Prousalis</td>
+                <td>0.500</td>
+                <td>0.059</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Hat-triq</td>
+                <td>A. Andersson</td>
+                <td>0.500</td>
+                <td>0.040</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>CAISO_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.500</td>
+                <td>0.028</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>InFusion Test</td>
+                <td>M. Scillitani</td>
+                <td>0.500</td>
+                <td>0.016</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.051</td>
+                <td>-0.018</td>
+                <td><i>0.977</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Spatial Assessment Test</td>
+                <td>A. Udriste / M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>-0.034</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.105</td>
+                <td>-0.081</td>
+                <td><i>0.897</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.200</td>
+                <td>-0.092</td>
+                <td><i>0.884</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Einplex</td>
+                <td>I. Ivec</td>
+                <td>-0.500</td>
+                <td>-0.128</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>INSC 2024 - NGT-F</td>
+                <td>T. Prousalis</td>
+                <td>0.200</td>
+                <td>-0.153</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>VGT-F</td>
+                <td>T. Prousalis</td>
+                <td>0.000</td>
+                <td>-0.201</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Logos Test - VC 2026</td>
+                <td>T. Prousalis</td>
+                <td>0.000</td>
+                <td>-0.201</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Two-Thirds InFusion</td>
+                <td>M. Scillitani</td>
+                <td>0.000</td>
+                <td>-0.225</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Simtollect</td>
+                <td>I. Ivec</td>
+                <td>0.500</td>
+                <td>-0.254</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>SLSE I</td>
+                <td>J. Wai</td>
+                <td>0.400</td>
+                <td>-0.265</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Triplex Light</td>
+                <td>I. Ivec</td>
+                <td>-0.200</td>
+                <td>-0.299</td>
+                <td><i>0.625</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.200</td>
+                <td>-0.306</td>
+                <td><i>0.616</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.105</td>
+                <td>-0.327</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>International Numerical Sequences Contest 2017 / NPRA-F</td>
+                <td>T. Prousalis</td>
+                <td>0.400</td>
+                <td>-0.364</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>ILLUSION </td>
+                <td>J. Dorsey</td>
+                <td>-0.577</td>
+                <td>-0.400</td>
+                <td><i>0.505</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.400</td>
+                <td>-0.431</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Cooijmans Intelligence Test - Form 3E</td>
+                <td>P. Cooijmans</td>
+                <td>-0.500</td>
+                <td>-0.435</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NOACT_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.105</td>
+                <td>-0.449</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NEAITO_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>-0.475</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NOFRAT_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>-0.475</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>CAISO_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>-0.475</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>CAISO_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>-0.475</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.258</td>
+                <td>-0.487</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Free Fall</td>
+                <td>I. Ivec</td>
+                <td>-0.308</td>
+                <td>-0.491</td>
+                <td><i>0.401</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NEAITO_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.866</td>
+                <td>-0.524</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.577</td>
+                <td>-0.573</td>
+                <td><i>0.313</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>High Range Cognitive Ability Scale - HRCAS</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.200</td>
+                <td>-0.582</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Test of the Beheaded Man</td>
+                <td>P. Cooijmans</td>
+                <td>-0.500</td>
+                <td>-0.587</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.400</td>
+                <td>-0.611</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Echo Numbers</td>
+                <td>M. Scillitani</td>
+                <td>-0.500</td>
+                <td>-0.634</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.738</td>
+                <td>-0.647</td>
+                <td><i>0.238</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.707</td>
+                <td>-0.675</td>
+                <td><i>0.211</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NOACT</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.400</td>
+                <td>-0.712</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>ASMuDi</td>
+                <td>J. Dorsey</td>
+                <td>-0.866</td>
+                <td>-0.731</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.632</td>
+                <td>-0.746</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>JCTI/TRI-52</td>
+                <td>X. Jouve</td>
+                <td>-1.000</td>
+                <td>-0.764</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NOACT_Logical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.316</td>
+                <td>-0.764</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Wechsler Adult Intelligence Scale (aggregate)</td>
+                <td>D. Wechsler</td>
+                <td>-0.500</td>
+                <td>-0.823</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Hieroglyphica</td>
+                <td>M. Predavec</td>
+                <td>-0.500</td>
+                <td>-0.851</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NEAITO_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.500</td>
+                <td>-0.851</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>9I6 Test</td>
+                <td>L. Dubois</td>
+                <td>-1.000</td>
+                <td>-0.873</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>SLSE 48</td>
+                <td>J. Wai</td>
+                <td>-1.000</td>
+                <td>-0.911</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NOACT_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.775</td>
+                <td>-0.950</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Tetraktys - NC 2026</td>
+                <td>T. Prousalis</td>
+                <td>-1.000</td>
+                <td>-0.990</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>Triplex</td>
+                <td>I. Ivec</td>
+                <td>-0.866</td>
+                <td>-0.991</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NOAIS2_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-1.000</td>
+                <td>-0.999</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+            <tr>
+                <td>NEAITO</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.866</td>
+                <td>-1.000</td>
+                <td><i>N/A</i></td>
+                <td>3</td>
+            </tr>
+        
+    </tbody>
+
+    </table>
+    </div>
+
+    <p style="text-align:center;">
+        <a href="../External_test_g-loadings.html">
+            Back to main report
+        </a>
+    </p>
+
+    </body>
+    </html>
+    
