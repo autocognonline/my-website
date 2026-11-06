@@ -1893,6 +1893,24 @@
             const data = await response.json().catch(() => null);
 
             if (!response.ok) {
+              if (response.status === 429) {
+                let cooldownMessage = data?.error ||
+                  "You have already submitted a message recently.";
+            
+                if (data?.nextAllowedAt) {
+                  const nextAllowed = new Date(data.nextAllowedAt);
+            
+                  const dateString = nextAllowed.toLocaleString(undefined, {
+                    dateStyle: "long",
+                    timeStyle: "short"
+                  });
+            
+                  cooldownMessage += ` You can submit another message after ${dateString}.`;
+                }
+            
+                throw new Error(cooldownMessage);
+              }
+            
               throw new Error(
                 data?.error || "Could not send your message."
               );
