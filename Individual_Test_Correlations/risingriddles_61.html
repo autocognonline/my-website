@@ -1,0 +1,734 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <title>Correlations - Rising Riddles</title>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 30px;
+        background: #f7f8fa;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .info {
+        text-align: center;
+        color: #555;
+        line-height: 1.8;
+    }
+
+    .table-container {
+        max-width: 1100px;
+        margin: 25px auto;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border: 1px solid #999;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background: #0070ba;
+        color: white;
+        border: 1px solid #00558e;
+    }
+
+    tr:hover {
+        background: #f0f5f9;
+    }
+
+    a {
+        color: #0070ba;
+        text-decoration: none;
+    }
+    </style>
+    </head>
+
+    <body>
+
+    <h2>Rising Riddles</h2>
+
+    <div class="info">
+        <strong>Author(s):</strong> J. Dorsey<br>
+        <strong>Candidates:</strong> 13<br>
+        <strong>Test connections:</strong> 70<br>
+        <strong>Estimated g-loading:</strong> 0.432
+    </div>
+
+    <div class="table-container">
+
+    <table>
+
+    <thead>
+    <tr>
+        <th>Test Name</th>
+        <th>Author(s)</th>
+        <th>Spearman ρ</th>
+        <th>Pearson r</th>
+        <th>p value for r</th>
+        <th>Pairs</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+            <tr>
+                <td>Rhyming Riddles </td>
+                <td>J. Dorsey</td>
+                <td>0.261</td>
+                <td>0.941</td>
+                <td><i>0.005</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>Reduction Riddles</td>
+                <td>J. Dorsey</td>
+                <td>0.745</td>
+                <td>0.937</td>
+                <td><i>0.019</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>ILLUSION </td>
+                <td>J. Dorsey</td>
+                <td>0.824</td>
+                <td>0.880</td>
+                <td><i>0.009</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>World Intelligence Test</td>
+                <td>J. Betts</td>
+                <td>0.775</td>
+                <td>0.843</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Analytical Reasoning Test</td>
+                <td>J. Dorsey</td>
+                <td>0.730</td>
+                <td>0.815</td>
+                <td><i>0.048</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>FORTY</td>
+                <td>J. Dorsey</td>
+                <td>0.891</td>
+                <td>0.750</td>
+                <td><i>0.052</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>SPIRAL</td>
+                <td>J. Dorsey</td>
+                <td>0.747</td>
+                <td>0.729</td>
+                <td><i>0.026</i></td>
+                <td>9</td>
+            </tr>
+        
+            <tr>
+                <td>EngNum</td>
+                <td>J. Dorsey</td>
+                <td>0.775</td>
+                <td>0.700</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.612</td>
+                <td>0.612</td>
+                <td><i>0.272</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>SPECTRA </td>
+                <td>J. Dorsey</td>
+                <td>0.441</td>
+                <td>0.596</td>
+                <td><i>0.211</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>Death Numbers</td>
+                <td>M. Wu</td>
+                <td>0.775</td>
+                <td>0.582</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Redux Riddles II</td>
+                <td>J. Dorsey</td>
+                <td>0.816</td>
+                <td>0.577</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>METEOR</td>
+                <td>J. Dorsey</td>
+                <td>0.264</td>
+                <td>0.548</td>
+                <td><i>0.160</i></td>
+                <td>8</td>
+            </tr>
+        
+            <tr>
+                <td>IMAGE</td>
+                <td>J. Dorsey</td>
+                <td>0.476</td>
+                <td>0.513</td>
+                <td><i>0.239</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>AdSub</td>
+                <td>J. Dorsey</td>
+                <td>0.400</td>
+                <td>0.467</td>
+                <td><i>0.290</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>LARGE</td>
+                <td>J. Dorsey</td>
+                <td>0.631</td>
+                <td>0.466</td>
+                <td><i>0.429</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>A Paranoiac&#x27;s Torture - Intelligence Test Utilizing Diabolic Exactitude</td>
+                <td>P. Cooijmans</td>
+                <td>0.775</td>
+                <td>0.450</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>COSMIC</td>
+                <td>J. Dorsey</td>
+                <td>0.447</td>
+                <td>0.449</td>
+                <td><i>0.264</i></td>
+                <td>8</td>
+            </tr>
+        
+            <tr>
+                <td>PatLet </td>
+                <td>J. Dorsey</td>
+                <td>0.354</td>
+                <td>0.420</td>
+                <td><i>0.301</i></td>
+                <td>8</td>
+            </tr>
+        
+            <tr>
+                <td>​Replacement Riddles</td>
+                <td>J. Dorsey</td>
+                <td>0.289</td>
+                <td>0.409</td>
+                <td><i>0.494</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Logical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.408</td>
+                <td>0.408</td>
+                <td><i>0.495</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Logos Test - VC 2026</td>
+                <td>T. Prousalis</td>
+                <td>-0.056</td>
+                <td>0.381</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Einplex</td>
+                <td>I. Ivec</td>
+                <td>0.265</td>
+                <td>0.379</td>
+                <td><i>0.354</i></td>
+                <td>8</td>
+            </tr>
+        
+            <tr>
+                <td>NOACT_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.395</td>
+                <td>0.375</td>
+                <td><i>0.534</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.395</td>
+                <td>0.357</td>
+                <td><i>0.555</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>OASIS</td>
+                <td>J. Dorsey</td>
+                <td>0.524</td>
+                <td>0.354</td>
+                <td><i>0.389</i></td>
+                <td>8</td>
+            </tr>
+        
+            <tr>
+                <td>SYMBOLIQ</td>
+                <td>J. Dorsey</td>
+                <td>0.000</td>
+                <td>0.333</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Triplex</td>
+                <td>I. Ivec</td>
+                <td>0.000</td>
+                <td>0.307</td>
+                <td><i>0.615</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>MultDiv</td>
+                <td>J. Dorsey</td>
+                <td>0.129</td>
+                <td>0.287</td>
+                <td><i>0.533</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>0.272</td>
+                <td><i>0.658</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.250</td>
+                <td>0.250</td>
+                <td><i>0.685</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Alphabet </td>
+                <td>J. Dorsey</td>
+                <td>0.040</td>
+                <td>0.201</td>
+                <td><i>0.605</i></td>
+                <td>9</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>0.180</td>
+                <td><i>0.773</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NOCTAE_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.354</td>
+                <td>0.173</td>
+                <td><i>0.781</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>CELESTIAL</td>
+                <td>J. Dorsey</td>
+                <td>0.281</td>
+                <td>0.171</td>
+                <td><i>0.745</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>XVLingua</td>
+                <td>M. Predavec</td>
+                <td>0.000</td>
+                <td>0.157</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NOCTAE_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.363</td>
+                <td>0.145</td>
+                <td><i>0.817</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>MOSAIC</td>
+                <td>J. Dorsey</td>
+                <td>0.193</td>
+                <td>0.132</td>
+                <td><i>0.716</i></td>
+                <td>10</td>
+            </tr>
+        
+            <tr>
+                <td>NOCTAE</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>0.109</td>
+                <td><i>0.861</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>0.102</td>
+                <td><i>0.870</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR_Logical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.181</td>
+                <td>0.075</td>
+                <td><i>0.904</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>0.021</td>
+                <td><i>0.973</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Alliteration Analogies Assessment</td>
+                <td>J. Dorsey</td>
+                <td>-0.233</td>
+                <td>-0.000</td>
+                <td><i>1.000</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>ZD_Legenda_Test</td>
+                <td>C. Backlund</td>
+                <td>0.000</td>
+                <td>-0.000</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Arcanum</td>
+                <td>D. Kutle</td>
+                <td>-0.258</td>
+                <td>-0.000</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Hieroglyphica</td>
+                <td>M. Predavec</td>
+                <td>0.181</td>
+                <td>-0.015</td>
+                <td><i>0.981</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>PatNum</td>
+                <td>J. Dorsey</td>
+                <td>-0.227</td>
+                <td>-0.023</td>
+                <td><i>0.949</i></td>
+                <td>10</td>
+            </tr>
+        
+            <tr>
+                <td>IGNITER</td>
+                <td>J. Dorsey</td>
+                <td>-0.226</td>
+                <td>-0.048</td>
+                <td><i>0.929</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>NOACT_Logical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>-0.102</td>
+                <td><i>0.870</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NOCTAE_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>-0.102</td>
+                <td><i>0.870</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>COLOSSEUM</td>
+                <td>J. Dorsey</td>
+                <td>0.093</td>
+                <td>-0.107</td>
+                <td><i>0.768</i></td>
+                <td>10</td>
+            </tr>
+        
+            <tr>
+                <td>Verbal Test of Pattern Recognition</td>
+                <td>A. Udriste</td>
+                <td>-0.258</td>
+                <td>-0.160</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.363</td>
+                <td>-0.180</td>
+                <td><i>0.773</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NOAIS2_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.258</td>
+                <td>-0.182</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Hexa</td>
+                <td>J. Dorsey</td>
+                <td>-0.236</td>
+                <td>-0.192</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NOACT</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.354</td>
+                <td>-0.196</td>
+                <td><i>0.752</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NAITOR_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>-0.205</td>
+                <td><i>0.741</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Gordian Knot</td>
+                <td>T. Prousalis</td>
+                <td>-0.287</td>
+                <td>-0.221</td>
+                <td><i>0.721</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NOACT_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.354</td>
+                <td>-0.241</td>
+                <td><i>0.696</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>OVAT 33</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.354</td>
+                <td>-0.266</td>
+                <td><i>0.665</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>The Pirate Test</td>
+                <td>D. Kutle</td>
+                <td>0.000</td>
+                <td>-0.302</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NOACT_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.354</td>
+                <td>-0.331</td>
+                <td><i>0.586</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Asterix</td>
+                <td>J. Betts</td>
+                <td>-0.272</td>
+                <td>-0.333</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Verba 66</td>
+                <td>M. Predavec</td>
+                <td>-0.399</td>
+                <td>-0.336</td>
+                <td><i>0.515</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>Levant</td>
+                <td>D. Kutle</td>
+                <td>-0.258</td>
+                <td>-0.348</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Road to Damascus</td>
+                <td>D. Kutle</td>
+                <td>-0.272</td>
+                <td>-0.386</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>STADIUM</td>
+                <td>J. Dorsey</td>
+                <td>-0.135</td>
+                <td>-0.411</td>
+                <td><i>0.492</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>ASMuDi</td>
+                <td>J. Dorsey</td>
+                <td>-0.548</td>
+                <td>-0.439</td>
+                <td><i>0.384</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>Three Sonnets</td>
+                <td>H. Siemens</td>
+                <td>-0.544</td>
+                <td>-0.510</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Mathema</td>
+                <td>J. Betts</td>
+                <td>-0.968</td>
+                <td>-0.919</td>
+                <td><i>0.028</i></td>
+                <td>5</td>
+            </tr>
+        
+    </tbody>
+
+    </table>
+    </div>
+
+    <p style="text-align:center;">
+        <a href="../external_test_g-loadings.html">
+            Back to main report
+        </a>
+    </p>
+
+    </body>
+    </html>
+    
