@@ -413,6 +413,37 @@
       border-bottom: 1px solid #eee;
     }
 
+    .contribution-message {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #a7d7b5;
+      border-radius: 12px;
+      background: #f0faf3;
+      color: #1d492c;
+    }
+    .contribution-message.hidden {
+        display: none;
+    }
+
+    .contribution-message h4 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #246b3b;
+    }
+
+    .contribution-message p {
+      margin: 0 0 10px;
+      line-height: 1.6;
+    }
+
+    .contribution-message p:last-child {
+      margin-bottom: 0;
+    }
+
+
     @media (max-width: 780px) {
       .ocs-grid {
         grid-template-columns: 1fr;
@@ -512,7 +543,7 @@
         Comment
       </button>
       <button type="button" class="tab-button" data-tab="leaderboard-section">
-        Leaderboard
+        Leaderboard & Contribution
       </button>
       <button type="button" class="tab-button" data-tab="ocs-section">
         OCS
@@ -628,7 +659,27 @@
     </section>
 
     <section class="form-card hidden tab-panel" id="leaderboard-section">
-      <h3>Project Contributor Leaderboard</h3>
+      <h3>Leaderboard & Contribution</h3>
+      <div class="ocs-overall">
+        <div class="ocs-card ocs-main-card">
+          <span class="ocs-label">Your Contribution Score</span>
+          <strong id="contribution-score">-</strong>
+        </div>
+      </div>
+      <div id="contribution-message" class="contribution-message hidden">
+        <p>Your Contribution Score is above 60.</p>
+        <p>
+          You can now submit answers in the test apps and
+          access certificates without paying the usual fee.
+        </p>
+        <p>Thank you for your contribution.</p>
+      </div>
+
+      <p id="contribution-status" class="status"></p>
+
+      <hr style="margin: 30px 0; border: 0; border-top: 1px solid var(--line);">
+
+      <h3>Public Leaderboard</h3>
 
       <div class="leaderboard-row">
         <div>
@@ -647,6 +698,7 @@
       </div>
 
       <p id="leaderboard-status" class="status"></p>
+
     </section>
 
     <section class="form-card hidden tab-panel" id="message-section">
@@ -733,7 +785,7 @@
         <div class="ocs-overall">
           <div class="ocs-card ocs-main-card">
             <span class="ocs-label">Average I.Q.</span>
-            <strong id="ocs-overall-score">–</strong>
+            <strong id="ocs-overall-score">-</strong>
             <span id="ocs-full-test-count" class="ocs-secondary"></span>
           </div>
         </div>
@@ -742,31 +794,31 @@
 
           <div class="ocs-card">
             <span class="ocs-label">Verbal</span>
-            <strong id="ocs-verbal-score">–</strong>
+            <strong id="ocs-verbal-score">-</strong>
             <span id="ocs-verbal-count" class="ocs-secondary"></span>
           </div>
 
           <div class="ocs-card">
             <span class="ocs-label">Numerical</span>
-            <strong id="ocs-numerical-score">–</strong>
+            <strong id="ocs-numerical-score">-</strong>
             <span id="ocs-numerical-count" class="ocs-secondary"></span>
           </div>
 
           <div class="ocs-card">
             <span class="ocs-label">Spatial</span>
-            <strong id="ocs-spatial-score">–</strong>
+            <strong id="ocs-spatial-score">-</strong>
             <span id="ocs-spatial-count" class="ocs-secondary"></span>
           </div>
 
           <div class="ocs-card">
             <span class="ocs-label">Abstract</span>
-            <strong id="ocs-abstract-score">–</strong>
+            <strong id="ocs-abstract-score">-</strong>
             <span id="ocs-abstract-count" class="ocs-secondary"></span>
           </div>
 
           <div class="ocs-card">
             <span class="ocs-label">Logical</span>
-            <strong id="ocs-logical-score">–</strong>
+            <strong id="ocs-logical-score">-</strong>
             <span id="ocs-logical-count" class="ocs-secondary"></span>
           </div>
 
@@ -825,6 +877,34 @@
     const ocsNotEligible = document.getElementById("ocs-not-eligible");
     const ocsContent = document.getElementById("ocs-content");
 
+    function renderContributionScore(contribution) {
+      const scoreElement =        document.getElementById("contribution-score");
+      const messageElement =        document.getElementById("contribution-message");
+      const statusElement =        document.getElementById("contribution-status");
+      messageElement.classList.add("hidden");
+      statusElement.textContent = "";
+      if (
+        !contribution ||
+        contribution.score === null ||
+        contribution.score === undefined ||
+        !Number.isFinite(Number(contribution.score))
+      ) {
+        scoreElement.textContent = "-";
+        setStatus(
+          statusElement,
+          "Contribution score is currently unavailable.",
+          "error"
+        );
+        return;
+      }
+
+      const score = Number(contribution.score);
+      scoreElement.textContent = score;
+      if (score > 60) {
+        messageElement.classList.remove("hidden");
+      }
+    }
+
     function showTab(sectionId) {
       document.querySelectorAll(".tab-panel").forEach(panel => {
         panel.classList.add("hidden");
@@ -853,7 +933,7 @@
         value === undefined ||
         !Number.isFinite(Number(value))
       ) {
-        return "–";
+        return "-";
       }
       return Number(value).toFixed(1);
     }
@@ -1174,6 +1254,7 @@
 
     function renderLoggedInView(data) {
       renderOCS(data.ocs);
+      renderContributionScore(data.contribution_score);
       const visibleScores = (data.scores || []).filter(score => {
         const author = (score.tests?.author || "").toLowerCase();
         return !author.includes("nydegger");
@@ -1228,7 +1309,7 @@
       scoresSection.classList.add("hidden");
       messageSection.classList.add("hidden");
       leaderboardSection.classList.add("hidden");
-
+      
       showTab("submission-section");
     }
 
