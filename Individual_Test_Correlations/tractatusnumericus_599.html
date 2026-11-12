@@ -1,0 +1,734 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <title>Correlations - Tractatus Numericus</title>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 30px;
+        background: #f7f8fa;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .info {
+        text-align: center;
+        color: #555;
+        line-height: 1.8;
+    }
+
+    .table-container {
+        max-width: 1100px;
+        margin: 25px auto;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border: 1px solid #999;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background: #0070ba;
+        color: white;
+        border: 1px solid #00558e;
+    }
+
+    tr:hover {
+        background: #f0f5f9;
+    }
+
+    a {
+        color: #0070ba;
+        text-decoration: none;
+    }
+    </style>
+    </head>
+
+    <body>
+
+    <h2>Tractatus Numericus</h2>
+
+    <div class="info">
+        <strong>Author(s):</strong> T. Prousalis<br>
+        <strong>Candidates:</strong> 36<br>
+        <strong>Test connections:</strong> 70<br>
+        <strong>Estimated g-loading:</strong> 0.699
+    </div>
+
+    <div class="table-container">
+
+    <table>
+
+    <thead>
+    <tr>
+        <th>Test Name</th>
+        <th>Author(s)</th>
+        <th>Spearman ρ</th>
+        <th>Pearson r</th>
+        <th>p value for r</th>
+        <th>Pairs</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+            <tr>
+                <td>Lexiq</td>
+                <td>N. Soulios</td>
+                <td>0.949</td>
+                <td>0.995</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>PatLet </td>
+                <td>J. Dorsey</td>
+                <td>0.949</td>
+                <td>0.980</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Gordian Knot</td>
+                <td>T. Prousalis</td>
+                <td>0.900</td>
+                <td>0.952</td>
+                <td><i>0.012</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Strict Logic Sequence Examination I - SLSE I  </td>
+                <td>J. Wai</td>
+                <td>0.949</td>
+                <td>0.944</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>X&amp;Y</td>
+                <td>P.L. Miranda</td>
+                <td>0.900</td>
+                <td>0.943</td>
+                <td><i>0.016</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>International Verbal Reasoning Contest 2017 / VCAA</td>
+                <td>T. Prousalis</td>
+                <td>0.927</td>
+                <td>0.917</td>
+                <td><i>0.004</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>NVRA 80</td>
+                <td>T. Prousalis</td>
+                <td>0.878</td>
+                <td>0.915</td>
+                <td><i>5.50e-04</i></td>
+                <td>9</td>
+            </tr>
+        
+            <tr>
+                <td>INSC 2019</td>
+                <td>T. Prousalis</td>
+                <td>0.857</td>
+                <td>0.912</td>
+                <td><i>2.38e-04</i></td>
+                <td>10</td>
+            </tr>
+        
+            <tr>
+                <td>NPRA-R</td>
+                <td>T. Prousalis</td>
+                <td>0.814</td>
+                <td>0.892</td>
+                <td><i>0.003</i></td>
+                <td>8</td>
+            </tr>
+        
+            <tr>
+                <td>Reduction Riddles</td>
+                <td>J. Dorsey</td>
+                <td>0.800</td>
+                <td>0.891</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Road to Damascus</td>
+                <td>D. Kutle</td>
+                <td>0.821</td>
+                <td>0.871</td>
+                <td><i>0.055</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>MultDiv</td>
+                <td>J. Dorsey</td>
+                <td>0.871</td>
+                <td>0.866</td>
+                <td><i>0.012</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>ASMuDi</td>
+                <td>J. Dorsey</td>
+                <td>0.913</td>
+                <td>0.856</td>
+                <td><i>0.007</i></td>
+                <td>8</td>
+            </tr>
+        
+            <tr>
+                <td>Hat-triq</td>
+                <td>A. Andersson</td>
+                <td>0.500</td>
+                <td>0.854</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>AdSub</td>
+                <td>J. Dorsey</td>
+                <td>0.790</td>
+                <td>0.847</td>
+                <td><i>0.001</i></td>
+                <td>11</td>
+            </tr>
+        
+            <tr>
+                <td>Numerus Light 2</td>
+                <td>I. Ivec</td>
+                <td>0.857</td>
+                <td>0.829</td>
+                <td><i>0.021</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>International Numerical Reasoning Contest 2018</td>
+                <td>T. Prousalis</td>
+                <td>0.714</td>
+                <td>0.788</td>
+                <td><i>0.062</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.775</td>
+                <td>0.787</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Spatial Relations Latitude - SPIRAL</td>
+                <td>J. Dorsey</td>
+                <td>0.800</td>
+                <td>0.779</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Logica Verbalis</td>
+                <td>T. Prousalis</td>
+                <td>0.784</td>
+                <td>0.760</td>
+                <td><i>6.30e-04</i></td>
+                <td>16</td>
+            </tr>
+        
+            <tr>
+                <td>Arcanum</td>
+                <td>D. Kutle</td>
+                <td>0.359</td>
+                <td>0.755</td>
+                <td><i>0.140</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Logos Test - VC 2026</td>
+                <td>T. Prousalis</td>
+                <td>0.800</td>
+                <td>0.754</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Tetraktys - NC 2026</td>
+                <td>T. Prousalis</td>
+                <td>0.793</td>
+                <td>0.753</td>
+                <td><i>0.031</i></td>
+                <td>8</td>
+            </tr>
+        
+            <tr>
+                <td>INSC 2024 - NGTF</td>
+                <td>T. Prousalis</td>
+                <td>0.651</td>
+                <td>0.750</td>
+                <td><i>0.001</i></td>
+                <td>15</td>
+            </tr>
+        
+            <tr>
+                <td>International Verbal Reasoning Contest 2018</td>
+                <td>T. Prousalis</td>
+                <td>0.562</td>
+                <td>0.707</td>
+                <td><i>0.033</i></td>
+                <td>9</td>
+            </tr>
+        
+            <tr>
+                <td>Compilation of Excellent Spatial Abilities - CELESTIAL</td>
+                <td>J. Dorsey</td>
+                <td>0.632</td>
+                <td>0.700</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>International Numerical Sequences Contest 2017 / NPRA-F</td>
+                <td>T. Prousalis</td>
+                <td>0.670</td>
+                <td>0.693</td>
+                <td><i>0.012</i></td>
+                <td>12</td>
+            </tr>
+        
+            <tr>
+                <td>World Intelligence Championship 2014 - WIC2014</td>
+                <td>I. Ivec</td>
+                <td>0.410</td>
+                <td>0.681</td>
+                <td><i>0.206</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>PatNum</td>
+                <td>J. Dorsey</td>
+                <td>0.386</td>
+                <td>0.640</td>
+                <td><i>0.046</i></td>
+                <td>10</td>
+            </tr>
+        
+            <tr>
+                <td>Mental Examination of Reasoning - METEOR</td>
+                <td>J. Dorsey</td>
+                <td>0.358</td>
+                <td>0.634</td>
+                <td><i>0.177</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>VGT-F</td>
+                <td>T. Prousalis</td>
+                <td>0.497</td>
+                <td>0.619</td>
+                <td><i>0.102</i></td>
+                <td>8</td>
+            </tr>
+        
+            <tr>
+                <td>Online Advanced Spatial Intelligence Scale - OASIS</td>
+                <td>J. Dorsey</td>
+                <td>0.567</td>
+                <td>0.607</td>
+                <td><i>0.083</i></td>
+                <td>9</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Spatial_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.632</td>
+                <td>0.601</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NIT Spatial</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.667</td>
+                <td>0.553</td>
+                <td><i>0.255</i></td>
+                <td>6</td>
+            </tr>
+        
+            <tr>
+                <td>LDA-SWaN</td>
+                <td>G. Lombardi</td>
+                <td>0.359</td>
+                <td>0.529</td>
+                <td><i>0.359</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Sequential Aptitude Test Using Rational Numbers - SATURN</td>
+                <td>J. Leonard</td>
+                <td>0.738</td>
+                <td>0.500</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Spectacular Reasoning Assessment - SPECTRA </td>
+                <td>J. Dorsey</td>
+                <td>0.482</td>
+                <td>0.482</td>
+                <td><i>0.274</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>FREE Fall</td>
+                <td>I. Ivec</td>
+                <td>0.359</td>
+                <td>0.481</td>
+                <td><i>0.412</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Intense Gradient Instrument of Reasoning - IGNITER</td>
+                <td>J. Dorsey</td>
+                <td>0.200</td>
+                <td>0.478</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Two-Thirds InFusion</td>
+                <td>M. Scillitani</td>
+                <td>0.316</td>
+                <td>0.474</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Strict Logic Sequence Examination II - SLSE II</td>
+                <td>J. Wai</td>
+                <td>0.600</td>
+                <td>0.404</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Comprehensive Spatial Mental Inspection - COSMIC</td>
+                <td>J. Dorsey</td>
+                <td>0.016</td>
+                <td>0.384</td>
+                <td><i>0.273</i></td>
+                <td>10</td>
+            </tr>
+        
+            <tr>
+                <td>NIT Verbal</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.400</td>
+                <td>0.369</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Triplex Light</td>
+                <td>I. Ivec</td>
+                <td>0.344</td>
+                <td>0.328</td>
+                <td><i>0.590</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NIT-Form 1</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.200</td>
+                <td>0.306</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Einplex</td>
+                <td>I. Ivec</td>
+                <td>0.316</td>
+                <td>0.305</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Intellectual Spatial Orientation - ILLUSION </td>
+                <td>J. Dorsey</td>
+                <td>0.253</td>
+                <td>0.273</td>
+                <td><i>0.554</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>Comprehensive Long Assessment Untimed - COLOSSEUM</td>
+                <td>J. Dorsey</td>
+                <td>0.000</td>
+                <td>0.267</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NIT Abstract</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.252</td>
+                <td>0.252</td>
+                <td><i>0.585</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>Numerus Delight</td>
+                <td>I. Ivec</td>
+                <td>0.316</td>
+                <td>0.236</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>International Spatial Reasoning Contest 2018 / SEE30</td>
+                <td>T. Prousalis</td>
+                <td>0.236</td>
+                <td>0.236</td>
+                <td><i>0.541</i></td>
+                <td>9</td>
+            </tr>
+        
+            <tr>
+                <td>Alphabet </td>
+                <td>J. Dorsey</td>
+                <td>0.072</td>
+                <td>0.225</td>
+                <td><i>0.628</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>Numerus</td>
+                <td>I. Ivec</td>
+                <td>0.308</td>
+                <td>0.178</td>
+                <td><i>0.775</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Hexa</td>
+                <td>J. Dorsey</td>
+                <td>-0.105</td>
+                <td>0.109</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.000</td>
+                <td>0.105</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.200</td>
+                <td>0.089</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Major Self-Assessment of Intelligence - MOSAIC</td>
+                <td>J. Dorsey</td>
+                <td>-0.105</td>
+                <td>0.000</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Intense Mental Abilities Grand Exam - IMAGE</td>
+                <td>J. Dorsey</td>
+                <td>0.296</td>
+                <td>-0.000</td>
+                <td><i>1.000</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT_Numerical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.316</td>
+                <td>-0.073</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>CoNumA</td>
+                <td>J. Dorsey</td>
+                <td>-0.564</td>
+                <td>-0.217</td>
+                <td><i>0.726</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>Analytical Reasoning Test - ART</td>
+                <td>J. Dorsey</td>
+                <td>-0.400</td>
+                <td>-0.217</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NIT Numerical</td>
+                <td>M.-A. Nydegger</td>
+                <td>0.037</td>
+                <td>-0.228</td>
+                <td><i>0.623</i></td>
+                <td>7</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Logical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.258</td>
+                <td>-0.303</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>SAITO_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.447</td>
+                <td>-0.314</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NIT Logical</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.132</td>
+                <td>-0.337</td>
+                <td><i>0.580</i></td>
+                <td>5</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT_Abstract_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.400</td>
+                <td>-0.436</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.400</td>
+                <td>-0.449</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>Spatial Assessment Test</td>
+                <td>A. Udriste / M.-A. Nydegger</td>
+                <td>-0.632</td>
+                <td>-0.664</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT_Verbal_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.738</td>
+                <td>-0.727</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+            <tr>
+                <td>NAIT_Logical_Subtest</td>
+                <td>M.-A. Nydegger</td>
+                <td>-0.738</td>
+                <td>-0.827</td>
+                <td><i>N/A</i></td>
+                <td>4</td>
+            </tr>
+        
+    </tbody>
+
+    </table>
+    </div>
+
+    <p style="text-align:center;">
+        <a href="../external_test_g-loadings.html">
+            Back to main report
+        </a>
+    </p>
+
+    </body>
+    </html>
+    
