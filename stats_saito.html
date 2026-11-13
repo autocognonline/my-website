@@ -256,12 +256,75 @@
     text-align: center;
     margin-top: 40px;
   }
+  .irt-graphs {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      min-width: 0;
+  }
+
+  .irt-graph {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      max-height: 45vh;
+      height: auto;
+      object-fit: contain;
+      cursor: zoom-in;
+  }
+
+  .image-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.88);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      cursor: zoom-out;
+  }
+
+  .image-overlay.active {
+      opacity: 1;
+      visibility: visible;
+  }
+
+  .image-overlay img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      cursor: default;
+  }
+  .table-title {
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      margin: 0 0 14px;
+      color: #111;
+  }
 
   @media (max-width: 768px) {
     .page {
       width: calc(100% - 20px);
       padding-top: 20px;
     }
+
+    .irt-graphs {
+          grid-template-columns: 1fr;
+      }
+
+      .irt-graph {
+          max-height: 35vh;
+      }
 
     .intro {
       margin-bottom: 22px;
@@ -339,7 +402,7 @@
 
     <section class="intro">
       <h1>Statistics of SAITO and its Subtests</h1>
-      <h3>11 September 2026</h3>
+      <h3>13 November 2026</h3>
       <p>Developed in February 2026, SAITO is a short high range I.Q. test designed as an introduction to high range tests for newcomers, while also serving as a formal examination.
       <p>The test is untimed and consists of 30 items covering five cognitive domains, including numerical, verbal, logical, abstract, and spatial reasoning. 
       Its format is similar to a condensed version of NOACT and NOFRAT, with each of the five subtests containing six items.</p>
@@ -351,32 +414,31 @@
       <p>Another important consideration is that SAITO is offered free of charge and is open to anyone, including potentially very young participants. 
       As a result, some submissions may not accurately reflect a candidate's true cognitive ability, as individuals may abandon the test prematurely or make avoidable errors due to lack of motivation or seriousness.
       This tendency can lead to somewhat deflated statistical results, and this should be kept in mind when interpreting the data.</p>
-      <p><strong>Below are the statistics for SAITO based on a sample of 63 submissions. All statistics have been computed using code written in python or R.</strong></p>
-      <p><strong>Please review the changelog at the bottom of the page and consult the statistical explanations page for further information</strong></p>
+      <p><strong>Below are the statistics for SAITO based on a sample of 75 submissions. All statistics have been computed using code written in python or R.</strong></p>
+      <p><strong>Please review the changelog at the bottom of the page and consult the statistical explanations page for further information.</strong></p>
     </section>
 
     <nav class="navbar" aria-label="Statistics sections">
       <button class="nav-button active" data-section="summary">
         Statistical Summary
       </button>
-
       <button class="nav-button" data-section="ivec">
-        Ivec’s Quality
+        Ivec's Quality
       </button>
-
       <button class="nav-button" data-section="candidates">
         Candidates
       </button>
-
       <button class="nav-button" data-section="correlations">
         Correlations
       </button>
-
-      <button class="nav-button" data-section="validity">
-        Construct Validity
+      <button class="nav-button" data-section="irt">
+        IRT
       </button>
       <button class="nav-button" data-section="items">
-        Item g-loadings
+        g-loading
+      </button>
+      <button class="nav-button" data-section="validity">
+        Construct Validity
       </button>
     </nav>
 
@@ -393,29 +455,29 @@
           <tbody>
             <tr class="group-row"><th colspan="2">Descriptive Statistics</th></tr>
             <tr><td>Lowest raw score</td><td>1</td></tr>
-            <tr><td>Highest raw score</td><td>29</td></tr>
-            <tr><td>Mean and 95% confidence uncertainty</td><td>14.54 ± 2.19</td></tr>
+            <tr><td>Highest raw score</td><td>30</td></tr>
+            <tr><td>Mean and 95% confidence uncertainty</td><td>14.25 ± 1.97</td></tr>
             <tr><td>Median</td><td>12.0</td></tr>
-            <tr><td>Mode</td><td>7.00</td></tr>
-            <tr><td>Raw score standard deviation</td><td>8.63</td></tr>
-            <tr><td>Quartile deviation</td><td>8.25</td></tr>
-            <tr><td>Skewness</td><td>0.27</td></tr>
-            <tr><td>Excess kurtosis</td><td>-1.40</td></tr>
-            <tr><td>Average number of attempts left</td><td>2.43</td></tr>
+            <tr><td>Mode</td><td>6</td></tr>
+            <tr><td>Raw score standard deviation</td><td>8.49</td></tr>
+            <tr><td>Quartile deviation</td><td>8.00</td></tr>
+            <tr><td>Skewness</td><td>0.34</td></tr>
+            <tr><td>Excess kurtosis</td><td>-1.26</td></tr>
+            <tr><td>Average number of attempts left</td><td>2.93</td></tr>
 
             <tr class="group-row"><th colspan="2">Reliability</th></tr>
-            <tr><td>Cronbach's alpha</td><td>0.954</td></tr>
-            <tr><td>McDonald's omega</td><td>0.951</td></tr>
-            <tr><td>Split-half reliability index</td><td>0.920</td></tr>
-            <tr><td>Spearman–Brown corrected reliability</td><td>0.958</td></tr>
+            <tr><td>Cronbach's alpha</td><td>0.952</td></tr>
+            <tr><td>McDonald's omega</td><td>0.950</td></tr>
+            <tr><td>Split-half reliability index</td><td>0.914</td></tr>
+            <tr><td>Spearman-Brown corrected reliability</td><td>0.955</td></tr>
 
             <tr class="group-row"><th colspan="2">Test Characteristics</th></tr>
-            <tr><td>Range</td><td>29</td></tr>
-            <tr><td>Resolution</td><td>8.50</td></tr>
+            <tr><td>Range</td><td>30</td></tr>
+            <tr><td>Resolution</td><td>8.00</td></tr>
             <tr><td>Sample-dependent hardness</td><td>0.60</td></tr>
-            <tr><td>Sample-independent hardness</td><td>0.55</td></tr>
-            <tr><td>Overall test complexity</td><td>0.52</td></tr>
-            <tr><td>Standard error of measurement (raw score)</td><td>1.86</td></tr>
+            <tr><td>Sample-independent hardness</td><td>0.45</td></tr>
+            <tr><td>Overall test complexity</td><td>0.46</td></tr>
+            <tr><td>Standard error of measurement (raw score)</td><td>1.87</td></tr>
           </tbody>
         </table>
       </div>
@@ -424,7 +486,7 @@
     <section id="ivec" class="card narrow section-card">
       <div class="table-container">
         <table class="metric-table">
-          <caption>Ivec’s Quality </caption>
+          <caption>Ivec's Quality </caption>
           <thead>
             <tr>
               <th>Metric</th>
@@ -436,8 +498,8 @@
               <th colspan="2">Item Classification</th>
             </tr>
             <tr><td>Number of items</td><td>30</td></tr>
-            <tr><td>Good items</td><td>26</td></tr>
-            <tr><td>Average items</td><td>3</td></tr>
+            <tr><td>Good items</td><td>25</td></tr>
+            <tr><td>Average items</td><td>4</td></tr>
             <tr><td>Suspicious items</td><td>1</td></tr>
             <tr><td>Bad items</td><td>0</td></tr>
             <tr><td>Unsolved items</td><td>0</td></tr>
@@ -445,15 +507,15 @@
             <tr class="group-row">
               <th colspan="2">Quality Estimates in Percentage</th>
             </tr>
-            <tr><td>Overall quality </td><td>80.5</td></tr>
-            <tr><td>Abstract subtest quality </td><td>77.7</td></tr>
-            <tr><td>Numerical subtest quality </td><td>89.1</td></tr>
-            <tr><td>Verbal subtest quality </td><td>85.3</td></tr>
-            <tr><td>Spatial subtest quality </td><td>75.6</td></tr>
+            <tr><td>Overall quality </td><td>81.0</td></tr>
+            <tr><td>Abstract subtest quality </td><td>78.4</td></tr>
+            <tr><td>Numerical subtest quality </td><td>88.2</td></tr>
+            <tr><td>Verbal subtest quality </td><td>82.8</td></tr>
+            <tr><td>Spatial subtest quality </td><td>77.8</td></tr>
             <tr><td>Logical subtest quality </td><td>74.7</td></tr>
-            <tr><td>Overal quality in the 130 to 150 I.Q. range  </td><td>82.9</td></tr>
-            <tr><td>Overal Quality in the 140 to 160 I.Q. range </td><td>77.0</td></tr>
-            <tr><td>Overal Quality in the 150 to 170 I.Q. range </td><td>63.0</td></tr>
+            <tr><td>Overal Quality in the 130 to 150 I.Q. range  </td><td>82.8</td></tr>
+            <tr><td>Overal Quality in the 140 to 160 I.Q. range </td><td>79.2</td></tr>
+            <tr><td>Overal Quality in the 150 to 170 I.Q. range </td><td>66.6</td></tr>
           </tbody>
         </table>
       </div>
@@ -464,7 +526,7 @@
         target="_blank"
         rel="noopener noreferrer"
       >
-        Information about Ivec’s quality
+        Information about Ivec's quality
       </a>
     </section>
 
@@ -480,20 +542,20 @@
           </thead>
           <tbody>
             <tr class="group-row"><th colspan="2">General data</th></tr>
-            <tr><td>Number of authenticated candidates</td><td>25</td></tr>
+            <tr><td>Number of authenticated candidates</td><td>27</td></tr>
             <tr><td>Youngest candidate in years</td><td>17</td></tr>
             <tr><td>Oldest candidate in years</td><td>76</td></tr>
-            <tr><td>Mean age in years</td><td>39.1</td></tr>
-            <tr><td>Median age in years</td><td>37.5</td></tr>
-            <tr><td>Age standard deviation in years</td><td>16.8</td></tr>
-            <tr><td>Percentage of males</td><td>96.0</td></tr>
-            <tr><td>Percentage of females</td><td>4.0</td></tr>
+            <tr><td>Mean age in years</td><td>38.0</td></tr>
+            <tr><td>Median age in years</td><td>35.5</td></tr>
+            <tr><td>Age standard deviation in years</td><td>16.5</td></tr>
+            <tr><td>Percentage of males</td><td>96.3</td></tr>
+            <tr><td>Percentage of females</td><td>3.7</td></tr>
             <tr><td>Percentage classified as unknown/other sex</td><td>0.0</td></tr>
-            <tr><td>Correlation between age and raw score</td><td>-0.011</td></tr>
-            <tr><td>Correlation between number of tests taken and raw score</td><td>0.228</td></tr>
+            <tr><td>Correlation between age and raw score</td><td>-0.017</td></tr>
+            <tr><td>Correlation between number of tests taken and raw score</td><td>0.253</td></tr>
             <tr class="group-row"><th colspan="2">Candidates by Country, listed only if more than 1</th></tr>
+            <tr><td>China</td><td>5</td></tr>
             <tr><td>Italy</td><td>3</td></tr>
-            <tr><td>China</td><td>3</td></tr>
             <tr><td>Spain</td><td>2</td></tr>
             <tr><td>United States of America</td><td>2</td></tr>
           </tbody>
@@ -527,11 +589,74 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>Problems In Gentle Slopes of the third degree</td><td>P. Cooijmans</td><td>1.000</td><td>1.000</td><td><i> </i></td><td>3</td></tr><tr><td>Analytical Reasoning Test</td><td>J. Dorsey</td><td>1.000</td><td>1.000</td><td><i> </i></td><td>4</td></tr><tr><td>Analytiq-50</td><td>N. Joshi</td><td>1.000</td><td>1.000</td><td><i> </i></td><td>3</td></tr><tr><td>SRA33 - Spatial Reasoning Assessment 33</td><td>T. Prousalis</td><td>1.000</td><td>0.993</td><td><i> </i></td><td>3</td></tr><tr><td>SPUTNIK Fullscale Intelligence Test</td><td>IQexams</td><td>1.000</td><td>0.991</td><td><i> </i></td><td>3</td></tr><tr><td>DO-S-32</td><td>M.D. Chau</td><td>1.000</td><td>0.988</td><td><i> </i></td><td>3</td></tr><tr><td>OMEGA</td><td>IQexams</td><td>1.000</td><td>0.971</td><td><i> </i></td><td>3</td></tr><tr><td>SPEED</td><td>I. Ivec</td><td>1.000</td><td>0.964</td><td><i> </i></td><td>3</td></tr><tr><td>VRA 50</td><td>T. Prousalis</td><td>1.000</td><td>0.954</td><td><i> </i></td><td>3</td></tr><tr><td>ChronIQ</td><td>M. Lunardini / J. Gordon</td><td>1.000</td><td>0.933</td><td><i> </i></td><td>3</td></tr><tr><td>Genius Association Test</td><td>P. Cooijmans</td><td>1.000</td><td>0.929</td><td><i> </i></td><td>3</td></tr><tr><td>INSC 2019</td><td>T. Prousalis</td><td>1.000</td><td>0.904</td><td><i>0.035</i></td><td>5</td></tr><tr><td>NEAITO Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.927</td><td>0.975</td><td><i>3.67e-05</i></td><td>8</td></tr><tr><td>InFusion Test</td><td>M. Scillitani</td><td>1.000</td><td>0.891</td><td><i> </i></td><td>3</td></tr><tr><td>NEAITO</td><td>M.-A. Nydegger</td><td>0.910</td><td>0.956</td><td><i>2.05e-04</i></td><td>8</td></tr><tr><td>Numerus Light 2</td><td>I. Ivec</td><td>0.889</td><td>0.976</td><td><i> </i></td><td>4</td></tr><tr><td>Tractatus Numericus 2</td><td>T. Prousalis</td><td>1.000</td><td>0.851</td><td><i> </i></td><td>3</td></tr><tr><td>Esoterica</td><td>M. Predavec</td><td>0.866</td><td>0.982</td><td><i> </i></td><td>3</td></tr><tr><td>NOFRAT</td><td>M.-A. Nydegger</td><td>0.910</td><td>0.938</td><td><i>5.65e-04</i></td><td>8</td></tr><tr><td>The Smell Test</td><td>P. Cooijmans</td><td>0.866</td><td>0.971</td><td><i> </i></td><td>3</td></tr><tr><td>TetrastIQ Light</td><td>G. Garofalo</td><td>1.000</td><td>0.836</td><td><i> </i></td><td>3</td></tr><tr><td>International Numerical Reasoning Contest 2018</td><td>T. Prousalis</td><td>0.866</td><td>0.961</td><td><i> </i></td><td>3</td></tr><tr><td>Associative LIMIT</td><td>P. Cooijmans</td><td>0.900</td><td>0.916</td><td><i>0.029</i></td><td>5</td></tr><tr><td>NEAITO Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.852</td><td>0.963</td><td><i>1.23e-04</i></td><td>8</td></tr><tr><td>Two-Thirds InFusion</td><td>M. Scillitani</td><td>0.949</td><td>0.866</td><td><i> </i></td><td>4</td></tr><tr><td>Hexa</td><td>J. Dorsey</td><td>0.866</td><td>0.945</td><td><i> </i></td><td>3</td></tr><tr><td>LA24 Test</td><td>C. Backlund</td><td>0.866</td><td>0.945</td><td><i> </i></td><td>3</td></tr><tr><td>CEREBRIQ</td><td>A. Leggieri</td><td>0.949</td><td>0.852</td><td><i> </i></td><td>4</td></tr><tr><td>Cooijmans Intelligence Test - Form 3E</td><td>P. Cooijmans</td><td>0.928</td><td>0.865</td><td><i>0.026</i></td><td>6</td></tr><tr><td>Medius Cifra Abstrusa</td><td>A. Udriste</td><td>0.866</td><td>0.918</td><td><i> </i></td><td>3</td></tr><tr><td>Nydegger Online Automatic Intelligence Scale - Form 1</td><td>M.-A. Nydegger</td><td>0.949</td><td>0.828</td><td><i> </i></td><td>4</td></tr><tr><td>NAITOR Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.913</td><td>0.858</td><td><i>1.74e-04</i></td><td>13</td></tr><tr><td>NOFRAT Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.867</td><td>0.904</td><td><i>0.002</i></td><td>8</td></tr><tr><td>Tang</td><td>H. Chen</td><td>1.000</td><td>0.758</td><td><i> </i></td><td>4</td></tr><tr><td>NAITOR</td><td>M.-A. Nydegger</td><td>0.803</td><td>0.949</td><td><i>7.45e-07</i></td><td>13</td></tr><tr><td>NOAIS2 Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.800</td><td>0.950</td><td><i> </i></td><td>4</td></tr><tr><td>Long Duration Spatial Exam</td><td>IQexams</td><td>0.866</td><td>0.866</td><td><i> </i></td><td>3</td></tr><tr><td>ENSDT 20</td><td>M. Ripa</td><td>0.866</td><td>0.866</td><td><i> </i></td><td>3</td></tr><tr><td>Eclipses</td><td>M. Scillitani</td><td>0.866</td><td>0.866</td><td><i> </i></td><td>3</td></tr><tr><td>SAITO Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.812</td><td>0.917</td><td><i>1.12e-10</i></td><td>25</td></tr><tr><td>NOCTAE</td><td>M.-A. Nydegger</td><td>0.914</td><td>0.799</td><td><i>0.006</i></td><td>10</td></tr><tr><td>NOCTAE Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.836</td><td>0.875</td><td><i>9.17e-04</i></td><td>10</td></tr><tr><td>Wechsler Adult Intelligence Scale (aggregate)</td><td>D. Wechsler</td><td>0.886</td><td>0.825</td><td><i>0.043</i></td><td>6</td></tr><tr><td>NVRA 80</td><td>T. Prousalis</td><td>0.800</td><td>0.905</td><td><i> </i></td><td>4</td></tr><tr><td>SAITO Logical Subtest</td><td>M.-A. Nydegger</td><td>0.800</td><td>0.905</td><td><i>5.20e-10</i></td><td>25</td></tr><tr><td>SLSE II</td><td>J. Wai</td><td>0.894</td><td>0.795</td><td><i>0.108</i></td><td>5</td></tr><tr><td>The Nemesis Test</td><td>P. Cooijmans</td><td>0.866</td><td>0.822</td><td><i> </i></td><td>3</td></tr><tr><td>Abstract Reasoning Test - ART</td><td>D. Kutle</td><td>0.889</td><td>0.787</td><td><i> </i></td><td>4</td></tr><tr><td>NOFRAT Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.789</td><td>0.874</td><td><i>0.005</i></td><td>8</td></tr><tr><td>NOCTAE Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.894</td><td>0.768</td><td><i>0.010</i></td><td>10</td></tr><tr><td>SAITO Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.740</td><td>0.907</td><td><i>4.23e-10</i></td><td>25</td></tr><tr><td>NEAITO Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.845</td><td>0.788</td><td><i>0.020</i></td><td>8</td></tr><tr><td>The Aion Test</td><td>C. Backlund</td><td>0.866</td><td>0.756</td><td><i> </i></td><td>3</td></tr><tr><td>Introgers</td><td>M. Scillitani</td><td>0.866</td><td>0.756</td><td><i> </i></td><td>3</td></tr><tr><td>SAITO Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.865</td><td>0.754</td><td><i>1.36e-05</i></td><td>25</td></tr><tr><td>NOACT Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.647</td><td>0.968</td><td><i>4.44e-06</i></td><td>10</td></tr><tr><td>NAITOR Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.723</td><td>0.890</td><td><i>4.62e-05</i></td><td>13</td></tr><tr><td>NAIT</td><td>M.-A. Nydegger</td><td>0.771</td><td>0.841</td><td><i>0.002</i></td><td>10</td></tr><tr><td>NAIT Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.724</td><td>0.879</td><td><i>8.14e-04</i></td><td>10</td></tr><tr><td>A Paranoiac's Torture - Intelligence Test Utilizing Diabolic Exactitude</td><td>P. Cooijmans</td><td>0.775</td><td>0.827</td><td><i> </i></td><td>4</td></tr><tr><td>Numerus Ultrafun</td><td>I. Ivec</td><td>0.865</td><td>0.733</td><td><i>0.159</i></td><td>5</td></tr><tr><td>Russian Doll</td><td>M.D. Chau</td><td>0.866</td><td>0.731</td><td><i> </i></td><td>3</td></tr><tr><td>Cooijmans Intelligence Test - Form 4E</td><td>P. Cooijmans</td><td>0.866</td><td>0.731</td><td><i> </i></td><td>3</td></tr><tr><td>NAITOR Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.676</td><td>0.919</td><td><i>8.75e-06</i></td><td>13</td></tr><tr><td>MCST 32</td><td>P.L. Miranda</td><td>0.700</td><td>0.894</td><td><i>0.041</i></td><td>5</td></tr><tr><td>Logos Test - VC 2026</td><td>T. Prousalis</td><td>0.833</td><td>0.750</td><td><i> </i></td><td>4</td></tr><tr><td>Levant</td><td>D. Kutle</td><td>0.894</td><td>0.676</td><td><i>0.210</i></td><td>5</td></tr><tr><td>COLOSSEUM</td><td>J. Dorsey</td><td>0.825</td><td>0.745</td><td><i>0.148</i></td><td>5</td></tr><tr><td>NOFRAT Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.834</td><td>0.730</td><td><i>0.040</i></td><td>8</td></tr><tr><td>ZD Legenda Test</td><td>C. Backlund</td><td>0.770</td><td>0.776</td><td><i>0.070</i></td><td>6</td></tr><tr><td>SAITO Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.755</td><td>0.784</td><td><i>3.51e-06</i></td><td>25</td></tr><tr><td>Einplex</td><td>I. Ivec</td><td>0.778</td><td>0.759</td><td><i>0.029</i></td><td>8</td></tr><tr><td>NAIT Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.715</td><td>0.810</td><td><i>0.004</i></td><td>10</td></tr><tr><td>AdSub</td><td>J. Dorsey</td><td>0.738</td><td>0.775</td><td><i> </i></td><td>4</td></tr><tr><td>NEAITO Logical Subtest</td><td>M.-A. Nydegger</td><td>0.846</td><td>0.663</td><td><i>0.073</i></td><td>8</td></tr><tr><td>ANOTELEIA 44</td><td>M. Predavec</td><td>0.833</td><td>0.663</td><td><i> </i></td><td>4</td></tr><tr><td>Verba 66</td><td>M. Predavec</td><td>0.763</td><td>0.715</td><td><i>0.175</i></td><td>5</td></tr><tr><td>NOAIS2 Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.763</td><td>0.714</td><td><i>0.176</i></td><td>5</td></tr><tr><td>IGNITER</td><td>J. Dorsey</td><td>0.632</td><td>0.844</td><td><i> </i></td><td>4</td></tr><tr><td>LSHR</td><td>I. Ivec</td><td>0.500</td><td>0.971</td><td><i> </i></td><td>3</td></tr><tr><td>Spatial Assessment Test</td><td>A. Udriste / M.-A. Nydegger</td><td>0.721</td><td>0.731</td><td><i>0.062</i></td><td>7</td></tr><tr><td>Gordian Knot</td><td>T. Prousalis</td><td>0.655</td><td>0.789</td><td><i>0.020</i></td><td>8</td></tr><tr><td>NAITOR Logical Subtest</td><td>M.-A. Nydegger</td><td>0.611</td><td>0.832</td><td><i>4.18e-04</i></td><td>13</td></tr><tr><td>Lieshout International Mesospheric Intelligence Test</td><td>P. Cooijmans</td><td>0.738</td><td>0.703</td><td><i> </i></td><td>4</td></tr><tr><td>LSHR Light</td><td>I. Ivec</td><td>0.731</td><td>0.693</td><td><i>0.038</i></td><td>9</td></tr><tr><td>VRA-F</td><td>T. Prousalis</td><td>0.500</td><td>0.924</td><td><i> </i></td><td>3</td></tr><tr><td>NOACT Logical Subtest</td><td>M.-A. Nydegger</td><td>0.532</td><td>0.884</td><td><i>6.79e-04</i></td><td>10</td></tr><tr><td>ARA</td><td>T. Prousalis</td><td>0.703</td><td>0.705</td><td><i>0.184</i></td><td>5</td></tr><tr><td>NAITOR Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.599</td><td>0.807</td><td><i>8.60e-04</i></td><td>13</td></tr><tr><td>NOACT Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.503</td><td>0.902</td><td><i>3.59e-04</i></td><td>10</td></tr><tr><td>Logica Rigor Numerorum</td><td>A. Udriste</td><td>0.600</td><td>0.788</td><td><i> </i></td><td>4</td></tr><tr><td>Verbal Test of Pattern Recognition</td><td>A. Udriste</td><td>0.526</td><td>0.834</td><td><i>0.079</i></td><td>5</td></tr><tr><td>VGT-F</td><td>T. Prousalis</td><td>0.649</td><td>0.712</td><td><i>0.178</i></td><td>5</td></tr><tr><td>Alphabet </td><td>J. Dorsey</td><td>0.847</td><td>0.506</td><td><i>0.247</i></td><td>7</td></tr><tr><td>Algebrica</td><td>M. Predavec</td><td>0.667</td><td>0.683</td><td><i>0.204</i></td><td>5</td></tr><tr><td>Tetragram</td><td>G. Garofalo</td><td>0.632</td><td>0.694</td><td><i> </i></td><td>4</td></tr><tr><td>MCST 40</td><td>P.L. Miranda</td><td>0.800</td><td>0.522</td><td><i> </i></td><td>4</td></tr><tr><td>International Spatial Reasoning Contest 2018 / SEE30</td><td>T. Prousalis</td><td>0.667</td><td>0.653</td><td><i>0.111</i></td><td>7</td></tr><tr><td>ZUN Test</td><td>C. Backlund</td><td>0.500</td><td>0.817</td><td><i> </i></td><td>3</td></tr><tr><td>Numerus Light</td><td>I. Ivec</td><td>0.574</td><td>0.739</td><td><i>0.093</i></td><td>6</td></tr><tr><td>Arete</td><td>A. Toliopoulos</td><td>0.500</td><td>0.789</td><td><i> </i></td><td>3</td></tr><tr><td>NOACT</td><td>M.-A. Nydegger</td><td>0.378</td><td>0.903</td><td><i>3.39e-04</i></td><td>10</td></tr><tr><td>X&Y</td><td>P.L. Miranda</td><td>0.632</td><td>0.643</td><td><i> </i></td><td>4</td></tr><tr><td>Road to Damascus</td><td>D. Kutle</td><td>0.585</td><td>0.688</td><td><i>0.131</i></td><td>6</td></tr><tr><td>ARI8MOI</td><td>A. Toliopoulos</td><td>0.500</td><td>0.756</td><td><i> </i></td><td>3</td></tr><tr><td>Numerical section of The Marathon Test</td><td>P. Cooijmans</td><td>0.600</td><td>0.651</td><td><i> </i></td><td>4</td></tr><tr><td>Reduction Riddles</td><td>J. Dorsey</td><td>0.652</td><td>0.598</td><td><i>0.210</i></td><td>6</td></tr><tr><td>NAIT Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.517</td><td>0.723</td><td><i>0.018</i></td><td>10</td></tr><tr><td>SPECTRA </td><td>J. Dorsey</td><td>0.551</td><td>0.667</td><td><i>0.148</i></td><td>6</td></tr><tr><td>Hat-triq</td><td>A. Andersson</td><td>0.564</td><td>0.631</td><td><i>0.253</i></td><td>5</td></tr><tr><td>NOCTAE Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.712</td><td>0.483</td><td><i>0.157</i></td><td>10</td></tr><tr><td>INSC 2024 - NGT-F</td><td>T. Prousalis</td><td>0.638</td><td>0.537</td><td><i>0.272</i></td><td>6</td></tr><tr><td>LAPT</td><td>C. Backlund</td><td>0.541</td><td>0.631</td><td><i>0.253</i></td><td>5</td></tr><tr><td>The Pirate Test</td><td>D. Kutle</td><td>0.688</td><td>0.470</td><td><i>0.424</i></td><td>5</td></tr><tr><td>NAIT Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.591</td><td>0.567</td><td><i>0.087</i></td><td>10</td></tr><tr><td>NOAIS2 Logical Subtest</td><td>M.-A. Nydegger</td><td>0.632</td><td>0.504</td><td><i> </i></td><td>4</td></tr><tr><td>NOACT Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.319</td><td>0.817</td><td><i>0.004</i></td><td>10</td></tr><tr><td>PatNum</td><td>J. Dorsey</td><td>0.488</td><td>0.637</td><td><i>0.090</i></td><td>8</td></tr><tr><td>Numericore</td><td>D. Fourie</td><td>0.404</td><td>0.703</td><td><i>0.078</i></td><td>7</td></tr><tr><td>NPRA-R</td><td>T. Prousalis</td><td>0.527</td><td>0.570</td><td><i>0.316</i></td><td>5</td></tr><tr><td>Simtollect</td><td>I. Ivec</td><td>0.224</td><td>0.874</td><td><i>0.053</i></td><td>5</td></tr><tr><td>9I6 Test</td><td>L. Dubois</td><td>0.500</td><td>0.596</td><td><i> </i></td><td>3</td></tr><tr><td>NIT-Form 1</td><td>M.-A. Nydegger</td><td>0.400</td><td>0.685</td><td><i> </i></td><td>4</td></tr><tr><td>NAIT Logical Subtest</td><td>M.-A. Nydegger</td><td>0.568</td><td>0.495</td><td><i>0.146</i></td><td>10</td></tr><tr><td>Backspace</td><td>IQexams</td><td>0.500</td><td>0.554</td><td><i> </i></td><td>3</td></tr><tr><td>Calculus Luminis Mensura</td><td>A. Udriste</td><td>0.500</td><td>0.554</td><td><i>0.333</i></td><td>5</td></tr><tr><td>Free Fall</td><td>I. Ivec</td><td>0.568</td><td>0.486</td><td><i>0.185</i></td><td>9</td></tr><tr><td>Arcanum</td><td>D. Kutle</td><td>0.785</td><td>0.262</td><td><i>0.571</i></td><td>7</td></tr><tr><td>Numerus Classic</td><td>I. Ivec</td><td>0.316</td><td>0.729</td><td><i> </i></td><td>4</td></tr><tr><td>Numerus Strictus Logicae 36</td><td>A. Udriste</td><td>0.600</td><td>0.443</td><td><i> </i></td><td>4</td></tr><tr><td>SLSE 48</td><td>J. Wai</td><td>0.500</td><td>0.526</td><td><i> </i></td><td>3</td></tr><tr><td>International Numerical Sequences Contest 2017 / NPRA-F</td><td>T. Prousalis</td><td>0.554</td><td>0.454</td><td><i>0.366</i></td><td>6</td></tr><tr><td>NEAITO Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.377</td><td>0.630</td><td><i>0.094</i></td><td>8</td></tr><tr><td>XVLingua</td><td>M. Predavec</td><td>0.544</td><td>0.459</td><td><i> </i></td><td>4</td></tr><tr><td>Synthesis Numerospatialis</td><td>A. Udriste</td><td>0.500</td><td>0.500</td><td><i> </i></td><td>3</td></tr><tr><td>Panthera Test</td><td>C. Backlund</td><td>0.500</td><td>0.500</td><td><i> </i></td><td>3</td></tr><tr><td>Dicing with death</td><td>P. Cooijmans</td><td>0.500</td><td>0.468</td><td><i> </i></td><td>3</td></tr><tr><td>OVAT 33</td><td>M.-A. Nydegger</td><td>0.500</td><td>0.455</td><td><i>0.258</i></td><td>8</td></tr><tr><td>Numerologica</td><td>A. Udriste</td><td>0.500</td><td>0.454</td><td><i> </i></td><td>3</td></tr><tr><td>Test of Interpretive Power</td><td>G. A. Grove</td><td>0.500</td><td>0.454</td><td><i> </i></td><td>3</td></tr><tr><td>Nydegger Online Automatic Intelligence Scale - Form 2</td><td>M.-A. Nydegger</td><td>0.500</td><td>0.438</td><td><i> </i></td><td>3</td></tr><tr><td>LUX 25</td><td>J. Betts</td><td>0.544</td><td>0.382</td><td><i> </i></td><td>4</td></tr><tr><td>Numerus</td><td>I. Ivec</td><td>0.466</td><td>0.456</td><td><i>0.217</i></td><td>9</td></tr><tr><td>Tractatus Numericus</td><td>T. Prousalis</td><td>0.500</td><td>0.397</td><td><i> </i></td><td>3</td></tr><tr><td>Echo Numbers</td><td>M. Scillitani</td><td>0.500</td><td>0.387</td><td><i> </i></td><td>3</td></tr><tr><td>Triplex</td><td>I. Ivec</td><td>0.456</td><td>0.416</td><td><i>0.485</i></td><td>5</td></tr><tr><td>STADIUM</td><td>J. Dorsey</td><td>0.500</td><td>0.371</td><td><i> </i></td><td>3</td></tr><tr><td>SPIRAL</td><td>J. Dorsey</td><td>0.500</td><td>0.323</td><td><i>0.596</i></td><td>5</td></tr><tr><td>ILLUSION </td><td>J. Dorsey</td><td>0.356</td><td>0.451</td><td><i>0.191</i></td><td>10</td></tr><tr><td>Morphic Verbal Associations</td><td>A. Udriste</td><td>0.500</td><td>0.289</td><td><i> </i></td><td>4</td></tr><tr><td>OASIS</td><td>J. Dorsey</td><td>0.438</td><td>0.300</td><td><i>0.564</i></td><td>6</td></tr><tr><td>The Sargasso Test</td><td>P. Cooijmans</td><td>0.265</td><td>0.451</td><td><i>0.369</i></td><td>6</td></tr><tr><td>World Intelligence Test</td><td>J. Betts</td><td>0.374</td><td>0.302</td><td><i>0.510</i></td><td>7</td></tr><tr><td>Rising Riddles</td><td>J. Dorsey</td><td>0.333</td><td>0.333</td><td><i> </i></td><td>4</td></tr><tr><td>G-Puzzles</td><td>C. Backlund</td><td>0.258</td><td>0.309</td><td><i> </i></td><td>4</td></tr><tr><td>​IMAGE</td><td>J. Dorsey</td><td>0.236</td><td>0.302</td><td><i> </i></td><td>4</td></tr><tr><td>NOAIS2 Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.316</td><td>0.203</td><td><i> </i></td><td>4</td></tr><tr><td>QuantIQ V2</td><td>K.E. Ferrell</td><td>0.316</td><td>0.196</td><td><i> </i></td><td>4</td></tr><tr><td>MOSAIC</td><td>J. Dorsey</td><td>0.368</td><td>0.093</td><td><i>0.882</i></td><td>5</td></tr><tr><td>Hieroglyphica</td><td>M. Predavec</td><td>0.205</td><td>0.252</td><td><i>0.682</i></td><td>5</td></tr><tr><td>High Range Cognitive Ability Scale - HRCAS</td><td>M.-A. Nydegger</td><td>0.200</td><td>0.256</td><td><i> </i></td><td>4</td></tr><tr><td>International Verbal Reasoning Contest 2018</td><td>T. Prousalis</td><td>0.270</td><td>0.117</td><td><i>0.802</i></td><td>7</td></tr><tr><td>The Alchemist Test</td><td>A. El Husseini</td><td>0.000</td><td>0.359</td><td><i> </i></td><td>3</td></tr><tr><td>MultDiv</td><td>J. Dorsey</td><td>0.258</td><td>0.098</td><td><i> </i></td><td>4</td></tr><tr><td>SLSE I</td><td>J. Wai</td><td>0.057</td><td>0.254</td><td><i>0.680</i></td><td>5</td></tr><tr><td>NOAIS2 Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.152</td><td>0.155</td><td><i>0.769</i></td><td>6</td></tr><tr><td>METEOR</td><td>J. Dorsey</td><td>0.344</td><td>-0.045</td><td><i>0.943</i></td><td>5</td></tr><tr><td>Asterix</td><td>J. Betts</td><td>0.062</td><td>0.205</td><td><i>0.697</i></td><td>6</td></tr><tr><td>LRA</td><td>T. Prousalis</td><td>0.000</td><td>0.241</td><td><i> </i></td><td>4</td></tr><tr><td>PATMOS</td><td>D. Kutle</td><td>0.000</td><td>0.189</td><td><i> </i></td><td>3</td></tr><tr><td>PatLet </td><td>J. Dorsey</td><td>0.000</td><td>0.175</td><td><i> </i></td><td>4</td></tr><tr><td>Only Idiots Test</td><td>P. Cooijmans</td><td>0.000</td><td>0.143</td><td><i> </i></td><td>3</td></tr><tr><td>Narcissus' last stand</td><td>P. Cooijmans</td><td>0.000</td><td>0.115</td><td><i> </i></td><td>3</td></tr><tr><td>International Verbal Reasoning Contest 2017 / VCAA</td><td>T. Prousalis</td><td>0.100</td><td>0.005</td><td><i>0.993</i></td><td>5</td></tr><tr><td>Three Sonnets</td><td>H. Siemens</td><td>0.000</td><td>0.052</td><td><i> </i></td><td>3</td></tr><tr><td>Numeralica</td><td>A. Udriste</td><td>0.000</td><td>0.000</td><td><i> </i></td><td>4</td></tr><tr><td>CELESTIAL</td><td>J. Dorsey</td><td>0.000</td><td>0.000</td><td><i> </i></td><td>4</td></tr><tr><td>COSMIC</td><td>J. Dorsey</td><td>0.000</td><td>-0.000</td><td><i>1.000</i></td><td>8</td></tr><tr><td>LDA-SWaN</td><td>G. Lombardi</td><td>-0.051</td><td>-0.018</td><td><i>0.977</i></td><td>5</td></tr><tr><td>Triplex Light</td><td>I. Ivec</td><td>-0.113</td><td>-0.012</td><td><i>0.979</i></td><td>7</td></tr><tr><td>Qoymans Multiple-Choice #5</td><td>P. Cooijmans</td><td>0.000</td><td>-0.351</td><td><i> </i></td><td>3</td></tr><tr><td>Test of the Beheaded Man</td><td>P. Cooijmans</td><td>-0.400</td><td>0.028</td><td><i> </i></td><td>4</td></tr><tr><td>Logima Strictica 36</td><td>R. Lato</td><td>-0.211</td><td>-0.208</td><td><i> </i></td><td>4</td></tr><tr><td>Alliteration Analogies Assessment</td><td>J. Dorsey</td><td>-0.272</td><td>-0.174</td><td><i> </i></td><td>4</td></tr><tr><td>ASMuDi</td><td>J. Dorsey</td><td>-0.315</td><td>-0.274</td><td><i>0.599</i></td><td>6</td></tr><tr><td>Cooijmans Intelligence Test 5</td><td>P. Cooijmans</td><td>-0.316</td><td>-0.284</td><td><i> </i></td><td>4</td></tr><tr><td>Lexiq</td><td>N. Soulios</td><td>-0.400</td><td>-0.287</td><td><i> </i></td><td>4</td></tr><tr><td>X10 Test</td><td>C. Backlund</td><td>-0.500</td><td>-0.327</td><td><i> </i></td><td>3</td></tr><tr><td>The Marathon Test</td><td>P. Cooijmans</td><td>-0.500</td><td>-0.371</td><td><i> </i></td><td>3</td></tr><tr><td>Amathematical Patterns Test</td><td>A. Udriste</td><td>-0.500</td><td>-0.500</td><td><i> </i></td><td>3</td></tr><tr><td>Rhyming Riddles </td><td>J. Dorsey</td><td>-0.577</td><td>-0.577</td><td><i> </i></td><td>4</td></tr><tr><td>Mathema</td><td>J. Betts</td><td>-0.671</td><td>-0.644</td><td><i>0.085</i></td><td>8</td></tr><tr><td>AGLT</td><td>A.A. Gangvik</td><td>-0.866</td><td>-0.739</td><td><i>0.154</i></td><td>5</td></tr><tr><td>Buckets of Words</td><td>D. Kutle</td><td>-0.866</td><td>-0.866</td><td><i> </i></td><td>3</td></tr><tr><td>Logica Verbalis</td><td>T. Prousalis</td><td>-0.866</td><td>-0.988</td><td><i> </i></td><td>3</td></tr>
+            <tr><td>Analytical Reasoning Test - ART</td><td>J. Dorsey</td><td>1.000</td><td>1.000</td><td><i> </i></td><td>4</td></tr><tr><td>Silent Numbers</td><td>J. Li</td><td>1.000</td><td>1.000</td><td><i> </i></td><td>3</td></tr><tr><td>Analytiq-50</td><td>N. Joshi</td><td>1.000</td><td>1.000</td><td><i> </i></td><td>3</td></tr><tr><td>SRA33 - Spatial Reasoning Assessment 33</td><td>T. Prousalis</td><td>1.000</td><td>0.993</td><td><i> </i></td><td>3</td></tr><tr><td>SPUTNIK Fullscale Intelligence Test</td><td>IQexams</td><td>1.000</td><td>0.991</td><td><i> </i></td><td>3</td></tr><tr><td>DO-S-32</td><td>M.D. Chau</td><td>1.000</td><td>0.988</td><td><i> </i></td><td>3</td></tr><tr><td>Orion - International Contest 2021</td><td>T. Prousalis</td><td>1.000</td><td>0.973</td><td><i> </i></td><td>4</td></tr><tr><td>Problems In Gentle Slopes of the third degree</td><td>P. Cooijmans</td><td>1.000</td><td>0.973</td><td><i> </i></td><td>4</td></tr><tr><td>OMEGA</td><td>IQexams</td><td>1.000</td><td>0.971</td><td><i> </i></td><td>3</td></tr><tr><td>The Phi Test</td><td>T. Prousalis</td><td>1.000</td><td>0.967</td><td><i> </i></td><td>3</td></tr><tr><td>InFusion Test</td><td>M. Scillitani</td><td>1.000</td><td>0.967</td><td><i> </i></td><td>4</td></tr><tr><td>VRA 50</td><td>T. Prousalis</td><td>1.000</td><td>0.954</td><td><i> </i></td><td>3</td></tr><tr><td>First Association Test</td><td>M. Scillitani</td><td>1.000</td><td>0.945</td><td><i> </i></td><td>3</td></tr><tr><td>ChronIQ</td><td>M. Lunardini / J. Gordon</td><td>1.000</td><td>0.933</td><td><i> </i></td><td>3</td></tr><tr><td>The Smell Test</td><td>P. Cooijmans</td><td>0.949</td><td>0.981</td><td><i> </i></td><td>4</td></tr><tr><td>The Nemesis Test</td><td>P. Cooijmans</td><td>0.949</td><td>0.981</td><td><i> </i></td><td>4</td></tr><tr><td>Genius Association Test</td><td>P. Cooijmans</td><td>1.000</td><td>0.929</td><td><i> </i></td><td>3</td></tr><tr><td>FNT-10 TEST</td><td>X. Li</td><td>1.000</td><td>0.923</td><td><i> </i></td><td>3</td></tr><tr><td>The Piper's Test</td><td>P. Cooijmans</td><td>0.949</td><td>0.962</td><td><i> </i></td><td>4</td></tr><tr><td>INSC 2019</td><td>T. Prousalis</td><td>1.000</td><td>0.904</td><td><i>0.035</i></td><td>5</td></tr><tr><td>NEAITO Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.927</td><td>0.964</td><td><i>1.14e-04</i></td><td>8</td></tr><tr><td>A Paranoiac's Torture - Intelligence Test Utilizing Diabolic Exactitude</td><td>P. Cooijmans</td><td>0.894</td><td>0.980</td><td><i>0.003</i></td><td>5</td></tr><tr><td>NOFRAT</td><td>M.-A. Nydegger</td><td>0.932</td><td>0.929</td><td><i>2.94e-04</i></td><td>9</td></tr><tr><td>Tractatus Numericus 2</td><td>T. Prousalis</td><td>1.000</td><td>0.851</td><td><i> </i></td><td>3</td></tr><tr><td>Cooijmans Intelligence Test - Form 3E</td><td>P. Cooijmans</td><td>0.955</td><td>0.894</td><td><i>0.007</i></td><td>7</td></tr><tr><td>Esoterica</td><td>M. Predavec</td><td>0.866</td><td>0.982</td><td><i> </i></td><td>3</td></tr><tr><td>Strict Logic Sequence Examination II - SLSE II</td><td>J. Wai</td><td>0.941</td><td>0.898</td><td><i>0.015</i></td><td>6</td></tr><tr><td>TetrastIQ Light</td><td>G. Garofalo</td><td>1.000</td><td>0.836</td><td><i> </i></td><td>3</td></tr><tr><td>International Numerical Reasoning Contest 2018</td><td>T. Prousalis</td><td>0.866</td><td>0.961</td><td><i> </i></td><td>3</td></tr><tr><td>Serendipity</td><td>D. Kutle</td><td>0.866</td><td>0.961</td><td><i> </i></td><td>3</td></tr><tr><td>Tang</td><td>H. Chen</td><td>1.000</td><td>0.826</td><td><i>0.085</i></td><td>5</td></tr><tr><td>Numina 4D</td><td>L. Smith</td><td>0.866</td><td>0.956</td><td><i> </i></td><td>3</td></tr><tr><td>NOCTAE Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.906</td><td>0.912</td><td><i>3.61e-05</i></td><td>12</td></tr><tr><td>Associative LIMIT</td><td>P. Cooijmans</td><td>0.900</td><td>0.916</td><td><i>0.029</i></td><td>5</td></tr><tr><td>Two-Thirds InFusion</td><td>M. Scillitani</td><td>0.949</td><td>0.866</td><td><i> </i></td><td>4</td></tr><tr><td>Hexa</td><td>J. Dorsey</td><td>0.866</td><td>0.945</td><td><i> </i></td><td>3</td></tr><tr><td>LA24 Test</td><td>C. Backlund</td><td>0.866</td><td>0.945</td><td><i> </i></td><td>3</td></tr><tr><td>CEREBRIQ</td><td>A. Leggieri</td><td>0.949</td><td>0.852</td><td><i> </i></td><td>4</td></tr><tr><td>NOCTAE</td><td>M.-A. Nydegger</td><td>0.942</td><td>0.848</td><td><i>4.98e-04</i></td><td>12</td></tr><tr><td>NAITOR</td><td>M.-A. Nydegger</td><td>0.846</td><td>0.940</td><td><i>5.68e-07</i></td><td>14</td></tr><tr><td>Medius Cifra Abstrusa</td><td>A. Udriste</td><td>0.866</td><td>0.918</td><td><i> </i></td><td>3</td></tr><tr><td>NEAITO</td><td>M.-A. Nydegger</td><td>0.867</td><td>0.916</td><td><i>0.001</i></td><td>8</td></tr><tr><td>NAITOR Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.913</td><td>0.858</td><td><i>8.70e-05</i></td><td>14</td></tr><tr><td>NOACT Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.784</td><td>0.971</td><td><i>1.61e-07</i></td><td>12</td></tr><tr><td>NOFRAT Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.856</td><td>0.897</td><td><i>0.001</i></td><td>9</td></tr><tr><td>NAITOR Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.825</td><td>0.925</td><td><i>2.21e-06</i></td><td>14</td></tr><tr><td>CAISO Logical Subtest</td><td>M.-A. Nydegger</td><td>0.940</td><td>0.805</td><td><i>0.053</i></td><td>6</td></tr><tr><td>SAITO Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.827</td><td>0.918</td><td><i>1.60e-11</i></td><td>27</td></tr><tr><td>NOCTAE Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.911</td><td>0.831</td><td><i>8.06e-04</i></td><td>12</td></tr><tr><td>CAISO Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.955</td><td>0.786</td><td><i>0.064</i></td><td>6</td></tr><tr><td>SAITO Logical Subtest</td><td>M.-A. Nydegger</td><td>0.837</td><td>0.902</td><td><i>1.35e-10</i></td><td>27</td></tr><tr><td>Dragon Ball Test</td><td>J. Li</td><td>0.866</td><td>0.866</td><td><i> </i></td><td>3</td></tr><tr><td>Long Duration Spatial Exam</td><td>IQexams</td><td>0.866</td><td>0.866</td><td><i> </i></td><td>3</td></tr><tr><td>ENSDT 20</td><td>M. Ripa</td><td>0.866</td><td>0.866</td><td><i> </i></td><td>3</td></tr><tr><td>Eclipses</td><td>M. Scillitani</td><td>0.866</td><td>0.866</td><td><i> </i></td><td>3</td></tr><tr><td>OXYGENA Test</td><td>C. Backlund</td><td>0.866</td><td>0.866</td><td><i> </i></td><td>3</td></tr><tr><td>Wechsler Adult Intelligence Scale (aggregate)</td><td>D. Wechsler</td><td>0.886</td><td>0.825</td><td><i>0.043</i></td><td>6</td></tr><tr><td>NEAITO Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.794</td><td>0.913</td><td><i>0.002</i></td><td>8</td></tr><tr><td>Dicing with death</td><td>P. Cooijmans</td><td>0.800</td><td>0.907</td><td><i> </i></td><td>4</td></tr><tr><td>NVRA 80</td><td>T. Prousalis</td><td>0.800</td><td>0.905</td><td><i> </i></td><td>4</td></tr><tr><td>NOFRAT Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.834</td><td>0.861</td><td><i>0.003</i></td><td>9</td></tr><tr><td>CAISO</td><td>M.-A. Nydegger</td><td>0.765</td><td>0.915</td><td><i>0.011</i></td><td>6</td></tr><tr><td>Abstract Reasoning Test - ART</td><td>D. Kutle</td><td>0.889</td><td>0.787</td><td><i> </i></td><td>4</td></tr><tr><td>CAISO Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.731</td><td>0.940</td><td><i>0.005</i></td><td>6</td></tr><tr><td>Malaki Test</td><td>C. Backlund</td><td>0.866</td><td>0.803</td><td><i> </i></td><td>3</td></tr><tr><td>NOAIS2 Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.800</td><td>0.866</td><td><i>0.058</i></td><td>5</td></tr><tr><td>Numerologica</td><td>A. Udriste</td><td>0.800</td><td>0.863</td><td><i> </i></td><td>4</td></tr><tr><td>SAITO Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.882</td><td>0.776</td><td><i>1.94e-06</i></td><td>27</td></tr><tr><td>NAITOR Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.721</td><td>0.929</td><td><i>1.62e-06</i></td><td>14</td></tr><tr><td>SAITO Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.762</td><td>0.884</td><td><i>9.51e-10</i></td><td>27</td></tr><tr><td>Verba 66</td><td>M. Predavec</td><td>0.868</td><td>0.775</td><td><i>0.070</i></td><td>6</td></tr><tr><td>NAITOR Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.786</td><td>0.852</td><td><i>1.08e-04</i></td><td>14</td></tr><tr><td>CAISO Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.731</td><td>0.901</td><td><i>0.014</i></td><td>6</td></tr><tr><td>The Aion Test</td><td>C. Backlund</td><td>0.866</td><td>0.756</td><td><i> </i></td><td>3</td></tr><tr><td>Introgers</td><td>M. Scillitani</td><td>0.866</td><td>0.756</td><td><i> </i></td><td>3</td></tr><tr><td>Numerus Light 2</td><td>I. Ivec</td><td>0.730</td><td>0.890</td><td><i>0.043</i></td><td>5</td></tr><tr><td>NAIT</td><td>M.-A. Nydegger</td><td>0.771</td><td>0.841</td><td><i>0.002</i></td><td>10</td></tr><tr><td>Silent Spatial 40</td><td>J. Li</td><td>0.800</td><td>0.805</td><td><i> </i></td><td>4</td></tr><tr><td>Einplex</td><td>I. Ivec</td><td>0.837</td><td>0.767</td><td><i>0.016</i></td><td>9</td></tr><tr><td>SAITO Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.789</td><td>0.815</td><td><i>2.26e-07</i></td><td>27</td></tr><tr><td>NAIT Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.724</td><td>0.879</td><td><i>8.14e-04</i></td><td>10</td></tr><tr><td>NOACT Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.683</td><td>0.918</td><td><i>2.55e-05</i></td><td>12</td></tr><tr><td>Numerus Ultrafun</td><td>I. Ivec</td><td>0.865</td><td>0.733</td><td><i>0.159</i></td><td>5</td></tr><tr><td>CAISO Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.765</td><td>0.833</td><td><i>0.039</i></td><td>6</td></tr><tr><td>Russian Doll</td><td>M.D. Chau</td><td>0.866</td><td>0.731</td><td><i> </i></td><td>3</td></tr><tr><td>Cooijmans Intelligence Test - Form 4E</td><td>P. Cooijmans</td><td>0.866</td><td>0.731</td><td><i> </i></td><td>3</td></tr><tr><td>Nydegger Online Automatic Intelligence Scale - Form 1</td><td>M.-A. Nydegger</td><td>0.872</td><td>0.712</td><td><i>0.178</i></td><td>5</td></tr><tr><td>NEAITO Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.858</td><td>0.725</td><td><i>0.042</i></td><td>8</td></tr><tr><td>VerbaNum</td><td>N. Joshi</td><td>0.775</td><td>0.801</td><td><i> </i></td><td>4</td></tr><tr><td>VGT-F</td><td>T. Prousalis</td><td>0.806</td><td>0.765</td><td><i>0.077</i></td><td>6</td></tr><tr><td>Levant</td><td>D. Kutle</td><td>0.894</td><td>0.676</td><td><i>0.210</i></td><td>5</td></tr><tr><td>Numerus Strictus Logicae 36</td><td>A. Udriste</td><td>0.800</td><td>0.770</td><td><i>0.128</i></td><td>5</td></tr><tr><td>ZD Legenda Test</td><td>C. Backlund</td><td>0.770</td><td>0.776</td><td><i>0.070</i></td><td>6</td></tr><tr><td>SPEED</td><td>I. Ivec</td><td>0.632</td><td>0.913</td><td><i> </i></td><td>4</td></tr><tr><td>Narcissus' last stand</td><td>P. Cooijmans</td><td>0.632</td><td>0.910</td><td><i> </i></td><td>4</td></tr><tr><td>Numeric Inspiration Test</td><td>M. Wu</td><td>0.821</td><td>0.710</td><td><i>0.179</i></td><td>5</td></tr><tr><td>Figurines</td><td>M. Scillitani</td><td>0.707</td><td>0.821</td><td><i>0.089</i></td><td>5</td></tr><tr><td>NAIT Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.715</td><td>0.810</td><td><i>0.004</i></td><td>10</td></tr><tr><td>Verbal Test of Pattern Recognition</td><td>A. Udriste</td><td>0.735</td><td>0.789</td><td><i>0.062</i></td><td>6</td></tr><tr><td>NOFRAT Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.792</td><td>0.728</td><td><i>0.026</i></td><td>9</td></tr><tr><td>NOAIS2 Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.794</td><td>0.724</td><td><i>0.104</i></td><td>6</td></tr><tr><td>NEAITO Logical Subtest</td><td>M.-A. Nydegger</td><td>0.846</td><td>0.663</td><td><i>0.073</i></td><td>8</td></tr><tr><td>TRICKY 7</td><td>A. Toliopoulos</td><td>0.866</td><td>0.640</td><td><i> </i></td><td>3</td></tr><tr><td>NOACT</td><td>M.-A. Nydegger</td><td>0.585</td><td>0.919</td><td><i>2.41e-05</i></td><td>12</td></tr><tr><td>Calculus Luminis Mensura</td><td>A. Udriste</td><td>0.714</td><td>0.789</td><td><i>0.062</i></td><td>6</td></tr><tr><td>NAITOR Logical Subtest</td><td>M.-A. Nydegger</td><td>0.641</td><td>0.854</td><td><i>1.03e-04</i></td><td>14</td></tr><tr><td>Fair Original Test of Ability - FORTY</td><td>J. Dorsey</td><td>0.816</td><td>0.662</td><td><i> </i></td><td>4</td></tr><tr><td>Morphic Verbal Associations</td><td>A. Udriste</td><td>0.763</td><td>0.712</td><td><i>0.177</i></td><td>5</td></tr><tr><td>LSHR</td><td>I. Ivec</td><td>0.500</td><td>0.971</td><td><i> </i></td><td>3</td></tr><tr><td>Numerus Delight</td><td>I. Ivec</td><td>0.738</td><td>0.728</td><td><i> </i></td><td>4</td></tr><tr><td>NOACT Logical Subtest</td><td>M.-A. Nydegger</td><td>0.572</td><td>0.889</td><td><i>1.09e-04</i></td><td>12</td></tr><tr><td>NEAITO Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.617</td><td>0.836</td><td><i>0.010</i></td><td>8</td></tr><tr><td>Spatial Assessment Test</td><td>A. Udriste / M.-A. Nydegger</td><td>0.721</td><td>0.731</td><td><i>0.062</i></td><td>7</td></tr><tr><td>NIT Abstract</td><td>M.-A. Nydegger</td><td>0.657</td><td>0.794</td><td><i>0.059</i></td><td>6</td></tr><tr><td>NOCTAE Spatial Subtest</td><td>M.-A. Nydegger</td><td>0.818</td><td>0.629</td><td><i>0.029</i></td><td>12</td></tr><tr><td>Gordian Knot</td><td>T. Prousalis</td><td>0.655</td><td>0.789</td><td><i>0.020</i></td><td>8</td></tr><tr><td>Lieshout International Mesospheric Intelligence Test</td><td>P. Cooijmans</td><td>0.738</td><td>0.703</td><td><i> </i></td><td>4</td></tr><tr><td>LSHR Light</td><td>I. Ivec</td><td>0.731</td><td>0.693</td><td><i>0.038</i></td><td>9</td></tr><tr><td>VRA-F</td><td>T. Prousalis</td><td>0.500</td><td>0.924</td><td><i> </i></td><td>3</td></tr><tr><td>The Alchemist Test</td><td>A. El Husseini</td><td>0.632</td><td>0.777</td><td><i> </i></td><td>4</td></tr><tr><td>ARA</td><td>T. Prousalis</td><td>0.703</td><td>0.705</td><td><i>0.184</i></td><td>5</td></tr><tr><td>Logica Rigor Numerorum</td><td>A. Udriste</td><td>0.600</td><td>0.788</td><td><i> </i></td><td>4</td></tr><tr><td>Problems In Gentle Slopes of the second degree</td><td>P. Cooijmans</td><td>0.632</td><td>0.743</td><td><i> </i></td><td>4</td></tr><tr><td>Algebrica</td><td>M. Predavec</td><td>0.667</td><td>0.683</td><td><i>0.204</i></td><td>5</td></tr><tr><td>MCST 32</td><td>P.L. Miranda</td><td>0.551</td><td>0.789</td><td><i>0.062</i></td><td>6</td></tr><tr><td>OVAT 33</td><td>M.-A. Nydegger</td><td>0.654</td><td>0.679</td><td><i>0.044</i></td><td>9</td></tr><tr><td>Alphabet </td><td>J. Dorsey</td><td>0.855</td><td>0.477</td><td><i>0.232</i></td><td>8</td></tr><tr><td>Tetragram</td><td>G. Garofalo</td><td>0.632</td><td>0.694</td><td><i> </i></td><td>4</td></tr><tr><td>International Spatial Reasoning Contest 2018 / SEE30</td><td>T. Prousalis</td><td>0.667</td><td>0.653</td><td><i>0.111</i></td><td>7</td></tr><tr><td>ZUN Test</td><td>C. Backlund</td><td>0.500</td><td>0.817</td><td><i> </i></td><td>3</td></tr><tr><td>NOAIS2 Logical Subtest</td><td>M.-A. Nydegger</td><td>0.718</td><td>0.595</td><td><i>0.290</i></td><td>5</td></tr><tr><td>Numerus Light</td><td>I. Ivec</td><td>0.574</td><td>0.739</td><td><i>0.093</i></td><td>6</td></tr><tr><td>NOACT Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.466</td><td>0.845</td><td><i>5.44e-04</i></td><td>12</td></tr><tr><td>Arete</td><td>A. Toliopoulos</td><td>0.500</td><td>0.789</td><td><i> </i></td><td>3</td></tr><tr><td>Logical chains</td><td>M.D. Chau</td><td>0.410</td><td>0.875</td><td><i>0.052</i></td><td>5</td></tr><tr><td>Logos Test - VC 2026</td><td>T. Prousalis</td><td>0.657</td><td>0.623</td><td><i>0.186</i></td><td>6</td></tr><tr><td>X&Y</td><td>P.L. Miranda</td><td>0.632</td><td>0.643</td><td><i> </i></td><td>4</td></tr><tr><td>Road to Damascus</td><td>D. Kutle</td><td>0.585</td><td>0.688</td><td><i>0.131</i></td><td>6</td></tr><tr><td>Nydegger Online Automatic Intelligence Scale - Form 2</td><td>M.-A. Nydegger</td><td>0.600</td><td>0.668</td><td><i> </i></td><td>4</td></tr><tr><td>ARI8MOI</td><td>A. Toliopoulos</td><td>0.500</td><td>0.756</td><td><i> </i></td><td>3</td></tr><tr><td>Numerical section of The Marathon Test</td><td>P. Cooijmans</td><td>0.600</td><td>0.651</td><td><i> </i></td><td>4</td></tr><tr><td>Reduction Riddles</td><td>J. Dorsey</td><td>0.652</td><td>0.598</td><td><i>0.210</i></td><td>6</td></tr><tr><td>NAIT Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.517</td><td>0.723</td><td><i>0.018</i></td><td>10</td></tr><tr><td>NIT Verbal</td><td>M.-A. Nydegger</td><td>0.718</td><td>0.509</td><td><i>0.381</i></td><td>5</td></tr><tr><td>MCST 40</td><td>P.L. Miranda</td><td>0.700</td><td>0.520</td><td><i>0.370</i></td><td>5</td></tr><tr><td>Spectacular Reasoning Assessment - SPECTRA </td><td>J. Dorsey</td><td>0.551</td><td>0.667</td><td><i>0.148</i></td><td>6</td></tr><tr><td>High Range Cognitive Ability Scale - HRCAS</td><td>M.-A. Nydegger</td><td>0.600</td><td>0.614</td><td><i>0.270</i></td><td>5</td></tr><tr><td>The Sargasso Test</td><td>P. Cooijmans</td><td>0.545</td><td>0.666</td><td><i>0.102</i></td><td>7</td></tr><tr><td>Death Numbers</td><td>M. Wu</td><td>0.632</td><td>0.578</td><td><i> </i></td><td>4</td></tr><tr><td>Hat-triq</td><td>A. Andersson</td><td>0.564</td><td>0.631</td><td><i>0.253</i></td><td>5</td></tr><tr><td>N-World</td><td>M. Wu</td><td>0.553</td><td>0.635</td><td><i>0.250</i></td><td>5</td></tr><tr><td>INSC 2024 - NGTF</td><td>T. Prousalis</td><td>0.638</td><td>0.537</td><td><i>0.272</i></td><td>6</td></tr><tr><td>LAPT</td><td>C. Backlund</td><td>0.541</td><td>0.631</td><td><i>0.253</i></td><td>5</td></tr><tr><td>The Pirate Test</td><td>D. Kutle</td><td>0.688</td><td>0.470</td><td><i>0.424</i></td><td>5</td></tr><tr><td>NAIT Abstract Subtest</td><td>M.-A. Nydegger</td><td>0.591</td><td>0.567</td><td><i>0.087</i></td><td>10</td></tr><tr><td>NIT Spatial</td><td>M.-A. Nydegger</td><td>0.400</td><td>0.720</td><td><i> </i></td><td>4</td></tr><tr><td>Numericore</td><td>D. Fourie</td><td>0.404</td><td>0.703</td><td><i>0.078</i></td><td>7</td></tr><tr><td>NPRA-R</td><td>T. Prousalis</td><td>0.527</td><td>0.570</td><td><i>0.316</i></td><td>5</td></tr><tr><td>Simtollect</td><td>I. Ivec</td><td>0.224</td><td>0.874</td><td><i>0.053</i></td><td>5</td></tr><tr><td>9I6 Test</td><td>L. Dubois</td><td>0.500</td><td>0.596</td><td><i> </i></td><td>3</td></tr><tr><td>NIT-Form 1</td><td>M.-A. Nydegger</td><td>0.400</td><td>0.685</td><td><i> </i></td><td>4</td></tr><tr><td>NAIT Logical Subtest</td><td>M.-A. Nydegger</td><td>0.568</td><td>0.495</td><td><i>0.146</i></td><td>10</td></tr><tr><td>Backspace</td><td>IQexams</td><td>0.500</td><td>0.554</td><td><i> </i></td><td>3</td></tr><tr><td>FREE Fall</td><td>I. Ivec</td><td>0.568</td><td>0.486</td><td><i>0.185</i></td><td>9</td></tr><tr><td>Arcanum</td><td>D. Kutle</td><td>0.785</td><td>0.262</td><td><i>0.571</i></td><td>7</td></tr><tr><td>Numerus Classic</td><td>I. Ivec</td><td>0.316</td><td>0.729</td><td><i> </i></td><td>4</td></tr><tr><td>PATMOS</td><td>D. Kutle</td><td>0.574</td><td>0.461</td><td><i>0.434</i></td><td>5</td></tr><tr><td>Strict Logic Spatial Examination 48 - SLSE 48</td><td>J. Wai</td><td>0.500</td><td>0.526</td><td><i> </i></td><td>3</td></tr><tr><td>Online Advanced Spatial Intelligence Scale - OASIS</td><td>J. Dorsey</td><td>0.457</td><td>0.565</td><td><i>0.089</i></td><td>10</td></tr><tr><td>Test of the Beheaded Man</td><td>P. Cooijmans</td><td>0.300</td><td>0.718</td><td><i>0.172</i></td><td>5</td></tr><tr><td>International Numerical Sequences Contest 2017 / NPRA-F</td><td>T. Prousalis</td><td>0.554</td><td>0.454</td><td><i>0.366</i></td><td>6</td></tr><tr><td>Synthesis Numerospatialis</td><td>A. Udriste</td><td>0.500</td><td>0.500</td><td><i> </i></td><td>3</td></tr><tr><td>Panthera Test</td><td>C. Backlund</td><td>0.500</td><td>0.500</td><td><i> </i></td><td>3</td></tr><tr><td>NOAIS2 Numerical Subtest</td><td>M.-A. Nydegger</td><td>0.553</td><td>0.437</td><td><i>0.462</i></td><td>5</td></tr><tr><td>XVLingua</td><td>M. Predavec</td><td>0.625</td><td>0.358</td><td><i>0.554</i></td><td>5</td></tr><tr><td>Comprehensive Spatial Mental Inspection - COSMIC</td><td>J. Dorsey</td><td>0.401</td><td>0.565</td><td><i>0.089</i></td><td>10</td></tr><tr><td>Test of Interpretive Power</td><td>G. A. Grove</td><td>0.500</td><td>0.454</td><td><i> </i></td><td>3</td></tr><tr><td>Strict Logic Sequence Examination I - SLSE I  </td><td>J. Wai</td><td>0.482</td><td>0.447</td><td><i>0.266</i></td><td>8</td></tr><tr><td>Lux 25</td><td>J. Betts</td><td>0.544</td><td>0.382</td><td><i> </i></td><td>4</td></tr><tr><td>Numerus</td><td>I. Ivec</td><td>0.466</td><td>0.456</td><td><i>0.217</i></td><td>9</td></tr><tr><td>Major Self-Assessment of Intelligence - MOSAIC</td><td>J. Dorsey</td><td>0.582</td><td>0.317</td><td><i>0.541</i></td><td>6</td></tr><tr><td>Echo Numbers</td><td>M. Scillitani</td><td>0.500</td><td>0.387</td><td><i> </i></td><td>3</td></tr><tr><td>Three Sonnets</td><td>H. Siemens</td><td>0.389</td><td>0.486</td><td><i> </i></td><td>4</td></tr><tr><td>Triplex</td><td>I. Ivec</td><td>0.456</td><td>0.416</td><td><i>0.485</i></td><td>5</td></tr><tr><td>Standard Intellectual Measurement - STADIUM</td><td>J. Dorsey</td><td>0.500</td><td>0.371</td><td><i> </i></td><td>3</td></tr><tr><td>Intense Gradient Instrument of Reasoning - IGNITER</td><td>J. Dorsey</td><td>0.553</td><td>0.302</td><td><i>0.621</i></td><td>5</td></tr><tr><td>Comprehensive Long Assessment Untimed - COLOSSEUM</td><td>J. Dorsey</td><td>0.492</td><td>0.333</td><td><i>0.519</i></td><td>6</td></tr><tr><td>Spatial Relations Latitude - SPIRAL</td><td>J. Dorsey</td><td>0.500</td><td>0.323</td><td><i>0.596</i></td><td>5</td></tr><tr><td>Intellectual Spatial Orientation - ILLUSION </td><td>J. Dorsey</td><td>0.356</td><td>0.451</td><td><i>0.191</i></td><td>10</td></tr><tr><td>The Titan Test</td><td>R.K. Hoeflin</td><td>0.500</td><td>0.254</td><td><i> </i></td><td>3</td></tr><tr><td>Rising Riddles</td><td>J. Dorsey</td><td>0.395</td><td>0.357</td><td><i>0.555</i></td><td>5</td></tr><tr><td>World Intelligence Test - WIT</td><td>J. Betts</td><td>0.374</td><td>0.302</td><td><i>0.510</i></td><td>7</td></tr><tr><td>PatNum</td><td>J. Dorsey</td><td>0.193</td><td>0.470</td><td><i>0.170</i></td><td>10</td></tr><tr><td>Triplex Light</td><td>I. Ivec</td><td>0.272</td><td>0.380</td><td><i>0.353</i></td><td>8</td></tr><tr><td>NOAIS2 Verbal Subtest</td><td>M.-A. Nydegger</td><td>0.318</td><td>0.311</td><td><i>0.498</i></td><td>7</td></tr><tr><td>AdSub</td><td>J. Dorsey</td><td>0.385</td><td>0.203</td><td><i>0.629</i></td><td>8</td></tr><tr><td>ANOTELEIA 44</td><td>M. Predavec</td><td>0.289</td><td>0.290</td><td><i>0.636</i></td><td>5</td></tr><tr><td>G-Puzzles</td><td>C. Backlund</td><td>0.258</td><td>0.309</td><td><i> </i></td><td>4</td></tr><tr><td>Tetraktys - NC 2026</td><td>T. Prousalis</td><td>0.359</td><td>0.166</td><td><i>0.790</i></td><td>5</td></tr><tr><td>QuantIQ V2</td><td>K.E. Ferrell</td><td>0.316</td><td>0.196</td><td><i> </i></td><td>4</td></tr><tr><td>Hieroglyphica</td><td>M. Predavec</td><td>0.205</td><td>0.252</td><td><i>0.682</i></td><td>5</td></tr><tr><td>NIT Numerical</td><td>M.-A. Nydegger</td><td>0.257</td><td>0.191</td><td><i>0.716</i></td><td>6</td></tr><tr><td>Psychometrically Activated Grids Acerbate Neuroticism</td><td>P. Cooijmans</td><td>0.000</td><td>0.447</td><td><i> </i></td><td>3</td></tr><tr><td>International Verbal Reasoning Contest 2018</td><td>T. Prousalis</td><td>0.270</td><td>0.117</td><td><i>0.802</i></td><td>7</td></tr><tr><td>Tractatus Numericus</td><td>T. Prousalis</td><td>0.200</td><td>0.089</td><td><i> </i></td><td>4</td></tr><tr><td>Asterix</td><td>J. Betts</td><td>0.062</td><td>0.205</td><td><i>0.697</i></td><td>6</td></tr><tr><td>LRA</td><td>T. Prousalis</td><td>0.000</td><td>0.241</td><td><i> </i></td><td>4</td></tr><tr><td>Cooijmans Intelligence Test 5</td><td>P. Cooijmans</td><td>-0.051</td><td>0.225</td><td><i>0.716</i></td><td>5</td></tr><tr><td>PatLet </td><td>J. Dorsey</td><td>0.028</td><td>0.124</td><td><i>0.842</i></td><td>5</td></tr><tr><td>Only Idiots Test</td><td>P. Cooijmans</td><td>0.000</td><td>0.143</td><td><i> </i></td><td>3</td></tr><tr><td>International Verbal Reasoning Contest 2017 / VCAA</td><td>T. Prousalis</td><td>0.100</td><td>0.005</td><td><i>0.993</i></td><td>5</td></tr><tr><td>Numeralica</td><td>A. Udriste</td><td>0.000</td><td>0.000</td><td><i> </i></td><td>4</td></tr><tr><td>MultDiv</td><td>J. Dorsey</td><td>0.000</td><td>0.000</td><td><i>1.000</i></td><td>7</td></tr><tr><td>Compilation of Excellent Spatial Abilities - CELESTIAL</td><td>J. Dorsey</td><td>0.000</td><td>0.000</td><td><i> </i></td><td>4</td></tr><tr><td>Mental Examination of Reasoning - METEOR</td><td>J. Dorsey</td><td>0.000</td><td>-0.056</td><td><i>0.916</i></td><td>6</td></tr><tr><td>LDA-SWaN</td><td>G. Lombardi</td><td>-0.051</td><td>-0.054</td><td><i>0.931</i></td><td>5</td></tr><tr><td>​Replacement Riddles</td><td>J. Dorsey</td><td>0.000</td><td>-0.189</td><td><i> </i></td><td>3</td></tr><tr><td>ASMuDi</td><td>J. Dorsey</td><td>-0.147</td><td>-0.099</td><td><i>0.832</i></td><td>7</td></tr><tr><td>ASIT</td><td>P.L. Miranda</td><td>0.000</td><td>-0.277</td><td><i> </i></td><td>3</td></tr><tr><td>Qoymans Multiple-Choice #5</td><td>P. Cooijmans</td><td>0.000</td><td>-0.351</td><td><i> </i></td><td>3</td></tr><tr><td>Logima Strictica 36 - LS 36</td><td>R. Lato</td><td>-0.211</td><td>-0.208</td><td><i> </i></td><td>4</td></tr><tr><td>Alliteration Analogies Assessment</td><td>J. Dorsey</td><td>-0.272</td><td>-0.174</td><td><i> </i></td><td>4</td></tr><tr><td>Lexiq</td><td>N. Soulios</td><td>-0.400</td><td>-0.287</td><td><i> </i></td><td>4</td></tr><tr><td>NIT Logical</td><td>M.-A. Nydegger</td><td>-0.300</td><td>-0.501</td><td><i>0.390</i></td><td>5</td></tr><tr><td>Intense Mental Abilities Grand Exam - IMAGE</td><td>J. Dorsey</td><td>-0.393</td><td>-0.411</td><td><i>0.418</i></td><td>6</td></tr><tr><td>X10 Test</td><td>C. Backlund</td><td>-0.500</td><td>-0.327</td><td><i> </i></td><td>3</td></tr><tr><td>The Marathon Test</td><td>P. Cooijmans</td><td>-0.500</td><td>-0.371</td><td><i> </i></td><td>3</td></tr><tr><td>Amathematical Patterns Test</td><td>A. Udriste</td><td>-0.500</td><td>-0.500</td><td><i> </i></td><td>3</td></tr><tr><td>Visual Image Pattern Sequence I - VIPS I</td><td>A.A. Gangvik</td><td>-0.526</td><td>-0.598</td><td><i>0.287</i></td><td>5</td></tr><tr><td>Rhyming Riddles </td><td>J. Dorsey</td><td>-0.577</td><td>-0.577</td><td><i> </i></td><td>4</td></tr><tr><td>JCTI/TRI-52</td><td>X. Jouve</td><td>-0.632</td><td>-0.524</td><td><i> </i></td><td>4</td></tr><tr><td>Mathema</td><td>J. Betts</td><td>-0.671</td><td>-0.644</td><td><i>0.085</i></td><td>8</td></tr><tr><td>AGLT</td><td>A.A. Gangvik</td><td>-0.866</td><td>-0.739</td><td><i>0.154</i></td><td>5</td></tr><tr><td>JINA Test</td><td>T. Shao</td><td>-0.866</td><td>-0.866</td><td><i> </i></td><td>3</td></tr><tr><td>Buckets of Words</td><td>D. Kutle</td><td>-0.866</td><td>-0.866</td><td><i> </i></td><td>3</td></tr><tr><td>Logica Verbalis</td><td>T. Prousalis</td><td>-0.866</td><td>-0.988</td><td><i> </i></td><td>3</td></tr>
           </tbody>
         </table>
       </div>
 
+
+    </section>
+
+    <section id="irt" class="card narrow section-card">
+      <div class="table-container">
+        <table class="metric-table">
+          <h2>IRT Information</h2>
+          <p>
+            A 2PL (two-parameter logistic) IRT model was fitted to identify the range of ability levels over which the test provides the highest measurement precision. 
+            For an explanation of test information and its relationship to measurement precision, see <a href="https://www.cogn-iq.org/learn/theory/test-information-function/" target="_blank">Test Information Function</a>.
+            The I.Q. equivalents reported below are derived from the most up-to-date norm (not the official one). 
+            The test provides its highest measurement precision across an I.Q. range of approximately 119 to 162, with peak precision at an I.Q. of approximately 138. 
+            These findings are particularly encouraging given that the test was specifically designed to discriminate effectively among individuals at this ability level. 
+            Provided that sufficient construct validity is established within this ability range, the test can reasonably be considered a high-range I.Q. test.
+          </p>
+          <caption>General information</caption>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="2">Peak Measurement</th></tr>
+            <tr><td>Minimum acceptable information</td><td>15</td></tr>
+            <tr><td>I.Q. at start of interval</td><td>118.8</td></tr>
+            <tr><td>I.Q. at end of interval</td><td>162.7</td></tr>
+            <tr><td>Peak information</td><td>64.47</td></tr>
+            <tr><td>I.Q. at peak information</td><td>138.3</td></tr>
+            
+            <tr class="group-row"><th colspan="2">Latent Ability</th></tr>
+            <tr><td>Mean EAP theta</td><td>0.000</td></tr>
+            <tr><td>Lowest EAP theta</td><td>-2.019</td></tr>
+            <tr><td>Highest EAP theta</td><td>2.294</td></tr>
+            <tr><td>EAP theta at start of highest information interval</td><td>-0.846</td></tr>
+            <tr><td>EAP theta at end of highest information interval</td><td>1.663</td></tr>
+            <tr><td>EAP theta at peak information</td><td>0.171</td></tr>
+          </tbody>
+        </table>
+        <h2 style="text-align: center;">Information and CSE graphs</h2>
+          <div class="irt-graphs">
+              <img src="SAITO_stats_images/info.png"
+                  alt="Test Information"
+                  class="irt-graph"
+                  onclick="openImage(this)">
+
+              <img src="SAITO_stats_images/cse.png"
+                  alt="Conditional Standard Error"
+                  class="irt-graph"
+                  onclick="openImage(this)">
+          </div>
+              <p>
+                The graph below, which illustrates the relationship between latent ability (\(\theta\)) and raw scores, represents a general model and cannot be used to estimate the ability of individual candidates.
+                This is because IRT does not base ability estimates on raw scores.
+                Instead, it estimates ability from the individual item responses, taking into account the difficulty and other characteristics of each item. 
+              </p>
+              <img src="SAITO_stats_images/rawconv.png"
+                  alt="raw score to ability conversion"
+                  class="irt-graph"
+                  onclick="openImage(this)">
+          
+          
+      </div>
     </section>
 
     <section id="validity" class="card narrow section-card">
@@ -539,9 +664,9 @@
         <table class="metric-table">
           <h2>Construct Validity</h2>
           <p>
-            Internal factor analysis does not currently provide any usable estimates, only external correlations with other cognitive tests can be computed.
-            The external estimate should be interpreted cautiously, correlations between SAITO and external tests are attenuated by the restricted score range and ceiling effects.
-            The external estimate is expected to be conservative and can be considered a lower bound.
+            Internal factor analysis does not currently provide reliable estimates, only external correlations with other cognitive tests can be considered.
+            However, the external estimate should be interpreted cautiously, correlations between SAITO and external tests are naturally attenuated by the short length of the test and by the restricted score range.
+            The external estimate is conservative, as further suggested by the markedly higher g-loadings observed for most subtests.
           </p>
           <caption>General information</caption>
           <thead>
@@ -552,17 +677,17 @@
           </thead>
           <tbody>
             <tr class="group-row"><th colspan="2">g Factor</th></tr>
-            <tr><td>Estimated g-loading (external)</td><td>0.77</td></tr>
-            <tr><td>Number of (sub)tests used for the g-loading estimation (score pairs ≥ 4, SAITO subtests excluded) </td><td>135</td></tr>
-            <tr><td>Estimated g-loading (internal)</td><td>N/A</td></tr>
+            <tr><td>Estimated g-loading (external)</td><td>0.787</td></tr>
+            <tr><td>Number of (sub)tests used for the g-loading estimation (score pairs ≥ 4, SAITO subtests excluded) </td><td>174</td></tr>
+            <tr><td>Estimated g-loading (internal factor analysis)</td><td> > 0.88</td></tr>
 
 
             <tr class="group-row"><th colspan="2">Corrected Point-Biserial Correlation \(r_{pb}\)</th></tr>
-            <tr><td>Mean value</td><td>0.609</td></tr>
-            <tr><td>Lowest item value</td><td>0.224</td></tr>
-            <tr><td>Highest item value</td><td>0.871</td></tr>
-            <tr><td>Number of items with very strong discrimination</td><td>11</td></tr>
-            <tr><td>Number of items with strong discrimination</td><td>15</td></tr>
+            <tr><td>Mean value</td><td>0.602</td></tr>
+            <tr><td>Lowest item value</td><td>0.200</td></tr>
+            <tr><td>Highest item value</td><td>0.853</td></tr>
+            <tr><td>Number of items with very strong discrimination</td><td>10</td></tr>
+            <tr><td>Number of items with strong discrimination</td><td>16</td></tr>
             <tr><td>Number of items with acceptable discrimination</td><td>2</td></tr>
             <tr><td>Number of items with weak discrimination</td><td>2</td></tr>
             <tr><td>Number of items with very weak (problematic) discrimination</td><td>0</td></tr>
@@ -605,11 +730,11 @@
           </thead>
 
           <tbody>
-            <tr><th>Abstract</th><td>1</td><td>0.841</td><td>0.770</td><td>0.779</td><td>0.771</td></tr>
-      <tr><th>Numerical</th><td>0.841</td><td>1</td><td>0.782</td><td>0.722</td><td>0.853</td></tr>
-      <tr><th>Verbal</th><td>0.770</td><td>0.782</td><td>1</td><td>0.639</td><td>0.798</td></tr>
-      <tr><th>Spatial</th><td>0.779</td><td>0.722</td><td>0.639</td><td>1</td><td>0.628</td></tr>
-      <tr><th>Logical</th><td>0.771</td><td>0.853</td><td>0.798</td><td>0.628</td><td>1</td></tr>
+            <tr><th>Abstract</th><td>1</td><td>0.805</td><td>0.761</td><td>0.744</td><td>0.776</td></tr>
+      <tr><th>Numerical</th><td>0.805</td><td>1</td><td>0.749</td><td>0.724</td><td>0.844</td></tr>
+      <tr><th>Verbal</th><td>0.761</td><td>0.749</td><td>1</td><td>0.621</td><td>0.802</td></tr>
+      <tr><th>Spatial</th><td>0.744</td><td>0.724</td><td>0.621</td><td>1</td><td>0.653</td></tr>
+      <tr><th>Logical</th><td>0.776</td><td>0.844</td><td>0.802</td><td>0.653</td><td>1</td></tr>
 
           </tbody>
         </table>
@@ -622,11 +747,11 @@
           <caption>SAITO Subtest g-loadings, Single-Factor MINRES FA</caption>
           <tbody>
             <tr class="group-row"><th colspan="2">Subtest g-loadings</th></tr>
-            <tr><td>Numerical subtest</td><td>0.934</td></tr>
-      <tr><td>Abstract subtest</td><td>0.916</td></tr>
-      <tr><td>Logical subtest</td><td>0.879</td></tr>
-      <tr><td>Verbal subtest</td><td>0.854</td></tr>
-      <tr><td>Spatial subtest</td><td>0.773</td></tr>
+            <tr><td>Numerical subtest</td><td>0.915</td></tr>
+      <tr><td>Logical subtest</td><td>0.898</td></tr>
+      <tr><td>Abstract subtest</td><td>0.898</td></tr>
+      <tr><td>Verbal subtest</td><td>0.843</td></tr>
+      <tr><td>Spatial subtest</td><td>0.772</td></tr>
 
           </tbody>
         </table>
@@ -634,17 +759,22 @@
     </section>
 
     <section id="items" class="card narrow section-card">
-      <h2>Item g-loadings</h2>
+      <h2>g-loading estimations</h2>
 
       <p>
-        After further testing, it became apparent that the amount of available data is currently insufficient to produce reliable internal g-loading estimates.
-        Previously, a hierarchical factor model using a Schmid-Leiman transformation was fitted to estimate the contribution of the general intelligence factor (g) to both the overall test and each individual item. 
-        The model was initially specified with three factors; however, this was inappropriate given the highly unidimensional nature of the test, for which a one-factor model would be more suitable.
-        Unfortunately, the current sample size is not sufficient to produce reliable estimates using a one-factor model. 
-        Forcing a three-factor solution produces unrealistically high values.
-        A 2PL MIRT model was also evaluated, which is now used as the primary protocol for unidimensional tests, but it failed to converge.
-        The analysis will therefore be recalculated once the sample size reaches 75.
+        The available sample size is currently insufficient to produce reliable internal estimates of g-loadings. 
+        Nevertheless, some exploratory results are presented below for informational purposes.
+        A hierarchical factor model incorporating a Schmid-Leiman transformation was fitted to examine the contribution of the general intelligence factor (g) to the overall test and its individual items.
+        The test appears to exhibit a strongly unidimensional structure, with even the exploratory analyses suggesting a dominant single factor. 
+        To examine the stability of the factor structure and the sensitivity of the resulting g-loadings to model specification, several models were fitted and compared. 
+        These included a direct one-factor exploratory factor analysis (EFA), as well as Schmid-Leiman solutions based on 3, 4, 5, and 6 first-order factors.
+        Solutions involving more than 6 factors could not be obtained due to the occurrence of improper solutions or inadmissible parameter estimates.
       </p>
+
+      <p>
+        <Strong>Important:</Strong> The Schmid-Leiman analysis considers solutions with at least 3 first-order factors.
+        A 2 factors solution is excluded because the second-order general factor is not uniquely defined when only two first-order factors are present.
+    </p>
 
       <div class="table-container">
 
@@ -658,26 +788,97 @@
           </thead>
           <tbody>
             <tr class="group-row"><th colspan="2">Overall test</th></tr>
-
-            <tr><td><strong>Estimated internal g-loading</strong></td> <td><strong>-</strong></td></tr>
-            <tr><td>Omega hierarchical (ω<sub>h</sub>)</td> <td>-</td> </tr>
-            <tr><td>Omega total (ω<sub>t</sub>)</td><td>-</td> </tr>
+            <tr><td><strong>Estimated internal g-loading</strong></td> <td>> 0.88</td></tr>
+            <tr><td>Omega hierarchical (ω<sub>h</sub>)</td> <td>0.978</td> </tr>
+            <tr><td>Omega total (ω<sub>t</sub>)</td><td>0.978</td> </tr>
 
             <tr class="group-row"><th colspan="2">Factor structure</th></tr>
-
-            <tr><td>General factor (PC1) loading</td> <td>-</td></tr>
-            <tr><td>PC1 variance explained (tetrachoric)</td><td>-</td></tr>
-            <tr><td>First/second eigenvalue ratio</td><td>-</td></tr>
-            <tr><td>First-order factors retained</td><td>-</td></tr>
-            <tr><td>Mean correlation between factors</td><td>-</td></tr>
-            <tr><td>Range of factor correlations</td><td>-</td></tr>
-
+            <tr><td>General factor (PC1) loading</td> <td>0.782</td></tr>
+            <tr><td>PC1 variance explained (tetrachoric)</td><td>0.611</td></tr>
+            <tr><td>First/second eigenvalue ratio</td><td>8.46</td></tr>
+            <tr><td>First-order factors retained</td><td>1</td></tr>
+            <tr><td>Mean correlation between factors</td><td>N/A for 1 factor</td></tr>
+            <tr><td>Range of factor correlations</td><td>N/A for 1 factor</td></tr>
           </tbody>
         </table>
 
+        <h2 style="text-align: center;">Graphs</h2>
+          <div class="irt-graphs">
+              <img src="SAITO_stats_images/Schmid_Leiman_Total_Test_g_Loading.png"
+                  alt="Test g-loading by number of factors"
+                  class="irt-graph"
+                  onclick="openImage(this)">
+
+              <p>
+                  The 1 factor solution yields an estimate of 0.989.
+                  However, this exceptionally high value does not seem reasonable and may be unstable or inflated given the limited sample size.
+              </p>
+
+              <p>
+                  The 5 factors solution, which yields a test g correlation of 0.895, might appear more plausible, particularly given that the test comprises 5 subtests intended to assess different and more specific abilities.
+                  However, the number and apparent content of the subtests do not establish the underlying structure of the test.
+                  The abilities actually measured must be inferred from empirical evidence rather than from the apparent content of the test.
+              </p>
+
+              <p>
+                  In this respect, the high g-loadings observed for the individual subtests (see table at the bottom of the "Construct Validity" tab) raise questions about the extent to which they measure sufficiently distinct abilities to be interpreted as independent domains.
+                  Furthermore, the dimensionality analyses indicate that the test as a whole exhibits a predominantly unidimensional structure.
+                  Although distinct group abilities may coexist with a general factor, the available results provide limited evidence that the 5 subtests represent 5 clearly differentiated cognitive domains.
+              </p>
+
+              <p>
+                  The estimated test g correlation decreases as the number of first-order factors increases but the magnitude of this decrease becomes progressively smaller.
+                  This pattern might suggest the existence of an asymptote as the number of factors approaches infinity.
+                  However, the number of factors is necessarily finite and assuming a very large number of factors is difficult to justify.
+              </p>
+             
+              <p>
+                  Despite these changes in the estimated strength of the general factor, the item-level general-factor loading patterns appear comparatively stable across the solutions.
+                  The correlations between the loading vectors of consecutive solutions are presented below.
+              </p>
+
+              <div>
+                  <h3 class="table-title">Correlations between consecutive solutions</h3>
+                  <table>
+                      <thead>
+                          <tr>
+                              <th>Number of factors</th>
+                              <th>Pearson correlation</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr><td>3 and 4</td><td>0.952</td></tr>
+                          <tr><td>4 and 5</td><td>0.942</td></tr>
+                          <tr><td>5 and 6</td><td>0.936</td></tr>
+                      </tbody>
+                  </table>
+              </div>
+
+              <p>
+                  These consistently high correlations indicate that the relative pattern of item-level general-factor loadings changes comparatively little as additional first-order factors are introduced.
+                  In other words, although the absolute magnitude of the loadings varies, items with relatively high loadings tend to retain that characteristic across solutions, as do items with relatively low loadings.
+              </p>
+
+              <p>
+                  The individual item g-loadings do not appear to converge towards particular values as the number of first-order factors increases, as illustrated below.
+                  This means that their precise magnitudes cannot be predicted.
+                  Nevertheless, the relative differences between items can still provide useful information.
+                  For example, items 12, 13, 19 and 20 tend to exhibit comparatively high g-loadings, whereas items 4 and 30 tend to exhibit comparatively low loadings.
+              </p>
+
+              <img src="SAITO_stats_images/Schmid_Leiman_g_Loadings_by_Factor_Count.png"
+                  alt="Item g-loading changes across different factor solutions"
+                  class="irt-graph"
+                  onclick="openImage(this)">
+
+              <p>
+                  For reference, the table below presents the item g-loadings obtained from the one-factor solution.
+              </p>
+          </div>
+
         <div class="table-container">
+          <h2>Item g-loadings</h2>
           <table class="forced-small-table" style="max-width:1000px;margin:0 auto;">
-            <caption>Item g-loadings</caption>
             <thead>
               <tr style="background-color:#0070ba;color:white;">
                 <th>Item</th>
@@ -685,36 +886,36 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>1</td><td>>0</td></tr>
-              <tr><td>2</td><td>>0</td></tr>
-              <tr><td>3</td><td>>0</td></tr>
-              <tr><td>4</td><td>>0</td></tr>
-              <tr><td>5</td><td>>0</td></tr>
-              <tr><td>6</td><td>>0</td></tr>
-              <tr><td>7</td><td>>0</td></tr>
-              <tr><td>8</td><td>>0</td></tr>
-              <tr><td>9</td><td>>0</td></tr>
-              <tr><td>10</td><td>>0</td></tr>
-              <tr><td>11</td><td>>0</td></tr>
-              <tr><td>12</td><td>>0</td></tr>
-              <tr><td>13</td><td>>0</td></tr>
-              <tr><td>14</td><td>>0</td></tr>
-              <tr><td>15</td><td>>0</td></tr>
-              <tr><td>16</td><td>>0</td></tr>
-              <tr><td>17</td><td>>0</td></tr>
-              <tr><td>18</td><td>>0</td></tr>
-              <tr><td>19</td><td>>0</td></tr>
-              <tr><td>20</td><td>>0</td></tr>
-              <tr><td>21</td><td>>0</td></tr>
-              <tr><td>22</td><td>>0</td></tr>
-              <tr><td>23</td><td>>0</td></tr>
-              <tr><td>24</td><td>>0</td></tr>
-              <tr><td>25</td><td>>0</td></tr>
-              <tr><td>26</td><td>>0</td></tr>
-              <tr><td>27</td><td>>0</td></tr>
-              <tr><td>28</td><td>>0</td></tr>
-              <tr><td>29</td><td>>0</td></tr>
-              <tr><td>30</td><td>>0</td></tr>
+              <tr><td>1</td><td>0.585</td></tr>
+              <tr><td>2</td><td>0.714</td></tr>
+              <tr><td>3</td><td>0.678</td></tr>
+              <tr><td>4</td><td>0.295</td></tr>
+              <tr><td>5</td><td>0.863</td></tr>
+              <tr><td>6</td><td>0.731</td></tr>
+              <tr><td>7</td><td>0.634</td></tr>
+              <tr><td>8</td><td>0.520</td></tr>
+              <tr><td>9</td><td>0.745</td></tr>
+              <tr><td>10</td><td>0.822</td></tr>
+              <tr><td>11</td><td>0.737</td></tr>
+              <tr><td>12</td><td>0.954</td></tr>
+              <tr><td>13</td><td>0.941</td></tr>
+              <tr><td>14</td><td>0.890</td></tr>
+              <tr><td>15</td><td>0.685</td></tr>
+              <tr><td>16</td><td>0.866</td></tr>
+              <tr><td>17</td><td>0.730</td></tr>
+              <tr><td>18</td><td>0.862</td></tr>
+              <tr><td>19</td><td>0.956</td></tr>
+              <tr><td>20</td><td>0.912</td></tr>
+              <tr><td>21</td><td>0.797</td></tr>
+              <tr><td>22</td><td>0.839</td></tr>
+              <tr><td>23</td><td>0.875</td></tr>
+              <tr><td>24</td><td>0.817</td></tr>
+              <tr><td>25</td><td>0.890</td></tr>
+              <tr><td>26</td><td>0.792</td></tr>
+              <tr><td>27</td><td>0.739</td></tr>
+              <tr><td>28</td><td>0.760</td></tr>
+              <tr><td>29</td><td>0.707</td></tr>
+              <tr><td>30</td><td>0.467</td></tr>
             </tbody>
           </table>
         </div>
@@ -724,13 +925,12 @@
     </section>
 
     <h2>Changelog</h2>
-
     <ul>
+      <li>MIRT internal g-loading analysis postponed until the sample size reaches 200.</li>
       <li>Subtest g-loading method changed from PCA to single-factor MINRES factor analysis.</li>
       <li>External g-loading estimation method changed to Cooijmans' method.</li>
       <li>Candidates who did not formally click the "End Test" button on NAIT are now excluded from the statistics.</li>
       <li>Internal g-loading cannot currently be estimated reliably due to the small sample size.</li>
-      <li>Ivec's quality is now computed separately for each subtest, with values aggregated to obtain a full-test estimate.</li>
       <li>New rule: candidates cannot abandon the test unless they have lost at least 3 attempts. As a result, some previously "finished" submissions have been reverted to unfinished.</li>
       <li>Fixed: scores from an older version of NGT-F were incorrectly merged with scores from the newer version.</li>
       <li>Corrected point-biserial correlation values are now reported using discrimination categories.</li>
@@ -784,6 +984,37 @@
         displaySection("summary", false);
       }
     });
+    function openImage(image) {
+      document.querySelector(".image-overlay")?.remove();
+      const overlay = document.createElement("div");
+      overlay.className = "image-overlay";
+      const enlargedImage = document.createElement("img");
+      enlargedImage.src = image.src;
+      enlargedImage.alt = image.alt;
+      overlay.appendChild(enlargedImage);
+      document.body.appendChild(overlay);
+      requestAnimationFrame(() => {
+          overlay.classList.add("active");
+      });
+      function closeOverlay() {
+          overlay.classList.remove("active");
+          overlay.addEventListener("transitionend", () => {
+              overlay.remove();
+          }, { once: true });
+          document.removeEventListener("keydown", handleKeydown);
+      }
+      overlay.addEventListener("click", function (event) {
+          if (event.target === overlay) {
+              closeOverlay();
+          }
+      });
+      function handleKeydown(event) {
+          if (event.key === "Escape") {
+              closeOverlay();
+          }
+      }
+      document.addEventListener("keydown", handleKeydown);
+  }
   </script>
 </body>
 </html>
