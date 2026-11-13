@@ -1,3 +1,4 @@
+14 November 2026 - SAITO statistics updated, N=75.
 11 November 2026 - Contribution scores ≥ 60 waive fees.
 3 November 2026 - Estimated external tests g-loadings page available.
 26 October 2026 - More information added in the statistical report.
@@ -11,21 +12,21 @@
 18 September 2026 - All tests' leaderboards removed.
 13 September 2026 - Candidates can now revoke the finished status for NAITOR, NEAITO, and NOAIS2 via the report issue form. Update: Abolished 27sep2026.
 12 September 2026 - Added a table of all database tests to the Favorite High Range Tests page.
-11 September 2026 - SAITO statistics updated outside of the schedule.
+11 September 2026 - SAITO statistics updated outside of the schedule, N=63.
 31 August 2026 - NAITOR first preliminary norm.
 19 August 2026 - The Overall Cognitive Score (OCS) is now available in the score submission interface.
 12 August 2026 - Report issue form available.
 5 August 2026 - HRCAS estimated norm.
 1 August 2026 - A test selection form is available (introduction tab).
 25 July 2026 - NAIT correlation list updated.
-19 July 2026 - SAITO statistics updated.
+19 July 2026 - SAITO statistics updated, N=50.
 19 July 2026 - SAITO third preliminary norm.
 10 July 2026 - NOAIS-Form 2 (battery) is available.
 28 June 2026 - OCS renamed to HRCAS for coherence.
 1 June 2026 - Candidates can check their contest rank in the NAITOR contest tab.
 22 May 2026 - Project contributors leaderboard available.
 21 May 2026 - An interface to share previous test scores is available.
-19 May 2026 - SAITO statistics available.
+19 May 2026 - SAITO statistics available, N=25.
 19 May 2026 - SAITO second preliminary norm.
 19 May 2026 - Authentication procedure updated.
 18 May 2026 - Index layout change.
