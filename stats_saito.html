@@ -605,9 +605,10 @@
             A 2PL (two-parameter logistic) IRT model was fitted to identify the range of ability levels over which the test provides the highest measurement precision. 
             For an explanation of test information and its relationship to measurement precision, see <a href="https://www.cogn-iq.org/learn/theory/test-information-function/" target="_blank">Test Information Function</a>.
             The I.Q. equivalents reported below are derived from the most up-to-date norm (not the official one). 
-            The test provides its highest measurement precision across an I.Q. range of approximately 119 to 162, with peak precision at an I.Q. of approximately 138. 
-            These findings are particularly encouraging given that the test was specifically designed to discriminate effectively among individuals at this ability level. 
-            Provided that sufficient construct validity is established within this ability range, the test can reasonably be considered a high-range I.Q. test.
+            The test provides its highest measurement precision across an I.Q. range of approximately 114 to 152, with peak precision at an I.Q. of approximately 145.
+            Where the Standard Error of Measurement (SEM) is no greater than 5 IQ points, the 95% confidence interval extends approximately ±9.8 I.Q. points around the estimated I.Q. score.
+            Within the considered range, the peak accuracy achieved is approximately ±5.3 I.Q. points at the 95% confidence level.
+            Given the small sample size, these results should be considered preliminary.
           </p>
           <caption>General information</caption>
           <thead>
@@ -618,25 +619,28 @@
           </thead>
           <tbody>
             <tr class="group-row"><th colspan="2">Peak Measurement</th></tr>
-            <tr><td>Minimum acceptable information</td><td>15</td></tr>
-            <tr><td>I.Q. at start of interval</td><td>118.8</td></tr>
-            <tr><td>I.Q. at end of interval</td><td>162.7</td></tr>
-            <tr><td>Peak information</td><td>64.47</td></tr>
-            <tr><td>I.Q. at peak information</td><td>138.3</td></tr>
+            <tr><td>Number of intervals</td><td>2</td></tr>
+            <tr><td>Minimum acceptable S.E.M. in I.Q. points</td><td>5</td></tr>
+            <tr><td>I.Q. at start of main interval</td><td>114.4</td></tr>
+            <tr><td>I.Q. at end of main interval</td><td>152.3</td></tr>
+            <tr><td>Peak information for main interval</td><td>16.36</td></tr>
+            <tr><td>Lowest S.E.M for main interval</td><td>2.68</td></tr>
+            <tr><td>I.Q. at lowest S.E.M for main interval</td><td>145.3</td></tr>
             
-            <tr class="group-row"><th colspan="2">Latent Ability</th></tr>
+
+
+            <tr class="group-row"><th colspan="2">Latent Ability (Theta)</th></tr>
             <tr><td>Mean EAP theta</td><td>0.000</td></tr>
-            <tr><td>Lowest EAP theta</td><td>-2.019</td></tr>
-            <tr><td>Highest EAP theta</td><td>2.294</td></tr>
-            <tr><td>EAP theta at start of highest information interval</td><td>-0.846</td></tr>
-            <tr><td>EAP theta at end of highest information interval</td><td>1.663</td></tr>
-            <tr><td>EAP theta at peak information</td><td>0.171</td></tr>
+            <tr><td>Lowest EAP theta</td><td>-2.491</td></tr>
+            <tr><td>Highest EAP theta</td><td>2.820</td></tr>
+            <tr><td>EAP theta at start of acceptable S.E.M. main interval</td><td>-1.598</td></tr>
+            <tr><td>EAP theta at end of acceptable S.E.M. main interval</td><td>1.663</td></tr>
           </tbody>
         </table>
-        <h2 style="text-align: center;">Information and CSE graphs</h2>
+        <h2 style="text-align: center;">Graphs</h2>
           <div class="irt-graphs">
               <img src="SAITO_stats_images/info.png"
-                  alt="Test Information"
+                  alt="SEM in IQ points"
                   class="irt-graph"
                   onclick="openImage(this)">
 
@@ -789,7 +793,7 @@
           <tbody>
             <tr class="group-row"><th colspan="2">Overall test</th></tr>
             <tr><td><strong>Estimated internal g-loading</strong></td> <td>> 0.88</td></tr>
-            <tr><td>Omega hierarchical (ω<sub>h</sub>)</td> <td>N/A</td> </tr>
+            <tr><td>Omega hierarchical (ω<sub>h</sub>)</td> <td>0.978</td> </tr>
             <tr><td>Omega total (ω<sub>t</sub>)</td><td>0.978</td> </tr>
 
             <tr class="group-row"><th colspan="2">Factor structure</th></tr>
@@ -797,8 +801,8 @@
             <tr><td>PC1 variance explained (tetrachoric)</td><td>0.611</td></tr>
             <tr><td>First/second eigenvalue ratio</td><td>8.46</td></tr>
             <tr><td>First-order factors retained</td><td>1</td></tr>
-            <tr><td>Mean correlation between factors</td><td>N/A</td></tr>
-            <tr><td>Range of factor correlations</td><td>N/A</td></tr>
+            <tr><td>Mean correlation between factors</td><td>N/A for 1 factor</td></tr>
+            <tr><td>Range of factor correlations</td><td>N/A for 1 factor</td></tr>
           </tbody>
         </table>
 
@@ -926,6 +930,7 @@
 
     <h2>Changelog</h2>
     <ul>
+      <li>Corrected an error in the IRT computation and made the section more informative.</li>
       <li>MIRT internal g-loading analysis postponed until the sample size reaches 200.</li>
       <li>Subtest g-loading method changed from PCA to single-factor MINRES factor analysis.</li>
       <li>External g-loading estimation method changed to Cooijmans' method.</li>
