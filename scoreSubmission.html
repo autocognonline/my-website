@@ -667,7 +667,7 @@
         </div>
       </div>
       <div id="contribution-message" class="contribution-message hidden">
-        <p>Your Contribution Score is above 60.</p>
+        <p>Your Contribution Score is above 30.</p>
         <p>
           You can now submit answers in the test apps and
           access certificates without paying the usual fee.
@@ -901,7 +901,7 @@
 
       const score = Number(contribution.score);
       scoreElement.textContent = score;
-      if (score > 60) {
+      if (score > 30) {
         messageElement.classList.remove("hidden");
       }
     }
