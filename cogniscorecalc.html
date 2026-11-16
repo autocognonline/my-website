@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cognimetrica Score Calculator</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 30px;
+      text-align: center;
+      line-height: 1.6;
+      color: #222;
+    }
+
+    h1 { font-size: 36px; margin-bottom: 20px; }
+    h2 { font-size: 26px; margin-bottom: 16px; text-align: center;}
+
+    p {
+      max-width: 1000px;
+      margin: 10px auto;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    a { text-decoration: none; font-size: 18px; }
+
+    .section {
+      max-width: 1000px;
+      margin: 50px auto;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 18px;
+      border-radius: 8px;
+      color: white;
+      background-color: #0070ba;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 5px;
+    }
+
+    .button:hover { background-color: #005c99; }
+
+    .button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: #ccc;
+      margin: 60px auto;
+      width: 80%;
+    }
+
+    .card, .upload-card {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px;
+      background: white;
+      border: 1px solid #d7e0e8;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      text-align: left;
+      box-sizing: border-box;
+    }
+
+    .upload-card { max-width: 1000px; }
+
+    .file-input {
+      display: block;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto 18px;
+      padding: 12px;
+      font-size: 16px;
+      background: #f7fafd;
+      border: 1px solid #c9d8e6;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    .muted {
+      color: #5a6b7b;
+      text-align: center;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 25px auto;
+    }
+
+    .control-group {
+      min-width: 190px;
+      text-align: left;
+    }
+
+    .control-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      font-size: 17px;
+      border: 1px solid #c9d8e6;
+      border-radius: 8px;
+      background: #f7fafd;
+    }
+
+    .status {
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 8px;
+      background: #eef4f8;
+      text-align: center;
+    }
+
+    .status.error {
+      background: #fdeeee;
+      color: #8a1f11;
+    }
+
+    .result-box {
+      margin: 20px auto;
+      padding: 18px;
+      background: #eef4f8;
+      border-radius: 8px;
+      text-align: left;
+      box-sizing: border-box;
+      overflow-x: auto;
+    }
+
+    .result-box.error {
+      background: #fdeeee;
+      border-left-color: #c0392b;
+      color: #8a1f11;
+    }
+
+    .score {
+      font-size: 32px;
+      font-weight: bold;
+      color: #0070ba;
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      background: white;
+    }
+
+    th,
+    td {
+      border: 1px solid #e2e7ee;
+      padding: 10px 14px;
+      font-size: 16px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #0070ba;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    @media(max-width: 600px) {
+      body { margin: 12px; }
+      h1 { font-size: 29px; }
+      .card, .upload-card { padding: 16px; }
+      .controls { flex-direction: column; }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+  <link rel="icon" href="favicon.png">
+</head>
+
+<body>
+
+  <h1>Cognimetrica Score Calculator</h1>
+
+  <div class="section">
+    <div class="card">
+      <p>This calculator allows you to compute Cognimetrica scores for high-range tests.</p>
+
+      <p>
+        Scores are calculated as the arithmetic mean of submitted results.
+        The difference between the highest and lowest scores must not exceed
+        10 I.Q. points. No individual item type may account for more than
+        50% of submitted tests.
+      </p>
+
+      <p>Each tier has its own minimum sample size and number of required tests.</p>
+      <strong><p>Make sure you only include scores for which you have a verifiable proof !</p></strong>
+      <a href="example.xlsx" download >Example Excel data</a>
+    </div>
+
+    <div class="table-container">
+            <h2>Tiers and Requirements</h2>
+                <table>
+                    <tr>
+                        <th>Tier</th>
+                        <th>Scores Required</th>
+                        <th>Minimum Test Sample Size</th>
+                    </tr>
+                    <tr>
+                        <td>I</td>
+                        <td>10</td>
+                        <td>10 × ≥20, 8 × ≥40, 6 × ≥60, 4 × ≥80 and 2 × ≥100</td>
+                    </tr>
+                    <tr>
+                        <td>II</td>
+                        <td>8</td>
+                        <td>8 × ≥40, 6 × ≥60, 4 × ≥80 and 2 × ≥100</td>
+                    </tr>
+                    <tr>
+                        <td>III</td>
+                        <td>6</td>
+                        <td>6 x ≥60, 4 x ≥80 and 2 x ≥100</td>
+                    </tr>
+                    <tr>
+                        <td>IV</td>
+                        <td>4</td>
+                        <td>4 x ≥80 and 2 x ≥100</td>
+                    </tr>
+                    <tr>
+                        <td>V</td>
+                        <td>2</td>
+                        <td>2 x ≥100</td>
+                    </tr>
+                </table>
+            <br>
+            <p>The list of accepted test authors is available <a href='https://nsl36.netlify.app/cognimetrica/accepted-authors'>here</a>.</p>
+        </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="upload-card">
+
+      <h2>Test database</h2>
+
+      <p class="muted"> Upload your Excel or ODS file. Your data will be retained in this browser session.</p>
+      
+
+      <form id="uploadForm" style="text-align:center">
+        <input type="file" id="file" class="file-input"  accept=".xlsx,.xls,.ods" />
+
+        <button type="submit" class="button"> Load data </button>
+      </form>
+
+      <div id="databaseStatus" class="status" style="text-align:center">
+        No database loaded.
+      </div>
+      <div style="text-align:center">
+        <button id="clearDataBtn" class="button" type="button" >
+          Clear database
+        </button>
+      </div>
+
+      <hr>
+
+      <h2>Calculate score</h2>
+
+      <div class="controls">
+
+        <div class="control-group">
+          <label for="tier">Select tier</label>
+
+          <select id="tier">
+            <option value="I">Tier I (10 tests, N ≥ 20)</option>
+            <option value="II">Tier II (8 tests, N ≥ 40)</option>
+            <option value="III">Tier III (6 tests, N ≥ 60)</option>
+            <option value="IV">Tier IV (4 tests, N ≥ 80)</option>
+            <option value="V" selected>Tier V (2 tests, N ≥ 100)</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="mode">Calculation mode</label>
+
+          <select id="mode">
+            <option value="maximize">Maximize</option>
+            <option value="minimize">Minimize</option>
+            <option value="average">Average</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div style="text-align:center">
+        <button id="computeBtn" class="button" type="button" disabled>
+          Compute score
+        </button>
+      </div>
+
+      <div id="result" class="hidden"></div>
+
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <a class="button" href="norms.html">Normalization information</a>
+    <a class="button" href="stats.html">Statistics</a>
+    <a class="button" href="index.html">Back to main page</a>
+  </div>
+
+
+<script>
+
+const TIERS = {
+  I:   { required: 10, minN: 20 },
+  II:  { required: 8,  minN: 40 },
+  III: { required: 6,  minN: 60 },
+  IV:  { required: 4,  minN: 80 },
+  V:   { required: 2,  minN: 100 }
+};
+
+const ITEM_TYPES = ["N", "V", "A", "L", "S"];
+const MAX_IQ_DIFFERENCE = 10;
+const STORAGE_KEY = "cognimetrica_score_database_v1";
+let entries = [];
+
+function saveDatabase() {
+  try {
+    sessionStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(entries)
+    );
+  } catch (error) {
+    console.error("Could not save database:", error);
+  }
+}
+
+function restoreDatabase() {
+  try {
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      entries = JSON.parse(saved);
+
+      if (!Array.isArray(entries)) {
+        entries = [];
+      }
+    }
+  } catch (error) {
+    console.error("Could not restore database:", error);
+    entries = [];
+  }
+  updateDatabaseStatus();
+}
+
+function clearDatabase() {
+  entries = [];
+  sessionStorage.removeItem(STORAGE_KEY);
+  document.getElementById("file").value = "";
+  document.getElementById("result").classList.add("hidden");
+  updateDatabaseStatus();
+}
+
+function normalizeEntries(rows) {
+  return rows.map(row => {
+    const name = String(row[0] ?? "").trim();
+    const types = String(row[1] ?? "").trim().toUpperCase();
+    const IQ = Number(row[2]);
+    const N = Number(row[3]);
+    if (!name || !Number.isFinite(IQ) || !Number.isFinite(N)) {
+      return null;
+    }
+    return {
+      Test_name: name,
+      Types: types,
+      IQ: IQ,
+      N: N
+    };
+  }).filter(row => row !== null);
+}
+
+
+async function loadFile(file) {
+  const extension = file.name.split(".").pop().toLowerCase();
+  let rows = [];
+  if (extension === "json") {
+    const data = JSON.parse(await file.text());
+    if (!Array.isArray(data)) {
+      throw new Error("JSON must contain an array of test records.");
+    }
+    rows = data.map(item => [
+      item.Test_name ?? item.name,
+      item.Types ?? item.types,
+      item.IQ ?? item.iq,
+      item.N ?? item.n
+    ]);
+
+  } else {
+    const buffer = await file.arrayBuffer();
+    const workbook = XLSX.read(buffer, {
+      type: "array"
+    });
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+    rows = XLSX.utils.sheet_to_json(firstSheet, {
+      header: 1,
+      range: 1,
+      defval: null,
+      raw: true
+    });
+  }
+  const newEntries = normalizeEntries(rows);
+  if (newEntries.length === 0) {
+    throw new Error("No usable score rows were found.");
+  }
+  entries = newEntries;
+  saveDatabase();
+  document.getElementById("result").classList.add("hidden");
+  updateDatabaseStatus();
+}
+
+function updateDatabaseStatus() {
+  const status = document.getElementById("databaseStatus");
+  const computeBtn = document.getElementById("computeBtn");
+  if (entries.length > 0) {
+    status.className = "status";
+    status.textContent =
+      "Database loaded: " + entries.length + " test records.";
+    computeBtn.disabled = false;
+  } else {
+    status.className = "status";
+    status.textContent = "No database loaded.";
+    computeBtn.disabled = true;
+  }
+}
+
+function getItemTypes(types) {
+  const result = new Set();
+  for (const char of String(types).toUpperCase()) {
+    if (ITEM_TYPES.includes(char)) {
+      result.add(char);
+    }
+  }
+  return [...result];
+}
+
+function checkTypeDistribution(selected, required) {
+  const counts = {
+    N: 0,
+    V: 0,
+    A: 0,
+    L: 0,
+    S: 0
+  };
+  for (const test of selected) {
+    for (const type of test.Item_types) {
+      counts[type]++;
+    }
+  }
+  for (const type of ITEM_TYPES) {
+    if (counts[type] / required > 0.5 + 1e-10) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function findBestCombination(database, tier, mode) {
+  const required = tier.required;
+  const minN = tier.minN;
+  const eligible = database
+    .filter(test =>
+      test.N >= minN &&
+      Number.isFinite(test.IQ) &&
+      getItemTypes(test.Types).length > 0
+    )
+    .map(test => ({
+      ...test,
+      Item_types: getItemTypes(test.Types)
+    }));
+  if (eligible.length < required) {
+    return null;
+  }
+  const unique = new Map();
+  for (const test of eligible) {
+    const previous = unique.get(test.Test_name);
+    if (
+      !previous ||
+      (mode === "minimize" && test.IQ < previous.IQ) ||
+      (mode !== "minimize" && test.IQ > previous.IQ)
+    ) {
+      unique.set(test.Test_name, test);
+    }
+  }
+  const tests = [...unique.values()]
+    .sort((a, b) => a.IQ - b.IQ);
+  if (tests.length < required) {
+    return null;
+  }
+  const targetAverage =
+    tests.reduce((sum, t) => sum + t.IQ, 0) / tests.length;
+  const typeLimit = Math.floor(required / 2);
+  const maxCandidates = mode === "average" ? 8 : 1;
+  function candidateDistance(candidate) {
+    return Math.abs(candidate.sum / required - targetAverage);
+  }
+
+  function isBetter(a, b) {
+    if (mode === "maximize") {
+      return a.sum > b.sum;
+    }
+    if (mode === "minimize") {
+      return a.sum < b.sum;
+    }
+    return candidateDistance(a) < candidateDistance(b);
+  }
+
+  function retainCandidates(existing, additions) {
+    const combined = [...(existing || []), ...additions];
+    combined.sort((a, b) => {
+      if (mode === "maximize") return b.sum - a.sum;
+      if (mode === "minimize") return a.sum - b.sum;
+      return candidateDistance(a) - candidateDistance(b);
+    });
+    const uniqueCandidates = [];
+    const seen = new Set();
+    for (const candidate of combined) {
+      const key = candidate.sum.toFixed(9);
+      if (!seen.has(key)) {
+        seen.add(key);
+        uniqueCandidates.push(candidate);
+      }
+      if (uniqueCandidates.length >= maxCandidates) {
+        break;
+      }
+    }
+    return uniqueCandidates;
+  }
+
+  let best = null;
+  const anchors = [...new Set(tests.map(t => t.IQ))];
+  for (const anchor of anchors) {
+
+    const window = tests.filter(test =>
+      test.IQ >= anchor - 1e-10 &&
+      test.IQ <= anchor + MAX_IQ_DIFFERENCE + 1e-10
+    );
+
+    if (window.length < required) {
+      continue;
+    }
+    const initialCounts = [0, 0, 0, 0, 0];
+    const initialKey = "0|" + initialCounts.join(",");
+    let states = new Map();
+
+    states.set(initialKey, [{
+      count: 0,
+      counts: initialCounts,
+      sum: 0,
+      selected: []
+    }]);
+
+    for (let index = 0; index < window.length; index++) {
+      const test = window[index];
+      const additions = new Map();
+      for (const solutions of states.values()) {
+        for (const solution of solutions) {
+          if (solution.count >= required) {
+            continue;
+          }
+          const newCounts = [...solution.counts];
+          let valid = true;
+          for (const type of test.Item_types) {
+            const typeIndex = ITEM_TYPES.indexOf(type);
+            newCounts[typeIndex]++;
+            if (newCounts[typeIndex] > typeLimit) {
+              valid = false;
+              break;
+            }
+          }
+          if (!valid) {
+            continue;
+          }
+          const newCount = solution.count + 1;
+          const newSolution = {
+            count: newCount,
+            counts: newCounts,
+            sum: solution.sum + test.IQ,
+            selected: [...solution.selected, test]
+          };
+          const key = newCount + "|" + newCounts.join(",");
+          if (!additions.has(key)) {
+            additions.set(key, []);
+          }
+          additions.get(key).push(newSolution);
+        }
+      }
+      for (const [key, candidates] of additions) {
+        states.set(
+          key,
+          retainCandidates(states.get(key), candidates)
+        );
+      }
+    }
+    for (const solutions of states.values()) {
+      for (const solution of solutions) {
+        if (solution.count !== required) {
+          continue;
+        }
+        const score = solution.sum / required;
+        const candidate = {
+          selected: solution.selected,
+          score: score
+        };
+        if (
+          !best ||
+          isBetter(
+            { sum: candidate.score * required },
+            { sum: best.score * required }
+          )
+        ) {
+          best = candidate;
+        }
+      }
+    }
+  }
+
+  return best;
+}
+function truncate1(value) {
+  return Math.trunc(value * 10) / 10;
+}
+function showResults(result, tierName, mode) {
+  const container = document.getElementById("result");
+  container.classList.remove("hidden");
+  if (!result) {
+    container.className = "result-box error";
+    container.textContent =
+      "Tier " + tierName +
+      " is not available. No valid combination of tests satisfies all requirements.";
+    return;
+  }
+  container.className = "result-box";
+  const selected = result.selected;
+  const required = selected.length;
+  const lowest = Math.min(...selected.map(t => t.IQ));
+  const highest = Math.max(...selected.map(t => t.IQ));
+  const iqScores = selected.map(t => t.IQ);
+  const mean = iqScores.reduce((sum, value) => sum + value, 0) / iqScores.length;
+  const variance = iqScores.reduce(
+    (sum, value) => sum + Math.pow(value - mean, 2),
+    0
+  ) / iqScores.length;
+  const standardDeviation = Math.sqrt(variance)
+  const counts = {
+    N: 0,
+    V: 0,
+    A: 0,
+    L: 0,
+    S: 0
+  };
+  for (const test of selected) {
+    for (const type of test.Item_types) {
+      counts[type]++;
+    }
+  }
+  let html = `
+    <h2 style="text-align:center">Tier ${tierName} result</h2>
+    <div class="score">${truncate1(result.score).toFixed(1)}</div>
+    <p style="text-align:center">
+      Cognimetrica score for ${required} submitted tests
+    </p>
+    <p>
+      <strong>Lowest I.Q. score:</strong> ${lowest.toFixed(1)}<br>
+      <strong>Highest I.Q. score:</strong> ${highest.toFixed(1)}<br>
+      <strong>Range:</strong> ${(highest - lowest).toFixed(1)}<br>
+      <strong>Standard deviation:</strong> ${(standardDeviation).toFixed(2)}<br>
+      <strong>Calculation mode:</strong> ${mode}
+    </p>
+    <h3>Selected tests</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Test</th>
+            <th>I.Q.</th>
+            <th>Sample size</th>
+            <th>Type(s)</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+  selected.forEach((test, index) => {
+    html += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${escapeHTML(test.Test_name)}</td>
+        <td>${test.IQ.toFixed(1)}</td>
+        <td>${test.N}</td>
+        <td>${escapeHTML(test.Types)}</td>
+      </tr>
+    `;
+  });
+  html += `
+        </tbody>
+      </table>
+    </div>
+    <h3>Item type distribution</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Occurrences</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+  for (const type of ITEM_TYPES) {
+    if (counts[type] === 0) continue;
+    const percentage = counts[type] / required * 100;
+    html += `
+      <tr>
+        <td>${type}</td>
+        <td>${counts[type]}</td>
+        <td>${percentage.toFixed(1)}%</td>
+      </tr>
+    `;
+  }
+  html += `
+        </tbody>
+      </table>
+    </div>
+  `;
+  container.innerHTML = html;
+}
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+document.getElementById("uploadForm").addEventListener(
+  "submit",
+  async function(event) {
+    event.preventDefault();
+    const file = document.getElementById("file").files[0];
+    if (!file) {
+      return;
+    }
+    const status = document.getElementById("databaseStatus");
+    status.className = "status";
+    status.textContent = "Loading database...";
+    try {
+      await loadFile(file);
+    } catch (error) {
+      status.className = "status error";
+      status.textContent = "Error: " + error.message;
+      console.error(error);
+    }
+  }
+);
+
+document.getElementById("computeBtn").addEventListener(
+  "click",
+  function() {
+    if (entries.length === 0) {
+      return;
+    }
+    const tierName = document.getElementById("tier").value;
+    const mode = document.getElementById("mode").value;
+    const tier = TIERS[tierName];
+    const button = document.getElementById("computeBtn");
+    button.disabled = true;
+    button.textContent = "Computing...";
+    setTimeout(() => {
+      try {
+        const result = findBestCombination(
+          entries,
+          tier,
+          mode
+        );
+        showResults(result, tierName, mode);
+      } catch (error) {
+        const container = document.getElementById("result");
+        container.className = "result-box error";
+        container.classList.remove("hidden");
+        container.textContent = "Calculation error: " + error.message;
+        console.error(error);
+      } finally {
+        button.disabled = false;
+        button.textContent = "Compute score";
+      }
+    }, 20);
+  }
+);
+
+document.getElementById("clearDataBtn").addEventListener(
+  "click",
+  function() {
+    if (confirm("Are you sure you want to clear the loaded database?")) {
+      clearDatabase();
+    }
+  }
+);
+
+restoreDatabase();
+</script>
+</body>
+</html>
