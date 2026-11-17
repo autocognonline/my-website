@@ -208,19 +208,32 @@
   <h1>Cognimetrica Score Calculator</h1>
 
   <div class="section">
-    <div class="card">
-      <p>This calculator allows you to compute Cognimetrica scores for high range tests.</p>
+    <div class="card">   
+      <p>This calculator determines Cognimetrica scores based on submitted high-range test results. It automatically identifies the best valid combination of tests according to the selected calculation mode.</p>
+      <h3><strong>Calculation rules:</strong></h3>   
+      <ul>     
+        <li>The final score is the arithmetic mean of the selected test scores.</li>     
+        <li>The difference between the highest and lowest selected scores cannot exceed 10 I.Q. points.</li>     
+        <li>No individual item type may account for more than 50% of the selected tests.</li>     
+        <li>A maximum of 10 distinct authors is permitted.</li>   
+      </ul>
+      <h3><strong>Calculation modes:</strong></h3>   
+      <ul>     
+        <li><strong>Maximize:</strong> Selects the valid combination with the highest possible average score.</li>     
+        <li><strong>Minimize:</strong> Selects the valid combination with the lowest possible average score.</li>     
+        <li><strong>Average:</strong> Selects the combination whose average is closest to the average score of all eligible tests.</li>     
+        <li><strong>Heterogeneity:</strong> Prioritizes the greatest number of heterogeneous tests (tests containing at least two different item types), then the highest average score.</li>     
+        <li><strong>Authors:</strong> Prioritizes the greatest number of distinct authors, then the highest average score.</li>     
+        <li><strong>Ranking:</strong> Prioritizes the greatest number of distinct authors, followed by the greatest number of heterogeneous tests, and finally the highest average score.</li>   
+      </ul>
 
-      <p>
-        Scores are calculated as the arithmetic mean of submitted scores.
-        The difference between the highest and lowest scores must not exceed
-        10 I.Q. points. No individual item type may account for more than
-        50% of submitted tests. Number of authors is limited to 10.
-      </p>
+      <p>The calculator automatically enforces all requirements. You simply need to upload your database, choose a tier and calculation mode, and compute your result.</p>
 
-      <p>Upload you data in an Excel or ODS file, please format it like in the example below.</p>
-      <a href="example.xlsx" download >Example Excel data</a>
-      <strong><p>Make sure you only include scores for which you have a verifiable proof !</p></strong>
+      <h3><strong>Uploading your data:</strong></h3>
+      <p>Upload your test database in Excel or ODS format, following the structure shown in the example file:</p>
+      <p><a href="example.xlsx" download>Download example Excel file</a></p>
+
+      <p><strong>Important:</strong> Only include test scores supported by verifiable evidence.</p>
     </div>
 
     <div class="table-container">
@@ -258,7 +271,7 @@
                     </tr>
                 </table>
             <br>
-            <p>The list of accepted test authors is available <a href='https://nsl36.netlify.app/cognimetrica/accepted-authors'>here</a>.</p>
+            <p>The list of accepted test authors is available <a href='https://nsl36.netlify.app/cognimetrica/accepted-authors' target="_blank" >here</a>.</p>
         </div>
   </div>
 
