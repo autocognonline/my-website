@@ -198,15 +198,7 @@
       .controls { flex-direction: column; }
     }
   </style>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'G-3XHMB3NM73');
-  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
   <link rel="icon" href="favicon.png">
 </head>
@@ -217,18 +209,18 @@
 
   <div class="section">
     <div class="card">
-      <p>This calculator allows you to compute <a href="https://nsl36.netlify.app/cognimetrica/society" target="_blank">Cognimetrica</a> scores for high range tests.</p>
-      
+      <p>This calculator allows you to compute Cognimetrica scores for high range tests.</p>
+
       <p>
         Scores are calculated as the arithmetic mean of submitted scores.
         The difference between the highest and lowest scores must not exceed
         10 I.Q. points. No individual item type may account for more than
-        50% of submitted tests.
+        50% of submitted tests. Number of authors is limited to 10.
       </p>
 
-      <p>Each tier has its own minimum sample size and number of required tests, as you can see below.</p>
-      <strong><p>Make sure you only include scores for which you have a verifiable proof !</p></strong>
+      <p>Upload you data in an Excel or ODS file, please format it like in the example below.</p>
       <a href="example.xlsx" download >Example Excel data</a>
+      <strong><p>Make sure you only include scores for which you have a verifiable proof !</p></strong>
     </div>
 
     <div class="table-container">
@@ -277,7 +269,7 @@
 
       <h2>Test database</h2>
 
-      <p class="muted"> Upload your Excel or ODS file. Your data will be retained in this browser session.</p>
+      <p class="muted"> Upload your Excel or ODS file and click "Load data". Your data will be retained in this browser session.</p>
       
 
       <form id="uploadForm" style="text-align:center">
@@ -320,6 +312,9 @@
             <option value="maximize">Maximize</option>
             <option value="minimize">Minimize</option>
             <option value="average">Average</option>
+            <option value="heterogeneity">Heterogeneity</option>
+            <option value="authors">Authors</option>
+            <option value="rank">Ranking</option>
           </select>
         </div>
 
@@ -376,7 +371,6 @@ function restoreDatabase() {
     const saved = sessionStorage.getItem(STORAGE_KEY);
     if (saved) {
       entries = JSON.parse(saved);
-
       if (!Array.isArray(entries)) {
         entries = [];
       }
@@ -402,6 +396,7 @@ function normalizeEntries(rows) {
     const types = String(row[1] ?? "").trim().toUpperCase();
     const IQ = Number(row[2]);
     const N = Number(row[3]);
+    const authors = String(row[4] ?? "").trim();
     if (!name || !Number.isFinite(IQ) || !Number.isFinite(N)) {
       return null;
     }
@@ -409,7 +404,8 @@ function normalizeEntries(rows) {
       Test_name: name,
       Types: types,
       IQ: IQ,
-      N: N
+      N: N,
+      Authors: authors
     };
   }).filter(row => row !== null);
 }
@@ -427,7 +423,8 @@ async function loadFile(file) {
       item.Test_name ?? item.name,
       item.Types ?? item.types,
       item.IQ ?? item.iq,
-      item.N ?? item.n
+      item.N ?? item.n,
+      item.Authors ?? item.authors ?? item.Author ?? item.author
     ]);
 
   } else {
@@ -468,14 +465,138 @@ function updateDatabaseStatus() {
   }
 }
 
-function getItemTypes(types) {
-  const result = new Set();
-  for (const char of String(types).toUpperCase()) {
-    if (ITEM_TYPES.includes(char)) {
-      result.add(char);
+const AUTHOR_SIMILARITY_THRESHOLD = 0.85;
+
+function buildAuthorRegistry(tests) {
+  const allNames = [];
+  for (const test of tests) {
+    for (const name of getAuthors(test.Authors)) {
+      const normalized = normalizeAuthorName(name);
+      if (normalized) {
+        allNames.push({
+          name,
+          normalized
+        });
+      }
     }
   }
-  return [...result];
+  const uniqueNames = new Map();
+  for (const item of allNames) {
+    if (!uniqueNames.has(item.normalized)) {
+      uniqueNames.set(item.normalized, item);
+    }
+  }
+  const sortedNames = [...uniqueNames.values()].sort(
+    (a, b) =>
+      b.normalized.length - a.normalized.length ||
+      a.normalized.localeCompare(b.normalized)
+  );
+  const representatives = [];
+  for (const item of sortedNames) {
+    let bestMatch = null;
+    let bestSimilarity = 0;
+    for (const representative of representatives) {
+      const similarity = authorSimilarity(
+        item.normalized,
+        representative.normalized
+      );
+      if (
+        similarity >= AUTHOR_SIMILARITY_THRESHOLD &&
+        similarity > bestSimilarity
+      ) {
+        bestSimilarity = similarity;
+        bestMatch = representative;
+      }
+    }
+    if (!bestMatch) {
+      representatives.push({
+        id: item.normalized,
+        name: item.name,
+        normalized: item.normalized
+      });
+    }
+  }
+  function resolve(name) {
+    const normalized = normalizeAuthorName(name);
+    if (!normalized) return null;
+    let bestMatch = null;
+    let bestSimilarity = 0;
+    for (const representative of representatives) {
+      const similarity = authorSimilarity(
+        normalized,
+        representative.normalized
+      );
+      if (
+        similarity >= AUTHOR_SIMILARITY_THRESHOLD &&
+        similarity > bestSimilarity
+      ) {
+        bestSimilarity = similarity;
+        bestMatch = representative;
+      }
+    }
+    return bestMatch ? bestMatch.id : null;
+  }
+  const displayNames = new Map(
+    representatives.map(author => [author.id, author.name])
+  );
+  return {
+    resolve,
+    displayNames
+  };
+}
+
+function getItemTypes(types) {
+  const text = String(types ?? "").toUpperCase();
+  return ITEM_TYPES.filter(type => text.includes(type));
+}
+function getAuthors(authors) {
+  return String(authors ?? "")
+    .split("/")
+    .map(author => author.trim())
+    .filter(author => author.length > 0);
+}
+
+function normalizeAuthorName(name) {
+  return String(name)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .trim()
+    .split(/\s+/)
+    .sort()
+    .join(" ");
+}
+
+function levenshteinDistance(a, b) {
+  const matrix = Array.from(
+    { length: a.length + 1 },
+    () => new Array(b.length + 1).fill(0)
+  );
+  for (let i = 0; i <= a.length; i++) {
+    matrix[i][0] = i;
+  }
+  for (let j = 0; j <= b.length; j++) {
+    matrix[0][j] = j;
+  }
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      matrix[i][j] = Math.min(
+        matrix[i - 1][j] + 1,
+        matrix[i][j - 1] + 1,
+        matrix[i - 1][j - 1] + cost
+      );
+    }
+  }
+  return matrix[a.length][b.length];
+}
+
+function authorSimilarity(a, b) {
+  if (a === b) return 1;
+  const maxLength = Math.max(a.length, b.length);
+  if (maxLength === 0) return 1;
+  return 1 - levenshteinDistance(a, b) / maxLength;
 }
 
 function checkTypeDistribution(selected, required) {
@@ -510,10 +631,18 @@ function findBestCombination(database, tier, mode) {
     )
     .map(test => ({
       ...test,
-      Item_types: getItemTypes(test.Types)
+      Item_types: getItemTypes(test.Types),
+      Author_list: getAuthors(test.Authors)
     }));
   if (eligible.length < required) {
     return null;
+  }
+  const authorRegistry = buildAuthorRegistry(eligible);
+  for (const test of eligible) {
+    test.Author_ids = test.Author_list
+      .map(name => authorRegistry.resolve(name))
+      .filter(id => id !== null);
+    test.Author_ids = [...new Set(test.Author_ids)];
   }
   const unique = new Map();
   for (const test of eligible) {
@@ -546,6 +675,27 @@ function findBestCombination(database, tier, mode) {
     if (mode === "minimize") {
       return a.sum < b.sum;
     }
+    if (mode === "heterogeneity") {
+      if (a.heterogeneousCount !== b.heterogeneousCount) {
+        return a.heterogeneousCount > b.heterogeneousCount;
+      }
+      return a.sum > b.sum;
+    }
+    if (mode === "authors") {
+      if (a.authorCount !== b.authorCount) {
+        return a.authorCount > b.authorCount;
+      }
+      return a.sum > b.sum;
+    }
+    if (mode === "rank") {
+      if (a.authorCount !== b.authorCount) {
+        return a.authorCount > b.authorCount;
+      }
+      if (a.heterogeneousCount !== b.heterogeneousCount) {
+        return a.heterogeneousCount > b.heterogeneousCount;
+      }
+      return a.sum > b.sum;
+    }
     return candidateDistance(a) < candidateDistance(b);
   }
 
@@ -554,6 +704,27 @@ function findBestCombination(database, tier, mode) {
     combined.sort((a, b) => {
       if (mode === "maximize") return b.sum - a.sum;
       if (mode === "minimize") return a.sum - b.sum;
+      if (mode === "heterogeneity") {
+        if (a.heterogeneousCount !== b.heterogeneousCount) {
+          return b.heterogeneousCount - a.heterogeneousCount;
+        }
+        return b.sum - a.sum;
+      }
+      if (mode === "authors") {
+        if (a.authorCount !== b.authorCount) {
+          return b.authorCount - a.authorCount;
+        }
+        return b.sum - a.sum;
+      }
+      if (mode === "rank") {
+        if (a.authorCount !== b.authorCount) {
+          return b.authorCount - a.authorCount;
+        }
+        if (a.heterogeneousCount !== b.heterogeneousCount) {
+          return b.heterogeneousCount - a.heterogeneousCount;
+        }
+        return b.sum - a.sum;
+      }
       return candidateDistance(a) - candidateDistance(b);
     });
     const uniqueCandidates = [];
@@ -591,6 +762,8 @@ function findBestCombination(database, tier, mode) {
       count: 0,
       counts: initialCounts,
       sum: 0,
+      heterogeneousCount: 0,
+      authors: [],
       selected: []
     }]);
 
@@ -616,13 +789,31 @@ function findBestCombination(database, tier, mode) {
             continue;
           }
           const newCount = solution.count + 1;
+          const newAuthors = [
+            ...new Set([
+              ...solution.authors,
+              ...test.Author_ids
+            ])
+          ];
+          if (newAuthors.length > 10) {
+            continue;
+          }
           const newSolution = {
             count: newCount,
             counts: newCounts,
             sum: solution.sum + test.IQ,
+            heterogeneousCount:
+              solution.heterogeneousCount +
+              (test.Item_types.length >= 2 ? 1 : 0),
+            authors: newAuthors,
             selected: [...solution.selected, test]
           };
-          const key = newCount + "|" + newCounts.join(",");
+
+          const authorKey =
+            (mode === "authors" || mode === "rank")
+              ? "|" + JSON.stringify([...newAuthors].sort())
+              : "";
+          const key = newCount + "|" + newCounts.join(",") + "|" + newSolution.heterogeneousCount + authorKey;
           if (!additions.has(key)) {
             additions.set(key, []);
           }
@@ -644,13 +835,24 @@ function findBestCombination(database, tier, mode) {
         const score = solution.sum / required;
         const candidate = {
           selected: solution.selected,
-          score: score
+          score: score,
+          heterogeneousCount: solution.heterogeneousCount,
+          authors: solution.authors.map(id => authorRegistry.displayNames.get(id) || id),
+          authorCount: solution.authors.length
         };
         if (
           !best ||
           isBetter(
-            { sum: candidate.score * required },
-            { sum: best.score * required }
+            {
+              sum: candidate.score * required,
+              heterogeneousCount: candidate.heterogeneousCount,
+              authorCount: candidate.authorCount
+            },
+            {
+              sum: best.score * required,
+              heterogeneousCount: best.heterogeneousCount,
+              authorCount: best.authorCount
+            }
           )
         ) {
           best = candidate;
@@ -709,7 +911,15 @@ function showResults(result, tierName, mode) {
       <strong>Highest I.Q. score:</strong> ${highest.toFixed(1)}<br>
       <strong>Range:</strong> ${(highest - lowest).toFixed(1)}<br>
       <strong>Standard deviation:</strong> ${(standardDeviation).toFixed(2)}<br>
-      <strong>Calculation mode:</strong> ${mode}
+      <strong>Calculation mode:</strong> ${
+        mode === "heterogeneity" ? "Heterogeneity" :
+        mode === "authors" ? "Authors" :
+        mode === "rank" ? "Rank" :
+        mode
+      }<br>
+      <strong>Distinct authors:</strong> ${result.authorCount} / 10<br>
+      <strong>Authors:</strong> ${escapeHTML(result.authors.join(", "))}<br>
+      <strong>Heterogeneous tests:</strong> ${result.heterogeneousCount} / ${required} (${(result.heterogeneousCount / required * 100).toFixed(1)}%)
     </p>
     <h3>Selected tests</h3>
     <div class="table-wrapper">
@@ -721,6 +931,7 @@ function showResults(result, tierName, mode) {
             <th>I.Q.</th>
             <th>Sample size</th>
             <th>Type(s)</th>
+            <th>Author(s)</th>
           </tr>
         </thead>
         <tbody>
@@ -733,6 +944,7 @@ function showResults(result, tierName, mode) {
         <td>${test.IQ.toFixed(1)}</td>
         <td>${test.N}</td>
         <td>${escapeHTML(test.Types)}</td>
+        <td>${escapeHTML(test.Authors || "")}</td>
       </tr>
     `;
   });
