@@ -1,3 +1,4 @@
+17 November 2026 - Cognimetrica score calculator available (Miscellaneous tab).
 14 November 2026 - SAITO statistics updated, N=75.
 11 November 2026 - Contribution scores ≥ 30 waive fees.
 3 November 2026 - Estimated external tests g-loadings page available.
