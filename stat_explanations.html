@@ -273,29 +273,35 @@
       <h2>Description</h2>
       <div class="section">
         <p>
-          The Item Discrimination metric measures how well an item discriminates between lower and higher ability testees. It is based on the Ivec Item Quality metric.
+          The item discrimination metric measures how well an item discriminates between lower and higher ability testees.
         </p>
         <p>
-          It evaluates whether correct responses to an item are concentrated among testees with higher performance on the
+          It evaluates whether the points earned on an item are concentrated among testees with higher performance on the
           rest of the test. The metric is conceptually similar to the corrected point-biserial correlation, also called the item-rest correlation.
         </p>
         <p>
-          The metric takes values in the closed interval \([-1,1]\). A value of 1 indicates perfect discrimination, where
-          correct responses are fully concentrated among the higher-performing testees. A value of 0 indicates no
-          discrimination: the item is solved as often by low scorers as by high scorers, which is the expected result for
-          an item answered at random. A negative value indicates a reversed item, solved more often by testees who perform
-          worse on the rest of the test.
+          The metric takes values in the closed interval \([0,1]\). A value of 1 indicates perfect discrimination, where
+          the points of the item are fully concentrated among the higher-performing testees. A value of 0 indicates no
+          discrimination: the item is not solved more by high scorers than it is by low scorers, which is the expected
+          result for an item answered at random. A negative value indicates a reversed item, which testees who perform
+          worse on the rest of the test do better on. The lower limit is -1 only for items of medium difficulty and is
+          closer to 0 for very easy or very hard items.
         </p>
         <p>
-          The metric is undefined for items solved by nobody or by everybody (when solvability is 0 or 1).
+          The metric supports partial credit but is undefined for items on which all testees obtained the same score
+          (for example items solved by nobody or by everybody).
         </p>
       </div>
 
       <h2>Definition</h2>
       <div class="section">
         <p>
-          Let \( X_{pi} \in \{0,1\} \) be the score of testee \( p \) on item \( i \), let \( n \) be the number of testees,
-          and let \( z \) be the number of items in the test.
+          Let \( X_{pi} \in [0,1] \) be the score of testee \( p \) on item \( i \), where \( n \) is the number of testees
+          and \( z \) is the number of items in the test. Raw item points \( x_{pi} \) are mapped linearly to this range,
+          \[
+          X_{pi} = \frac{x_{pi} - x_i^{\min}}{x_i^{\max} - x_i^{\min}},
+          \]
+          where \( x_i^{\min} \) and \( x_i^{\max} \) are the lowest and highest points that item \( i \) can award (for example \(-1\) and \(8\)). Dichotomous items (0 or 1) are left unchanged.
         </p>
 
         <p>
@@ -308,37 +314,33 @@
         </div>
 
         <p>
-          The number of testees who solved item \( i \) is:
+          The total credit earned on item \( i \) is:
         </p>
         <div class="math-block">
           \[
-          K_i = \sum_{p=1}^{n} X_{pi}, \qquad 0 < K_i < n
+          K_i = \sum_{p=1}^{n} X_{pi}
           \]
         </div>
 
         <p>
-          Testees are ordered by decreasing rest score \( T_p^{(i)} \), and the top \( K_i \) ranks form the reference group.
-          Let \( c_i \) be the rest score of the \( K_i \)-th ranked testee, let \( g_i \) be the number of testees with
-          \( T_p^{(i)} > c_i \), and let \( e_i \) be the number of testees with \( T_p^{(i)} = c_i \).
-          Each testee receives a group weight:
+          Testees are ordered by decreasing rest score \( T_p^{(i)} \) and are assigned to a reference group of total
+          weight \( K_i \), starting with the highest rest score. Let \( b_p \) be the number of testees with a rest score
+          strictly higher than that of testee \( p \), and let \( e_p \) be the number of testees (including \( p \)) with
+          the same rest score as \( p \). Each testee receives a group weight:
         </p>
         <div class="math-block">
           \[
-          w_p^{(i)} =
-          \begin{cases}
-          1 & T_p^{(i)} > c_i \\[4pt]
-          \dfrac{K_i - g_i}{e_i} & T_p^{(i)} = c_i \\[8pt]
-          0 & T_p^{(i)} < c_i
-          \end{cases}
+          w_p^{(i)} = \min\!\left(1,\; \max\!\left(0,\; \frac{K_i - b_p}{e_p}\right)\right)
           \]
         </div>
         <p>
-          The weights sum to \( K_i \). When there are no ties at the cutoff, the weights are 1 for the top
-          \( K_i \) testees and 0 for all others.
+          The weights sum to \( K_i \). Testees with equal rest scores share the available weight equally, so ties
+          at the cutoff are split fractionally. When there are no ties and \( K_i \) is an integer, the weights are 1 for the
+          top \( K_i \) testees and 0 for all others.
         </p>
 
         <p>
-          The weighted number of correct responses to item \( i \) within the reference group is:
+          The weighted credit on item \( i \) within the reference group is:
         </p>
         <div class="math-block">
           \[
@@ -347,13 +349,33 @@
         </div>
 
         <p>
+          Let \( X_{(1)i} \ge X_{(2)i} \ge \dots \) be the scores on item \( i \) sorted in decreasing order and
+          \( m_i = \lfloor K_i \rfloor \). The largest value that \( R_i \) can reach is:
+        </p>
+        <div class="math-block">
+          \[
+          R_i^{\max} = \sum_{r=1}^{m_i} X_{(r)i} + (K_i - m_i)\,X_{(m_i+1)i}
+          \]
+        </div>
+        <p>
+          For dichotomous items, \( R_i^{\max} = K_i \).
+        </p>
+
+        <p>
           The Item Discrimination of item \( i \) is defined as:
         </p>
         <div class="math-block">
           \[
-          ID_i = \frac{R_i - K_i^2/n}{K_i - K_i^2/n} = \frac{n R_i - K_i^2}{K_i\,(n - K_i)}
+          ID_i = \frac{R_i - K_i^2/n}{R_i^{\max} - K_i^2/n} = \frac{n R_i - K_i^2}{n R_i^{\max} - K_i^2}
           \]
         </div>
+        <p>
+          For dichotomous items we have:
+        </p>
+        <div class="math-block">
+          \( ID_i = \dfrac{n R_i - K_i^2}{K_i\,(n - K_i)} \).
+        </div>
+
         <h3>Interpretation</h3>
         <div style="display: flex; justify-content: center;">
           <table>
