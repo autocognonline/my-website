@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Item Quality Analysis</title>
+  <style>
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    margin: 30px;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    margin-top: 60px;
+  }
+
+  p {
+    max-width: 1200px;
+    margin: 10px auto;
+    font-size: 18px;
+    text-align: justify;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 18px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  .section {
+    margin: 50px auto;
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 12px 28px;
+    font-size: 20px;
+    border-radius: 8px;
+    color: white;
+    background-color: #0070ba;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+    min-width: 150px;
+    max-width: 100%;
+  }
+
+  .button:hover {
+    background-color: #005c99;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 60px auto;
+    width: 80%;
+    max-width: 100%;
+  }
+
+  table {
+    border-collapse: collapse;
+    border: 4px solid #000;
+    width: auto;              
+    font-family: sans-serif;
+    margin: 0 auto 40px;
+  }
+
+  th, td {
+      border: 1px solid #ddd;
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 11px;
+      white-space: nowrap;
+  }
+
+  th {
+      background-color: #0070ba;
+      color: white;
+      font-size: 15px;
+  }
+
+  tr:hover {
+      background-color: #f2f2f2;
+  }
+
+  .table-container {
+      width: 80%;
+      max-width: 80%;
+      margin: 0 auto 20px;
+      display: block;
+      overflow-x: auto;
+      overflow-y: hidden;
+  }
+
+  .table-container table {
+      width: auto;
+      margin-top: 30px;
+      min-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      margin: 12px;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    h2 {
+      margin-top: 40px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    a {
+      font-size: 16px;
+    }
+
+    .section {
+      margin: 30px auto;
+    }
+
+    .button {
+      width: 100%;
+      min-width: 0;
+      font-size: 18px;
+      padding: 12px 16px;
+    }
+
+    th, td {
+      padding: 8px 12px;
+    }
+
+    .table-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .table-container table {
+        min-width: 600px;
+    }
+
+    th, td {
+        padding: 8px 12px;
+    }
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3XHMB3NM73"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3XHMB3NM73', {
+    'send_page_view': true,
+    'allow_google_signals': true
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<link rel="icon" href="favicon.png">
+</head>
+<body>
+  <h1>Item quality analysis and proposed improved metric</h1>
+
+  <div class="section">
+    <h2>1. Introduction</h2>
+    <p> 
+      In the design and evaluation of tests, one of the most important psychometric properties of an item is its discrimination.
+    </p>
+    <p>
+      Item discrimination describes how well an item distinguishes candidates with higher levels of the ability being measured from candidates with lower levels of that ability.
+    </p>
+    <p>
+      Several established statistics are used to assess item discrimination, including the point-biserial correlation and its corrected version, commonly referred to as the item-rest correlation. 
+      These statistics are widely used in psychometrics.
+    </p>
+    <p>
+      Another metric, known as the Ivec quality, was introduced in the early 2010s to quantify the quality of items in high range tests. 
+      Its main advantages are its simplicity and its minimal data requirements.
+    </p>
+    <p>
+      However, recent analysis and testing have revealed significant limitations in the metric. 
+      These flaws make the interpretation of item quality values less straightforward than originally intended.
+    </p>
+    <p>
+      This is particularly important when the metric is used to identify problematic items, revise existing tests, or guide the development of new tests with better overall discrimination.
+    </p>
+    <p>
+      A revised metric has therefore been developed to address these limitations. 
+      The problems with the metric, the proposed corrections, and the empirical evidence supporting them are discussed below.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>2. The Ivec quality metric</h2>
+    <p>
+      The Ivec quality metric is intended to measure how well an item discriminates between candidates with lower and higher overall test performance.
+    </p>
+    <p>
+      It evaluates whether points earned on a particular item are disproportionately concentrated among candidates with higher total test scores.
+    </p>
+    <p>
+      The metric takes values between 0 and 1, with higher values interpreted as indicating better item quality.
+    </p>
+    <p>It is based on two quantities.</p>
+    <p>For the definition and examples, see: <a href="https://ivec.ultimaiq.net/details.htm" target="_blank"> definition</a></p>
+  </div>
+
+  <div class="section">
+    <h2>3. Problems with the quality metric</h2>
+    <p>The Ivec quality metric has three issues:</p>
+    <ol style="text-align: left;">
+      <li>Its expected value under random performance is not zero.</li>
+      <li>The evaluated item is included in the total score used for ranking candidates.</li>
+      <li>Its treatment of ties changes the effective selection size.</li>
+    </ol>
+    <p>These problems are discussed below, in order of importance.</p>
+    <h3>3.1 Non-zero chance baseline</h3>
+    <p>The metric is defined as: \[Q=\frac{R}{S}\]</p>
+    <p>where:</p>
+    <ul style="text-align: left;">
+      <li>N: the number of candidates.</li>
+      <li>S: the total number of points achieved on the item (for an item scored 0/1, the number of candidates who solved it).</li>
+      <li>R: the number of points achieved on the item by the top S candidates, ranked by total test score.</li>
+    </ul>
+    <p>The fundamental problem is that the metric is not corrected for chance: an item with no relationship to the rest of the test still obtains a high value.</p>
+
+    <h4>An example</h4>
+    <p>
+      Take 1000 candidates and an easy item that 800 of them solved (solvability \(p = S/N = 0.80\)).
+      Suppose the item is completely unrelated to the rest of the test, so that solving it is a matter of luck or of reasons
+      that have nothing to do with what the other items measure.
+    </p>
+    <p>
+      Q looks at the 800 best-performing candidates. 
+      Because the item is unrelated to the performance on the remaining items, the selected group would contain approximately the same proportion of solvers as a randomly selected group, assuming the item were excluded from the ranking.
+      So this group is no different from 800 candidates picked at random, and in any random group about 80% of the candidates solved the item.
+      That is about 640 candidates, so \(R \approx 640\) and
+    </p>
+    \[ Q \approx \frac{640}{800} = 0.80. \]
+    <p>
+      The item does not discriminate at all, yet it receives 0.80. Now take a hard item solved by only 200 candidates and
+      also unrelated to the rest of the test. The top 200 candidates are again a random group, of which about 20% solved the item:
+      \(R \approx 40\) and \(Q \approx 40/200 = 0.20\).
+    </p>
+
+    <h4>The general rule</h4>
+    <p>For an item unrelated to the rest of the test:</p>
+    <ol style="text-align: left;">
+      <li>The top group has S candidates.</li>
+      <li>Each of them solved the item with the same probability as any other candidate, which is the item's solvability \(p = S/N\).</li>
+      <li>The expected number of correct responses in the top group is therefore \[ E[R]=S\cdot\frac{S}{N}=\frac{S^2}{N}. \]</li>
+      <li>Dividing by S gives the expected quality: \[ \frac{E[R]}{S} = \frac{S}{N} = p. \]</li>
+    </ol>
+    <p>
+      The expected quality of a non-discriminating item is therefore equal to its solvability, not to 0.
+      Easy items start with a high value and difficult items with a low one, whatever their discrimination.
+      The "neutral" point of the scale is p, and it is different for every item.
+    </p>
+
+    <h4>Consequences</h4>
+    <ul style="text-align: left;">
+      <li>
+        An item with a solvability of 0.80 and no discrimination at all is classified as <em>good</em>.
+      </li>
+      <li>
+        Conversely, a very difficult item with a solvability of 0.10 that does discriminate somewhat, say \(Q = 0.28\),
+        is clearly better than chance (0.10) but is still classified as <em>bad</em>.
+      </li>
+      <li>
+        Quality and solvability end up strongly correlated, because the baseline of every item is its own solvability.
+      </li>
+    </ul>
+    <p>
+      The metric therefore confounds item difficulty with discrimination: a high value can mean that the item discriminates well or simply that it is easy.
+      A fair measure must compare the observed R with the chance level \(S^2/N\) instead of with 0.
+    </p>
+    <p>
+      The values above are the baseline under the most favourable assumption. In practice the value of a non-discriminating item is
+      even slightly higher than p, because the item is part of the total score used for the ranking (see the next section).
+    </p>
+    <h3>3.2 Part-whole contamination</h3>
+    <p>The evaluated item is included in the total score used to rank candidates.</p>
+    <p>
+      Even if the item is completely random and unrelated to ability, solving it increases the candidate's probability of being ranked among the top S candidates.
+    </p>
+    <p>
+      This introduces artificial positive discrimination.
+      The effect is particularly pronounced in short tests, where a single point represents a relatively large proportion of the total score.
+      As the number of items increases, the influence of one item on the overall ranking becomes smaller, and this bias diminishes but remains present as long as the evaluated item is included in the ranking score.
+    </p>
+
+    <h4>Why it happens</h4>
+    <p>
+      Take two candidates who gave identical answers on all the other items. If one of them also solved the evaluated item,
+      that candidate has a total score one point higher and is ranked above the other.
+      Across many candidates, solvers are therefore pushed slightly upward in the ranking and non-solvers slightly downward,
+      even when solving the item has nothing to do with ability.
+      Since Q measures how many of the solvers are in the top group, it is inflated.
+    </p>
+
+    <h3>3.3 Ties</h3>
+    <p>The method specifies that when candidates are tied at the selection cutoff, the selection group is extended to include all candidates sharing that score.</p>
+    <p>This avoids arbitrarily breaking ties, but introduces another complication.</p>
+    <p>
+      The effective number of selected candidates is no longer necessarily equal to S. 
+      It depends on the number of candidates tied at the cutoff and on the distribution of scores across the other items.
+      This can introduce additional distortion into the quality value.
+    </p>
+    <p>The effect is particularly relevant for short tests, where total scores can take relatively few distinct values and ties are more common.</p>
+    <h2>4. Empirical evidence</h2>
+    <p>Several experiments were conducted to investigate the problems described above.</p>
+    <p>The Ivec quality metric was compared with item solvability and corrected point-biserial correlations (item-rest correlations) using three datasets:</p>
+    <ul style="text-align: left;">
+      <li>SAITO: A real test dataset with a sample size of 76 candidates.</li>
+      <li>50-item random test: 5,000 simulated candidates.</li>
+      <li>30-item random test: 1,000 simulated candidates.</li>
+    </ul>
+    <p>The random responses were generated using quantum random numbers from the Australian National University Quantum Numbers service.
+        The simulated tests consist entirely of independent random binary responses, and therefore contain no genuine discrimination.
+    </p>
+    <h3>4.1 Correlation between Ivec quality and solvability</h3>
+    <p>The observed Pearson correlations between Ivec quality and item solvability were:</p>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Dataset</th>
+            <th>Correlation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>SAITO</td><td>0.703</td></tr>
+          <tr><td>50-item random test</td><td>0.728</td></tr>
+          <tr><td>30-item random test</td><td>0.703</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The correlations are substantial in all three datasets.</p>
+    <p>The random datasets are particularly revealing because there is no genuine discrimination to explain the relationship.</p>
+    <p>
+      The metric is therefore strongly influenced by item difficulty, as predicted by its non-zero chance baseline.
+      A discrimination metric with a chance-corrected baseline should be less susceptible to this systematic dependence on solvability.
+    </p>
+
+    <h3>4.2 Correlation between Ivec quality and corrected point-biserial correlation</h3>
+    <p>The observed correlations between the Ivec quality and corrected point-biserial correlations were:</p>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Dataset</th>
+            <th>Correlation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>SAITO</td><td>0.180</td></tr>
+          <tr><td>50-item random test</td><td>0.510</td></tr>
+          <tr><td>30-item random test</td><td>0.616</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The random datasets are not particularly informative for evaluating agreement between discrimination metrics, because random responses produce no genuine discrimination and the item-rest correlations fluctuate around zero.</p>
+    <p>
+      The real dataset shows a weak relationship between the two measures. 
+      This indicates that the two metrics are not measuring the same thing.
+    </p>
+    </p>
+
+    <h3>4.3 Average Ivec quality, solvability and item-rest correlation</h3>
+    <p>The observed average item solvability, the Ivec quality and item-rest correlation were:</p>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Dataset</th>
+            <th>Average solvability</th>
+            <th>Average quality</th>
+            <th>Average item-rest correlation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>SAITO</td><td>0.475</td><td>0.808</td><td>0.598</td></tr>
+          <tr><td>50-item random test</td><td>0.500</td><td>0.550</td><td>-0.001</td></tr>
+          <tr><td>30-item random test</td><td>0.494</td><td>0.561</td><td>-0.005</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The real dataset is not informative for estimating the random baseline because it contains genuine discrimination.</p>
+    <p>The random datasets, however, demonstrate the problem clearly.</p>
+    <p>The observed values are consistent with the predicted effects of the chance baseline and part-whole contamination. </p>
+    <p>For a random test with solvability near 0.50, approximately half of the quality value is attributable to the chance baseline, while the additional positive bias is caused by ranking candidates using a score that includes the evaluated item. </p>
+    <p>This additional bias is more pronounced in the shorter test as predicted. </p>
+    <p>We also observe that the item-rest correlation is about 0 for the random datasets as it should be. </p>
+
+    <h3>4.4 Final considerations</h3>
+    <p>This demonstrates that the Ivec quality metric systematically produces positive quality values even when items contain no genuine discrimination.</p>
+    <p>The effect is particularly important for high range tests, which are often relatively short, frequently consisting of around 30 items rather than 50 or more.</p>
+    <p>A metric intended to quantify discrimination should ideally distinguish genuine discrimination from the positive bias introduced by chance and by the construction of the ranking score. </p>
+    <hr>
+    <h2>5. The item discrimination metric</h2>
+    <p>
+      The revised metric addresses the limitations of the Ivec quality measure by correcting for the expected value under chance and excluding the evaluated item from the ranking score. 
+    </p>
+    <p>
+      Rather than ranking candidates using their total test score, candidates are ranked using their score on all remaining items. 
+      This prevents the evaluated item from artificially influencing its own discrimination estimate.
+    </p>
+    <p>
+      The metric also accounts for the fact that an item may award different amounts of credit, allowing it to be applied to both dichotomous and partial-credit items.
+    </p>
+    <p>Let:</p>
+    <ul style="text-align: left;">
+      <li>N be the total number of candidates. </li>
+      <li>\(x_i\) be the credit awarded to candidate \(i\) on the evaluated item, expressed on a scale from 0 to 1. </li>
+      <li>\(K=\sum_{i=1}^{N}x_i\) be the total credit awarded across all candidates. </li>
+      <li>\(w_i\) be the selection weight assigned to candidate \(i\) after ranking candidates by their scores on the remaining items. </li>
+    </ul>
+    <p>
+      The weights are assigned by selecting the highest-scoring candidates until the total selection weight equals \(K\).
+      If a tie occurs at the cutoff, the tied candidates share the remaining selection weight proportionally.
+    </p>
+    <p>The total item credit among the selected candidates is then: \[R=\sum_{i=1}^{N}x_iw_i\]</p>
+    <p>Under independence between the evaluated item and the remaining test, the expected value of \(R\) is:\[E[R]=\frac{K^2}{N}\]</p>
+    <p>The maximum achievable value of \(R\), denoted by \(R_{\max}\), is obtained by selecting candidates with the highest item scores, using the same selection-weight procedure.</p>
+    <p>The item discrimination metric is therefore defined as:\[ID=\frac{R-\frac{K^2}{N}}{R_{\max}-\frac{K^2}{N}}\]</p>
+    <p>This normalization provides a meaningful reference point:</p>
+    <ul style="text-align: left;">
+      <li>0: The item exhibits no meaningful discrimination.</li>
+      <li>1: The item exhibits the maximum possible discrimination.</li>
+      <li>less than 0: The item exhibits discrimination in the opposite direction, with higher item scores tending to occur among candidates with lower scores on the remaining test.</li>
+    </ul>
+    <p>For dichotomous items, \(K\) is the number of candidates who solve the item, and \(R_{\max}=K\). The formula becomes:\[ID=\frac{R-\frac{K^2}{N}}{K-\frac{K^2}{N}}\]</p>
+    <p>
+      Unlike the original Ivec quality measure, the item discrimination metric has an expected value of 0 under independence, regardless of the item's difficulty.
+    </p>
+    <p>
+      Excluding the evaluated item from the ranking score removes the artificial advantage that candidates receive from solving the very item whose discrimination is being evaluated.
+    </p>
+    <p>
+      Fractional tie handling ensures that the total selection weight is always exactly \(K\), avoiding distortions caused by expanding the selected group to include every candidate tied at the cutoff.
+    </p>
+    <p>
+      The same idea is applied to partial-credit items. 
+      Instead of counting solvers, it uses the total credit awarded on the item, while the normalization accounts for the maximum item credit that could be obtained by the selected group.
+      This makes the metric applicable to binary and partial-credit in which item scores have meaningful numerical values.
+    </p>
+    <h2>6. Practical example</h2>
+    <p>
+      Consider a test with 10 candidates and a dichotomous item solved by 4 candidates.
+      The candidates are ranked using their scores on the remaining items. Suppose 3 of the 4 solvers fall within the top 4 candidates.
+    </p>
+    <p>Then:\[N=10,\qquad K=4,\qquad R=3\]</p>
+    <p>Under independence, the expected number of solvers in the selected group is:\[E[R]=\frac{4^2}{10}=1.6\]</p>
+    <p>
+      The maximum possible number of solvers in the selected group is 4.
+      The item discrimination is therefore:\[ID=\frac{3-1.6}{4-1.6}=\frac{1.4}{2.4}\approx0.58\]
+    </p>
+    <p>
+      For comparison, the Ivec quality would be:\[Q=\frac{3}{4}=0.75\]
+    </p>
+    <h2>7. Limitations</h2>
+    <p>Like other discrimination measures, the item discrimination metric is not without limitations.</p>
+    <h3>7.1 Undefined values </h3>
+      <p> 
+      The metric is undefined when all candidates receive the same score on the evaluated item, since the item provides no variation to evaluate. 
+      It is also undefined when the normalization denominator is zero, meaning that the maximum possible value of \(R\) cannot exceed its expected value under chance.
+      For dichotomous items, this includes items solved by nobody or everybody.
+      </p>
+    <h3>7.2 Information loss </h3>
+      <p> 
+      The metric uses a top-group selection procedure with a total selection weight of \(K\), rather than considering the entire distribution of candidate scores.
+      Although this makes it intuitive and interpretable, it also discards some information about the relative performance of candidates outside the selected group.
+      Correlation-based measures, such as the point-biserial correlation or item-rest correlation, use more of the score distribution and may consequently provide complementary information.
+      </p>
+    <h3>7.3 Dependence on the remaining test </h3>
+      <p> 
+      The metric evaluates an item relative to the performance of candidates on the other items.
+      Its value can therefore depend on the composition, length, difficulty, and quality of the remaining test.
+      An item may get a certain discrimination value on one test but a another discrimination value on another test, even when the item itself is unchanged.
+      Values are most reliable for comparing items within one test instead of items between tests, and in short tests even good items might obtain slightly lower values.
+      </p>
+    <h2>8. Ressources</h2>
+    <ul style="text-align: left;">
+      <li><a href="https://quantumnumbers.anu.edu.au/" target="_blank"> Australian National University Quantum Numbers (AQN) webpage</a></li>
+      <li><a href="random_binary_data_1000_30.json" download> Random data for 30-item test, N=1000</a></li>
+      <li><a href="random_binary_data_5000_50.json" download> Random data for 50-item test, N=5000</a></li>
+    </ul>
+  </div>
+
+
+
+  <hr>
+
+
+  <div class="section">
+    <a class="button" href="index.html">Back to main page</a>
+  </div>
+</body>
+</html>
