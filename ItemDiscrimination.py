@@ -3,8 +3,10 @@ import json
 import tkinter as tk
 from tkinter import filedialog
 
-def item_disc(rawData, decimals=9):
+def item_disc(rawData, decimals=9, min_correct=3, min_incorrect=3):
     X = np.asarray(rawData, dtype=float)
+    if X.ndim != 2:
+        raise ValueError("Raw data must be a 2D array.")
     if X.min() < 0 or X.max() > 1:
         raise ValueError("Item scores must be in [0, 1]; divide by each item's max points.")
     N, k = X.shape
@@ -13,21 +15,29 @@ def item_disc(rawData, decimals=9):
     for i in range(k):
         x = X[:, i]
         if np.ptp(x) == 0:
-            continue                                   # constant item: undefined
-        K = x.sum()                                    # total credit, not necessarily an integer
+            continue
+        correct = np.count_nonzero(x == 1.0)
+        incorrect = np.count_nonzero(x == 0.0)
+        # Require sufficient observations at both extremes
+        if correct < min_correct or incorrect < min_incorrect:
+            continue
+        K = x.sum()
         rest = np.round(total - x, decimals)
-        # Fill the "top K" mass from the best rest score down; tied testees share the mass.
         _, inv, counts = np.unique(-rest, return_inverse=True, return_counts=True)
-        before = np.cumsum(counts) - counts            # mass already used by better groups
+        before = np.cumsum(counts) - counts
         w = np.clip((K - before) / counts, 0.0, 1.0)[inv]
         R = x @ w
-        # Largest possible R: put the full weight on the highest item scores
         xs = np.sort(x)[::-1]
         m = int(np.floor(K + 1e-9))
         frac = max(K - m, 0.0)
-        R_max = xs[:m].sum() + (frac * xs[m] if m < N else 0.0)
-        expected = K * K / N                           # R under independence
-        quality[i] = (R - expected) / (R_max - expected)
+        R_max = xs[:m].sum()
+        if m < N:
+            R_max += frac * xs[m]
+        expected = K * K / N
+        denominator = R_max - expected
+        if denominator <= 1e-12:
+            continue
+        quality[i] = (R - expected) / denominator
     return quality
 
 def main():
@@ -43,7 +53,7 @@ def main():
     rawData = np.full((len(raw_json), max_items), np.nan)
     for i, row in enumerate(raw_json):
         rawData[i, :len(row)] = row
-    discrimination = item_disc(rawData)
+    discrimination = item_disc(rawData, min_correct=3, min_incorrect=3)
  
     print("DISCRIMINATION")
     print(f"Candidates: {len(rawData)}")
@@ -68,4 +78,3 @@ if __name__ == "__main__":
     except Exception:
         import traceback
         traceback.print_exc()
-        input("Press Enter to exit...")
