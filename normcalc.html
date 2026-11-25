@@ -144,12 +144,15 @@
       box-sizing: border-box;
     }
 
+    select.file-input {
+      cursor: pointer;
+    }
+
     .result-box {
       max-width: 700px;
       margin: 20px auto 0 auto;
       padding: 14px 18px;
       background: #eef4f8;
-      border-left: 5px solid #0070ba;
       border-radius: 8px;
       text-align: left;
       font-size: 17px;
@@ -159,7 +162,6 @@
 
     .result-box.error {
       background: #fdeeee;
-      border-left-color: #c0392b;
       color: #8a1f11;
     }
 
@@ -187,13 +189,13 @@
 
   <div class="section">
     <div class="card">
-      <p>This calculator allows you to compute norms for high range tests.</p>
+      <p>This calculator can compute norms, item discrimination or both from candidate response data.</p>
 
       <div class="note-box">
         <strong>Minimum sample size:</strong> at least 25 candidates are required for the calculator to run properly.
       </div>
 
-      <p>Please upload your data as a <strong>.json</strong> file formatted as an array of candidate response arrays.</p>
+      <p>Upload a .json file formatted as an array of candidate response arrays. For discrimination, item scores must be mapped to a value between 0 and 1. Norms require binary data (0/1).</p>
 
       <div class="example-block">
       [
@@ -203,14 +205,13 @@
       ]</div>
 
       <p>Each inner array represents one candidate. Each value represents the score obtained on one item:</p>
-      <p><strong>1</strong> = correct response, <strong>0</strong> = incorrect response.</p>
-      <p>Other values are not supported.</p>
+      <p><strong>1</strong> = full credit, <strong>0</strong> = no credit. For discrimination-only mode, partial-credit values between 0 and 1 are also accepted.</p>
       <p>The first number corresponds to the first item, the second number to the second item, and so on. All candidate arrays must be enclosed within a single outer array.</p>
       <a href="example.json" download>Example json data</a>
     </div>
     <h2>Important information</h2>
     <div class="card">
-      <p>This calculator can produce estimates with sample sizes as small as 25 candidates. However, for stable and more reliable results, a sample size of at least 100 is recommended.</p>
+      <p>This calculator can produce estimated norms with sample sizes as small as 25 candidates. However, for stable and more reliable results, a sample size of at least 100 is recommended.</p>
       <p>Extreme performances will be underestimated if the sample size is too small.</p>
       <p>Due to technical constraints, the implementation used in this calculator differs slightly from the version I use to norm my tests.</p>
       <p>This calculator is written primarily in TypeScript and uses simplified algorithms. The main implementation is written in Python and relies on well established scientific libraries.</p>
@@ -222,11 +223,17 @@
   <div class="section">
     <div class="upload-card">
       <h2>Upload data</h2>
-      <p class="muted">Select a JSON file and compute the norm.</p>
+      <p class="muted">Select a JSON file and choose what to calculate.</p>
 
       <form id="calc">
+        <label for="mode"><strong>Calculation mode</strong></label>
+        <select id="mode" class="file-input" style="margin-top:8px;">
+          <option value="norms">Compute norms only (binary data)</option>
+          <option value="discrimination">Compute item discrimination only (binary & continuous data)</option>
+          <option value="both">Compute both (binary data)</option>
+        </select>
         <input type="file" id="file" class="file-input" accept=".json,application/json" required />
-        <button type="submit" class="button">Compute norm</button>
+        <button type="submit" class="button">Calculate</button>
       </form>
 
       <div id="result" class="result-box"></div>
@@ -240,6 +247,7 @@
   <hr>
 
   <div class="section">
+    <a class="button" href="stat_explanations.html#item-qual">Item discrimination</a>
     <a class="button" href="norms.html">Normalization information</a>
     <a class="button" href="stats.html">Statistics</a>
     <a class="button" href="index.html">Back to main page</a><br><br>
@@ -248,218 +256,176 @@
   <script>
     const form = document.getElementById("calc");
     const fileInput = document.getElementById("file");
+    const modeSelect = document.getElementById("mode");
     const resultBox = document.getElementById("result");
     const downloadXlsxBtn = document.getElementById("downloadXlsxBtn");
 
-    let lastNormPayload = null;
+    let lastPayload = null;
 
     function showMessage(message, isError = false) {
       resultBox.style.display = "block";
       resultBox.className = isError ? "result-box error" : "result-box";
       resultBox.innerHTML = message;
-
       if (isError) {
         downloadXlsxBtn.style.display = "none";
-        lastNormPayload = null;
+        lastPayload = null;
       }
     }
 
-    function isAllowedScore(value) {
-      return value === 0 || value === 1;
-    }
-
-    function validateNormData(data) {
+    function validateData(data, mode) {
       if (!Array.isArray(data) || data.length === 0) {
         throw new Error("The JSON file must contain a non-empty array of candidate responses.");
       }
-
-      if (data.length < 25) {
-        throw new Error("The sample size is too small. At least 25 candidates are required.");
+      if ((mode === "norms" || mode === "both") && data.length < 25) {
+        throw new Error("Norm calculation requires at least 25 candidates.");
       }
-
       if (!Array.isArray(data[0]) || data[0].length === 0) {
         throw new Error("Each candidate entry must be a non-empty array.");
       }
-
       const expectedLength = data[0].length;
-
       for (let i = 0; i < data.length; i++) {
         const row = data[i];
-
-        if (!Array.isArray(row)) {
-          throw new Error(`Candidate ${i + 1} is not formatted as an array.`);
-        }
-
+        if (!Array.isArray(row)) throw new Error(`Candidate ${i + 1} is not formatted as an array.`);
         if (row.length !== expectedLength) {
-          throw new Error(
-            `Candidate ${i + 1} has ${row.length} responses, but ${expectedLength} were expected. All arrays must have the same length.`
-          );
+          throw new Error(`Candidate ${i + 1} has ${row.length} responses, but ${expectedLength} were expected. All arrays must have the same length.`);
         }
-
         for (let j = 0; j < row.length; j++) {
           const value = row[j];
-
           if (typeof value !== "number" || !Number.isFinite(value)) {
-            throw new Error(
-              `Invalid value at candidate ${i + 1}, item ${j + 1}. All values must be numbers.`
-            );
+            throw new Error(`Invalid value at candidate ${i + 1}, item ${j + 1}. All values must be numeric.`);
           }
-
-          if (!isAllowedScore(value)) {
-            throw new Error(
-              `Invalid value at candidate ${i + 1}, item ${j + 1}. Only 0 and 1 are allowed.`
-            );
+          if (mode === "discrimination") {
+            if (value < 0 || value > 1) {
+              throw new Error(`Invalid value at candidate ${i + 1}, item ${j + 1}. Discrimination mode requires scores between 0 and 1.`);
+            }
+          } else if (value !== 0 && value !== 1) {
+            throw new Error(`Invalid value at candidate ${i + 1}, item ${j + 1}. Norms and combined mode only support 0 and 1.`);
           }
         }
       }
-
-      return {
-        sampleSize: data.length,
-        items: expectedLength
-      };
+      return { sampleSize: data.length, items: expectedLength };
     }
 
     function renderNormTable(payload) {
       const rows = payload.normTable || [];
-    
-      if (!rows.length) {
-        showMessage("No norm table was returned.", true);
-        return;
-      }
-    
-      lastNormPayload = payload;
-      downloadXlsxBtn.style.display = "inline-block";
+      if (!rows.length) return "<p>No norm table was returned.</p>";
       const normRows = rows.filter(row => row.rawScore !== 0);
       const raw1Row = normRows.find(row => row.rawScore === 1);
-    
       const displayRows = [];
-    
       if (raw1Row && raw1Row.standardScore !== null) {
-        displayRows.push({
-          rawScore: 0,
-          standardScore: `≤${raw1Row.standardScore - 1}`
-        });
+        displayRows.push({ rawScore: 0, standardScore: `≤${raw1Row.standardScore - 1}` });
       }
-    
-      normRows.forEach(row => {
-        displayRows.push({
-          rawScore: row.rawScore,
-          standardScore: row.standardScore
-        });
-      });
-    
-      const html = `
-        <div style="margin-bottom:12px;">
-          <strong>Sample size:</strong> ${payload.sampleSize}<br>
-          <strong>Items:</strong> ${payload.items}<br>
-        </div>
-    
+      normRows.forEach(row => displayRows.push({ rawScore: row.rawScore, standardScore: row.standardScore }));
+      return `
+        <h3>Norm table</h3>
         <div style="overflow-x:auto;">
           <table style="width:100%; border-collapse:collapse; background:#fff;">
-            <thead>
-              <tr>
-                <th style="padding:10px 14px; background:#0070ba; color:#fff; border-bottom:1px solid #d7e0e8;">Raw score</th>
-                <th style="padding:10px 14px; background:#0070ba; color:#fff; border-bottom:1px solid #d7e0e8;">Standard score</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${displayRows.map((row, i) => `
-                <tr>
-                  <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">
-                    ${row.rawScore}
-                  </td>
-                  <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">
-                    ${row.standardScore === null ? "—" : row.standardScore}
-                  </td>
-                </tr>
-              `).join("")}
+            <thead><tr>
+              <th style="padding:10px 14px; background:#0070ba; color:#fff;">Raw score</th>
+              <th style="padding:10px 14px; background:#0070ba; color:#fff;">Standard score</th>
+            </tr></thead><tbody>
+              ${displayRows.map((row, i) => `<tr>
+                <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">${row.rawScore}</td>
+                <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">${row.standardScore === null ? "—" : row.standardScore}</td>
+              </tr>`).join("")}
             </tbody>
           </table>
-        </div>
-      `;
-    
+        </div>`;
+    }
+
+    function renderDiscriminationTable(payload) {
+      const rows = payload.itemQuality || [];
+      if (!rows.length) return "<p>No item discrimination results were returned.</p>";
+      return `
+        <h3>Item discrimination</h3>
+        <p>Items with fewer than 3 full-credit or 3 zero-credit responses are reported as N/A because there is too much noise.</p>
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; background:#fff;">
+            <thead><tr>
+              <th style="padding:10px 14px; background:#0070ba; color:#fff;">Item</th>
+              <th style="padding:10px 14px; background:#0070ba; color:#fff;">Full credit</th>
+              <th style="padding:10px 14px; background:#0070ba; color:#fff;">Zero credit</th>
+              <th style="padding:10px 14px; background:#0070ba; color:#fff;">Solvability</th>
+              <th style="padding:10px 14px; background:#0070ba; color:#fff;">Item discrimination</th>
+            </tr></thead><tbody>
+              ${rows.map((row, i) => `<tr>
+                <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">${row.item}</td>
+                <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">${row.correct}</td>
+                <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">${row.incorrect}</td>
+                <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">${row.meanScore.toFixed(4)}</td>
+                <td style="padding:10px 14px; border-bottom:1px solid #e6edf3; ${i % 2 ? "background:#f7fafd;" : ""}">${row.quality === null ? "N/A" : row.quality.toFixed(6)}</td>
+              </tr>`).join("")}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    function renderResults(payload) {
+      lastPayload = payload;
+      downloadXlsxBtn.style.display = "inline-block";
+      const parts = `<div style="margin-bottom:12px;">
+        <strong>Mode:</strong> ${payload.mode}<br>
+        <strong>Sample size:</strong> ${payload.sampleSize}<br>
+        <strong>Items:</strong> ${payload.items}
+      </div>`;
+      let html = parts;
+      if (payload.normTable) html += renderNormTable(payload);
+      if (payload.itemQuality) html += renderDiscriminationTable(payload);
       showMessage(html, false);
     }
 
-    function downloadNormTableXlsx() {
-      if (!lastNormPayload || !lastNormPayload.normTable || !lastNormPayload.normTable.length) {
-        return;
-      }
-      const normRows = lastNormPayload.normTable.filter(row => row.rawScore !== 0);
-    
-      const exportRows = [];
-    
-      const raw1Row = normRows.find(row => row.rawScore === 1);
-    
-      if (raw1Row && raw1Row.standardScore !== null) {
-        exportRows.push({
-          "Raw score": 0,
-          "Standard score": `≤${raw1Row.standardScore - 1}`
-        });
-      }
-    
-      normRows.forEach(row => {
-        exportRows.push({
-          "Raw score": row.rawScore,
-          "Standard score": row.standardScore
-        });
-      });
-    
-      const worksheet = XLSX.utils.json_to_sheet(exportRows);
+    function downloadResultsXlsx() {
+      if (!lastPayload) return;
       const workbook = XLSX.utils.book_new();
-    
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Norm Table");
-    
-      const originalName =
-        fileInput.files[0]?.name?.replace(/\.[^/.]+$/, "") || "norm_table";
-    
-      XLSX.writeFile(workbook, `${originalName}_norm_table.xlsx`);
+      if (lastPayload.normTable?.length) {
+        const normRows = lastPayload.normTable.filter(row => row.rawScore !== 0);
+        const raw1Row = normRows.find(row => row.rawScore === 1);
+        const exportRows = [];
+        if (raw1Row && raw1Row.standardScore !== null) {
+          exportRows.push({ "Raw score": 0, "Standard score": `≤${raw1Row.standardScore - 1}` });
+        }
+        normRows.forEach(row => exportRows.push({ "Raw score": row.rawScore, "Standard score": row.standardScore }));
+        XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(exportRows), "Norm Table");
+      }
+      if (lastPayload.itemQuality?.length) {
+        const exportRows = lastPayload.itemQuality.map(row => ({
+          "Item": row.item,
+          "Full-credit responses": row.correct,
+          "Zero-credit responses": row.incorrect,
+          "Mean item score": row.meanScore,
+          "Item quality": row.quality === null ? "N/A" : row.quality,
+        }));
+        XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(exportRows), "Item Discrimination");
+      }
+      const originalName = fileInput.files[0]?.name?.replace(/\.[^/.]+$/, "") || "results";
+      XLSX.writeFile(workbook, `${originalName}_${lastPayload.mode}.xlsx`);
     }
 
-    downloadXlsxBtn.addEventListener("click", downloadNormTableXlsx);
+    downloadXlsxBtn.addEventListener("click", downloadResultsXlsx);
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-
       const file = fileInput.files[0];
       if (!file) {
         showMessage("Please select a JSON file first.", true);
         return;
       }
-
-      showMessage("<strong>Processing...</strong> The norm is being computed.");
-
+      const mode = modeSelect.value;
+      showMessage("<strong>Processing...</strong> Calculating the requested results.");
       try {
         const text = await file.text();
         let data;
-
-        try {
-          data = JSON.parse(text);
-        } catch {
-          throw new Error("The selected file is not valid JSON.");
-        }
-
-        validateNormData(data);
-
-        const res = await fetch(
-          "https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/norm_calc",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              data,
-              originalFileName: file.name
-            }),
-          }
-        );
-
+        try { data = JSON.parse(text); }
+        catch { throw new Error("The selected file is not valid JSON."); }
+        validateData(data, mode);
+        const res = await fetch("https://qlmlvtohtkiycwtohqwk.supabase.co/functions/v1/norm_calc", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data, mode, originalFileName: file.name }),
+        });
         const result = await res.json();
-
-        if (!res.ok) {
-          throw new Error(result.error || "Server returned an error.");
-        }
-
-        renderNormTable(result);
+        if (!res.ok) throw new Error(result.error || "Server returned an error.");
+        renderResults(result);
       } catch (err) {
         console.error(err);
         showMessage(err.message || "An unexpected error occurred.", true);
